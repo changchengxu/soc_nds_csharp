@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91529F3E-8410-430B-B61A-565536187D5F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>soc_nds_csharp</RootNamespace>
+    <AssemblyName>soc_nds_csharp</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GoldPrinter">
+      <HintPath>BLL\GoldPrinter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XPExplorerBar">
+      <HintPath>BLL\XPExplorerBar.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\DBHelper.cs" />
+    <Compile Include="App_Code\exportData.cs" />
+    <Compile Include="App_Code\Function.cs" />
+    <Compile Include="App_Code\Printer.cs" />
+    <Compile Include="DB_Manage\print.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DB_Manage\print.Designer.cs">
+      <DependentUpon>print.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB_Manage\Query_condition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DB_Manage\Query_condition.Designer.cs">
+      <DependentUpon>Query_condition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gf_login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gf_login.Designer.cs">
+      <DependentUpon>gf_login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gf_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="gf_main.Designer.cs">
+      <DependentUpon>gf_main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DB_Manage\print.resx">
+      <DependentUpon>print.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DB_Manage\Query_condition.resx">
+      <DependentUpon>Query_condition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gf_login.resx">
+      <DependentUpon>gf_login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="gf_main.resx">
+      <DependentUpon>gf_main.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Level.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vertical.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HDICLogo2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HDICTool.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\account_management.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\account_management1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Database_management.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Database_management1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Delete_database_records.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Delete_database_records1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Export_file.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Export_file1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\HDICLogo2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Import_serialized_data.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Import_serialized_data1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Level.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Pipeline_Management.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Pipeline_Management1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\Vertical.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\导出返回文件.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\导入序列号数据.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\流水线管理.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\删除数据库记录.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\数据库数据管理.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\账户管理.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\frmlogin.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
