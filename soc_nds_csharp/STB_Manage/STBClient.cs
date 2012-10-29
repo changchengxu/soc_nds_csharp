@@ -68,13 +68,13 @@ namespace soc_nds_csharp.STB_Manage
                 int a = HDIC_DB.sqlDelete("delete from STBClient where pipLineID='" + intID + "'");
                 if (a > 0)
                 {
-                    HDIC_Message.ShowInfoDialog(this, "人员类别信息删除成功！");
+                    HDIC_Message.ShowInfoDialog(this, "息删除成功！");
                     this.STBClient_Load(sender, e);
 
                 }
                 else
                 {
-                    HDIC_Message.ShowErrorDialog(this, "人员类别信息删除失败！");
+                    HDIC_Message.ShowErrorDialog(this, "删除失败！");
                 }
             }
             else

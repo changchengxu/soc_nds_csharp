@@ -30,12 +30,12 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.txt_pipID = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn1 = new System.Windows.Forms.Button();
             this.txt_currentPipID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txt_pipIDMax = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -54,14 +54,14 @@
             this.txt_pipID.Size = new System.Drawing.Size(100, 21);
             this.txt_pipID.TabIndex = 1;
             // 
-            // button1
+            // btn1
             // 
-            this.button1.Location = new System.Drawing.Point(52, 210);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn1.Location = new System.Drawing.Point(52, 210);
+            this.btn1.Name = "btn1";
+            this.btn1.Size = new System.Drawing.Size(75, 23);
+            this.btn1.TabIndex = 2;
+            this.btn1.Text = "button1";
+            this.btn1.UseVisualStyleBackColor = true;
             // 
             // txt_currentPipID
             // 
@@ -95,30 +95,33 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "流水线号最大值：";
             // 
-            // button2
+            // btn2
             // 
-            this.button2.Location = new System.Drawing.Point(177, 210);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btn2.Location = new System.Drawing.Point(177, 210);
+            this.btn2.Name = "btn2";
+            this.btn2.Size = new System.Drawing.Size(75, 23);
+            this.btn2.TabIndex = 7;
+            this.btn2.Text = " 取 消 ";
+            this.btn2.UseVisualStyleBackColor = true;
             // 
             // STBClient01
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 299);
-            this.Controls.Add(this.button2);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(298, 286);
+            this.Controls.Add(this.btn2);
             this.Controls.Add(this.txt_pipIDMax);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txt_currentPipID);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn1);
             this.Controls.Add(this.txt_pipID);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "STBClient01";
             this.Text = "STBClient01";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.STBClient01_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,11 +131,11 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_pipID;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn1;
         private System.Windows.Forms.TextBox txt_currentPipID;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_pipIDMax;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn2;
     }
 }

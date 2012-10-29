@@ -264,7 +264,7 @@ namespace HDICSoft.Message
         }
 
         /// <summary>
-        /// 显示信息对话框
+        /// 显示信息对话框OK
         /// </summary>
         /// <param name="CurrentForm">当前窗体</param>
         /// <param name="DialogMessage">信息</param>
@@ -281,7 +281,7 @@ namespace HDICSoft.Message
         }
 
         /// <summary>
-        /// 显示问答对话框
+        /// 显示问答对话框OKCancel
         /// </summary>
         /// <param name="CurrentForm">当前窗体</param>
         /// <param name="DialogMessage">提示信息</param>
