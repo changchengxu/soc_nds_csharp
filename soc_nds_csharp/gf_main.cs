@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using XPExplorerBar;
-using HDIC_DB;
+using HDICSoft.DB;
 
 namespace soc_nds_csharp
 {
@@ -27,7 +27,7 @@ namespace soc_nds_csharp
             {
                 if (login.ShowDialog() == DialogResult.OK)
                 {
-                    dt = DBHelper.GetList("SELECT * FROM  SysMenuDisplay");
+                    dt = HDIC_DB.GetList("SELECT * FROM  SysMenuDisplay");
                     taskPane1.Expandos.Clear();
 
                     AddExpando();

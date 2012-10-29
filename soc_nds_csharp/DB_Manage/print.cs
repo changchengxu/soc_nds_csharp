@@ -5,16 +5,17 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using HDIC_DB;
-using HDIC_Func;
-using HDIC_EXPORT;
+using HDICSoft.DB;
+using HDICSoft.Export;
+using HDICSoft.Message;
+using HDICSoft.Func;
 using GoldPrinter;
 
 namespace soc_nds_csharp.DB_Manage
 {
     public partial class print : Form
     {
-        exportData exportOBJ=new exportData();
+        HDIC_Export exportOBJ = new HDIC_Export();
         public print()
         {
             InitializeComponent();
@@ -73,7 +74,7 @@ namespace soc_nds_csharp.DB_Manage
             //*****第三步*****：打印重点，设置数据 源
             //可以是一维数组、二维数组、DataGrid(DataGridView和DataGrid不同，它需要转换成二维数组）、DataTable、ListView、MshFlexGrid、HtmlTable...，
             //总之，不支持的你自己写一个函数转换成二维数组赋给DataSource一切搞定
-            string[,] array = Func.ToStringArray(dataGridView1,true);
+            string[,] array = HDIC_Func.ToStringArray(dataGridView1,true);
             misGoldPrinter.DataSource = array;	//DataGrid作为数据源
 
             Body body = new Body();
@@ -127,24 +128,44 @@ namespace soc_nds_csharp.DB_Manage
 
         #endregion
 
+        #region Delete Button
         private void tsbDelete_Click(object sender, EventArgs e)
         {
-            int[] rowSelect = new int[dataGridView1.Rows.Count];
-            int index=0;
-           for(int i=0;i<dataGridView1.Rows.Count;i++)
-           {
-                if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue==true)
+            string rowSelect = "";
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue == true)
                 {
-                    rowSelect[index++] = Convert.ToInt32(dataGridView1.Rows[i].Cells[1].Value.ToString().Trim());
+                    rowSelect += Convert.ToInt32(dataGridView1.Rows[i].Cells[1].Value.ToString().Trim()) + ",";
                 }
             }
-            if (MessageBox.Show("Are you sure you want to delete the selected row " + index, "info", MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.OK)
-            {
-                
-            }
-        }
 
-        #region Query
+            if (HDIC_Message.ShowQuestionDialog(this,"Are you sure you want to delete the selected row " + (rowSelect.Split(',').Length - 1)) == DialogResult.No)
+            {
+                return;
+            }
+
+            if (rowSelect != "")
+            {
+                rowSelect = rowSelect.Substring(0, rowSelect.LastIndexOf(','));
+                string sqlstr = "delete from STBData where ChipID in (" + rowSelect + ")";
+                try
+                {
+                    HDIC_DB.sqlDelete(sqlstr);
+                    HDIC_Message.ShowInfoDialog(this, "deleted successfully");
+                }
+                catch (System.Exception ex)
+                {
+                    HDIC_Message.ShowErrorDialog(this,"delete failed because of" + ex.ToString());
+                }
+
+                btn_Query_Click(sender, e);
+            }
+
+        }
+        #endregion
+
+        #region Query Button
         private void tsbQuery_Click(object sender, EventArgs e)
         {
             panel1.Visible = !panel1.Visible;
@@ -156,6 +177,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 dateTimePicker_start.Enabled = true;
                 dateTimePicker_end.Enabled = true;
+                dateTimePicker_end.Value = DateTime.Now.AddMonths(1);
             }
             else
             {
@@ -169,7 +191,6 @@ namespace soc_nds_csharp.DB_Manage
             string sqlstr = "select * from STBData where 1=1";
             if (cbo_Time.Checked)
             {
-                dateTimePicker_end.Value = DateTime.Now.AddMonths(1);
                 sqlstr += " and ProductDate between '"+dateTimePicker_start.Value+"' and '"+dateTimePicker_end.Value+"'";
             }
             if (txt_CAID.Text.Trim() != "")
@@ -181,12 +202,16 @@ namespace soc_nds_csharp.DB_Manage
                 sqlstr += " and ChipID='" + txt_ChipID.Text.Trim() + "'";
             }
 
+            dataGridView1.DataSource=null;
+            dataGridView1.Columns.Clear();
+            dataGridView1.Refresh();
+
             DataGridViewCheckBoxColumn cb_check = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             cb_check.HeaderText = "Select";
             cb_check.Name = "cb_check";
             dataGridView1.Columns.Add(cb_check);
 
-            dataGridView1.DataSource = DBHelper.GetList(sqlstr);
+            dataGridView1.DataSource = HDIC_DB.GetList(sqlstr);
 
         }
 
@@ -197,13 +222,14 @@ namespace soc_nds_csharp.DB_Manage
 
         #endregion
 
-        //导出数据
+        #region Export file
         private void tsbExport_Click(object sender, EventArgs e)
         {
             exportOBJ.outPutDataGridViewData(dataGridView1, "直播星数据库管理软件");
         }
+        #endregion
 
-        //自动添加编号
+        #region automatically add a number
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,e.RowBounds.Location.Y
@@ -215,6 +241,7 @@ namespace soc_nds_csharp.DB_Manage
             dataGridView1.RowHeadersDefaultCellStyle.ForeColor,
             TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
         }
+        #endregion
 
     }
 

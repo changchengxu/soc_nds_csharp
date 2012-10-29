@@ -51,18 +51,13 @@
     <Compile Include="App_Code\DBHelper.cs" />
     <Compile Include="App_Code\exportData.cs" />
     <Compile Include="App_Code\Function.cs" />
+    <Compile Include="App_Code\HDIC.cs" />
     <Compile Include="App_Code\Printer.cs" />
     <Compile Include="DB_Manage\print.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DB_Manage\print.Designer.cs">
       <DependentUpon>print.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DB_Manage\Query_condition.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DB_Manage\Query_condition.Designer.cs">
-      <DependentUpon>Query_condition.cs</DependentUpon>
     </Compile>
     <Compile Include="gf_login.cs">
       <SubType>Form</SubType>
@@ -78,11 +73,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="STB_Manage\STBClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="STB_Manage\STBClient.Designer.cs">
+      <DependentUpon>STBClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="STB_Manage\STBClient01.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="STB_Manage\STBClient01.Designer.cs">
+      <DependentUpon>STBClient01.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DB_Manage\print.resx">
       <DependentUpon>print.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DB_Manage\Query_condition.resx">
-      <DependentUpon>Query_condition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="gf_login.resx">
       <DependentUpon>gf_login.cs</DependentUpon>
@@ -101,6 +105,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="STB_Manage\STBClient.resx">
+      <DependentUpon>STBClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="STB_Manage\STBClient01.resx">
+      <DependentUpon>STBClient01.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
@@ -195,6 +205,7 @@
   <ItemGroup>
     <None Include="Resources\frmlogin.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

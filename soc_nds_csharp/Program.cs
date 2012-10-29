@@ -15,7 +15,7 @@ namespace soc_nds_csharp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new gf_main());
-           Application.Run(new DB_Manage.print());
+           Application.Run(new STB_Manage.STBClient());
 
         }
     }
