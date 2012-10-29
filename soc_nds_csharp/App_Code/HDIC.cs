@@ -804,7 +804,10 @@ namespace HDICSoft.Func
         /// <returns></returns>
         public static string[,] ToStringArray(DataGridView dataGridView, bool includeColumnText)
         {
-
+            if (dataGridView.Rows.Count <= 0)
+            {
+                return null;
+            }
             string[,] arrReturn = null;
             int rowsCount = dataGridView.Rows.Count;
             int colsCount = dataGridView.Columns.Count;

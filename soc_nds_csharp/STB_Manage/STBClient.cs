@@ -20,7 +20,8 @@ namespace soc_nds_csharp.STB_Manage
 
         private void STBClient_Load(object sender, EventArgs e)
         {
-            dgv_STB.DataSource = HDIC_DB.GetList("select pipLineID as '流水线号',currentPipID as '当前流水号',piplineIDMax as '流水号最大值' from STBClient");
+            dgv_STB.DataSource = HDIC_DB.GetList(@"select pipLineID as '流水线号',currentPipID as '当前流水号',piplineIDMax as '流水号最大值' from STBClient 
+            order by pipLineID ");
         }
 
 
@@ -48,7 +49,7 @@ namespace soc_nds_csharp.STB_Manage
             }
             else
             {
-                HDIC_Message.ShowWarnDialog(this, "请选择要编辑的信息。");
+                HDIC_Message.ShowWarnDialog(this, "请选择要编辑的信息");
             }
         }
 
@@ -68,7 +69,7 @@ namespace soc_nds_csharp.STB_Manage
                 int a = HDIC_DB.sqlDelete("delete from STBClient where pipLineID='" + intID + "'");
                 if (a > 0)
                 {
-                    HDIC_Message.ShowInfoDialog(this, "息删除成功！");
+                    HDIC_Message.ShowInfoDialog(this, "删除成功！");
                     this.STBClient_Load(sender, e);
 
                 }

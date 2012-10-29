@@ -62,6 +62,7 @@
             this.btn1.TabIndex = 2;
             this.btn1.Text = "button1";
             this.btn1.UseVisualStyleBackColor = true;
+            this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
             // txt_currentPipID
             // 
@@ -103,6 +104,7 @@
             this.btn2.TabIndex = 7;
             this.btn2.Text = " 取 消 ";
             this.btn2.UseVisualStyleBackColor = true;
+            this.btn2.Click += new System.EventHandler(this.btn2_Click);
             // 
             // STBClient01
             // 
@@ -120,6 +122,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "STBClient01";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "STBClient01";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.STBClient01_MouseDown);
             this.ResumeLayout(false);

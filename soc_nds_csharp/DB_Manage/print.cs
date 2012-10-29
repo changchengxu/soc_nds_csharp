@@ -74,8 +74,10 @@ namespace soc_nds_csharp.DB_Manage
             //*****第三步*****：打印重点，设置数据 源
             //可以是一维数组、二维数组、DataGrid(DataGridView和DataGrid不同，它需要转换成二维数组）、DataTable、ListView、MshFlexGrid、HtmlTable...，
             //总之，不支持的你自己写一个函数转换成二维数组赋给DataSource一切搞定
-            string[,] array = HDIC_Func.ToStringArray(dataGridView1,true);
-            misGoldPrinter.DataSource = array;	//DataGrid作为数据源
+            string[,] array = HDIC_Func.ToStringArray(dataGridView1, true);
+            if (array == null) { misGoldPrinter.DataSource = ""; }
+            else { misGoldPrinter.DataSource = array; }	//DataGrid作为数据源
+           
 
             Body body = new Body();
             body.ColsAlignString = "CRLL";						//由左中右第一个字母组成，对应于每列的对对齐方式
