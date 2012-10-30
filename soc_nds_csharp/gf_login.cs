@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using HDICSoft.DB;
+using HDICSoft.Message;
 
 namespace soc_nds_csharp
 {
@@ -50,6 +52,11 @@ namespace soc_nds_csharp
         private void btn_login_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+        }
+
+        private void gf_login_Load(object sender, EventArgs e)
+        {
+            h
         }
     }
 }

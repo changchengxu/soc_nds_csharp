@@ -11,25 +11,25 @@ using HDICSoft.Message;
 using HDICSoft.DB;
 namespace soc_nds_csharp.STB_Manage
 {
-    public partial class STBClient : Form
+    public partial class STBOp : Form
     {
-        public STBClient()
+        public STBOp()
         {
             InitializeComponent();
         }
 
         private void STBClient_Load(object sender, EventArgs e)
         {
-            dgv_STB.DataSource = HDIC_DB.GetList(@"select pipLineID as '流水线号',currentPipID as '当前流水号',piplineIDMax as '流水号最大值' from STBClient 
+            dgv_STB.DataSource = HDIC_DB.GetList(@"select pipLineID as '流水线号',currentPipID as '当前流水号',piplineIDMax as '流水号最大值' from STBOp 
             order by pipLineID ");
         }
 
 
-        private STBClient01 stbObject;
+        private STBOp01 stbObject;
         private void tsb_Newfrm_Click(object sender, EventArgs e)
         {
-            stbObject = new STBClient01();
-            stbObject.Text = "STBClient Add";
+            stbObject = new STBOp01();
+            stbObject.Text = "STBOp Add";
             stbObject.ShowDialog();
             this.STBClient_Load(sender, e);
         }
@@ -40,8 +40,8 @@ namespace soc_nds_csharp.STB_Manage
             {
                 int intTypeId = Convert.ToInt32(dgv_STB.SelectedRows[0].Cells["流水线号"].Value);
                 //实例化编辑页面
-                stbObject = new STBClient01(intTypeId);
-                stbObject.Text = "STBClient Edit";
+                stbObject = new STBOp01(intTypeId);
+                stbObject.Text = "STBOp Edit";
                 // 显示人员编辑画面
                 stbObject.ShowDialog();
                 // 重新初始化该画面
@@ -66,7 +66,7 @@ namespace soc_nds_csharp.STB_Manage
             {
                 //获取要删除行的ID号
                 intID = Convert.ToInt32(dgv_STB.SelectedRows[0].Cells["流水线号"].Value);
-                int a = HDIC_DB.sqlDelete("delete from STBClient where pipLineID='" + intID + "'");
+                int a = HDIC_DB.sqlDelete("delete from STBOp where pipLineID='" + intID + "'");
                 if (a > 0)
                 {
                     HDIC_Message.ShowInfoDialog(this, "删除成功！");

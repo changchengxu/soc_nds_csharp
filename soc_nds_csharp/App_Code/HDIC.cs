@@ -71,10 +71,15 @@ namespace HDICSoft.DB
                     try
                     {
                         PrepareCommand(cmd, conn, trans, cmdType, cmdText, cmdParms);
-                        return cmd.ExecuteNonQuery();
+                        //return cmd.ExecuteNonQuery();
+                        int count = 0;               //长城添加
+                        count = cmd.ExecuteNonQuery(); //长城添加
+                        if (trans != null) { trans.Commit(); }           //长城添加 
+                        return count;                //长城添加
                     }
                     catch (Exception ex)
                     {
+                        if (trans != null) {  trans.Rollback();}//长城添加 
                         conn.Close();
                         cmd.Dispose();
                         throw new Exception("数据操作错误"+ex.ToString());
@@ -353,7 +358,7 @@ namespace HDICSoft.Export
         /// <param name="ds">数据源</param>
         /// <param name="txtTitle">导出数据的标题</param>
 
-        public void outPutDataSet(DataSet ds, string txtTitle)
+        public static void outPutDataSet(DataTable dt, string txtTitle)
         {
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "表格.xls|.xls|文档.doc|.doc|RLC格式.rlc|.rlc|文本格式.txt|.txt";
@@ -369,32 +374,32 @@ namespace HDICSoft.Export
                     sw.WriteLine(txtTitle);
                     //写数据字段
                     string tempTitle = "";
-                    for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
+                    for (int i = 0; i < dt.Columns.Count; i++)
                     {
                         if (i > 0)
                         {
                             tempTitle += "\t";
                         }
-                        tempTitle += ds.Tables[0].Columns[i].ColumnName;
+                        tempTitle += dt.Columns[i].ColumnName;
                     }
                     sw.WriteLine(tempTitle);
 
                     //循环写内容
-                    for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+                    for (int j = 0; j < dt.Rows.Count; j++)
                     {
                         string tempStr = "";
-                        for (int k = 0; k < ds.Tables[0].Columns.Count; k++)
+                        for (int k = 0; k < dt.Columns.Count; k++)
                         {
                             if (k > 0)
                             { tempStr += "\t"; }
 
                             if (save.FilterIndex == 4)
                             {
-                                tempStr += "'" + ds.Tables[0].Rows[j][k].ToString();
+                                tempStr += "'" + dt.Rows[j][k].ToString();
                             }
                             else
                             {
-                                tempStr += ds.Tables[0].Rows[j][k].ToString();
+                                tempStr += dt.Rows[j][k].ToString();
                             }
                         }
                         sw.WriteLine(tempStr);
@@ -413,18 +418,6 @@ namespace HDICSoft.Export
                     myStream.Close();
                 }
             }
-        }
-
-        /// <summary>
-        /// 导出DataGridView数据
-        /// </summary>
-        /// <param name="dgv">DataGridView控件</param>
-        /// <param name="txtTitle">导出数据标题</param>
-
-        public void outPutDataGridViewData(DataGridView dgv, string txtTitle, string filter)
-        {
-            DataSet myds = (DataSet)dgv.DataSource;
-            this.outPutDataSet(myds, txtTitle);
         }
 
         /// <summary>

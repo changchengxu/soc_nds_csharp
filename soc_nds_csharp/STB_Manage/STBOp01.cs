@@ -10,7 +10,7 @@ using HDICSoft.Message;
 
 namespace soc_nds_csharp.STB_Manage
 {
-    public partial class STBClient01 : Form
+    public partial class STBOp01 : Form
     {
         #region //in order to move the form
         const int WM_NCLBUTTONDOWN = 0xA1;
@@ -22,7 +22,7 @@ namespace soc_nds_csharp.STB_Manage
         //构造全局变量
         private int intGloID;
 
-        public STBClient01()
+        public STBOp01()
         {
             InitializeComponent();
             intGloID = -1;
@@ -30,7 +30,7 @@ namespace soc_nds_csharp.STB_Manage
             txt_pipID.Enabled = true;
         }
 
-        public STBClient01(int intID)
+        public STBOp01(int intID)
         {
             InitializeComponent();
             intGloID = intID;
@@ -65,10 +65,10 @@ namespace soc_nds_csharp.STB_Manage
 
             if (intGloID == -1)// add
             {
-                object obj = HDIC_DB.ExecuteScalar("select count(*) from STBClient where pipLineID='" + txt_pipID.Text.Trim() + "'", null);
+                object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where pipLineID='" + txt_pipID.Text.Trim() + "'", null);
                 if (obj == null || (int)obj == 0)
                 {
-                    if (HDIC_DB.ExcuteNonQuery(@"insert into STBClient (pipLineID,currentPipID,piplineIDMax) values('" + txt_pipID.Text.Trim() + "','" +
+                    if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (pipLineID,currentPipID,piplineIDMax) values('" + txt_pipID.Text.Trim() + "','" +
                         txt_currentPipID.Text.Trim() + "','" + txt_pipIDMax.Text.Trim() + "')", null) > 0)
                     {
                         HDIC_Message.ShowInfoDialog(this, "添加成功");
@@ -84,7 +84,7 @@ namespace soc_nds_csharp.STB_Manage
 
             else  if(intGloID >0)          //edit
             {
-                if (HDIC_DB.ExcuteNonQuery(@"update STBClient set currentPipID='" + txt_currentPipID.Text.Trim() + "',piplineIDMax='" +
+                if (HDIC_DB.ExcuteNonQuery(@"update STBOp set currentPipID='" + txt_currentPipID.Text.Trim() + "',piplineIDMax='" +
                     txt_pipIDMax.Text.Trim() + "' where pipLineID='" + txt_pipID.Text.Trim() + "'", null) > 0)
                 {
                     HDIC_Message.ShowInfoDialog(this, "修改成功");

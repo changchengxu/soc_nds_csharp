@@ -113,6 +113,7 @@
             this.Name = "gf_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " 登 录 ";
+            this.Load += new System.EventHandler(this.gf_login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

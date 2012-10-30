@@ -1,6 +1,6 @@
 ﻿namespace soc_nds_csharp.STB_Manage
 {
-    partial class STBClient01
+    partial class STBOp01
     {
         /// <summary>
         /// Required designer variable.
