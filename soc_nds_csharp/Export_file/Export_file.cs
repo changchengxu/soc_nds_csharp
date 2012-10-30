@@ -44,7 +44,7 @@ namespace soc_nds_csharp.Export_file
         {
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("生产商名字", typeof(string)));
-            dt.Columns.Add(new DataColumn(" STB Model", typeof(string)));
+            dt.Columns.Add(new DataColumn("STB Model", typeof(string)));
             dt.Columns.Add(new DataColumn("生产日期", typeof(string)));
             dt.Columns.Add(new DataColumn("STB Chip", typeof(string)));
             dt.Columns.Add(new DataColumn("BroadCaster", typeof(string)));

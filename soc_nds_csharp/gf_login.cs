@@ -8,16 +8,19 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using System.Data.SqlClient;
 
 namespace soc_nds_csharp
 {
     public partial class gf_login : Form
     {
+        string path = Application.StartupPath .Substring(0,Application.StartupPath.Substring(0, Application.StartupPath.LastIndexOf('\\')).LastIndexOf('\\'));
+
         public gf_login()
         {
             InitializeComponent();
-           //txt_username.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
-           //txt_pwd.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
+            //txt_username.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
+            //txt_pwd.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
 
         }
 
@@ -51,12 +54,82 @@ namespace soc_nds_csharp
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            try
+            {
+                HDIC_DB.GetList("select * from SysUser");
+
+                DialogResult = DialogResult.OK;
+
+            }
+            catch
+            {
+                #region 附加数据库
+                try
+                {
+                    //数据库连接对象
+                    using (SqlConnection Conn = new SqlConnection("Data Source=.;Persist Security Info=False;User ID=sa; pwd =sa"))
+                    {
+                        using (SqlCommand Comm = new SqlCommand())//命令
+                        {
+                            Comm.CommandText = "sp_attach_db";
+                            Comm.CommandType = CommandType.StoredProcedure;                         //引入存储过程
+                            Comm.Parameters.Add("@dbname", "STBInfo");                             //这个是数据库名字，也就是你写什么名字附加到数据库就是什么名字。
+                            Comm.Parameters.Add("@filename1", path + @"\App_Data\STBInfo.mdf");   //地址
+                            Comm.Connection = Conn;    //初始化连接对象
+                            Conn.Open();   //打开连接对象
+                            Comm.ExecuteNonQuery();
+                            Conn.Close();   //关闭连接对象
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("附加失败:" + ex.Message);
+                }
+                #endregion
+            }
         }
 
         private void gf_login_Load(object sender, EventArgs e)
         {
-            h
+
+        }
+
+        private void btn_detach_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (SqlConnection Conn = new SqlConnection("Data Source=.;Persist Security Info=False;User ID=sa; pwd =sa"))
+                {
+                    using (SqlCommand Comm = new SqlCommand())//命令
+                    {
+                        Conn.Open();
+                        Comm.Connection = Conn;
+                        Comm.CommandText = @"USE master;
+                                           ALTER DATABASE STBInfo
+                                           SET SINGLE_USER
+                                           with ROLLBACK IMMEDIATE";
+                        //上面的目的是强制断开用户
+                        Comm.ExecuteNonQuery();
+
+                        Comm.CommandText = @"sp_detach_db";
+                        Comm.Parameters.Add(new SqlParameter(@"dbname", SqlDbType.NVarChar));
+
+                        Comm.Parameters[@"dbname"].Value = "STBInfo";
+                        Comm.CommandType = CommandType.StoredProcedure;
+                        Comm.ExecuteNonQuery();
+                       HDIC_Message.ShowInfoDialog(this,"分离数据库成功");
+                        Conn.Close();
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("分离失败:" + ex.Message);
+            }
+
         }
     }
 }

@@ -361,27 +361,64 @@ namespace HDICSoft.Export
         public static void outPutDataSet(DataTable dt, string txtTitle)
         {
             SaveFileDialog save = new SaveFileDialog();
-            save.Filter = "表格.xls|.xls|文档.doc|.doc|RLC格式.rlc|.rlc|文本格式.txt|.txt";
+            save.Filter = "文本格式.txt|.txt|表格.xls|.xls|文档.doc|.doc|RLC格式.rlc|.rlc";
             save.Title = "导出文件到";
 
             if (save.ShowDialog() == DialogResult.OK)
             {
+                string padStr = "";//用于填充空格
                 Stream myStream = save.OpenFile();
                 StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding("GB2312"));
                 try
                 {
+                    int[] temp = new int[dt.Columns.Count];
+                    for (int index = 0; index < dt.Columns.Count; index++)
+                    {
+                        int max = 0;
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            max = max > Encoding.Default.GetBytes(dt.Rows[i][index].ToString().Trim()).Length ? max : Encoding.Default.GetBytes(dt.Rows[i][index].ToString().Trim()).Length;
+                        }
+                        temp[index] = max;
+                    }
+
                     //写标题
                     sw.WriteLine(txtTitle);
                     //写数据字段
                     string tempTitle = "";
                     for (int i = 0; i < dt.Columns.Count; i++)
                     {
-                        if (i > 0)
+                        if (save.FilterIndex == 4)//如果是表格xls格式
                         {
-                            tempTitle += "\t";
+                            if (i > 0)
+                            {
+                                tempTitle += "\t";
+                            }
+                            tempTitle += dt.Columns[i].ColumnName;
                         }
-                        tempTitle += dt.Columns[i].ColumnName;
-                    }
+                        else//如果是doc、txt等格式
+                        {
+                            if (i == 0)
+                            {
+                                tempTitle += dt.Columns[i].ColumnName;
+                            }
+                            else
+                            {
+                                if (temp[i - 1] - Encoding.Default.GetBytes(dt.Columns[i - 1].ColumnName).Length < 0)
+                                {
+                                    tempTitle += padStr.PadRight(2, ' ');
+
+                                }
+                                else
+                                {
+                                    tempTitle += padStr.PadRight(temp[i - 1] - Encoding.Default.GetBytes(dt.Columns[i - 1].ColumnName).Length + 2, ' ');
+                                }
+
+                                tempTitle += dt.Columns[i].ColumnName;
+                            }
+
+                        }
+                        }
                     sw.WriteLine(tempTitle);
 
                     //循环写内容
@@ -390,17 +427,35 @@ namespace HDICSoft.Export
                         string tempStr = "";
                         for (int k = 0; k < dt.Columns.Count; k++)
                         {
-                            if (k > 0)
-                            { tempStr += "\t"; }
+                            if (save.FilterIndex == 4)//如果是表格xls格式
+                            {
+                                if (k > 0)
+                                {
+                                    tempStr += "\t";
+                                }
+                                tempStr += "'" + dt.Rows[j][k].ToString().Trim();
+                            }
+                            else //如果是doc、txt等格式
+                            {
+                                if (k == 0)
+                                {
+                                    tempStr += dt.Rows[j][k].ToString();
+                                }
+                                else
+                                {
+                                    if (temp[k - 1] - Encoding.Default.GetBytes(dt.Columns[k - 1].ColumnName).Length < 0)
+                                    {
+                                        tempStr += padStr.PadRight(Encoding.Default.GetBytes(dt.Columns[k - 1].ColumnName).Length - Encoding.Default.GetBytes(dt.Rows[j][k - 1].ToString().Trim()).Length + 2, ' ');
+                                    }
+                                    else
+                                    {
+                                        tempStr += padStr.PadRight(temp[k - 1] - Encoding.Default.GetBytes(dt.Rows[j][k - 1].ToString().Trim()).Length + 2, ' ');
 
-                            if (save.FilterIndex == 4)
-                            {
-                                tempStr += "'" + dt.Rows[j][k].ToString();
+                                    }
+                                    tempStr += dt.Rows[j][k].ToString().Trim();
+                                }
                             }
-                            else
-                            {
-                                tempStr += dt.Rows[j][k].ToString();
-                            }
+                            
                         }
                         sw.WriteLine(tempStr);
                     }
@@ -430,7 +485,6 @@ namespace HDICSoft.Export
             SaveFileDialog save = new SaveFileDialog();
             //save.Filter = "user files(" + filter + ")|" + filter";
             save.Filter = "文本格式.txt|.txt|表格.xls|.xls|文档.doc|.doc|RLC格式.rlc|.rlc";
-
             save.Title = "导出文件到";
 
             if (save.ShowDialog() == DialogResult.OK)

@@ -35,6 +35,7 @@
             this.btn_login = new System.Windows.Forms.Button();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.txt_pwd = new System.Windows.Forms.TextBox();
+            this.btn_detach = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label2
@@ -93,6 +94,16 @@
             this.txt_pwd.Size = new System.Drawing.Size(108, 21);
             this.txt_pwd.TabIndex = 19;
             // 
+            // btn_detach
+            // 
+            this.btn_detach.Location = new System.Drawing.Point(693, 383);
+            this.btn_detach.Name = "btn_detach";
+            this.btn_detach.Size = new System.Drawing.Size(75, 23);
+            this.btn_detach.TabIndex = 20;
+            this.btn_detach.Text = "分离数据库";
+            this.btn_detach.UseVisualStyleBackColor = true;
+            this.btn_detach.Click += new System.EventHandler(this.btn_detach_Click);
+            // 
             // gf_login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -101,6 +112,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(780, 456);
+            this.Controls.Add(this.btn_detach);
             this.Controls.Add(this.txt_pwd);
             this.Controls.Add(this.txt_username);
             this.Controls.Add(this.label2);
@@ -127,6 +139,7 @@
         private System.Windows.Forms.Button btn_login;
         private System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.TextBox txt_pwd;
+        private System.Windows.Forms.Button btn_detach;
 
 
     }
