@@ -30,10 +30,10 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_clear = new System.Windows.Forms.Button();
-            this.txt_CAID = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btn_cancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txt_CAID = new System.Windows.Forms.TextBox();
+            this.btn_clear = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -67,41 +67,41 @@
             this.panel1.Size = new System.Drawing.Size(333, 262);
             this.panel1.TabIndex = 0;
             // 
-            // btn_clear
-            // 
-            this.btn_clear.Location = new System.Drawing.Point(57, 179);
-            this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(75, 23);
-            this.btn_clear.TabIndex = 0;
-            this.btn_clear.Text = " 清 除 ";
-            this.btn_clear.UseVisualStyleBackColor = true;
-            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
-            // 
-            // txt_CAID
-            // 
-            this.txt_CAID.Location = new System.Drawing.Point(161, 106);
-            this.txt_CAID.Name = "txt_CAID";
-            this.txt_CAID.Size = new System.Drawing.Size(100, 21);
-            this.txt_CAID.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(82, 115);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 12);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "CA_ID";
-            // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(206, 179);
+            this.btn_cancel.Location = new System.Drawing.Point(227, 174);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_cancel.TabIndex = 3;
             this.btn_cancel.Text = " 取 消 ";
             this.btn_cancel.UseVisualStyleBackColor = true;
             this.btn_cancel.Click += new System.EventHandler(this.btn_cancel_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(88, 112);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "CA_ID:";
+            // 
+            // txt_CAID
+            // 
+            this.txt_CAID.Location = new System.Drawing.Point(155, 106);
+            this.txt_CAID.Name = "txt_CAID";
+            this.txt_CAID.Size = new System.Drawing.Size(100, 21);
+            this.txt_CAID.TabIndex = 1;
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.Location = new System.Drawing.Point(67, 173);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(75, 23);
+            this.btn_clear.TabIndex = 0;
+            this.btn_clear.Text = " 清 除 ";
+            this.btn_clear.UseVisualStyleBackColor = true;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // Delete_DBRecords
             // 

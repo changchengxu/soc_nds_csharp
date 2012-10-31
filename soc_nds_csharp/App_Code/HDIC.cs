@@ -20,6 +20,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 
 namespace HDICSoft.Security
@@ -620,6 +621,34 @@ namespace HDICSoft.Func
 {
     class HDIC_Func
     {
+        /// <summary>
+        /// 设置app.config文件
+        /// </summary>
+        /// <param name="AppKey"></param>
+        /// <param name="AppValue"></param>
+        public static void SetValue(string AppKey, string AppValue)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(Application.StartupPath+@"\soc_nds_csharp.exe.config");
+            XmlNode xNode;
+            XmlElement xElem1;
+            XmlElement xElem2;
+            xNode = xDoc.SelectSingleNode("//connectionStrings");
+            xElem1 = (XmlElement)xNode.SelectSingleNode("//add[@name='" + AppKey + "']");
+            if (xElem1 != null)
+            {
+                xElem1.SetAttribute("connectionString", AppValue);
+            }
+            else
+            {
+                xElem2 = xDoc.CreateElement("add");
+                xElem2.SetAttribute("name", AppKey);
+                xElem2.SetAttribute("connectionString", AppValue);
+                xNode.AppendChild(xElem2);
+            }
+            xDoc.Save(Application.StartupPath+@"\soc_nds_csharp.exe.config");
+        }
+
         /// <summary>
         /// 获得程序运行路径
         /// </summary>

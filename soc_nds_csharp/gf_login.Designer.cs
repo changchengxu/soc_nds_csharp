@@ -35,7 +35,10 @@
             this.btn_login = new System.Windows.Forms.Button();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.txt_pwd = new System.Windows.Forms.TextBox();
-            this.btn_detach = new System.Windows.Forms.Button();
+            this.btn_network = new System.Windows.Forms.Button();
+            this.gbx_NetWork = new System.Windows.Forms.GroupBox();
+            this.lbl_IP = new System.Windows.Forms.Label();
+            this.gbx_NetWork.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -94,15 +97,35 @@
             this.txt_pwd.Size = new System.Drawing.Size(108, 21);
             this.txt_pwd.TabIndex = 19;
             // 
-            // btn_detach
+            // btn_network
             // 
-            this.btn_detach.Location = new System.Drawing.Point(693, 383);
-            this.btn_detach.Name = "btn_detach";
-            this.btn_detach.Size = new System.Drawing.Size(75, 23);
-            this.btn_detach.TabIndex = 20;
-            this.btn_detach.Text = "分离数据库";
-            this.btn_detach.UseVisualStyleBackColor = true;
-            this.btn_detach.Click += new System.EventHandler(this.btn_detach_Click);
+            this.btn_network.Location = new System.Drawing.Point(693, 388);
+            this.btn_network.Name = "btn_network";
+            this.btn_network.Size = new System.Drawing.Size(75, 23);
+            this.btn_network.TabIndex = 20;
+            this.btn_network.Text = "网络设置";
+            this.btn_network.UseVisualStyleBackColor = true;
+            this.btn_network.Click += new System.EventHandler(this.btn_network_Click);
+            // 
+            // gbx_NetWork
+            // 
+            this.gbx_NetWork.BackColor = System.Drawing.Color.Transparent;
+            this.gbx_NetWork.Controls.Add(this.lbl_IP);
+            this.gbx_NetWork.Location = new System.Drawing.Point(333, 334);
+            this.gbx_NetWork.Name = "gbx_NetWork";
+            this.gbx_NetWork.Size = new System.Drawing.Size(227, 46);
+            this.gbx_NetWork.TabIndex = 21;
+            this.gbx_NetWork.TabStop = false;
+            this.gbx_NetWork.Text = "登录服务器";
+            // 
+            // lbl_IP
+            // 
+            this.lbl_IP.AutoSize = true;
+            this.lbl_IP.Location = new System.Drawing.Point(21, 21);
+            this.lbl_IP.Name = "lbl_IP";
+            this.lbl_IP.Size = new System.Drawing.Size(29, 12);
+            this.lbl_IP.TabIndex = 0;
+            this.lbl_IP.Text = "IP：";
             // 
             // gf_login
             // 
@@ -112,7 +135,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(780, 456);
-            this.Controls.Add(this.btn_detach);
+            this.Controls.Add(this.gbx_NetWork);
+            this.Controls.Add(this.btn_network);
             this.Controls.Add(this.txt_pwd);
             this.Controls.Add(this.txt_username);
             this.Controls.Add(this.label2);
@@ -125,7 +149,8 @@
             this.Name = "gf_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " 登 录 ";
-            this.Load += new System.EventHandler(this.gf_login_Load);
+            this.gbx_NetWork.ResumeLayout(false);
+            this.gbx_NetWork.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,7 +164,9 @@
         private System.Windows.Forms.Button btn_login;
         private System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.TextBox txt_pwd;
-        private System.Windows.Forms.Button btn_detach;
+        private System.Windows.Forms.Button btn_network;
+        private System.Windows.Forms.GroupBox gbx_NetWork;
+        private System.Windows.Forms.Label lbl_IP;
 
 
     }

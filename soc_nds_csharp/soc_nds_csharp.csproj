@@ -53,6 +53,12 @@
     <Compile Include="App_Code\Function.cs" />
     <Compile Include="App_Code\HDIC.cs" />
     <Compile Include="App_Code\Printer.cs" />
+    <Compile Include="DB_Manage\DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DB_Manage\DB.Designer.cs">
+      <DependentUpon>DB.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB_Manage\print.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,12 @@
     <Compile Include="Import_Data\Import_Data.Designer.cs">
       <DependentUpon>Import_Data.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPValidateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IPValidateControl.designer.cs">
+      <DependentUpon>IPValidateControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="STB_Manage\STBOp.cs">
@@ -103,6 +115,9 @@
     <Compile Include="STB_Manage\STBOp01.Designer.cs">
       <DependentUpon>STBOp01.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DB_Manage\DB.resx">
+      <DependentUpon>DB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DB_Manage\print.resx">
       <DependentUpon>print.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Import_Data\Import_Data.resx">
       <DependentUpon>Import_Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IPValidateControl.resx">
+      <DependentUpon>IPValidateControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

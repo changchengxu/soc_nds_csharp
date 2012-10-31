@@ -55,6 +55,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbo_Time = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txt_STBID = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -171,6 +173,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txt_STBID);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btn_hide);
             this.groupBox1.Controls.Add(this.btn_Query);
             this.groupBox1.Controls.Add(this.txt_CAID);
@@ -212,7 +216,7 @@
             // 
             // txt_CAID
             // 
-            this.txt_CAID.Location = new System.Drawing.Point(628, 39);
+            this.txt_CAID.Location = new System.Drawing.Point(518, 42);
             this.txt_CAID.Name = "txt_CAID";
             this.txt_CAID.Size = new System.Drawing.Size(100, 21);
             this.txt_CAID.TabIndex = 8;
@@ -220,7 +224,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(556, 45);
+            this.label4.Location = new System.Drawing.Point(446, 48);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 7;
@@ -229,7 +233,7 @@
             // 
             // txt_ChipID
             // 
-            this.txt_ChipID.Location = new System.Drawing.Point(311, 39);
+            this.txt_ChipID.Location = new System.Drawing.Point(311, 42);
             this.txt_ChipID.Name = "txt_ChipID";
             this.txt_ChipID.Size = new System.Drawing.Size(100, 21);
             this.txt_ChipID.TabIndex = 6;
@@ -237,7 +241,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(239, 45);
+            this.label3.Location = new System.Drawing.Point(239, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 5;
@@ -305,6 +309,23 @@
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
+            // txt_STBID
+            // 
+            this.txt_STBID.Location = new System.Drawing.Point(728, 42);
+            this.txt_STBID.Name = "txt_STBID";
+            this.txt_STBID.Size = new System.Drawing.Size(100, 21);
+            this.txt_STBID.TabIndex = 12;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(659, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "  STBID：";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // print
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -355,5 +376,7 @@
         private System.Windows.Forms.CheckBox cbo_Time;
         private System.Windows.Forms.Button btn_hide;
         private System.Windows.Forms.Button btn_Query;
+        private System.Windows.Forms.TextBox txt_STBID;
+        private System.Windows.Forms.Label label5;
     }
 }

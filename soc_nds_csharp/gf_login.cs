@@ -1,4 +1,14 @@
-﻿using System;
+﻿//************************************************************************
+//版权信息：版权所有(C) 2012，HDICSoft Corporation
+//公司名称：上海高清
+//系统名称：soc_nds
+//模块名称：
+//作    者：薛长城
+//创建时间：2012-10-28
+//修改时间：
+//修改内容： 本机器IP地址是192.168.21.1 或者 192.168.223.1
+//************************************************************************
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +19,8 @@ using System.Drawing.Drawing2D;
 using HDICSoft.DB;
 using HDICSoft.Message;
 using System.Data.SqlClient;
+using System.Configuration;
+using HDICSoft.Func;
 
 namespace soc_nds_csharp
 {
@@ -21,7 +33,7 @@ namespace soc_nds_csharp
             InitializeComponent();
             //txt_username.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
             //txt_pwd.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.txt_username.Width, this.txt_username.Height), 10f));
-
+            gbx_NetWork.Visible = false;
         }
 
         #region 文本框圆角
@@ -54,6 +66,14 @@ namespace soc_nds_csharp
 
         private void btn_login_Click(object sender, EventArgs e)
         {
+            if (ipUserControl!=null)
+            {
+                string str = "Data Source=" + ipUserControl.Text + ";Initial Catalog=STBInfo;Persist Security Info=False;User ID=sa; pwd =sa";
+
+                string a =HDIC_Func.GetRunningPath();
+                HDIC_Func.SetValue("connStringName", str);
+
+            }
             try
             {
                 HDIC_DB.GetList("select * from SysUser");
@@ -79,6 +99,8 @@ namespace soc_nds_csharp
                             Conn.Open();   //打开连接对象
                             Comm.ExecuteNonQuery();
                             Conn.Close();   //关闭连接对象
+                            DialogResult = DialogResult.OK;
+
                         }
                     }
                 }
@@ -90,46 +112,19 @@ namespace soc_nds_csharp
             }
         }
 
-        private void gf_login_Load(object sender, EventArgs e)
+        #region 添加自定义控件
+        private IPValidateControl ipUserControl;
+        private void btn_network_Click(object sender, EventArgs e)
         {
+            ipUserControl = new IPValidateControl();
+            gbx_NetWork.Controls.Add(ipUserControl);
 
+            ipUserControl.Location = new System.Drawing.Point(lbl_IP.Location.X + 35, lbl_IP.Location.Y-8);
+            this.lbl_IP.Name = "IPmyControl";
+
+            gbx_NetWork.Visible = true;
         }
+        #endregion
 
-        private void btn_detach_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (SqlConnection Conn = new SqlConnection("Data Source=.;Persist Security Info=False;User ID=sa; pwd =sa"))
-                {
-                    using (SqlCommand Comm = new SqlCommand())//命令
-                    {
-                        Conn.Open();
-                        Comm.Connection = Conn;
-                        Comm.CommandText = @"USE master;
-                                           ALTER DATABASE STBInfo
-                                           SET SINGLE_USER
-                                           with ROLLBACK IMMEDIATE";
-                        //上面的目的是强制断开用户
-                        Comm.ExecuteNonQuery();
-
-                        Comm.CommandText = @"sp_detach_db";
-                        Comm.Parameters.Add(new SqlParameter(@"dbname", SqlDbType.NVarChar));
-
-                        Comm.Parameters[@"dbname"].Value = "STBInfo";
-                        Comm.CommandType = CommandType.StoredProcedure;
-                        Comm.ExecuteNonQuery();
-                       HDIC_Message.ShowInfoDialog(this,"分离数据库成功");
-                        Conn.Close();
-
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("分离失败:" + ex.Message);
-            }
-
-        }
     }
 }

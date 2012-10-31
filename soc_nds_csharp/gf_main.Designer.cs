@@ -141,7 +141,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Yellow;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackgroundImage = global::soc_nds_csharp.Properties.Resources.HDICLogo2;
             this.ClientSize = new System.Drawing.Size(998, 552);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.taskPane1);

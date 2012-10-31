@@ -65,7 +65,8 @@ namespace soc_nds_csharp.DB_Manage
         private void Print(bool p_PrintOrPreview)
         {
             //*****第二步*****：直接赋值给打印对象(可选)
-            misGoldPrinter.Title = "直播星生产线工位操作和数据库管理\nchangchengxue@gmail.com";							//主标题（C#用\n表示换行）	
+            //misGoldPrinter.Title = "直播星生产线工位操作和数据库管理\nchangchengxue@gmail.com";							//主标题（C#用\n表示换行）	
+            misGoldPrinter.Title = "直播星生产线工位操作和数据库管理";							//主标题（C#用\n表示换行）	
             //misGoldPrinter.Caption = "　　——qq:765650886，有问题请联系CC.XUE";										//副标题
             misGoldPrinter.Top = "作者：薛长城|2012-10-25|版本：V1.0";										//抬头，一行三列的文字说明，用|分隔
             misGoldPrinter.Bottom = "打印直播星数据||打印日期：" + System.DateTime.Now.ToLongDateString();	//结尾，说明同抬头
@@ -202,6 +203,10 @@ namespace soc_nds_csharp.DB_Manage
             if (txt_ChipID.Text.Trim() != "")
             {
                 sqlstr += " and ChipID='" + txt_ChipID.Text.Trim() + "'";
+            }
+            if (txt_STBID.Text.Trim() != "")
+            {
+                sqlstr += " and STBID='" + txt_STBID.Text.Trim() + "'";
             }
 
             dataGridView1.DataSource=null;
