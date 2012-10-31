@@ -193,6 +193,12 @@ namespace soc_nds_csharp
                 case "Database_management1":
                     map = soc_nds_csharp.Properties.Resources.Database_management1;
                     break;
+                case "Station_Operation":
+                    map = soc_nds_csharp.Properties.Resources.Station_Operation;
+                    break;
+                case "Station_Operation1":
+                    map = soc_nds_csharp.Properties.Resources.Station_Operation1;
+                    break;
                 default:
                     break;
             }

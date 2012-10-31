@@ -14,7 +14,7 @@ namespace soc_nds_csharp.DB_Manage
     public partial class DB : Form
     {
         string dataBaseName = "STBInfo";
-
+        string path = Application.StartupPath.Substring(0, Application.StartupPath.Substring(0, Application.StartupPath.LastIndexOf('\\')).LastIndexOf('\\'));
         public DB()
         {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace soc_nds_csharp.DB_Manage
             FolderBrowserDialog fbDialog = new FolderBrowserDialog();
             if (fbDialog.ShowDialog() == DialogResult.OK)
             {
-                string backupstr = "backup database " + dataBaseName + "to disk='" + fbDialog.SelectedPath + "';";
+                string backupstr = "backup database " + dataBaseName + " to disk='" + fbDialog.SelectedPath + "\\"+dataBaseName+".bak';";
 
                 using (SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
                 {
@@ -99,14 +99,43 @@ namespace soc_nds_csharp.DB_Manage
             FolderBrowserDialog fbDialog = new FolderBrowserDialog();
             if (fbDialog.ShowDialog() == DialogResult.OK)
             {
-                string restore = "restore database " + dataBaseName + "from disk='" + fbDialog.SelectedPath + "';";
-                using (SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
+                string restore = "restore database " + dataBaseName + " from disk='" + fbDialog.SelectedPath + "';";
+                using (SqlConnection Conn = new SqlConnection())
                 {
-                    using (SqlCommand Comm = new SqlCommand(restore, Conn))//命令
+                    using (SqlCommand Comm = new SqlCommand())//命令
                     {
                         try
                         {
+                            Conn.ConnectionString = "Data Source=.;Initial Catalog=master;Persist Security Info=False;User ID=sa; pwd =sa";
+
+                            
+                            Comm.Connection = Conn;
                             Conn.Open();
+
+                            string strSQL = "select   spid   from   master..sysprocesses   where   dbid=db_id( '" + dataBaseName + "') ";//获取所有用户进程 
+                            SqlDataAdapter   Da=new   SqlDataAdapter(strSQL,   Conn); 
+                            DataTable   spidTable=new   DataTable(); 
+                            Da.Fill(spidTable);
+
+                            Comm.CommandType = CommandType.Text;
+                            for (int iRow = 0; iRow <= spidTable.Rows.Count - 1; iRow++)
+                            {
+                                Comm.CommandText = "kill   " + spidTable.Rows[iRow][0].ToString();   //强行关闭用户进程 
+                                Comm.ExecuteNonQuery();
+                            }
+                            //上面是：先杀所用访问该数据库进程
+
+
+
+
+                            //-------------------------
+
+
+                           //Comm.ExecuteNonQuery();
+
+                           //Conn.ConnectionString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
+                           //Comm.Connection = Conn;
+                            Comm.CommandText = restore;
                             Comm.ExecuteNonQuery();
                             HDIC_Message.ShowInfoDialog(this, "恢复成功");
 
