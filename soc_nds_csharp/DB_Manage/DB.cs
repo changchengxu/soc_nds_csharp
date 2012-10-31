@@ -63,10 +63,10 @@ namespace soc_nds_csharp.DB_Manage
         #region 备份数据库
         private void btn_BackUpDB_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            if (save.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog fbDialog = new FolderBrowserDialog();
+            if (fbDialog.ShowDialog() == DialogResult.OK)
             {
-                string backupstr = "backup database "+dataBaseName+"to disk='" + save.OpenFile() + "';";
+                string backupstr = "backup database " + dataBaseName + "to disk='" + fbDialog.SelectedPath + "';";
 
                 using (SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
                 {
@@ -96,10 +96,10 @@ namespace soc_nds_csharp.DB_Manage
         #region 还原数据库
         private void btn_Restore_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new SaveFileDialog();
-            if (save.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog fbDialog = new FolderBrowserDialog();
+            if (fbDialog.ShowDialog() == DialogResult.OK)
             {
-                string restore = "restore database "+dataBaseName+ "from disk='" + save.OpenFile() + "';";
+                string restore = "restore database " + dataBaseName + "from disk='" + fbDialog.SelectedPath + "';";
                 using (SqlConnection Conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
                 {
                     using (SqlCommand Comm = new SqlCommand(restore, Conn))//命令
