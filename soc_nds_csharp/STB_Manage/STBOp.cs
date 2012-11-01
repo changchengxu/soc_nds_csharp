@@ -7,8 +7,9 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.Security;
 using HDICSoft.Message;
-
+using HDICSoft.Command;
 using HDICSoft.DB;
+
 namespace soc_nds_csharp.STB_Manage
 {
     public partial class STBOp : Form
@@ -16,6 +17,9 @@ namespace soc_nds_csharp.STB_Manage
         public STBOp()
         {
             InitializeComponent();
+            dgv_STB.BackgroundColor = HDIC_Command.setColor();
+
+
         }
 
         private void STBClient_Load(object sender, EventArgs e)
@@ -83,6 +87,6 @@ namespace soc_nds_csharp.STB_Manage
                 HDIC_Message.ShowWarnDialog(this, "请选择要删除的信息。");
             }
         }
-
     }
+
 }

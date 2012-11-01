@@ -925,6 +925,145 @@ namespace HDICSoft.Func
             }
             return arrReturn;
         }
+
+        //#region 下面加密和解密复制考勤机 长城暂时屏蔽
+        ///// <summary>
+        ///// 对字符串进行DES加密
+        ///// </summary>
+        ///// <param name="sourceString">待加密的字符串</param>
+        ///// <returns>加密后的BASE64编码的字符串</returns>
+        //public string Encrypt(string sourceString)
+        //{
+        //    byte[] btKey = Encoding.Default.GetBytes(key);
+        //    byte[] btIV = Encoding.Default.GetBytes(iv);
+        //    DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        byte[] inData = Encoding.Default.GetBytes(sourceString);
+        //        try
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(btKey, btIV), CryptoStreamMode.Write))
+        //            {
+        //                cs.Write(inData, 0, inData.Length);
+        //                cs.FlushFinalBlock();
+        //            }
+
+        //            return Convert.ToBase64String(ms.ToArray());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //            return "";
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 对DES加密后的字符串进行解密
+        ///// </summary>
+        ///// <param name="encryptedString">待解密的字符串</param>
+        ///// <returns>解密后的字符串</returns>
+        //public string Decrypt(string encryptedString)
+        //{
+        //    byte[] btKey = Encoding.Default.GetBytes(key);
+        //    byte[] btIV = Encoding.Default.GetBytes(iv);
+        //    DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        byte[] inData = Convert.FromBase64String(encryptedString);
+        //        try
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(btKey, btIV), CryptoStreamMode.Write))
+        //            {
+        //                cs.Write(inData, 0, inData.Length);
+        //                cs.FlushFinalBlock();
+        //            }
+
+        //            return Encoding.Default.GetString(ms.ToArray());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("解密失败!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            MessageBox.Show(ex.Message);
+        //            return "";
+        //        }
+        //    }
+        //}
+        ///// <summary>
+        ///// 对数据库连接字符串进行DES加密
+        ///// </summary>
+        ///// <param name="sourceString">待加密的字符串</param>
+        ///// <returns>加密后的BASE64编码的字符串</returns>
+        //public string DBjiami(string sourceString)
+        //{
+        //    byte[] btKey = Encoding.Default.GetBytes("ruanjianke");
+        //    byte[] btIV = Encoding.Default.GetBytes("RUANJIANKE");
+        //    DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        byte[] inData = Encoding.Default.GetBytes(sourceString);
+        //        try
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(btKey, btIV), CryptoStreamMode.Write))
+        //            {
+        //                cs.Write(inData, 0, inData.Length);
+        //                cs.FlushFinalBlock();
+        //            }
+
+        //            return Convert.ToBase64String(ms.ToArray());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //            return "";
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 对DES加密后的数据库连接字符串进行解密
+        ///// </summary>
+        ///// <param name="encryptedString">待解密的字符串</param>
+        ///// <returns>解密后的字符串</returns>
+        //public string DBjiemi(string encryptedString)
+        //{
+        //    byte[] btKey = Encoding.Default.GetBytes("ruanjianke");
+        //    byte[] btIV = Encoding.Default.GetBytes("RUANJIANKE");
+        //    DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        byte[] inData = Convert.FromBase64String(encryptedString);
+        //        try
+        //        {
+        //            using (CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(btKey, btIV), CryptoStreamMode.Write))
+        //            {
+        //                cs.Write(inData, 0, inData.Length);
+        //                cs.FlushFinalBlock();
+        //            }
+
+        //            return Encoding.Default.GetString(ms.ToArray());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.Message);
+        //            return "";
+        //        }
+        //    }
+        //}
+        //#endregion
     }
 }
 
+
+namespace HDICSoft.Command
+{
+    class HDIC_Command
+    {
+        public static System.Drawing.Color setColor()
+        {
+            return System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
+        }
+    }
+}

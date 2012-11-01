@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using HDICSoft.Message;
 using System.Configuration;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.DB_Manage
 {
@@ -18,6 +19,7 @@ namespace soc_nds_csharp.DB_Manage
         public DB()
         {
             InitializeComponent();
+            tableLayoutPanel1.BackColor = HDIC_Command.setColor();
         }
 
         #region 分离数据库
@@ -96,25 +98,26 @@ namespace soc_nds_csharp.DB_Manage
         #region 还原数据库
         private void btn_Restore_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbDialog = new FolderBrowserDialog();
+            OpenFileDialog fbDialog = new OpenFileDialog();
             if (fbDialog.ShowDialog() == DialogResult.OK)
             {
-                string restore = "restore database " + dataBaseName + " from disk='" + fbDialog.SelectedPath + "';";
                 using (SqlConnection Conn = new SqlConnection())
                 {
                     using (SqlCommand Comm = new SqlCommand())//命令
                     {
                         try
                         {
-                            Conn.ConnectionString = "Data Source=.;Initial Catalog=master;Persist Security Info=False;User ID=sa; pwd =sa";
+                            Conn.ConnectionString = "Data Source=.;Initial Catalog="+dataBaseName+";Persist Security Info=False;User ID=sa; pwd =sa";
 
                             
                             Comm.Connection = Conn;
                             Conn.Open();
 
-                            string strSQL = "select   spid   from   master..sysprocesses   where   dbid=db_id( '" + dataBaseName + "') ";//获取所有用户进程 
-                            SqlDataAdapter   Da=new   SqlDataAdapter(strSQL,   Conn); 
-                            DataTable   spidTable=new   DataTable(); 
+                            #region 第一种数据库还原方法
+                            //先杀所用访问该数据库进程
+                            string strSQL = "use master ;select   spid   from   master..sysprocesses   where   dbid=db_id( '" + dataBaseName + "') ";//获取所有用户进程 
+                            SqlDataAdapter Da = new SqlDataAdapter(strSQL, Conn);
+                            DataTable spidTable = new DataTable();
                             Da.Fill(spidTable);
 
                             Comm.CommandType = CommandType.Text;
@@ -123,20 +126,20 @@ namespace soc_nds_csharp.DB_Manage
                                 Comm.CommandText = "kill   " + spidTable.Rows[iRow][0].ToString();   //强行关闭用户进程 
                                 Comm.ExecuteNonQuery();
                             }
-                            //上面是：先杀所用访问该数据库进程
-
-
-
-
-                            //-------------------------
-
-
-                           //Comm.ExecuteNonQuery();
-
-                           //Conn.ConnectionString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
-                           //Comm.Connection = Conn;
-                            Comm.CommandText = restore;
+                            //还原指定的数据库文件
+                            Comm.CommandText =  "restore database " + dataBaseName + " from disk='" + fbDialog.FileName + "'";
                             Comm.ExecuteNonQuery();
+                            #endregion
+
+
+                            #region 第二种数据库还原方法
+                            ////先强制关闭用户进程，然后还原指定的数据库文件 
+                            string sql = string.Format("use master ;declare @s varchar(8000);select @s=isnull(@s,'')+' kill '+rtrim(spID) from master..sysprocesses where dbid=db_id('{0}');select @s;exec(@s) ;RESTORE DATABASE {1} FROM DISK = N'{2}' with replace", dataBaseName, dataBaseName, fbDialog.FileName);
+                            Comm.CommandText = sql;
+                            Comm.CommandType = CommandType.Text;
+                            Comm.ExecuteNonQuery();
+                            #endregion
+
                             HDIC_Message.ShowInfoDialog(this, "恢复成功");
 
                         }

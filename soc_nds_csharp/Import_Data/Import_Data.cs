@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using HDICSoft.Message;
 using HDICSoft.DB;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Import_Data
 {
@@ -16,6 +17,7 @@ namespace soc_nds_csharp.Import_Data
         public Import_Data()
         {
             InitializeComponent();
+            tableLayoutPanel1.BackColor = HDIC_Command.setColor();
         }
 
         #region 自己修改了网上的导出txt数据到SQL中

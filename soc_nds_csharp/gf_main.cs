@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using XPExplorerBar;
 using HDICSoft.DB;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp
 {
@@ -21,7 +22,7 @@ namespace soc_nds_csharp
         private void gf_main_Load(object sender, EventArgs e)
         {
             //dt = DBHelper.GetList("SELECT * FROM  vwSysAllUserOperation  WHERE usename='admin' ORDER BY sequence");
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
+            this.BackColor = HDIC_Command.setColor();
             taskPane1.CollapseAll();
             using (gf_login login = new gf_login())
             {
@@ -53,7 +54,7 @@ namespace soc_nds_csharp
                 expando.Tag = dt.DefaultView[i]["menuNo"];
                 AddTaskItem(expando);
                 expando.Collapsed = true;
-                expando.CustomSettings.NormalBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
+                expando.CustomSettings.NormalBackColor = HDIC_Command.setColor();
                 taskPane1.Expandos.Add(expando);
                 dt.DefaultView.RowFilter = "isModel =1";
             }
@@ -203,6 +204,11 @@ namespace soc_nds_csharp
                     break;
             }
             return map;
+        }
+
+        private void tsm_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
     }

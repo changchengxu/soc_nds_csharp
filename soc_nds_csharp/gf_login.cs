@@ -93,14 +93,13 @@ namespace soc_nds_csharp
                         {
                             Comm.CommandText = "sp_attach_db";
                             Comm.CommandType = CommandType.StoredProcedure;                         //引入存储过程
-                            Comm.Parameters.Add("@dbname", "STBInfo");                             //这个是数据库名字，也就是你写什么名字附加到数据库就是什么名字。
-                            Comm.Parameters.Add("@filename1", path + @"\App_Data\STBInfo.mdf");   //地址
+                            Comm.Parameters.AddWithValue("@dbname", "STBInfo");                             //这个是数据库名字，也就是你写什么名字附加到数据库就是什么名字。
+                            Comm.Parameters.AddWithValue("@filename1", path + @"\App_Data\STBInfo.mdf");   //地址
+                            Comm.Parameters.AddWithValue("@filename2", path + @"\App_Data\STBInfo_log.ldf");
                             Comm.Connection = Conn;    //初始化连接对象
                             Conn.Open();   //打开连接对象
                             Comm.ExecuteNonQuery();
                             Conn.Close();   //关闭连接对象
-                            DialogResult = DialogResult.OK;
-
                         }
                     }
                 }

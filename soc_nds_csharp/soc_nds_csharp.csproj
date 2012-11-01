@@ -48,9 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\DBHelper.cs" />
-    <Compile Include="App_Code\exportData.cs" />
-    <Compile Include="App_Code\Function.cs" />
+    <Compile Include="App_Code\Command.cs" />
     <Compile Include="App_Code\HDIC.cs" />
     <Compile Include="App_Code\Printer.cs" />
     <Compile Include="DB_Manage\DB.cs">
@@ -103,6 +101,36 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Station_Operation\gf_CheckSerializer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Station_Operation\gf_CheckSerializer.Designer.cs">
+      <DependentUpon>gf_CheckSerializer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Station_Operation\gf_ReadChipID.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Station_Operation\gf_ReadChipID.Designer.cs">
+      <DependentUpon>gf_ReadChipID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Station_Operation\gf_RemoteFlashProtect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Station_Operation\gf_RemoteFlashProtect.Designer.cs">
+      <DependentUpon>gf_RemoteFlashProtect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Station_Operation\gf_SelectPipeLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Station_Operation\gf_SelectPipeLine.Designer.cs">
+      <DependentUpon>gf_SelectPipeLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Station_Operation\gf_Serializer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Station_Operation\gf_Serializer.Designer.cs">
+      <DependentUpon>gf_Serializer.cs</DependentUpon>
+    </Compile>
     <Compile Include="STB_Manage\STBOp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +178,21 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Station_Operation\gf_CheckSerializer.resx">
+      <DependentUpon>gf_CheckSerializer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Station_Operation\gf_ReadChipID.resx">
+      <DependentUpon>gf_ReadChipID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Station_Operation\gf_RemoteFlashProtect.resx">
+      <DependentUpon>gf_RemoteFlashProtect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Station_Operation\gf_SelectPipeLine.resx">
+      <DependentUpon>gf_SelectPipeLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Station_Operation\gf_Serializer.resx">
+      <DependentUpon>gf_Serializer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="STB_Manage\STBOp.resx">
       <DependentUpon>STBOp.cs</DependentUpon>
     </EmbeddedResource>

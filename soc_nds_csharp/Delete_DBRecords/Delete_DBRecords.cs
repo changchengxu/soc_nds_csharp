@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Delete_DBRecords
 {
@@ -15,6 +16,7 @@ namespace soc_nds_csharp.Delete_DBRecords
         public Delete_DBRecords()
         {
             InitializeComponent();
+            tableLayoutPanel1.BackColor = HDIC_Command.setColor();
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)

@@ -9,6 +9,7 @@ using HDICSoft.DB;
 using HDICSoft.Export;
 using HDICSoft.Message;
 using HDICSoft.Func;
+using HDICSoft.Command;
 using GoldPrinter;
 
 namespace soc_nds_csharp.DB_Manage
@@ -19,6 +20,7 @@ namespace soc_nds_csharp.DB_Manage
         public print()
         {
             InitializeComponent();
+            dataGridView1.BackgroundColor = HDIC_Command.setColor();
             //dt = DBHelper.GetList("select * from SysMenuDisplay");
             //dt = DBHelper.GetList("select * from STBData");
         }
