@@ -51,6 +51,19 @@
     <Compile Include="App_Code\Command.cs" />
     <Compile Include="App_Code\HDIC.cs" />
     <Compile Include="App_Code\Printer.cs" />
+    <Compile Include="App_Code\SysRole.cs" />
+    <Compile Include="Authority\gf_SysRole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authority\gf_SysRole.Designer.cs">
+      <DependentUpon>gf_SysRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Authority\gf_SysRoleAuthority.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authority\gf_SysRoleAuthority.Designer.cs">
+      <DependentUpon>gf_SysRoleAuthority.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB_Manage\DB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +156,12 @@
     <Compile Include="STB_Manage\STBOp01.Designer.cs">
       <DependentUpon>STBOp01.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Authority\gf_SysRole.resx">
+      <DependentUpon>gf_SysRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Authority\gf_SysRoleAuthority.resx">
+      <DependentUpon>gf_SysRoleAuthority.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DB_Manage\DB.resx">
       <DependentUpon>DB.cs</DependentUpon>
     </EmbeddedResource>

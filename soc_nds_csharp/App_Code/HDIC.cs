@@ -46,6 +46,7 @@ namespace HDICSoft.DB
 {
     class HDIC_DB
     {
+
         //   private static readonly string connStringName = ConfigurationManager.AppSettings["connStringName"].ToString();
         private static readonly string connString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
         private static readonly string providerName = ConfigurationManager.ConnectionStrings["connStringName"].ProviderName;
@@ -217,16 +218,41 @@ namespace HDICSoft.DB
 
         #endregion
 
+        /// <summary>
+        /// get DataTable
+        /// </summary>
+        /// <param name="sqlString"></param>
+        /// <returns></returns>
         public static DataTable GetList(string sqlString)
         {
             DataTable dt = ExcuteDataSet(sqlString, null).Tables[0];
             return dt;
         }
 
+        /// <summary>
+        /// Delete 
+        /// </summary>
+        /// <param name="sqlStr"></param>
+        /// <returns></returns>
         public static int sqlDelete(string sqlStr)
         {
             int i = ExcuteNonQuery(sqlStr, null);
             return i;
+        }
+
+        /// <summary>
+        /// Query
+        /// </summary>
+        /// <param name="sqlStr"></param>
+        /// <returns></returns>
+        public static string sqlQuery(string sqlStr)
+        {
+            object i = ExecuteScalar(sqlStr, null);
+            if (i == null)
+            {
+                return "0";
+            }
+            return i.ToString();
         }
     }
 }
@@ -872,6 +898,37 @@ namespace HDICSoft.Func
             }
             return max;
         }
+
+        /// <summary>
+        /// 生成指定个数的随机数
+        /// </summary>
+        /// <param name="codeCount"></param>
+        /// <returns></returns>
+        private string CreateRandomCode(int codeCount)
+        {
+            string allChar = "0,1,2,3,4,5,6,7,8,9";
+            string[] allCharArray = allChar.Split(',');
+            string randomCode = "";
+            int temp = -1;
+
+            Random rand = new Random();
+            for (int i = 0; i < codeCount; i++)
+            {
+                if (temp != -1)
+                {
+                    rand = new Random(i * temp * ((int)DateTime.Now.Ticks));
+                }
+                int t = rand.Next(10);
+                if (temp == t)
+                {
+                    return CreateRandomCode(codeCount);
+                }
+                temp = t;
+                randomCode += allCharArray[t];
+            }
+            return randomCode;
+        }
+
         /// <summary>
         /// DataGridView转换为二维数组 
         /// </summary>
@@ -1056,11 +1113,14 @@ namespace HDICSoft.Func
     }
 }
 
-
 namespace HDICSoft.Command
 {
     class HDIC_Command
     {
+        /// <summary>
+        /// 设置背景颜色
+        /// </summary>
+        /// <returns></returns>
         public static System.Drawing.Color setColor()
         {
             return System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));

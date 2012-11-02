@@ -14,8 +14,8 @@ namespace soc_nds_csharp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new gf_main());
-            //Application.Run(new Import_Data.Import_Data());
+            //Application.Run(new gf_main());
+            Application.Run(new Authority.gf_SysRoleAuthority());
 
         }
     }
