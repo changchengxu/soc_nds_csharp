@@ -21,7 +21,7 @@ namespace soc_nds_csharp.Authority
         {
             initCtrols();
 
-            cbo_UserRole.DataSource = HDIC_DB.GetList("select roleNo,roleName from SysRole");
+            cbo_UserRole.DataSource = HDIC_DB.GetList("select distinct roleNo,roleName from SysRole");
             cbo_UserRole.DisplayMember = "roleName";
             cbo_UserRole.ValueMember = "roleNo";
             cbo_UserRole.SelectedIndex = -1;
@@ -43,6 +43,10 @@ namespace soc_nds_csharp.Authority
 
             if (dgv_SysUser.Rows.Count > 0)
             {
+                if (dgv_SysUser.CurrentRow == null)
+                {
+                    return;
+                }
                 if (dgv_SysUser.CurrentRow.Index > -1)
                 {
                     panel_Edit.Visible = true;
@@ -51,7 +55,7 @@ namespace soc_nds_csharp.Authority
 
                     txt_UserName.Text = dgv_SysUser.SelectedRows[0].Cells["userName"].Value.ToString().Trim();
                     txt_Remark.Text = dgv_SysUser.SelectedRows[0].Cells["remark"].Value.ToString().Trim();
-                    cbo_UserRole.Text = dgv_SysUser.SelectedRows[0].Cells["roleName"].Value.ToString().Trim();
+                    cbo_UserRole.SelectedValue = dgv_SysUser.SelectedRows[0].Cells["roleNo"].Value.ToString().Trim();
                 }
             }
         }
@@ -83,12 +87,12 @@ namespace soc_nds_csharp.Authority
                         {
                             HDIC_Message.ShowInfoDialog(this, "添加用户成功");
                             bindDgv();
+                            initCtrols();
                         }
                     }
                     catch (System.Exception ex)
                     {
                         HDIC_Message.ShowInfoDialog(this, ex.ToString());
-                        bindDgv();
                     }
             }
 
@@ -101,20 +105,20 @@ namespace soc_nds_csharp.Authority
                     try
                     {
                         string sqlstr="update SysUser set pwd='" + txt_UserPwd.Text.Trim() + "',remark='"+txt_Remark.Text.Trim()
-                                  + "' where userNo='" + dgv_SysUser.SelectedCells[0].Value.ToString().Trim()
+                                  + "' where userNo='" + dgv_SysUser.SelectedRows[0].Cells["userNo"].Value.ToString().Trim()
                                   + "'; update SysUserRole set roleNo='"+cbo_UserRole.SelectedValue.ToString().Trim()
-                                  +"' where where userNo='" + dgv_SysUser.SelectedCells[0].Value.ToString().Trim()+"'";
+                                  + "' where  userNo='" + dgv_SysUser.SelectedRows[0].Cells["userNo"].Value.ToString().Trim() + "'";
 
                         if (HDIC_DB.ExcuteNonQuery(sqlstr, null) > 0)
                         {
                             HDIC_Message.ShowInfoDialog(this, "修改用户成功");
                             bindDgv();
+                            initCtrols();
                         }
                     }
                     catch (System.Exception ex)
                     {
                         HDIC_Message.ShowInfoDialog(this, ex.ToString());
-                        bindDgv();
                     }
             }
         }
@@ -129,6 +133,7 @@ namespace soc_nds_csharp.Authority
 #region Query
         private void tsb_Query_Click(object sender, EventArgs e)
         {
+            initCtrols();
             panel_Query.Visible = true;
         }
 
@@ -144,10 +149,42 @@ namespace soc_nds_csharp.Authority
 
 
 #endregion
+
+#region Delete
         private void tsb_Delete_Click(object sender, EventArgs e)
         {
+            if (dgv_SysUser.Rows.Count > 0)
+            {
+                if (dgv_SysUser.CurrentRow == null)
+                {
+                    return;
+                }
 
+                if (dgv_SysUser.CurrentRow.Index > -1)
+                {
+                    if (HDIC_Message.ShowQuestionDialog(this, "确定要删除：《" + dgv_SysUser.SelectedRows[0].Cells["userName"].Value.ToString() + "》 吗？") == DialogResult.OK)
+                    {
+                        try
+                        {
+                            string sqlstr = @"delete from SysUser where  userNo='" + dgv_SysUser.SelectedRows[0].Cells["userNo"].Value.ToString().Trim() +
+                                        "' ; delete from SysUserRole where  userNo='" + dgv_SysUser.SelectedRows[0].Cells["userNo"].Value.ToString().Trim() + "'";
+                            if (HDIC_DB.ExcuteNonQuery(sqlstr) > 0)
+                            {
+                                HDIC_Message.ShowInfoDialog(this, "删除成功");
+                                bindDgv();
+                            }
+                        }
+                        catch (System.Exception ex)
+                        {
+                            HDIC_Message.ShowInfoDialog(this, "删除失败：" + ex.ToString());
+                            bindDgv();
+                        }
+                    }
+                }
+            }
         }
+
+#endregion
 
         private void initCtrols()
         {
@@ -157,9 +194,8 @@ namespace soc_nds_csharp.Authority
             txt_UserName.Text = "";
             txt_UserPwd.Text = "";
             txt_UserPwdAgain.Text = "";
-
             txt_Remark.Text = "";
-
+            cbo_UserRole.SelectedIndex = -1;
             txt_UserName.Enabled = true;
             sign = "";
         }
@@ -191,7 +227,7 @@ namespace soc_nds_csharp.Authority
 
         private void bindDgv()
         {
-            string sqlstr = @"select a.userNo,a.userName,c.roleName,a.remark,a.cDate from SysUser as a inner join SysUserRole as b on a.userNo=b.userNo
+            string sqlstr = @"select c.roleNo,a.userNo,a.userName,c.roleName,a.remark,a.cDate from SysUser as a inner join SysUserRole as b on a.userNo=b.userNo
                             inner join SysRole as c on b.roleNo=c.roleNo  where 1=1";
             if (txt_search.Text.Trim() != "")
             {
@@ -200,7 +236,8 @@ namespace soc_nds_csharp.Authority
             sqlstr += " order by a.cDate";
 
             dgv_SysUser.DataSource = HDIC_DB.GetList(sqlstr);
-            dgv_SysUser.Columns[0].Visible = false;//第0行是userNo
+            dgv_SysUser.Columns[0].Visible = false;//第0行是roleNo
+            dgv_SysUser.Columns[1].Visible = false;//第1行是userNo
         }
 
         private void tsb_Exit_Click(object sender, EventArgs e)

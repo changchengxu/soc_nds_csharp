@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gf_SysRole));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAdd = new System.Windows.Forms.ToolStripButton();
             this.tsbDelete = new System.Windows.Forms.ToolStripButton();
@@ -81,7 +81,7 @@
             this.tsbAdd.Image = ((System.Drawing.Image)(resources.GetObject("tsbAdd.Image")));
             this.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAdd.Name = "tsbAdd";
-            this.tsbAdd.Size = new System.Drawing.Size(51, 22);
+            this.tsbAdd.Size = new System.Drawing.Size(52, 22);
             this.tsbAdd.Text = "添加";
             this.tsbAdd.Click += new System.EventHandler(this.tsbAdd_Click);
             // 
@@ -90,7 +90,7 @@
             this.tsbDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsbDelete.Image")));
             this.tsbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDelete.Name = "tsbDelete";
-            this.tsbDelete.Size = new System.Drawing.Size(51, 22);
+            this.tsbDelete.Size = new System.Drawing.Size(52, 22);
             this.tsbDelete.Text = "删除";
             this.tsbDelete.Click += new System.EventHandler(this.tsbDelete_Click);
             // 
@@ -99,7 +99,7 @@
             this.tsbModify.Image = ((System.Drawing.Image)(resources.GetObject("tsbModify.Image")));
             this.tsbModify.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbModify.Name = "tsbModify";
-            this.tsbModify.Size = new System.Drawing.Size(51, 22);
+            this.tsbModify.Size = new System.Drawing.Size(52, 22);
             this.tsbModify.Text = "修改";
             this.tsbModify.Click += new System.EventHandler(this.tsbModify_Click);
             // 
@@ -108,7 +108,7 @@
             this.tsbQuery.Image = ((System.Drawing.Image)(resources.GetObject("tsbQuery.Image")));
             this.tsbQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbQuery.Name = "tsbQuery";
-            this.tsbQuery.Size = new System.Drawing.Size(51, 22);
+            this.tsbQuery.Size = new System.Drawing.Size(52, 22);
             this.tsbQuery.Text = "查询";
             this.tsbQuery.Click += new System.EventHandler(this.tsbQuery_Click);
             // 
@@ -122,7 +122,7 @@
             this.tsbSelectOpt.Image = ((System.Drawing.Image)(resources.GetObject("tsbSelectOpt.Image")));
             this.tsbSelectOpt.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSelectOpt.Name = "tsbSelectOpt";
-            this.tsbSelectOpt.Size = new System.Drawing.Size(75, 22);
+            this.tsbSelectOpt.Size = new System.Drawing.Size(76, 22);
             this.tsbSelectOpt.Text = "选择权限";
             this.tsbSelectOpt.Click += new System.EventHandler(this.tsbSelectOpt_Click);
             // 
@@ -232,7 +232,7 @@
             this.btnSave.Location = new System.Drawing.Point(675, 19);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(60, 21);
-            this.btnSave.TabIndex = 15;
+            this.btnSave.TabIndex = 5;
             this.btnSave.Text = "保存";
             this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSave.UseVisualStyleBackColor = false;
@@ -256,7 +256,7 @@
             this.txtremark.Location = new System.Drawing.Point(280, 18);
             this.txtremark.Name = "txtremark";
             this.txtremark.Size = new System.Drawing.Size(388, 21);
-            this.txtremark.TabIndex = 9;
+            this.txtremark.TabIndex = 4;
             // 
             // label4
             // 
@@ -290,26 +290,26 @@
             this.dgv_SysRole.AllowUserToOrderColumns = true;
             this.dgv_SysRole.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_SysRole.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SysRole.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_SysRole.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv_SysRole.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_SysRole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_SysRole.Location = new System.Drawing.Point(0, 166);
             this.dgv_SysRole.Name = "dgv_SysRole";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SysRole.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_SysRole.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgv_SysRole.RowHeadersWidth = 15;
             this.dgv_SysRole.RowTemplate.Height = 23;
             this.dgv_SysRole.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

@@ -28,20 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gf_SysUser));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_Add = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_Edit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_Delete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsb_Query = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsb_Exit = new System.Windows.Forms.ToolStripButton();
             this.dgv_SysUser = new System.Windows.Forms.DataGridView();
             this.panel_Edit = new System.Windows.Forms.Panel();
             this.grb_Edit = new System.Windows.Forms.GroupBox();
+            this.cbo_UserRole = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txt_UserPwdAgain = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txt_UserPwd = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_EditHide = new System.Windows.Forms.Button();
             this.txt_Remark = new System.Windows.Forms.TextBox();
@@ -54,14 +62,6 @@
             this.btn_QueryHidden = new System.Windows.Forms.Button();
             this.btn_Query = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.txt_UserPwd = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txt_UserPwdAgain = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbo_UserRole = new System.Windows.Forms.ComboBox();
-            this.tsb_Query = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_SysUser)).BeginInit();
             this.panel_Edit.SuspendLayout();
@@ -88,53 +88,67 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
             // tsb_Add
             // 
             this.tsb_Add.Image = global::soc_nds_csharp.Properties.Resources.save;
             this.tsb_Add.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Add.Name = "tsb_Add";
-            this.tsb_Add.Size = new System.Drawing.Size(51, 22);
+            this.tsb_Add.Size = new System.Drawing.Size(52, 22);
             this.tsb_Add.Text = "添加";
             this.tsb_Add.Click += new System.EventHandler(this.tsb_Add_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // tsb_Edit
             // 
             this.tsb_Edit.Image = global::soc_nds_csharp.Properties.Resources.edit;
             this.tsb_Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Edit.Name = "tsb_Edit";
-            this.tsb_Edit.Size = new System.Drawing.Size(51, 22);
+            this.tsb_Edit.Size = new System.Drawing.Size(52, 22);
             this.tsb_Edit.Text = "修改";
             this.tsb_Edit.Click += new System.EventHandler(this.tsb_Edit_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tsb_Delete
             // 
             this.tsb_Delete.Image = global::soc_nds_csharp.Properties.Resources.delete;
             this.tsb_Delete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Delete.Name = "tsb_Delete";
-            this.tsb_Delete.Size = new System.Drawing.Size(51, 22);
+            this.tsb_Delete.Size = new System.Drawing.Size(52, 22);
             this.tsb_Delete.Text = "删除";
             this.tsb_Delete.Click += new System.EventHandler(this.tsb_Delete_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsb_Query
+            // 
+            this.tsb_Query.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Query.Image")));
+            this.tsb_Query.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Query.Name = "tsb_Query";
+            this.tsb_Query.Size = new System.Drawing.Size(52, 22);
+            this.tsb_Query.Text = "查询";
+            this.tsb_Query.Click += new System.EventHandler(this.tsb_Query_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // tsb_Exit
             // 
             this.tsb_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Exit.Name = "tsb_Exit";
-            this.tsb_Exit.Size = new System.Drawing.Size(35, 22);
+            this.tsb_Exit.Size = new System.Drawing.Size(36, 22);
             this.tsb_Exit.Text = "退出";
             this.tsb_Exit.Click += new System.EventHandler(this.tsb_Exit_Click);
             // 
@@ -145,31 +159,31 @@
             this.dgv_SysUser.AllowUserToOrderColumns = true;
             this.dgv_SysUser.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_SysUser.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SysUser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_SysUser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv_SysUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_SysUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_SysUser.Location = new System.Drawing.Point(0, 186);
             this.dgv_SysUser.Name = "dgv_SysUser";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv_SysUser.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_SysUser.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_SysUser.RowHeadersWidth = 15;
             this.dgv_SysUser.RowTemplate.Height = 23;
             this.dgv_SysUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_SysUser.Size = new System.Drawing.Size(873, 311);
-            this.dgv_SysUser.TabIndex = 8;
+            this.dgv_SysUser.TabIndex = 18;
             // 
             // panel_Edit
             // 
@@ -204,6 +218,58 @@
             this.grb_Edit.TabStop = false;
             this.grb_Edit.Text = "编辑信息";
             // 
+            // cbo_UserRole
+            // 
+            this.cbo_UserRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_UserRole.FormattingEnabled = true;
+            this.cbo_UserRole.Location = new System.Drawing.Point(83, 52);
+            this.cbo_UserRole.Name = "cbo_UserRole";
+            this.cbo_UserRole.Size = new System.Drawing.Size(121, 20);
+            this.cbo_UserRole.TabIndex = 6;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(24, 55);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(59, 12);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "用户权限:";
+            // 
+            // txt_UserPwdAgain
+            // 
+            this.txt_UserPwdAgain.Location = new System.Drawing.Point(516, 19);
+            this.txt_UserPwdAgain.Name = "txt_UserPwdAgain";
+            this.txt_UserPwdAgain.PasswordChar = '*';
+            this.txt_UserPwdAgain.Size = new System.Drawing.Size(140, 21);
+            this.txt_UserPwdAgain.TabIndex = 5;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(457, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "确认密码:";
+            // 
+            // txt_UserPwd
+            // 
+            this.txt_UserPwd.Location = new System.Drawing.Point(301, 19);
+            this.txt_UserPwd.Name = "txt_UserPwd";
+            this.txt_UserPwd.PasswordChar = '*';
+            this.txt_UserPwd.Size = new System.Drawing.Size(140, 21);
+            this.txt_UserPwd.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(242, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 12);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "用户密码:";
+            // 
             // btn_Save
             // 
             this.btn_Save.BackColor = System.Drawing.Color.Transparent;
@@ -213,7 +279,7 @@
             this.btn_Save.Location = new System.Drawing.Point(675, 19);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(60, 21);
-            this.btn_Save.TabIndex = 15;
+            this.btn_Save.TabIndex = 8;
             this.btn_Save.Text = "保存";
             this.btn_Save.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_Save.UseVisualStyleBackColor = false;
@@ -227,7 +293,7 @@
             this.btn_EditHide.Location = new System.Drawing.Point(776, 20);
             this.btn_EditHide.Name = "btn_EditHide";
             this.btn_EditHide.Size = new System.Drawing.Size(60, 21);
-            this.btn_EditHide.TabIndex = 16;
+            this.btn_EditHide.TabIndex = 9;
             this.btn_EditHide.Text = " 隐 藏 ";
             this.btn_EditHide.UseVisualStyleBackColor = false;
             this.btn_EditHide.Click += new System.EventHandler(this.btn_EditHide_Click);
@@ -237,7 +303,7 @@
             this.txt_Remark.Location = new System.Drawing.Point(301, 52);
             this.txt_Remark.Name = "txt_Remark";
             this.txt_Remark.Size = new System.Drawing.Size(355, 21);
-            this.txt_Remark.TabIndex = 9;
+            this.txt_Remark.TabIndex = 7;
             // 
             // label4
             // 
@@ -333,72 +399,6 @@
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 15;
             this.label1.Text = "用户名称：";
-            // 
-            // txt_UserPwd
-            // 
-            this.txt_UserPwd.Location = new System.Drawing.Point(301, 19);
-            this.txt_UserPwd.Name = "txt_UserPwd";
-            this.txt_UserPwd.PasswordChar = '*';
-            this.txt_UserPwd.Size = new System.Drawing.Size(140, 21);
-            this.txt_UserPwd.TabIndex = 18;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(242, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 12);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "用户密码:";
-            // 
-            // txt_UserPwdAgain
-            // 
-            this.txt_UserPwdAgain.Location = new System.Drawing.Point(516, 19);
-            this.txt_UserPwdAgain.Name = "txt_UserPwdAgain";
-            this.txt_UserPwdAgain.PasswordChar = '*';
-            this.txt_UserPwdAgain.Size = new System.Drawing.Size(140, 21);
-            this.txt_UserPwdAgain.TabIndex = 20;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(457, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 12);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "确认密码:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 55);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 12);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "用户权限:";
-            // 
-            // cbo_UserRole
-            // 
-            this.cbo_UserRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbo_UserRole.FormattingEnabled = true;
-            this.cbo_UserRole.Location = new System.Drawing.Point(83, 52);
-            this.cbo_UserRole.Name = "cbo_UserRole";
-            this.cbo_UserRole.Size = new System.Drawing.Size(121, 20);
-            this.cbo_UserRole.TabIndex = 22;
-            // 
-            // tsb_Query
-            // 
-            this.tsb_Query.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Query.Image")));
-            this.tsb_Query.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Query.Name = "tsb_Query";
-            this.tsb_Query.Size = new System.Drawing.Size(51, 22);
-            this.tsb_Query.Text = "查询";
-            this.tsb_Query.Click += new System.EventHandler(this.tsb_Query_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // gf_SysUser
             // 

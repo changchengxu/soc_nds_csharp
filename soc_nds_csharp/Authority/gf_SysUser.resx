@@ -121,6 +121,18 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsb_Query.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFYSURBVDhPrZIhb8MwEIX7E/YPtn+w0LHAotZoKqoNy2JY
+        trBtaIZhMyzbwULDshkWGhYalr3dpaqULEmlSXvSKSbvu3eXm83+QxQShhVB+whPEZ9f3+5mHzFPye8C
+        irm5DaEQJwGOAeEQb0Mk6pScp9Z8rdFR/BjgnLlzgPMetXNwXKUyGAfwonpiM+05eghIp9yWJ4KxFrp6
+        uRtAPIWeXzqL+ap8BlIGpyForeshgBfVlcSWriIxZ36mE9pfvV6v0wAgm+4Bmguga45HGSNi8bwYAXC0
+        rojnlR1IbOkc2Ewxw25r6JV2H69VfwyZrauUUrt1v2MQ34h0FrNaKZAzoMaiB+kB2pkz4jHCNQ5mY7kM
+        DJudLZF8CRwMvGPIe6XafVwB8p2q+s3BqgKxLpCaEpkU7EZd7uL3tXUvr/su5wqGIWFbwswL6OXjJcFf
+        VLGpLB6wfLpvzT+SHBwiaUE+UgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="btn_Save.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -159,18 +171,6 @@
         aQKQTY8A3QUwNMejjBFRPVczAI42FPG8sgOJLZ0Dmylm2G2Lel27j9dmPIbMNlRKqd+63zGIb0Q6i1mv
         NcgZUGcxgowA/cwZ8RjhOgezsVwGhs3OKiSvgIOBdwx5b3S/jytAvkvVvjlYXSC2BVKnkEnDbvTlLn5f
         2/Dyhm9VahiGhK2CKQvU1eMlwV/UsEkVD6ie7nvzD5xdHCizI+9TAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="tsb_Query.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFYSURBVDhPrZIhb8MwEIX7E/YPtn+w0LHAotZoKqoNy2JY
-        trBtaIZhMyzbwULDshkWGhYalr3dpaqULEmlSXvSKSbvu3eXm83+QxQShhVB+whPEZ9f3+5mHzFPye8C
-        irm5DaEQJwGOAeEQb0Mk6pScp9Z8rdFR/BjgnLlzgPMetXNwXKUyGAfwonpiM+05eghIp9yWJ4KxFrp6
-        uRtAPIWeXzqL+ap8BlIGpyForeshgBfVlcSWriIxZ36mE9pfvV6v0wAgm+4Bmguga45HGSNi8bwYAXC0
-        rojnlR1IbOkc2Ewxw25r6JV2H69VfwyZrauUUrt1v2MQ34h0FrNaKZAzoMaiB+kB2pkz4jHCNQ5mY7kM
-        DJudLZF8CRwMvGPIe6XafVwB8p2q+s3BqgKxLpCaEpkU7EZd7uL3tXUvr/su5wqGIWFbwswL6OXjJcFf
-        VLGpLB6wfLpvzT+SHBwiaUE+UgAAAABJRU5ErkJggg==
 </value>
   </data>
 </root>

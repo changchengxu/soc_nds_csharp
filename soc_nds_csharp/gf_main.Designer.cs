@@ -40,9 +40,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.taskPane1 = new XPExplorerBar.TaskPane();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsm_reset = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.taskPane1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -51,7 +55,7 @@
             this.dsafToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(998, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(998, 25);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "&File  &Window";
             // 
@@ -59,9 +63,10 @@
             // 
             this.dsafToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fsdafToolStripMenuItem,
+            this.tsm_reset,
             this.tsm_exit});
             this.dsafToolStripMenuItem.Name = "dsafToolStripMenuItem";
-            this.dsafToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.dsafToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.dsafToolStripMenuItem.Text = "文件";
             // 
             // fsdafToolStripMenuItem
@@ -90,25 +95,25 @@
             // 锁屏LToolStripMenuItem
             // 
             this.锁屏LToolStripMenuItem.Name = "锁屏LToolStripMenuItem";
-            this.锁屏LToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.锁屏LToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.锁屏LToolStripMenuItem.Text = "锁屏(&L)";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // 退出XToolStripMenuItem
             // 
             this.退出XToolStripMenuItem.Name = "退出XToolStripMenuItem";
-            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.退出XToolStripMenuItem.Text = "退出(&X)";
             // 
             // panel1
             // 
             this.panel1.BackgroundImage = global::soc_nds_csharp.Properties.Resources.Level;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 24);
+            this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(998, 9);
             this.panel1.TabIndex = 23;
@@ -121,9 +126,9 @@
             this.taskPane1.CustomSettings.GradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
             this.taskPane1.CustomSettings.Padding = new XPExplorerBar.Padding(1, 0, 0, 0);
             this.taskPane1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.taskPane1.Location = new System.Drawing.Point(0, 33);
+            this.taskPane1.Location = new System.Drawing.Point(0, 34);
             this.taskPane1.Name = "taskPane1";
-            this.taskPane1.Size = new System.Drawing.Size(210, 519);
+            this.taskPane1.Size = new System.Drawing.Size(210, 518);
             this.taskPane1.TabIndex = 32;
             this.taskPane1.Text = "taskPane1";
             // 
@@ -131,11 +136,34 @@
             // 
             this.pictureBox2.BackgroundImage = global::soc_nds_csharp.Properties.Resources.Vertical;
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox2.Location = new System.Drawing.Point(210, 33);
+            this.pictureBox2.Location = new System.Drawing.Point(210, 34);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(10, 519);
+            this.pictureBox2.Size = new System.Drawing.Size(10, 518);
             this.pictureBox2.TabIndex = 33;
             this.pictureBox2.TabStop = false;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(220, 530);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(778, 22);
+            this.statusStrip1.TabIndex = 35;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // tsm_reset
+            // 
+            this.tsm_reset.Name = "tsm_reset";
+            this.tsm_reset.Size = new System.Drawing.Size(152, 22);
+            this.tsm_reset.Text = "重启";
+            this.tsm_reset.Click += new System.EventHandler(this.tsm_reset_Click);
             // 
             // gf_main
             // 
@@ -144,6 +172,7 @@
             this.BackColor = System.Drawing.Color.Yellow;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(998, 552);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.taskPane1);
             this.Controls.Add(this.panel1);
@@ -161,6 +190,8 @@
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.taskPane1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +210,9 @@
         private System.Windows.Forms.ToolStripMenuItem dsafToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fsdafToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsm_exit;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripMenuItem tsm_reset;
     }
 }
 

@@ -28,10 +28,11 @@ namespace soc_nds_csharp
                 if (login.ShowDialog() == DialogResult.OK)
                 {
                     //下面sql意思：获取该用户权限编号在SysRoleMenu是选中的菜单，以及主菜单
-                //    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
-                //" where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.RoleNum + "')" +
-                //"or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.RoleNum + "')";
-                    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a ";
+                    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
+                " where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.roleNo + "')" +
+                "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')";
+                  
+                     //string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a ";
                     dt = HDIC_DB.GetList(sqlstr);
 
                     taskPane1.Expandos.Clear();
@@ -42,6 +43,8 @@ namespace soc_nds_csharp
                 {
                     Application.Exit();
                 }
+
+                statusStrip1.Text="尊敬的<"+HDIC_Command.UseName+">用户，欢迎您登录直播星软件 | 今天的日期是："+DateTime.Now.ToString("yyyy-MM-dd");
             }
 
         }
@@ -215,6 +218,24 @@ namespace soc_nds_csharp
         {
             Application.Exit();
         }
+
+#region Reset
+        private void tsm_reset_Click(object sender, EventArgs e)
+        {
+            Application.ExitThread();
+            System.Threading.Thread thtmp = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
+            object appName = Application.ExecutablePath;
+            //System.Threading.Thread.Sleep(2000);
+            thtmp.Start(appName);
+        }
+
+        private void run(Object obj)
+        {
+            System.Diagnostics.Process ps = new System.Diagnostics.Process();
+            ps.StartInfo.FileName = obj.ToString();
+            ps.Start();
+        }
+#endregion
 
     }
 }

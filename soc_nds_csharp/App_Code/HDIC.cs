@@ -1161,13 +1161,23 @@ namespace HDICSoft.Command
         }
 
         /// <summary>
-        /// roleName
+        /// userNo
         /// </summary>
-        private static string _rolenum = "";
-        public static string RoleNum
+        private static string _useno = "";
+        public static string userNo
         {
-            get { return _rolenum; }
-            set { _rolenum = value; }
+            get { return _useno; }
+            set { _useno = value; }
+        }
+
+        /// <summary>
+        /// roleNo
+        /// </summary>
+        private static string _roleno = "";
+        public static string roleNo
+        {
+            get { return _roleno; }
+            set { _roleno = value; }
         }
     }
 }

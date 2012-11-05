@@ -38,6 +38,8 @@
             this.btn_network = new System.Windows.Forms.Button();
             this.gbx_NetWork = new System.Windows.Forms.GroupBox();
             this.lbl_IP = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbo_userRole = new System.Windows.Forms.ComboBox();
             this.gbx_NetWork.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,64 +47,65 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Location = new System.Drawing.Point(338, 243);
+            this.label2.Location = new System.Drawing.Point(338, 272);
             this.label2.Name = "label2";
-            this.label2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 17;
-            this.label2.Text = "密  码：";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Text = "  密  码：";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(338, 205);
+            this.label1.Location = new System.Drawing.Point(338, 234);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 15;
-            this.label1.Text = "用户名：";
+            this.label1.Text = "  用户名：";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btn_exit
             // 
-            this.btn_exit.Location = new System.Drawing.Point(478, 294);
+            this.btn_exit.Location = new System.Drawing.Point(478, 316);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(75, 23);
-            this.btn_exit.TabIndex = 14;
+            this.btn_exit.TabIndex = 5;
             this.btn_exit.Text = " 退 出 ";
             this.btn_exit.UseVisualStyleBackColor = true;
             this.btn_exit.Click += new System.EventHandler(this.btn_exit_Click);
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(340, 294);
+            this.btn_login.Location = new System.Drawing.Point(340, 316);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(75, 23);
-            this.btn_login.TabIndex = 12;
+            this.btn_login.TabIndex = 4;
             this.btn_login.Text = " 登 录 ";
             this.btn_login.UseVisualStyleBackColor = true;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
             // txt_username
             // 
-            this.txt_username.Location = new System.Drawing.Point(409, 200);
+            this.txt_username.Location = new System.Drawing.Point(409, 229);
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(108, 21);
-            this.txt_username.TabIndex = 18;
+            this.txt_username.TabIndex = 2;
             // 
             // txt_pwd
             // 
-            this.txt_pwd.Location = new System.Drawing.Point(409, 236);
+            this.txt_pwd.Location = new System.Drawing.Point(409, 265);
             this.txt_pwd.Name = "txt_pwd";
+            this.txt_pwd.PasswordChar = '*';
             this.txt_pwd.Size = new System.Drawing.Size(108, 21);
-            this.txt_pwd.TabIndex = 19;
+            this.txt_pwd.TabIndex = 3;
             // 
             // btn_network
             // 
             this.btn_network.Location = new System.Drawing.Point(693, 388);
             this.btn_network.Name = "btn_network";
             this.btn_network.Size = new System.Drawing.Size(75, 23);
-            this.btn_network.TabIndex = 20;
+            this.btn_network.TabIndex = 6;
             this.btn_network.Text = "网络设置";
             this.btn_network.UseVisualStyleBackColor = true;
             this.btn_network.Click += new System.EventHandler(this.btn_network_Click);
@@ -111,7 +114,7 @@
             // 
             this.gbx_NetWork.BackColor = System.Drawing.Color.Transparent;
             this.gbx_NetWork.Controls.Add(this.lbl_IP);
-            this.gbx_NetWork.Location = new System.Drawing.Point(333, 334);
+            this.gbx_NetWork.Location = new System.Drawing.Point(333, 356);
             this.gbx_NetWork.Name = "gbx_NetWork";
             this.gbx_NetWork.Size = new System.Drawing.Size(227, 46);
             this.gbx_NetWork.TabIndex = 21;
@@ -127,6 +130,26 @@
             this.lbl_IP.TabIndex = 0;
             this.lbl_IP.Text = "IP：";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Location = new System.Drawing.Point(338, 198);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "用户类型：";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbo_userRole
+            // 
+            this.cbo_userRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_userRole.FormattingEnabled = true;
+            this.cbo_userRole.Location = new System.Drawing.Point(409, 193);
+            this.cbo_userRole.Name = "cbo_userRole";
+            this.cbo_userRole.Size = new System.Drawing.Size(108, 20);
+            this.cbo_userRole.TabIndex = 1;
+            // 
             // gf_login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -135,6 +158,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(780, 456);
+            this.Controls.Add(this.cbo_userRole);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.gbx_NetWork);
             this.Controls.Add(this.btn_network);
             this.Controls.Add(this.txt_pwd);
@@ -149,6 +174,7 @@
             this.Name = "gf_login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " 登 录 ";
+            this.Load += new System.EventHandler(this.gf_login_Load);
             this.gbx_NetWork.ResumeLayout(false);
             this.gbx_NetWork.PerformLayout();
             this.ResumeLayout(false);
@@ -167,6 +193,8 @@
         private System.Windows.Forms.Button btn_network;
         private System.Windows.Forms.GroupBox gbx_NetWork;
         private System.Windows.Forms.Label lbl_IP;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbo_userRole;
 
 
     }
