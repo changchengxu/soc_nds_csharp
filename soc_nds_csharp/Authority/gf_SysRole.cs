@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Func;
 
 namespace soc_nds_csharp.Authority
 {
@@ -47,6 +48,7 @@ namespace soc_nds_csharp.Authority
                 if (dgv_SysRole.CurrentRow.Index > -1)
                 {
                     txtroleName.Text = dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString();
+                    txtremark.Text = dgv_SysRole.CurrentRow.Cells["remark"].Value.ToString();
                     oldRoleName = txtroleName.Text;
                 }
             }
@@ -67,7 +69,7 @@ namespace soc_nds_csharp.Authority
                 {
                     return;
                 }
-                HDIC_DB.ExcuteNonQuery("insert into SysRole(roleName,remark) values('" + txtroleName.Text.Trim() + "','" + txtremark.Text.Trim() + "')", null);
+                HDIC_DB.ExcuteNonQuery("insert into SysRole(roleNo,roleName,remark) values('"+HDIC_Func.CreateKeyStr("RO")+"','" + txtroleName.Text.Trim() + "','" + txtremark.Text.Trim() + "')", null);
                 HDIC_Message.ShowInfoDialog(this, "添加成功");
                 bindDgv();
             }
@@ -82,7 +84,7 @@ namespace soc_nds_csharp.Authority
                 {
                     return;
                 }
-                if (HDIC_DB.ExcuteNonQuery("delete SysRole where roleName='" + oldRoleName + "';insert into SysRole(roleName,remark) values('" + txtroleName.Text.Trim() + "','" + txtremark.Text.Trim() + "')", null)>0)
+                if (HDIC_DB.ExcuteNonQuery("delete SysRole where roleName='" + oldRoleName + "';insert into SysRole(roleNo,roleName,remark) values('" + HDIC_Func.CreateKeyStr("RO") + "','" + txtroleName.Text.Trim() + "','" + txtremark.Text.Trim() + "')", null) > 0)
                 {
                     HDIC_Message.ShowInfoDialog(this, "修改成功");
                     bindDgv();
@@ -126,11 +128,15 @@ namespace soc_nds_csharp.Authority
         #region Delete
         private void tsbDelete_Click(object sender, EventArgs e)
         {
-            if (HDIC_Message.ShowQuestionDialog(this, "确定要删除权限名称为：" + dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString() + " 的信息吗？") == DialogResult.Cancel)
+            //删除两个表
+            string sqlstr = @"delete SysRole where roleName='" + dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString()
+                         + "';delete SysRoleMenu where roleNo='" + dgv_SysRole.CurrentRow.Cells["roleNo"].Value.ToString() + "'";
+
+            if (HDIC_Message.ShowQuestionDialog(this, "确定要删除权限名称为：<" + dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString().Trim() + "> 的信息吗？") == DialogResult.Cancel)
             {
                 return;
             }
-            if (HDIC_DB.ExcuteNonQuery("delete SysRole where roleName='" + dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString() + "'", null) > 0)
+            if (HDIC_DB.ExcuteNonQuery(sqlstr, null) > 0)
             {
                 HDIC_Message.ShowInfoDialog(this, "删除成功");
                 bindDgv();
@@ -171,8 +177,8 @@ namespace soc_nds_csharp.Authority
                 if (dgv_SysRole.CurrentRow.Index > -1)
                 {
                     gf_SysRoleAuthority roleAuth = new gf_SysRoleAuthority();
-                    roleAuth.rolename = dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString();
-                    roleAuth.roleno = dgv_SysRole.CurrentRow.Cells["roleNo"].Value.ToString();
+                    roleAuth.rolename = dgv_SysRole.CurrentRow.Cells["roleName"].Value.ToString().Trim();
+                    roleAuth.roleno = dgv_SysRole.CurrentRow.Cells["roleNo"].Value.ToString().Trim();
                     roleAuth.ShowDialog();
                 }
                 else

@@ -21,14 +21,19 @@ namespace soc_nds_csharp
 
         private void gf_main_Load(object sender, EventArgs e)
         {
-            //dt = DBHelper.GetList("SELECT * FROM  vwSysAllUserOperation  WHERE usename='admin' ORDER BY sequence");
             this.BackColor = HDIC_Command.setColor();
             taskPane1.CollapseAll();
             using (gf_login login = new gf_login())
             {
                 if (login.ShowDialog() == DialogResult.OK)
                 {
-                    dt = HDIC_DB.GetList("SELECT * FROM  SysMenuDisplay");
+                    //下面sql意思：获取该用户权限编号在SysRoleMenu是选中的菜单，以及主菜单
+                //    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
+                //" where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.RoleNum + "')" +
+                //"or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.RoleNum + "')";
+                    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a ";
+                    dt = HDIC_DB.GetList(sqlstr);
+
                     taskPane1.Expandos.Clear();
 
                     AddExpando();

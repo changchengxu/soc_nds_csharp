@@ -930,6 +930,30 @@ namespace HDICSoft.Func
         }
 
         /// <summary>
+        /// 生成20位的主键数，如AB200807021438250001
+        /// </summary>
+        /// <param name="str">主键字符串的前两位</param>
+        /// <param name="str">例如调用接口：PKey.CreateKeyStr("RO");返回RO打头的20位字符</param>
+        /// <returns></returns>
+        public static string CreateKeyStr(string str)
+        {
+            StringBuilder strKey = new StringBuilder();
+            Random rd = new Random(System.DateTime.Now.Millisecond);
+            string strDate;
+            string strRd;
+
+            str = str.ToUpper().Replace(" ", "") + "AA";
+            str = str.Substring(0, 2);
+            strKey.Append(str);
+            strDate = DateTime.Now.ToString("yyyyMMdd") + DateTime.Now.ToString("HH:mm:ss").Replace(":", "");
+            strKey.Append(strDate);
+            strRd = "0000" + rd.Next(1, 10000);
+            strRd = strRd.Substring(strRd.Length - 4, 4);
+            strKey.Append(strRd);
+            return strKey.ToString();
+        }
+
+        /// <summary>
         /// DataGridView转换为二维数组 
         /// </summary>
         /// <param name="dataGridView"></param>
@@ -1124,6 +1148,26 @@ namespace HDICSoft.Command
         public static System.Drawing.Color setColor()
         {
             return System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
+        }
+
+        /// <summary>
+        /// userName
+        /// </summary>
+        private static string _usename="";
+        public static string UseName
+        {
+            get { return _usename; }
+            set { _usename = value; }
+        }
+
+        /// <summary>
+        /// roleName
+        /// </summary>
+        private static string _rolenum = "";
+        public static string RoleNum
+        {
+            get { return _rolenum; }
+            set { _rolenum = value; }
         }
     }
 }
