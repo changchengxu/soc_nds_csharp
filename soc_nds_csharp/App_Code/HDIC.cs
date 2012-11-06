@@ -1007,6 +1007,25 @@ namespace HDICSoft.Func
             return arrReturn;
         }
 
+        /// <summary>
+        /// 系统重启
+        /// </summary>
+        public static void Reset()
+        {
+            Application.ExitThread();
+            System.Threading.Thread thtmp = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
+            object appName = Application.ExecutablePath;
+            //System.Threading.Thread.Sleep(2000);
+            thtmp.Start(appName);
+        }
+        private static void run(Object obj)
+        {
+            System.Diagnostics.Process ps = new System.Diagnostics.Process();
+            ps.StartInfo.FileName = obj.ToString();
+            ps.Start();
+        }
+
+
         //#region 下面加密和解密复制考勤机 长城暂时屏蔽
         ///// <summary>
         ///// 对字符串进行DES加密

@@ -77,15 +77,17 @@ namespace soc_nds_csharp
                             Conn.Open();   //打开连接对象
                             Comm.ExecuteNonQuery();
                             Conn.Close();   //关闭连接对象
+
+                            HDIC_Message.ShowInfoDialog(this,"附加数据库成功,正在重新打开系统");
+                            HDICSoft.Func.HDIC_Func.Reset();
+                           
                         }
                     }
                 }
                 catch 
                 {
-                    MessageBox.Show("附加失败:" + ex.Message);
+                    HDIC_Message.ShowWarnDialog(this,"附加失败:" + ex.Message);
                 }
-
-                btn_login_Click(sender, e);
                 ipUserControl.Text = "";
 
                 #endregion
@@ -172,16 +174,19 @@ namespace soc_nds_csharp
             if (cbo_userRole.SelectedValue == null)
             {
                 HDIC_Message.ShowWarnDialog(this, "用户类型不能为空！");
+                cbo_userRole.Focus();
                 return false;
             }
             if (txt_username.Text.Trim() == "")
             {
                 HDIC_Message.ShowWarnDialog(this, "用户名不能为空！");
+                txt_username.Focus();
                 return false;
             }
             if (txt_pwd.Text.Trim() == "")
             {
                 HDIC_Message.ShowWarnDialog(this, "密码不能为空！");
+                txt_pwd.Focus();
                 return false;
             }
             return true;
@@ -200,6 +205,30 @@ namespace soc_nds_csharp
             gbx_NetWork.Visible = true;
         }
         #endregion
+
+        private void cbo_userRole_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txt_username.Focus();
+            }
+        }
+
+        private void txt_username_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txt_pwd.Focus();
+            }
+        }
+
+        private void txt_pwd_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn_login_Click(btn_login, null);
+            }
+        }
 
     }
 }

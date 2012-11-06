@@ -30,19 +30,24 @@ namespace soc_nds_csharp.Station_Operation
 
         private void btn_begin_Click(object sender, EventArgs e)
         {
-            // richtxt_Connect
-            this.richTextBox3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.richTextBox3.ForeColor = System.Drawing.Color.ForestGreen;
-            this.richTextBox3.Text = "正在建立连接,请稍后... ...";
-
+            Connect();
         }
 
         private void btn_begin_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keys.KeyCode == Keys.Enter)
             {
-                btn_begin_Click(sender, e);
+                Connect();
             }
+        }
+
+        private void Connect()
+        {
+            // richtxt_Connect
+            this.richTextBox3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.richTextBox3.ForeColor = System.Drawing.Color.ForestGreen;
+            this.richTextBox3.Text = "正在建立连接,请稍后... ...";
+
         }
     }
 }

@@ -70,6 +70,12 @@
     <Compile Include="Authority\gf_SysUser.Designer.cs">
       <DependentUpon>gf_SysUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Authority\gf_UserPwd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authority\gf_UserPwd.Designer.cs">
+      <DependentUpon>gf_UserPwd.cs</DependentUpon>
+    </Compile>
     <Compile Include="DB_Manage\DB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Authority\gf_SysUser.resx">
       <DependentUpon>gf_SysUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Authority\gf_UserPwd.resx">
+      <DependentUpon>gf_UserPwd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DB_Manage\DB.resx">
       <DependentUpon>DB.cs</DependentUpon>

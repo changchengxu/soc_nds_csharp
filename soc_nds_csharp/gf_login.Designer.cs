@@ -91,6 +91,7 @@
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(108, 21);
             this.txt_username.TabIndex = 2;
+            this.txt_username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_username_KeyDown);
             // 
             // txt_pwd
             // 
@@ -99,6 +100,7 @@
             this.txt_pwd.PasswordChar = '*';
             this.txt_pwd.Size = new System.Drawing.Size(108, 21);
             this.txt_pwd.TabIndex = 3;
+            this.txt_pwd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_pwd_KeyDown);
             // 
             // btn_network
             // 
@@ -149,6 +151,7 @@
             this.cbo_userRole.Name = "cbo_userRole";
             this.cbo_userRole.Size = new System.Drawing.Size(108, 20);
             this.cbo_userRole.TabIndex = 1;
+            this.cbo_userRole.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbo_userRole_KeyDown);
             // 
             // gf_login
             // 

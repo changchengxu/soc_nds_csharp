@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using XPExplorerBar;
 using HDICSoft.DB;
 using HDICSoft.Command;
+using HDICSoft.Func;
+using HDICSoft.Message;
 
 namespace soc_nds_csharp
 {
@@ -27,16 +29,23 @@ namespace soc_nds_csharp
             {
                 if (login.ShowDialog() == DialogResult.OK)
                 {
-                    //下面sql意思：获取该用户权限编号在SysRoleMenu是选中的菜单，以及主菜单
-                    string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
-                " where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.roleNo + "')" +
-                "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')";
-                  
-                     //string sqlstr = "SELECT a.* FROM  SysMenuDisplay as a ";
+                    //下面sql意思：通过用户权限编号在SysRoleMenu中获取 子菜单 和 主菜单
+                      string sqlstr="";
+                      if (HDIC_Command.UseName.ToLower().Trim() == "admin")//超级管理用户 可使用全部功能
+                      {
+                          sqlstr = "SELECT a.* FROM  SysMenuDisplay as a order by a.menuNo";
+                      }
+                      else
+                      {
+                          sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
+                        " where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.roleNo + "')" +
+                        "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')" +
+                        " order by a.menuNo";
+                      }
+                 
                     dt = HDIC_DB.GetList(sqlstr);
 
                     taskPane1.Expandos.Clear();
-
                     AddExpando();
                 }
                 else
@@ -44,7 +53,7 @@ namespace soc_nds_csharp
                     Application.Exit();
                 }
 
-                statusStrip1.Text="尊敬的<"+HDIC_Command.UseName+">用户，欢迎您登录直播星软件 | 今天的日期是："+DateTime.Now.ToString("yyyy-MM-dd");
+                toolStripStatusLabel1.Text="尊敬的<"+HDIC_Command.UseName+">用户，欢迎您登录直播星软件 | 今天的日期是："+DateTime.Now.ToString("yyyy-MM-dd");
             }
 
         }
@@ -74,7 +83,6 @@ namespace soc_nds_csharp
         {
             //pictureBox2.Visible = false;
             string MenuName = ((TaskItem)sender).Name;
-            string MenuNo = ((TaskItem)sender).Tag.ToString();
 
             if (string.IsNullOrEmpty(MenuName)) return;
             //如果窗体已经创建，则将其激活，不再创建新事例
@@ -91,14 +99,11 @@ namespace soc_nds_csharp
             {
                     f = (Form)Activator.CreateInstance(Type.GetType(MenuName));
                     f.Text = ((TaskItem)sender).Text;
-                //设置datagridview的样式
-                //SearchDataGridView(f.Controls);
             }
             catch
             {
                 return;
             }
-            //f.BackColor = Color.FromArgb(0xD5, 0xEB, 0xFC);
             f.TopLevel = false;
             f.MdiParent = this;
             f.WindowState = FormWindowState.Maximized;
@@ -222,20 +227,18 @@ namespace soc_nds_csharp
 #region Reset
         private void tsm_reset_Click(object sender, EventArgs e)
         {
-            Application.ExitThread();
-            System.Threading.Thread thtmp = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(run));
-            object appName = Application.ExecutablePath;
-            //System.Threading.Thread.Sleep(2000);
-            thtmp.Start(appName);
-        }
-
-        private void run(Object obj)
-        {
-            System.Diagnostics.Process ps = new System.Diagnostics.Process();
-            ps.StartInfo.FileName = obj.ToString();
-            ps.Start();
+            if (HDIC_Message.ShowQuestionDialog(this, "确定要重启程序吗？") == DialogResult.OK)
+            {
+                HDIC_Func.Reset();
+            }
         }
 #endregion
+
+        private void gf_main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = (HDIC_Message.ShowQuestionDialog(this, "是否确定退出系统？") != DialogResult.OK);
+        }
+
 
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Authority
 {
@@ -23,6 +24,8 @@ namespace soc_nds_csharp.Authority
 
         private void gf_SysRoleAuthority_Load(object sender, EventArgs e)
         {
+            tvRoleOperation.BackColor = HDIC_Command.setColor();
+
             lbl_roleName.Text = rolename;
 
             dt = HDIC_DB.GetList("select menuNo,menuName,parentNo from SysMenuDisplay  order by menuNo");
@@ -102,7 +105,7 @@ namespace soc_nds_csharp.Authority
                         sign = false;
                     }
 
-                    //检索是不是菜单，如果是则将选择框设置为只读。
+                    //检索是不是菜单，如果是则将选择框设置隐藏。
                     if (HDIC_DB.sqlQuery("select count(*) from SysMenuDisplay where isModel=1 and menuNo='" + tvRoleOperation.SelectedNode.Tag.ToString() + "'") != "0")
                     {
                         //dgvRoleOperation.Rows[0].Cells["isSelect"].ReadOnly = false;

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Authority
 {
@@ -19,6 +20,8 @@ namespace soc_nds_csharp.Authority
 
         private void gf_SysUser_Load(object sender, EventArgs e)
         {
+            dgv_SysUser.BackgroundColor = HDIC_Command.setColor();
+
             initCtrols();
 
             cbo_UserRole.DataSource = HDIC_DB.GetList("select distinct roleNo,roleName from SysRole");
@@ -98,6 +101,11 @@ namespace soc_nds_csharp.Authority
 
             else if (sign == "edit")
             {
+                if (!userUse())//如果是超级管理员用户，则不能修改
+                {
+                    return;
+                }
+
                 if (!chekPara())
                 {
                     return;
@@ -162,6 +170,11 @@ namespace soc_nds_csharp.Authority
 
                 if (dgv_SysUser.CurrentRow.Index > -1)
                 {
+                    if (!userUse())
+                    {
+                        return;
+                    }
+
                     if (HDIC_Message.ShowQuestionDialog(this, "确定要删除：《" + dgv_SysUser.SelectedRows[0].Cells["userName"].Value.ToString() + "》 吗？") == DialogResult.OK)
                     {
                         try
@@ -195,9 +208,13 @@ namespace soc_nds_csharp.Authority
             txt_UserPwd.Text = "";
             txt_UserPwdAgain.Text = "";
             txt_Remark.Text = "";
-            cbo_UserRole.SelectedIndex = -1;
             txt_UserName.Enabled = true;
             sign = "";
+
+            cbo_UserRole.DataSource = HDIC_DB.GetList("select distinct roleNo,roleName from SysRole");
+            cbo_UserRole.DisplayMember = "roleName";
+            cbo_UserRole.ValueMember = "roleNo";
+            cbo_UserRole.SelectedIndex = -1;
         }
 
         private bool chekPara()
@@ -245,5 +262,17 @@ namespace soc_nds_csharp.Authority
             this.Close();
         }
 
+        #region 判断该用户是不是超级管理员
+        private bool userUse()
+        {
+            if (dgv_SysUser.SelectedRows[0].Cells["userName"].Value.ToString().ToLower().Trim() == "admin")
+            {
+                HDIC_Message.ShowWarnDialog(this, "您不能修改超级管理用户");
+                initCtrols();
+                return false;
+            }
+            return true;
+        }
+        #endregion
     }
 }

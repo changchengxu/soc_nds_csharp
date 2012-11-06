@@ -124,7 +124,7 @@ namespace soc_nds_csharp.Import_Data
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Title = "打开";
             OpenFile.InitialDirectory = @"桌面";
-            OpenFile.Filter = "文本文件(*.txt|*.txt;*.doc)";
+            OpenFile.Filter = "文本文件(*.txt)|*.txt|文档文件（*.doc)|*.doc;*.docx)";
             DialogResult drResult = OpenFile.ShowDialog();
             if (drResult == DialogResult.OK)
                 path = OpenFile.FileName;

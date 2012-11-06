@@ -52,7 +52,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 27.17391F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72.82609F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(635, 455);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 579);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -62,14 +62,14 @@
             this.panel1.Controls.Add(this.txt_CAID);
             this.panel1.Controls.Add(this.btn_clear);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(145, 103);
+            this.panel1.Location = new System.Drawing.Point(189, 136);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(333, 262);
+            this.panel1.Size = new System.Drawing.Size(438, 353);
             this.panel1.TabIndex = 0;
             // 
             // btn_cancel
             // 
-            this.btn_cancel.Location = new System.Drawing.Point(227, 174);
+            this.btn_cancel.Location = new System.Drawing.Point(263, 190);
             this.btn_cancel.Name = "btn_cancel";
             this.btn_cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_cancel.TabIndex = 3;
@@ -80,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(88, 112);
+            this.label1.Location = new System.Drawing.Point(124, 128);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 2;
@@ -88,14 +88,14 @@
             // 
             // txt_CAID
             // 
-            this.txt_CAID.Location = new System.Drawing.Point(155, 106);
+            this.txt_CAID.Location = new System.Drawing.Point(191, 122);
             this.txt_CAID.Name = "txt_CAID";
             this.txt_CAID.Size = new System.Drawing.Size(100, 21);
             this.txt_CAID.TabIndex = 1;
             // 
             // btn_clear
             // 
-            this.btn_clear.Location = new System.Drawing.Point(67, 173);
+            this.btn_clear.Location = new System.Drawing.Point(103, 189);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(75, 23);
             this.btn_clear.TabIndex = 0;
@@ -107,7 +107,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 455);
+            this.ClientSize = new System.Drawing.Size(784, 579);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Delete_DBRecords";
             this.Text = "删除数据库记录";

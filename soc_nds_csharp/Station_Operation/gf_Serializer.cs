@@ -38,17 +38,23 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (Keys.KeyCode == Keys.Enter)
             {
-                btn_begin_Click(null, e);
+                Connect();
             }
         }
 
         private void btn_begin_Click(object sender, EventArgs e)
+        {
+            Connect();
+        }
+
+        private int Connect()
         {
             // richtxt_Connect
             this.richtxt_Connect.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.richtxt_Connect.ForeColor = System.Drawing.Color.ForestGreen;
             this.richtxt_Connect.Text = "正在尝试连接,请稍后... ...";
 
+            return 0;
         }
 
     }
