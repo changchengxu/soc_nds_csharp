@@ -52,6 +52,12 @@
     <Compile Include="App_Code\HDIC.cs" />
     <Compile Include="App_Code\Printer.cs" />
     <Compile Include="App_Code\SysRole.cs" />
+    <Compile Include="Authority\gf_MenuManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Authority\gf_MenuManage.Designer.cs">
+      <DependentUpon>gf_MenuManage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Authority\gf_SysRole.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +174,9 @@
     <Compile Include="STB_Manage\STBOp01.Designer.cs">
       <DependentUpon>STBOp01.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Authority\gf_MenuManage.resx">
+      <DependentUpon>gf_MenuManage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Authority\gf_SysRole.resx">
       <DependentUpon>gf_SysRole.cs</DependentUpon>
     </EmbeddedResource>
