@@ -54,7 +54,7 @@
             this.dsafToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(998, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(998, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "&File  &Window";
             // 
@@ -64,20 +64,20 @@
             this.tsm_reset,
             this.tsm_exit});
             this.dsafToolStripMenuItem.Name = "dsafToolStripMenuItem";
-            this.dsafToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.dsafToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.dsafToolStripMenuItem.Text = "文件";
             // 
             // tsm_reset
             // 
             this.tsm_reset.Name = "tsm_reset";
-            this.tsm_reset.Size = new System.Drawing.Size(100, 22);
+            this.tsm_reset.Size = new System.Drawing.Size(98, 22);
             this.tsm_reset.Text = "重启";
             this.tsm_reset.Click += new System.EventHandler(this.tsm_reset_Click);
             // 
             // tsm_exit
             // 
             this.tsm_exit.Name = "tsm_exit";
-            this.tsm_exit.Size = new System.Drawing.Size(100, 22);
+            this.tsm_exit.Size = new System.Drawing.Size(98, 22);
             this.tsm_exit.Text = "退出";
             this.tsm_exit.Click += new System.EventHandler(this.tsm_exit_Click);
             // 
@@ -94,25 +94,25 @@
             // 锁屏LToolStripMenuItem
             // 
             this.锁屏LToolStripMenuItem.Name = "锁屏LToolStripMenuItem";
-            this.锁屏LToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.锁屏LToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.锁屏LToolStripMenuItem.Text = "锁屏(&L)";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
             // 
             // 退出XToolStripMenuItem
             // 
             this.退出XToolStripMenuItem.Name = "退出XToolStripMenuItem";
-            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.退出XToolStripMenuItem.Text = "退出(&X)";
             // 
             // panel1
             // 
             this.panel1.BackgroundImage = global::soc_nds_csharp.Properties.Resources.Level;
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(998, 9);
             this.panel1.TabIndex = 23;
@@ -125,9 +125,9 @@
             this.taskPane1.CustomSettings.GradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
             this.taskPane1.CustomSettings.Padding = new XPExplorerBar.Padding(1, 0, 0, 0);
             this.taskPane1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.taskPane1.Location = new System.Drawing.Point(0, 34);
+            this.taskPane1.Location = new System.Drawing.Point(0, 33);
             this.taskPane1.Name = "taskPane1";
-            this.taskPane1.Size = new System.Drawing.Size(210, 518);
+            this.taskPane1.Size = new System.Drawing.Size(210, 519);
             this.taskPane1.TabIndex = 32;
             this.taskPane1.Text = "taskPane1";
             // 
@@ -135,9 +135,9 @@
             // 
             this.pictureBox2.BackgroundImage = global::soc_nds_csharp.Properties.Resources.Vertical;
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pictureBox2.Location = new System.Drawing.Point(210, 34);
+            this.pictureBox2.Location = new System.Drawing.Point(210, 33);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(10, 518);
+            this.pictureBox2.Size = new System.Drawing.Size(10, 519);
             this.pictureBox2.TabIndex = 33;
             this.pictureBox2.TabStop = false;
             // 
@@ -154,7 +154,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // gf_main

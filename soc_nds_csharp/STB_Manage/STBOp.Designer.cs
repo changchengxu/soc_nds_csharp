@@ -113,7 +113,7 @@
             this.Controls.Add(this.dgv_STB);
             this.Controls.Add(this.toolStrip1);
             this.Name = "STBOp";
-            this.Text = "STBOp";
+            this.Text = "流水线管理";
             this.Load += new System.EventHandler(this.STBClient_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

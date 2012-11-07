@@ -61,9 +61,15 @@ namespace soc_nds_csharp.Authority
                 HDIC_Message.ShowWarnDialog(this, "没有选择主菜单");
                 return false;
             }
+            if (HDIC_DB.sqlQuery("select count(menuNo) from SysMenuDisplay where formName='" + txt_subMenu.Text.Trim() + "'") != "0")
+            {
+                HDIC_Message.ShowWarnDialog(this, "该菜单已经存在，请重新添加新菜单");
+                return false;
+            }
             return true;
         }
 
+        string addr = "";
         private void btn_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog OpenFileDialog1 =new OpenFileDialog();
@@ -73,7 +79,7 @@ namespace soc_nds_csharp.Authority
             {
                 try
                 {
-                    string addr = OpenFileDialog1.FileName;
+                    addr = OpenFileDialog1.FileName;
                     addr = addr.Substring(addr.LastIndexOf("soc_nds_csharp"));
                     txt_subMenu.Text = addr.Substring(0,addr.LastIndexOf("."));
                     txt_subMenu.Text = txt_subMenu.Text.Replace("\\", ".");
@@ -92,9 +98,42 @@ namespace soc_nds_csharp.Authority
             {
                 return;
             }
+            //获取ID
             string sqlstr = "select max(menuNo) from SysMenuDisplay where menuNo like '" + cbo_Menu.SelectedValue.ToString().Trim() + "%'";
-            string ID = (Convert.ToInt32(HDIC_DB.sqlQuery(sqlstr))+1).ToString().Trim();
-            sqlstr = @"insert into SysMenuDisplay values('0" + ID + "','" + this.Text.Trim() + "','" + txt_subMenu.Text.Trim() + "',null,'" +
+            string menuNoID =HDIC_DB.sqlQuery(sqlstr).Trim();
+            if (menuNoID.Length == 2)
+            {
+                menuNoID = menuNoID + "01";
+            }
+            else
+            {
+                string temp = (Convert.ToInt32(menuNoID.Substring(2, menuNoID.Length-2)) + 1).ToString();
+                if (temp.Length == 1)
+                {
+                    menuNoID = menuNoID.Substring(0, 2) + temp.PadLeft(temp.Length+1, '0');
+                }
+                else
+                {
+                    menuNoID = menuNoID.Substring(0, 2) + temp.PadLeft(temp.Length, '0');
+                }
+            }
+
+            //获取窗体的Text值
+            string formName = "";
+            try
+            {
+                Type fType = Type.GetType(txt_subMenu.Text);
+                Form f = (Form)fType.InvokeMember("乱写", System.Reflection.BindingFlags.CreateInstance, null, null, null);
+                formName = f.Text;
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "  添加的不是窗体文件，请重新添加 .\n"+ex.ToString());
+                return;
+            }
+
+            //sql语句添加
+            sqlstr = @"insert into SysMenuDisplay values('" + menuNoID + "','" + formName + "','" + txt_subMenu.Text.Trim() + "',null,'" +
                     cbo_Menu.SelectedValue.ToString().Trim()+"',0)";
             if (HDIC_DB.ExcuteNonQuery(sqlstr, null) > 0)
             {

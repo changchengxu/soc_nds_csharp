@@ -126,7 +126,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "DB";
-            this.Text = "DB";
+            this.Text = "数据库管理";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
