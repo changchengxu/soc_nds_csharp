@@ -44,6 +44,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.richtxt_CAID = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.richtxt_SmartCardID = new System.Windows.Forms.RichTextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,7 +84,7 @@
             // 
             // btn_begin
             // 
-            this.btn_begin.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_begin.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_begin.Location = new System.Drawing.Point(144, 372);
             this.btn_begin.Name = "btn_begin";
             this.btn_begin.Size = new System.Drawing.Size(465, 38);
@@ -94,6 +96,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.richtxt_SmartCardID);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.richtxt_STBPla3);
             this.groupBox1.Controls.Add(this.richtxt_STBPla2);
             this.groupBox1.Controls.Add(this.richtxt_STBPla1);
@@ -146,7 +150,7 @@
             // 
             // richtxt_STBID
             // 
-            this.richtxt_STBID.Location = new System.Drawing.Point(131, 197);
+            this.richtxt_STBID.Location = new System.Drawing.Point(131, 165);
             this.richtxt_STBID.Name = "richtxt_STBID";
             this.richtxt_STBID.Size = new System.Drawing.Size(304, 28);
             this.richtxt_STBID.TabIndex = 10;
@@ -155,7 +159,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(68, 205);
+            this.label4.Location = new System.Drawing.Point(68, 173);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 12);
             this.label4.TabIndex = 9;
@@ -163,7 +167,7 @@
             // 
             // richtxt_ChipID
             // 
-            this.richtxt_ChipID.Location = new System.Drawing.Point(131, 124);
+            this.richtxt_ChipID.Location = new System.Drawing.Point(131, 105);
             this.richtxt_ChipID.Name = "richtxt_ChipID";
             this.richtxt_ChipID.Size = new System.Drawing.Size(304, 28);
             this.richtxt_ChipID.TabIndex = 8;
@@ -172,7 +176,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(64, 132);
+            this.label3.Location = new System.Drawing.Point(64, 113);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 7;
@@ -195,6 +199,23 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "CA ID:";
             // 
+            // richtxt_SmartCardID
+            // 
+            this.richtxt_SmartCardID.Location = new System.Drawing.Point(131, 214);
+            this.richtxt_SmartCardID.Name = "richtxt_SmartCardID";
+            this.richtxt_SmartCardID.Size = new System.Drawing.Size(304, 28);
+            this.richtxt_SmartCardID.TabIndex = 16;
+            this.richtxt_SmartCardID.Text = "";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(40, 222);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "SmartCardID:";
+            // 
             // gf_Serializer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -209,7 +230,7 @@
             this.Controls.Add(this.richtxt_info);
             this.Name = "gf_Serializer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "序列化工具";
+            this.Text = "序列号工具";
             this.Load += new System.EventHandler(this.gf_Serializer_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -236,6 +257,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RichTextBox richtxt_CAID;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox richtxt_SmartCardID;
+        private System.Windows.Forms.Label label6;
 
     }
 }

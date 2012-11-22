@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using HDICSoft.Message;
 using BarcodeLib;
 
 namespace soc_nds_csharp.DB_Manage
@@ -30,6 +31,11 @@ namespace soc_nds_csharp.DB_Manage
         #region btn_Encode
         private void btnEncode_Click(object sender, EventArgs e)
         {
+            if (cbEncodeType.SelectedIndex == -1)
+            {
+                HDIC_Message.ShowWarnDialog(this, "请选择编码类型");
+                return;
+            }
             int W = Convert.ToInt32(this.txtWidth.Text.Trim());
             int H = Convert.ToInt32(this.txtHeight.Text.Trim());
 
@@ -125,6 +131,12 @@ namespace soc_nds_csharp.DB_Manage
         #region print
         private void Print_Click(object sender, EventArgs e)
         {
+            if (cbEncodeType.SelectedIndex == -1)
+            {
+                HDIC_Message.ShowWarnDialog(this, "请选择编码类型");
+                return;
+            }
+
             //printDocument1.Print();
             //TSCLIB_DLL.about();                                                                 //Show the DLL version
 
