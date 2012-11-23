@@ -692,6 +692,69 @@ namespace HDICSoft.Func
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width">卷标宽度</param>
+        /// <param name="height">卷标高度</param>
+        /// <param name="printSpeed">打印速度</param>
+        /// <param name="density">打印浓度</param>
+        /// <param name="X">条形码X方向起始点</param>
+        /// <param name="Y">条形码Y方向起始点</param>
+        /// <param name="EncodeType">编码类型</param>
+        /// <param name="GenerateLabel">打印码文</param>
+        /// <param name="content1">打印STB ID</param>
+        /// <param name="content2">打印CA ID</param>
+        /// <param name="content3">打印 SmartCardID</param>
+        /// <param name="rotate">设定条形码旋转角度</param>
+        /// <param name="bar">条形码宽窄bar 比例因子</param>
+        /// <param name="flag">0：不打印SmartCardID；1打印</param>
+        public static void TSCPrinter(string width,string height,string printSpeed,string density,string X,string Y,string EncodeType, string GenerateLabel, string content1, string content2, string content3,string rotate,string bar, int flag)
+        {
+            #region 1
+            //TSCLIB_DLL.openport("TSC TTP-344M Plus");                                           //Open specified printer driver
+            //TSCLIB_DLL.setup("100", "63.5", "4", "8", "0", "0", "0");                           //Setup the media size and sensor type info
+            //TSCLIB_DLL.clearbuffer();                                                           //Clear image buffer
+
+            //TSCLIB_DLL.barcode("100", "100", "128", "100", "1", "0", "2", "2", this.txtData.Text.Trim()); //Drawing barcode
+            //TSCLIB_DLL.printerfont("100", "250", "3", "0", "1", "1", "Print Font Test");        //Drawing printer font
+            //TSCLIB_DLL.windowsfont(100, 300, 24, 0, 0, 0, "ARIAL", "Windows Arial Font Test");  //Draw windows font
+
+            //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
+            //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
+
+            //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
+            //TSCLIB_DLL.closeport();                                                             //Close specified printer driver 
+            #endregion
+
+            #region 2
+            TSCLIB_DLL.openport("TSC TTP-344M Plus");
+            TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "0", "0");                           //Setup the media size and sensor type info
+            TSCLIB_DLL.clearbuffer();
+
+            TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
+            TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y)+140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
+            if (flag == 0)
+            {
+                TSCLIB_DLL.printlabel("1", "3");  //户户通打印八份
+            }
+            if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号
+            {
+                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 280).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content3);//打印SmartCardID
+                TSCLIB_DLL.printlabel("1", "2");  //村村通打印七份
+            }
+
+            //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
+            //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font
+
+            //TSCLIB_DLL.windowsfont(250, 350, 160, 0, 2, 0, "Times new Roman", "邱晓淯");  //Draw windows font
+            //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
+            //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
+            TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
+            TSCLIB_DLL.closeport();
+            #endregion
+        }
+
+        /// <summary>
         /// 写日志信息
         /// </summary>
         /// <param name="LogMsg">日志信息</param>
@@ -1198,5 +1261,107 @@ namespace HDICSoft.Command
             get { return _roleno; }
             set { _roleno = value; }
         }
+
+#region 条形码打印机变量
+        /// <summary>
+        /// 卷标宽度
+        /// </summary>
+        private static string tscwidth = "";
+        public static string tscWidth
+        {
+            get { return tscwidth; }
+            set { tscwidth = value; }
+        }
+        /// <summary>
+        /// 卷标高度
+        /// </summary>
+        private static string tscheight = "";
+        public static string tscHeight
+        {
+            get { return tscheight; }
+            set { tscheight = value; }
+        }
+        /// <summary>
+        /// 打印速度
+        /// </summary>
+        private static string tscprintspeed = "";
+            public static string tscPrintSpeed
+            {
+                get { return tscprintspeed; }
+                set { tscprintspeed = value; }
+            }
+        /// <summary>
+        /// 打印浓度
+        /// </summary>
+            private static string tscdensity = "";
+        public static string tscDensity
+            {
+                get { return tscdensity; }
+                set { tscdensity = value; }
+            }
+        /// <summary>
+        /// 条形码X方向起始点
+        /// </summary>
+        private static string tscx = "";
+        public static string tscX
+        {
+            get { return tscx; }
+            set { tscx = value; }
+        }
+        /// <summary>
+        /// 条形码Y方向起始点
+        /// </summary>
+        private static string tscy = "";
+        public static string tscY
+        {
+            get { return tscy; }
+            set { tscy = value; }
+        }
+        /// <summary>
+        /// 编码类型
+        /// </summary>
+        private static string tscencodetype = "";
+            public static string tscEncodeType
+            {
+                get { return tscencodetype; }
+                set { tscencodetype = value; }
+            }
+        /// <summary>
+        /// 打印码文
+        /// </summary>
+        private static string tscgeneratelabel="";
+        public static string  tscGeneratelabel
+        {
+            get { return tscgeneratelabel; }
+            set { tscgeneratelabel = value; }
+        }
+        /// <summary>
+        /// 设置条形码旋转角度
+        /// </summary>
+        private static string tscrotate = "";
+        public static string tscRotate
+        {
+            get { return tscrotate; }
+            set { tscrotate = value; }
+        }
+        /// <summary>
+        /// 条形码宽窄bar 比例因子
+        /// </summary>
+        private static string tscbar = "";
+           public  static string tscBar
+            {
+                get { return tscbar; }
+                set { tscbar = value; }
+            }
+        /// <summary>
+        /// 0 不打印智能卡号，1 打印
+        /// </summary>
+           private static int tscflag=0;
+        public static int tscFlag
+           {
+               get { return tscflag; }
+               set { tscflag = value; }
+           }
+#endregion
     }
 }
