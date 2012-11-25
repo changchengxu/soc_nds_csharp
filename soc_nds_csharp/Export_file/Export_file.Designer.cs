@@ -31,10 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Export_file));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsb_ExportData = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tst_Exit = new System.Windows.Forms.ToolStripButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.txt_HardwareID = new System.Windows.Forms.TextBox();
@@ -53,12 +49,16 @@
             this.txt_STBModel = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_Import = new System.Windows.Forms.Button();
-            this.txt_name = new System.Windows.Forms.TextBox();
+            this.txt_ManufacturerName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsb_ExportData = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tst_Exit = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -87,41 +87,6 @@
             this.panel1.Size = new System.Drawing.Size(456, 429);
             this.panel1.TabIndex = 0;
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_ExportData,
-            this.toolStripSeparator1,
-            this.tst_Exit});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(764, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // tsb_ExportData
-            // 
-            this.tsb_ExportData.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ExportData.Image")));
-            this.tsb_ExportData.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_ExportData.Name = "tsb_ExportData";
-            this.tsb_ExportData.Size = new System.Drawing.Size(75, 22);
-            this.tsb_ExportData.Text = "数据导出";
-            this.tsb_ExportData.Click += new System.EventHandler(this.tsb_ExportData_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tst_Exit
-            // 
-            this.tst_Exit.Image = ((System.Drawing.Image)(resources.GetObject("tst_Exit.Image")));
-            this.tst_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tst_Exit.Name = "tst_Exit";
-            this.tst_Exit.Size = new System.Drawing.Size(51, 22);
-            this.tst_Exit.Text = "退出";
-            this.tst_Exit.Click += new System.EventHandler(this.tst_Exit_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dateTimePicker1);
@@ -141,7 +106,7 @@
             this.groupBox1.Controls.Add(this.txt_STBModel);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btn_Import);
-            this.groupBox1.Controls.Add(this.txt_name);
+            this.groupBox1.Controls.Add(this.txt_ManufacturerName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(16, 6);
             this.groupBox1.Name = "groupBox1";
@@ -152,8 +117,8 @@
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd HH:mm";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.CustomFormat = "";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(158, 124);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(237, 21);
@@ -290,12 +255,12 @@
             this.btn_Import.UseVisualStyleBackColor = true;
             this.btn_Import.Click += new System.EventHandler(this.btn_Import_Click);
             // 
-            // txt_name
+            // txt_ManufacturerName
             // 
-            this.txt_name.Location = new System.Drawing.Point(158, 44);
-            this.txt_name.Name = "txt_name";
-            this.txt_name.Size = new System.Drawing.Size(153, 21);
-            this.txt_name.TabIndex = 24;
+            this.txt_ManufacturerName.Location = new System.Drawing.Point(158, 44);
+            this.txt_ManufacturerName.Name = "txt_ManufacturerName";
+            this.txt_ManufacturerName.Size = new System.Drawing.Size(153, 21);
+            this.txt_ManufacturerName.TabIndex = 24;
             // 
             // label1
             // 
@@ -306,6 +271,41 @@
             this.label1.TabIndex = 23;
             this.label1.Text = "生产商名字:";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsb_ExportData,
+            this.toolStripSeparator1,
+            this.tst_Exit});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(764, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsb_ExportData
+            // 
+            this.tsb_ExportData.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ExportData.Image")));
+            this.tsb_ExportData.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_ExportData.Name = "tsb_ExportData";
+            this.tsb_ExportData.Size = new System.Drawing.Size(76, 22);
+            this.tsb_ExportData.Text = "数据导出";
+            this.tsb_ExportData.Click += new System.EventHandler(this.tsb_ExportData_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tst_Exit
+            // 
+            this.tst_Exit.Image = ((System.Drawing.Image)(resources.GetObject("tst_Exit.Image")));
+            this.tst_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tst_Exit.Name = "tst_Exit";
+            this.tst_Exit.Size = new System.Drawing.Size(52, 22);
+            this.tst_Exit.Text = "退出";
+            this.tst_Exit.Click += new System.EventHandler(this.tst_Exit_Click);
+            // 
             // Export_file
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -315,12 +315,13 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Export_file";
             this.Text = "导出返回文件";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Export_file_FormClosed);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -352,7 +353,7 @@
         private System.Windows.Forms.TextBox txt_STBModel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_Import;
-        private System.Windows.Forms.TextBox txt_name;
+        private System.Windows.Forms.TextBox txt_ManufacturerName;
         private System.Windows.Forms.Label label1;
     }
 }

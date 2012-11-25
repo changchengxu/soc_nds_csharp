@@ -159,8 +159,8 @@ namespace soc_nds_csharp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new gf_main());
-            Application.Run(new DB_Manage.gf_Barcode());
-            //Application.Run(new DB_Manage.gf_TSCBarcode());
+            //Application.Run(new DB_Manage.gf_Barcode());
+            Application.Run(new Export_file.Export_file());
 
         }
     }
