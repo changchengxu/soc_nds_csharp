@@ -754,6 +754,21 @@ namespace HDICSoft.Func
             #endregion
         }
 
+        /// <param name="xmlPath">xml字符串</param>
+        /// <returns>DataSet</returns>
+        public static DataSet XMLToDataSet(string dir)
+        {
+            String fileExtension = System.IO.Path.GetExtension(dir);
+            if (fileExtension != ".xml" || !System.IO.File.Exists(dir))
+            {
+               MessageBox.Show( "加载的xml文件格式错误");
+            }
+            DataSet ds = new DataSet();
+            ds.ReadXml(dir);
+            return ds;
+        }
+
+
         /// <summary>
         /// 写日志信息
         /// </summary>

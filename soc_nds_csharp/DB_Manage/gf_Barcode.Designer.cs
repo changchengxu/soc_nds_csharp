@@ -94,9 +94,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslEncodedType});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 608);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(906, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
             this.statusStrip1.TabIndex = 42;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -110,9 +110,9 @@
             // 
             this.panel_Detail.Controls.Add(this.gbox_Detail);
             this.panel_Detail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_Detail.Location = new System.Drawing.Point(0, 439);
+            this.panel_Detail.Location = new System.Drawing.Point(0, 425);
             this.panel_Detail.Name = "panel_Detail";
-            this.panel_Detail.Size = new System.Drawing.Size(906, 169);
+            this.panel_Detail.Size = new System.Drawing.Size(884, 169);
             this.panel_Detail.TabIndex = 40;
             // 
             // gbox_Detail
@@ -122,7 +122,7 @@
             this.gbox_Detail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbox_Detail.Location = new System.Drawing.Point(0, 0);
             this.gbox_Detail.Name = "gbox_Detail";
-            this.gbox_Detail.Size = new System.Drawing.Size(906, 169);
+            this.gbox_Detail.Size = new System.Drawing.Size(884, 169);
             this.gbox_Detail.TabIndex = 45;
             this.gbox_Detail.TabStop = false;
             this.gbox_Detail.Text = "详细设置";
@@ -140,7 +140,7 @@
             this.groupBox8.Controls.Add(this.cbEncodeType);
             this.groupBox8.Controls.Add(this.txt_tscBar);
             this.groupBox8.Controls.Add(this.chkGenerateLabel);
-            this.groupBox8.Location = new System.Drawing.Point(358, 16);
+            this.groupBox8.Location = new System.Drawing.Point(358, 5);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(489, 144);
             this.groupBox8.TabIndex = 63;
@@ -285,7 +285,7 @@
             this.groupBox7.Controls.Add(this.txt_tscSpeed);
             this.groupBox7.Controls.Add(this.label11);
             this.groupBox7.Controls.Add(this.txt_tscDensity);
-            this.groupBox7.Location = new System.Drawing.Point(94, 16);
+            this.groupBox7.Location = new System.Drawing.Point(94, 5);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(192, 144);
             this.groupBox7.TabIndex = 62;
@@ -371,7 +371,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(293, 439);
+            this.groupBox1.Size = new System.Drawing.Size(295, 425);
             this.groupBox1.TabIndex = 43;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "用户设置";
@@ -379,7 +379,7 @@
             // btn_Detail
             // 
             this.btn_Detail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Detail.Location = new System.Drawing.Point(143, 392);
+            this.btn_Detail.Location = new System.Drawing.Point(151, 398);
             this.btn_Detail.Name = "btn_Detail";
             this.btn_Detail.Size = new System.Drawing.Size(138, 21);
             this.btn_Detail.TabIndex = 55;
@@ -572,12 +572,12 @@
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Controls.Add(this.pic_barcode);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox2.Location = new System.Drawing.Point(315, 0);
+            this.groupBox2.Location = new System.Drawing.Point(293, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(591, 439);
+            this.groupBox2.Size = new System.Drawing.Size(591, 425);
             this.groupBox2.TabIndex = 44;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "条形码显示";
+            this.groupBox2.Text = "STB ID条形码显示";
             // 
             // pictureBox1
             // 
@@ -604,11 +604,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 630);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(884, 616);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel_Detail);
             this.Controls.Add(this.statusStrip1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "gf_Barcode";
             this.Text = "gf_Barcode";
             this.Load += new System.EventHandler(this.gf_Barcode_Load);

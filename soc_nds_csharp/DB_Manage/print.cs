@@ -252,6 +252,12 @@ namespace soc_nds_csharp.DB_Manage
         }
         #endregion
 
+        private void tsbBarcodePrint_Click(object sender, EventArgs e)
+        {
+            gf_Barcode barcodeOBJ = new gf_Barcode();
+            barcodeOBJ.ShowDialog();
+        }
+
     }
 
 }

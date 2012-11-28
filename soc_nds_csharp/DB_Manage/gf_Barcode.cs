@@ -53,16 +53,31 @@ namespace soc_nds_csharp.DB_Manage
             HDIC_Command.tscBar = "4";
             HDIC_Command.tscFlag = 1;
 
-            txt_tscWidth.Text= HDIC_Command.tscWidth;
-            txt_tscHeight.Text= HDIC_Command.tscHeight;
-            txt_tscSpeed.Text=HDIC_Command.tscPrintSpeed;
-            txt_tscDensity.Text=HDIC_Command.tscDensity;
-            txt_tscX.Text=HDIC_Command.tscX;
-            txt_tscY.Text=HDIC_Command.tscY;
-            cbEncodeType.Text = HDIC_Command.tscEncodeType;
-            chkGenerateLabel.Checked=Convert.ToBoolean(Convert.ToInt32(HDIC_Command.tscGeneratelabel));
-            cbox_tscRotate.Text = HDIC_Command.tscRotate;
-            txt_tscBar.Text = HDIC_Command.tscBar;
+            //txt_tscWidth.Text= HDIC_Command.tscWidth;
+            //txt_tscHeight.Text= HDIC_Command.tscHeight;
+            //txt_tscSpeed.Text=HDIC_Command.tscPrintSpeed;
+            //txt_tscDensity.Text=HDIC_Command.tscDensity;
+            //txt_tscX.Text=HDIC_Command.tscX;
+            //txt_tscY.Text=HDIC_Command.tscY;
+            //cbEncodeType.Text = HDIC_Command.tscEncodeType;
+            //chkGenerateLabel.Checked=Convert.ToBoolean(Convert.ToInt32(HDIC_Command.tscGeneratelabel));
+            //cbox_tscRotate.Text = HDIC_Command.tscRotate;
+            //txt_tscBar.Text = HDIC_Command.tscBar;
+
+            DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
+              if (dt.Rows.Count > 0)
+              {
+                  txt_tscWidth.Text = dt.Rows[0]["tscWidth"].ToString().Trim();
+                  txt_tscHeight.Text = dt.Rows[0]["tscHeight"].ToString().Trim();
+                  txt_tscSpeed.Text = dt.Rows[0]["tscPrintSpeed"].ToString().Trim();
+                  txt_tscDensity.Text = dt.Rows[0]["tscDensity"].ToString().Trim();
+                  txt_tscX.Text = dt.Rows[0]["tscX"].ToString().Trim();
+                  txt_tscY.Text = dt.Rows[0]["tscY"].ToString().Trim();
+                  cbEncodeType.Text = dt.Rows[0]["tscEncodeType"].ToString().Trim();
+                  chkGenerateLabel.Checked = Convert.ToBoolean(Convert.ToInt32(dt.Rows[0]["tscGeneratelabel"].ToString().Trim()));
+                  cbox_tscRotate.Text = dt.Rows[0]["tscRotate"].ToString().Trim();
+                  txt_tscBar.Text = dt.Rows[0]["tscBar"].ToString().Trim();
+              }
         }
         #endregion
 

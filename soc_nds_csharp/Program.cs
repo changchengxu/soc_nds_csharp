@@ -160,7 +160,7 @@ namespace soc_nds_csharp
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new gf_main());
             //Application.Run(new DB_Manage.gf_Barcode());
-            Application.Run(new Export_file.Export_file());
+            Application.Run(new Station_Operation.gf_Serializer());
 
         }
     }

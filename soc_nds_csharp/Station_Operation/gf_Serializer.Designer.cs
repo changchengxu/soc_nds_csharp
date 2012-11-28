@@ -34,9 +34,11 @@
             this.richtxt_SerialID = new System.Windows.Forms.RichTextBox();
             this.btn_begin = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.richtxt_STBPla3 = new System.Windows.Forms.RichTextBox();
-            this.richtxt_STBPla2 = new System.Windows.Forms.RichTextBox();
-            this.richtxt_STBPla1 = new System.Windows.Forms.RichTextBox();
+            this.richtxt_SmartCardID = new System.Windows.Forms.RichTextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.richtxt_HardwareID = new System.Windows.Forms.RichTextBox();
+            this.richtxt_ModelID = new System.Windows.Forms.RichTextBox();
+            this.richtxt_ManufacturerID = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.richtxt_STBID = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -44,8 +46,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.richtxt_CAID = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.richtxt_SmartCardID = new System.Windows.Forms.RichTextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@
             // 
             this.richtxt_info.Location = new System.Drawing.Point(20, 48);
             this.richtxt_info.Name = "richtxt_info";
-            this.richtxt_info.Size = new System.Drawing.Size(272, 281);
+            this.richtxt_info.Size = new System.Drawing.Size(371, 281);
             this.richtxt_info.TabIndex = 1;
             this.richtxt_info.Text = "";
             // 
@@ -61,7 +61,7 @@
             // 
             this.richtxt_Connect.Location = new System.Drawing.Point(20, 14);
             this.richtxt_Connect.Name = "richtxt_Connect";
-            this.richtxt_Connect.Size = new System.Drawing.Size(272, 28);
+            this.richtxt_Connect.Size = new System.Drawing.Size(371, 28);
             this.richtxt_Connect.TabIndex = 2;
             this.richtxt_Connect.Text = "";
             // 
@@ -78,7 +78,7 @@
             // 
             this.richtxt_SerialID.Location = new System.Drawing.Point(100, 335);
             this.richtxt_SerialID.Name = "richtxt_SerialID";
-            this.richtxt_SerialID.Size = new System.Drawing.Size(192, 28);
+            this.richtxt_SerialID.Size = new System.Drawing.Size(291, 28);
             this.richtxt_SerialID.TabIndex = 4;
             this.richtxt_SerialID.Text = "";
             // 
@@ -98,9 +98,9 @@
             // 
             this.groupBox1.Controls.Add(this.richtxt_SmartCardID);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.richtxt_STBPla3);
-            this.groupBox1.Controls.Add(this.richtxt_STBPla2);
-            this.groupBox1.Controls.Add(this.richtxt_STBPla1);
+            this.groupBox1.Controls.Add(this.richtxt_HardwareID);
+            this.groupBox1.Controls.Add(this.richtxt_ModelID);
+            this.groupBox1.Controls.Add(this.richtxt_ManufacturerID);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.richtxt_STBID);
             this.groupBox1.Controls.Add(this.label4);
@@ -108,36 +108,53 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.richtxt_CAID);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(306, 13);
+            this.groupBox1.Location = new System.Drawing.Point(387, 13);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(461, 350);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ID信息";
             // 
-            // richtxt_STBPla3
+            // richtxt_SmartCardID
             // 
-            this.richtxt_STBPla3.Location = new System.Drawing.Point(267, 277);
-            this.richtxt_STBPla3.Name = "richtxt_STBPla3";
-            this.richtxt_STBPla3.Size = new System.Drawing.Size(65, 28);
-            this.richtxt_STBPla3.TabIndex = 14;
-            this.richtxt_STBPla3.Text = "";
+            this.richtxt_SmartCardID.Location = new System.Drawing.Point(131, 214);
+            this.richtxt_SmartCardID.Name = "richtxt_SmartCardID";
+            this.richtxt_SmartCardID.Size = new System.Drawing.Size(304, 28);
+            this.richtxt_SmartCardID.TabIndex = 16;
+            this.richtxt_SmartCardID.Text = "";
             // 
-            // richtxt_STBPla2
+            // label6
             // 
-            this.richtxt_STBPla2.Location = new System.Drawing.Point(198, 277);
-            this.richtxt_STBPla2.Name = "richtxt_STBPla2";
-            this.richtxt_STBPla2.Size = new System.Drawing.Size(69, 28);
-            this.richtxt_STBPla2.TabIndex = 13;
-            this.richtxt_STBPla2.Text = "";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(40, 222);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(77, 12);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "SmartCardID:";
             // 
-            // richtxt_STBPla1
+            // richtxt_HardwareID
             // 
-            this.richtxt_STBPla1.Location = new System.Drawing.Point(131, 277);
-            this.richtxt_STBPla1.Name = "richtxt_STBPla1";
-            this.richtxt_STBPla1.Size = new System.Drawing.Size(70, 28);
-            this.richtxt_STBPla1.TabIndex = 12;
-            this.richtxt_STBPla1.Text = "";
+            this.richtxt_HardwareID.Location = new System.Drawing.Point(267, 277);
+            this.richtxt_HardwareID.Name = "richtxt_HardwareID";
+            this.richtxt_HardwareID.Size = new System.Drawing.Size(65, 28);
+            this.richtxt_HardwareID.TabIndex = 14;
+            this.richtxt_HardwareID.Text = "";
+            // 
+            // richtxt_ModelID
+            // 
+            this.richtxt_ModelID.Location = new System.Drawing.Point(198, 277);
+            this.richtxt_ModelID.Name = "richtxt_ModelID";
+            this.richtxt_ModelID.Size = new System.Drawing.Size(69, 28);
+            this.richtxt_ModelID.TabIndex = 13;
+            this.richtxt_ModelID.Text = "";
+            // 
+            // richtxt_ManufacturerID
+            // 
+            this.richtxt_ManufacturerID.Location = new System.Drawing.Point(131, 277);
+            this.richtxt_ManufacturerID.Name = "richtxt_ManufacturerID";
+            this.richtxt_ManufacturerID.Size = new System.Drawing.Size(70, 28);
+            this.richtxt_ManufacturerID.TabIndex = 12;
+            this.richtxt_ManufacturerID.Text = "";
             // 
             // label5
             // 
@@ -199,29 +216,12 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "CA ID:";
             // 
-            // richtxt_SmartCardID
-            // 
-            this.richtxt_SmartCardID.Location = new System.Drawing.Point(131, 214);
-            this.richtxt_SmartCardID.Name = "richtxt_SmartCardID";
-            this.richtxt_SmartCardID.Size = new System.Drawing.Size(304, 28);
-            this.richtxt_SmartCardID.TabIndex = 16;
-            this.richtxt_SmartCardID.Text = "";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(40, 222);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 12);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "SmartCardID:";
-            // 
             // gf_Serializer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(801, 413);
+            this.ClientSize = new System.Drawing.Size(855, 419);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_begin);
             this.Controls.Add(this.richtxt_SerialID);
@@ -247,9 +247,9 @@
         private System.Windows.Forms.RichTextBox richtxt_SerialID;
         private System.Windows.Forms.Button btn_begin;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RichTextBox richtxt_STBPla3;
-        private System.Windows.Forms.RichTextBox richtxt_STBPla2;
-        private System.Windows.Forms.RichTextBox richtxt_STBPla1;
+        private System.Windows.Forms.RichTextBox richtxt_HardwareID;
+        private System.Windows.Forms.RichTextBox richtxt_ModelID;
+        private System.Windows.Forms.RichTextBox richtxt_ManufacturerID;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox richtxt_STBID;
         private System.Windows.Forms.Label label4;

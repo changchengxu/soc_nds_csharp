@@ -152,6 +152,7 @@ namespace soc_nds_csharp.Export_file
 #endregion
         }
 
+        //关闭本窗体，自动关闭返回文件创建
         private void tst_Exit_Click(object sender, EventArgs e)
         {
             MessageBox.Show("导出数据成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -161,7 +162,6 @@ namespace soc_nds_csharp.Export_file
             this.Close();
         }
 
-        //关闭本窗体，自动关闭返回文件创建
         private void Export_file_FormClosed(object sender, FormClosedEventArgs e)
         {
            
