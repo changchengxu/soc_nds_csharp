@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="gb2312"?>
+
+<!--
+Copyright:ShangHai HDIC  Technology Co.Ltd.
+2012.11.27/V1.00/Will/ 
+-->
+
+<com>
+
+  <port>2</port>
+  <data_bits>8</data_bits>
+  <parity>None</parity>
+  <stop_bit>1</stop_bit>
+  <baud_rate>9600</baud_rate>
+
+</com>
+

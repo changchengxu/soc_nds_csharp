@@ -15,23 +15,23 @@ using System.Security.Cryptography;
 using System.Data.Common;
 using System.Configuration;
 using System.Data;
-using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 using System.Net;
+using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Xml;
-
+using TSC;
 
 namespace HDICSoft.Security
 {
-   class MD5
+   public class MD5
     {
-       /// <summary>
-       /// MD5加密或者解密
-       /// </summary>
-       /// <param name="sourceString"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// MD5加密或者解密
+        /// </summary>
+        /// <param name="sourceString"></param>
+        /// <returns></returns>
         public static string Encrypt(string sourceString)
         {
             byte[] bytes = Encoding.Default.GetBytes(sourceString);
@@ -44,7 +44,7 @@ namespace HDICSoft.Security
 
 namespace HDICSoft.DB
 {
-    class HDIC_DB
+   public class HDIC_DB
     {
 
         //   private static readonly string connStringName = ConfigurationManager.AppSettings["connStringName"].ToString();
@@ -81,10 +81,10 @@ namespace HDICSoft.DB
                     }
                     catch (Exception ex)
                     {
-                        if (trans != null) {  trans.Rollback();}//长城添加 
+                        if (trans != null) { trans.Rollback(); }//长城添加 
                         conn.Close();
                         cmd.Dispose();
-                        throw new Exception("数据操作错误"+ex.ToString());
+                        throw new Exception("数据操作错误" + ex.ToString());
                     }
                 }
             }
@@ -117,7 +117,7 @@ namespace HDICSoft.DB
             {
                 conn.Close();
                 cmd.Dispose();
-                throw new Exception("数据操作错误"+ex.ToString());
+                throw new Exception("数据操作错误" + ex.ToString());
             }
             //    }
             //}
@@ -148,7 +148,7 @@ namespace HDICSoft.DB
                     {
                         conn.Close();
                         cmd.Dispose();
-                        throw new Exception("数据操作错误"+ex.ToString());
+                        throw new Exception("数据操作错误" + ex.ToString());
                     }
                 }
             }
@@ -185,7 +185,7 @@ namespace HDICSoft.DB
                     {
                         conn.Close();
                         cmd.Dispose();
-                        throw new Exception("数据操作错误"+ex.ToString());
+                        throw new Exception("数据操作错误" + ex.ToString());
                     }
                 }
             }
@@ -259,7 +259,7 @@ namespace HDICSoft.DB
 
 namespace HDICSoft.Message
 {
-    class HDIC_Message
+   public class HDIC_Message
     {
         /// <summary>
         /// 显示警告对话框
@@ -333,9 +333,9 @@ namespace HDICSoft.Message
 
 namespace HDICSoft.Export
 {
-   class HDIC_Export
+   public class HDIC_Export
     {
-                /// <summary>
+        /// <summary>
         /// 从listbox中导出数据
         /// </summary>
         /// <param name="lbox">listbox控件</param>
@@ -445,7 +445,7 @@ namespace HDICSoft.Export
                             }
 
                         }
-                        }
+                    }
                     sw.WriteLine(tempTitle);
 
                     //循环写内容
@@ -482,7 +482,7 @@ namespace HDICSoft.Export
                                     tempStr += dt.Rows[j][k].ToString().Trim();
                                 }
                             }
-                            
+
                         }
                         sw.WriteLine(tempStr);
                     }
@@ -527,8 +527,8 @@ namespace HDICSoft.Export
                     {
                         temp[index] = GetMaxWidth(dgv, index);
                     }
-                        //写标题
-                        sw.WriteLine(txtTitle);
+                    //写标题
+                    sw.WriteLine(txtTitle);
 
                     //写数据字段
                     string tempTitle = "";
@@ -604,7 +604,7 @@ namespace HDICSoft.Export
                                         tempStr += padStr.PadRight(temp[k - 1] - Encoding.Default.GetBytes(dgv.Rows[j].Cells[k - 1].Value.ToString().Trim()).Length + 2, ' ');
 
                                     }
-                                        tempStr += dgv.Rows[j].Cells[k].Value.ToString().Trim();
+                                    tempStr += dgv.Rows[j].Cells[k].Value.ToString().Trim();
                                 }
                             }
                         }
@@ -645,7 +645,7 @@ namespace HDICSoft.Export
 
 namespace HDICSoft.Func
 {
-    class HDIC_Func
+   public class HDIC_Func
     {
         /// <summary>
         /// 设置app.config文件
@@ -655,7 +655,7 @@ namespace HDICSoft.Func
         public static void SetValue(string AppKey, string AppValue)
         {
             XmlDocument xDoc = new XmlDocument();
-            xDoc.Load(Application.StartupPath+@"\soc_nds_csharp.exe.config");
+            xDoc.Load(Application.StartupPath + @"\soc_nds_csharp.exe.config");
             XmlNode xNode;
             XmlElement xElem1;
             XmlElement xElem2;
@@ -672,7 +672,7 @@ namespace HDICSoft.Func
                 xElem2.SetAttribute("connectionString", AppValue);
                 xNode.AppendChild(xElem2);
             }
-            xDoc.Save(Application.StartupPath+@"\soc_nds_csharp.exe.config");
+            xDoc.Save(Application.StartupPath + @"\soc_nds_csharp.exe.config");
         }
 
         /// <summary>
@@ -708,7 +708,7 @@ namespace HDICSoft.Func
         /// <param name="rotate">设定条形码旋转角度</param>
         /// <param name="bar">条形码宽窄bar 比例因子</param>
         /// <param name="flag">0：不打印SmartCardID；1打印</param>
-        public static void TSCPrinter(string width,string height,string printSpeed,string density,string X,string Y,string EncodeType, string GenerateLabel, string content1, string content2, string content3,string rotate,string bar, int flag)
+        public static void TSCPrinter(string width, string height, string printSpeed, string density, string X, string Y, string EncodeType, string GenerateLabel, string content1, string content2, string content3, string rotate, string bar, int flag)
         {
             #region 1
             //TSCLIB_DLL.openport("TSC TTP-344M Plus");                                           //Open specified printer driver
@@ -732,7 +732,7 @@ namespace HDICSoft.Func
             TSCLIB_DLL.clearbuffer();
 
             TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
-            TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y)+140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
+            TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
             if (flag == 0)
             {
                 TSCLIB_DLL.printlabel("1", "3");  //户户通打印八份
@@ -761,7 +761,7 @@ namespace HDICSoft.Func
             String fileExtension = System.IO.Path.GetExtension(dir);
             if (fileExtension != ".xml" || !System.IO.File.Exists(dir))
             {
-               MessageBox.Show( "加载的xml文件格式错误");
+                MessageBox.Show("加载的xml文件格式错误");
             }
             DataSet ds = new DataSet();
             ds.ReadXml(dir);
@@ -1236,7 +1236,7 @@ namespace HDICSoft.Func
 
 namespace HDICSoft.Command
 {
-    class HDIC_Command
+   public class HDIC_Command
     {
         /// <summary>
         /// 设置背景颜色
@@ -1250,7 +1250,7 @@ namespace HDICSoft.Command
         /// <summary>
         /// userName
         /// </summary>
-        private static string _usename="";
+        private static string _usename = "";
         public static string UseName
         {
             get { return _usename; }
@@ -1277,106 +1277,106 @@ namespace HDICSoft.Command
             set { _roleno = value; }
         }
 
-#region 条形码打印机变量
-        /// <summary>
-        /// 卷标宽度
-        /// </summary>
-        private static string tscwidth = "";
-        public static string tscWidth
-        {
-            get { return tscwidth; }
-            set { tscwidth = value; }
-        }
-        /// <summary>
-        /// 卷标高度
-        /// </summary>
-        private static string tscheight = "";
-        public static string tscHeight
-        {
-            get { return tscheight; }
-            set { tscheight = value; }
-        }
-        /// <summary>
-        /// 打印速度
-        /// </summary>
-        private static string tscprintspeed = "";
-            public static string tscPrintSpeed
-            {
-                get { return tscprintspeed; }
-                set { tscprintspeed = value; }
-            }
-        /// <summary>
-        /// 打印浓度
-        /// </summary>
-            private static string tscdensity = "";
-        public static string tscDensity
-            {
-                get { return tscdensity; }
-                set { tscdensity = value; }
-            }
-        /// <summary>
-        /// 条形码X方向起始点
-        /// </summary>
-        private static string tscx = "";
-        public static string tscX
-        {
-            get { return tscx; }
-            set { tscx = value; }
-        }
-        /// <summary>
-        /// 条形码Y方向起始点
-        /// </summary>
-        private static string tscy = "";
-        public static string tscY
-        {
-            get { return tscy; }
-            set { tscy = value; }
-        }
-        /// <summary>
-        /// 编码类型
-        /// </summary>
-        private static string tscencodetype = "";
-            public static string tscEncodeType
-            {
-                get { return tscencodetype; }
-                set { tscencodetype = value; }
-            }
-        /// <summary>
-        /// 打印码文
-        /// </summary>
-        private static string tscgeneratelabel="";
-        public static string  tscGeneratelabel
-        {
-            get { return tscgeneratelabel; }
-            set { tscgeneratelabel = value; }
-        }
-        /// <summary>
-        /// 设置条形码旋转角度
-        /// </summary>
-        private static string tscrotate = "";
-        public static string tscRotate
-        {
-            get { return tscrotate; }
-            set { tscrotate = value; }
-        }
-        /// <summary>
-        /// 条形码宽窄bar 比例因子
-        /// </summary>
-        private static string tscbar = "";
-           public  static string tscBar
-            {
-                get { return tscbar; }
-                set { tscbar = value; }
-            }
-        /// <summary>
-        /// 0 不打印智能卡号，1 打印
-        /// </summary>
-           private static int tscflag=0;
-        public static int tscFlag
-           {
-               get { return tscflag; }
-               set { tscflag = value; }
-           }
-#endregion
+        //#region 条形码打印机变量
+        //        /// <summary>
+        //        /// 卷标宽度
+        //        /// </summary>
+        //        private static string tscwidth = "";
+        //        public static string tscWidth
+        //        {
+        //            get { return tscwidth; }
+        //            set { tscwidth = value; }
+        //        }
+        //        /// <summary>
+        //        /// 卷标高度
+        //        /// </summary>
+        //        private static string tscheight = "";
+        //        public static string tscHeight
+        //        {
+        //            get { return tscheight; }
+        //            set { tscheight = value; }
+        //        }
+        //        /// <summary>
+        //        /// 打印速度
+        //        /// </summary>
+        //        private static string tscprintspeed = "";
+        //            public static string tscPrintSpeed
+        //            {
+        //                get { return tscprintspeed; }
+        //                set { tscprintspeed = value; }
+        //            }
+        //        /// <summary>
+        //        /// 打印浓度
+        //        /// </summary>
+        //            private static string tscdensity = "";
+        //        public static string tscDensity
+        //            {
+        //                get { return tscdensity; }
+        //                set { tscdensity = value; }
+        //            }
+        //        /// <summary>
+        //        /// 条形码X方向起始点
+        //        /// </summary>
+        //        private static string tscx = "";
+        //        public static string tscX
+        //        {
+        //            get { return tscx; }
+        //            set { tscx = value; }
+        //        }
+        //        /// <summary>
+        //        /// 条形码Y方向起始点
+        //        /// </summary>
+        //        private static string tscy = "";
+        //        public static string tscY
+        //        {
+        //            get { return tscy; }
+        //            set { tscy = value; }
+        //        }
+        //        /// <summary>
+        //        /// 编码类型
+        //        /// </summary>
+        //        private static string tscencodetype = "";
+        //            public static string tscEncodeType
+        //            {
+        //                get { return tscencodetype; }
+        //                set { tscencodetype = value; }
+        //            }
+        //        /// <summary>
+        //        /// 打印码文
+        //        /// </summary>
+        //        private static string tscgeneratelabel="";
+        //        public static string  tscGeneratelabel
+        //        {
+        //            get { return tscgeneratelabel; }
+        //            set { tscgeneratelabel = value; }
+        //        }
+        //        /// <summary>
+        //        /// 设置条形码旋转角度
+        //        /// </summary>
+        //        private static string tscrotate = "";
+        //        public static string tscRotate
+        //        {
+        //            get { return tscrotate; }
+        //            set { tscrotate = value; }
+        //        }
+        //        /// <summary>
+        //        /// 条形码宽窄bar 比例因子
+        //        /// </summary>
+        //        private static string tscbar = "";
+        //           public  static string tscBar
+        //            {
+        //                get { return tscbar; }
+        //                set { tscbar = value; }
+        //            }
+        //        /// <summary>
+        //        /// 0 不打印智能卡号，1 打印
+        //        /// </summary>
+        //           private static int tscflag=0;
+        //        public static int tscFlag
+        //           {
+        //               get { return tscflag; }
+        //               set { tscflag = value; }
+        //           }
+        //#endregion
     }
 }

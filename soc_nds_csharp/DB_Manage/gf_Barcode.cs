@@ -41,17 +41,17 @@ namespace soc_nds_csharp.DB_Manage
         /// </summary>
         private void variable_assignment()
         {
-            HDIC_Command.tscWidth = "83";
-            HDIC_Command.tscHeight = "58";
-            HDIC_Command.tscPrintSpeed = "4";
-            HDIC_Command.tscDensity = "8";
-            HDIC_Command.tscX="200";
-            HDIC_Command.tscY="100";
-            HDIC_Command.tscEncodeType = "128";
-            HDIC_Command.tscGeneratelabel = "1";
-            HDIC_Command.tscRotate = "0";
-            HDIC_Command.tscBar = "4";
-            HDIC_Command.tscFlag = 1;
+            //HDIC_Command.tscWidth = "83";
+            //HDIC_Command.tscHeight = "58";
+            //HDIC_Command.tscPrintSpeed = "4";
+            //HDIC_Command.tscDensity = "8";
+            //HDIC_Command.tscX="200";
+            //HDIC_Command.tscY="100";
+            //HDIC_Command.tscEncodeType = "128";
+            //HDIC_Command.tscGeneratelabel = "1";
+            //HDIC_Command.tscRotate = "0";
+            //HDIC_Command.tscBar = "4";
+            //HDIC_Command.tscFlag = 1;
 
             //txt_tscWidth.Text= HDIC_Command.tscWidth;
             //txt_tscHeight.Text= HDIC_Command.tscHeight;

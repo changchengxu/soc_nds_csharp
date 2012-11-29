@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("soc_serialport")]
+[assembly: AssemblyTitle("HDIC")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WwW.DEEPbbS.Org")]
-[assembly: AssemblyProduct("soc_serialport")]
+[assembly: AssemblyProduct("HDIC")]
 [assembly: AssemblyCopyright("Copyright © WwW.DEEPbbS.Org 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("ae1402d9-51ad-4994-a9e1-421afae21b53")]
+[assembly: Guid("8956b6a0-fdf9-42c7-a0de-022ccbc43c81")]
 
 // 程序集的版本信息由下面四个值组成:
 //

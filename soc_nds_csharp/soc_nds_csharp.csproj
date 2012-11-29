@@ -40,6 +40,9 @@
     <Reference Include="GoldPrinter">
       <HintPath>BLL\GoldPrinter.dll</HintPath>
     </Reference>
+    <Reference Include="HDIC">
+      <HintPath>..\HDIC\bin\Debug\HDIC.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -52,10 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\Command.cs" />
-    <Compile Include="App_Code\HDIC.cs" />
-    <Compile Include="App_Code\Printer.cs" />
-    <Compile Include="App_Code\SysRole.cs" />
     <Compile Include="Authority\gf_MenuManage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,7 +370,22 @@
     <None Include="Images\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config\BarcodeXml.xml" />
+    <Content Include="config\BarcodeXml.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="config\Serial.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config\SerialToolsCheck.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\soc_protocol\soc_protocol.csproj">
+      <Project>{4F03436A-4680-46A5-ABDF-F63E33E62828}</Project>
+      <Name>soc_protocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
