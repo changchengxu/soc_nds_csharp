@@ -60,7 +60,7 @@ namespace soc_protocol
 
         System.Threading.Semaphore mSemaphore;
 
-        Byte[] mReadBuffer;//串口读到的数据
+        static Byte[] mReadBuffer;//串口读到的数据
         int mBytesRead = 0;//串口读到的数据个数
 
         Int32 mBytesWantToRead;//读取串口指定个数的数据
@@ -187,9 +187,10 @@ namespace soc_protocol
                     mBytesRead = 0; // reset
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                HDIC_Message.ShowWarnDialog(null, ex.ToString())
+                ;
             }
         }
 

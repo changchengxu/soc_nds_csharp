@@ -15,93 +15,7 @@ using soc_protocol;
 
 namespace soc_nds_csharp.Station_Operation
 {
-    /// <summary>
-    /// SerialPort
-    /// </summary>
-    #region SerialPort
-    public class Uart
-    {
-        String mConfigFile;
-        SerialPort mSpSlot;
 
-        String mPortName;
-        Int32 mBaudRate;
-        Parity mParity;
-        Int32 mDataBits;
-        StopBits mStopBit;
-
-        public void loadConfig()
-        {
-            string mConfigFile = String.Format("{0}\\config\\Serial.xml", HDIC_Func.GetRunningPath());
-            DataTable dt = HDIC_Func.XMLToDataSet(mConfigFile).Tables["com"];
-            mPortName = dt.Rows[0]["port"].ToString().Trim();
-            mBaudRate = Convert.ToInt32(dt.Rows[0]["baud_rate"].ToString().Trim());
-            mParity = (Parity)Enum.Parse(typeof(Parity), dt.Rows[0]["parity"].ToString().Trim());
-            mDataBits = Convert.ToInt32(dt.Rows[0]["data_bits"].ToString().Trim());
-            mStopBit = (StopBits)Enum.Parse(typeof(Parity), dt.Rows[0]["stop_bit"].ToString().Trim());
-
-
-        }
-        /// <summary>
-        /// open port
-        /// </summary>
-        /// <returns></returns>
-        public bool open()
-        {
-            try
-            {
-                if (mSpSlot == null)
-                {
-                    mSpSlot = new SerialPort(mPortName, mBaudRate, mParity, mDataBits, mStopBit);
-                }
-                if (!mSpSlot.IsOpen)
-                {
-                    mSpSlot.Open();
-                }
-            }
-            catch (System.Exception ex)
-            {
-                HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n" + ex.ToString());
-                return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// close port
-        /// </summary>
-        public bool close()
-        {
-            try
-            {
-                if (mSpSlot == null)
-                {
-                    return true;
-                }
-                if (mSpSlot.IsOpen)
-                {
-                    mSpSlot.Close();
-                }
-            }
-            catch (System.Exception ex)
-            {
-                HDIC_Message.ShowWarnDialog(null, "无法关闭串口.\r\n" + ex.ToString());
-                return false;
-            }
-            return true;
-        }
-
-        public SerialPort slot
-        {
-            get
-            {
-                return mSpSlot;
-            }
-        }
-    }
-    #endregion
-
-    //////////////////////////////////////////////////////////////////////////
     public partial class gf_Serializer : Form
     {
         // Create a new Mutex. The creating thread does not own the
@@ -262,4 +176,91 @@ namespace soc_nds_csharp.Station_Operation
         }
 
     }
+    //////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// SerialPort
+    /// </summary>
+    #region SerialPort
+    public class Uart
+    {
+        String mConfigFile;
+        SerialPort mSpSlot;
+
+        String mPortName;
+        Int32 mBaudRate;
+        Parity mParity;
+        Int32 mDataBits;
+        StopBits mStopBit;
+
+        public void loadConfig()
+        {
+            string mConfigFile = String.Format("{0}\\config\\Serial.xml", HDIC_Func.GetRunningPath());
+            DataTable dt = HDIC_Func.XMLToDataSet(mConfigFile).Tables["com"];
+            mPortName = dt.Rows[0]["port"].ToString().Trim();
+            mBaudRate = Convert.ToInt32(dt.Rows[0]["baud_rate"].ToString().Trim());
+            mParity = (Parity)Enum.Parse(typeof(Parity), dt.Rows[0]["parity"].ToString().Trim());
+            mDataBits = Convert.ToInt32(dt.Rows[0]["data_bits"].ToString().Trim());
+            mStopBit = (StopBits)Enum.Parse(typeof(Parity), dt.Rows[0]["stop_bit"].ToString().Trim());
+
+
+        }
+        /// <summary>
+        /// open port
+        /// </summary>
+        /// <returns></returns>
+        public bool open()
+        {
+            try
+            {
+                if (mSpSlot == null)
+                {
+                    mSpSlot = new SerialPort(mPortName, mBaudRate, mParity, mDataBits, mStopBit);
+                }
+                if (!mSpSlot.IsOpen)
+                {
+                    mSpSlot.Open();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n" + ex.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// close port
+        /// </summary>
+        public bool close()
+        {
+            try
+            {
+                if (mSpSlot == null)
+                {
+                    return true;
+                }
+                if (mSpSlot.IsOpen)
+                {
+                    mSpSlot.Close();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(null, "无法关闭串口.\r\n" + ex.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public SerialPort slot
+        {
+            get
+            {
+                return mSpSlot;
+            }
+        }
+    }
+    #endregion
+
 }

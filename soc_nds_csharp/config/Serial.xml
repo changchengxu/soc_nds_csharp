@@ -11,7 +11,7 @@ Copyright:ShangHai HDIC  Technology Co.Ltd.
   <data_bits>8</data_bits>
   <parity>None</parity>
   <stop_bit>1</stop_bit>
-  <baud_rate>9600</baud_rate>
+  <baud_rate>115200</baud_rate>
   
 
 </com>
