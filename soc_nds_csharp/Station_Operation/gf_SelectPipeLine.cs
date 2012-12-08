@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Station_Operation
 {
@@ -19,14 +20,14 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_SelectPipeLine_Load(object sender, EventArgs e)
         {
-            cbo_LineID1.DataSource = HDIC_DB.GetList("select pipLineID from STBOp order by pipLineID");
-            cbo_LineID1.DisplayMember = "pipLineID";
-            cbo_LineID1.ValueMember = "pipLineID";
+            cbo_LineID1.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
+            cbo_LineID1.DisplayMember = "STBOpLineNum";
+            cbo_LineID1.ValueMember = "STBOpLineNum";
             cbo_LineID1.SelectedIndex = -1;
 
-            cbo_LineID2.DataSource = HDIC_DB.GetList("select pipLineID from STBOp order by pipLineID");
-            cbo_LineID2.DisplayMember = "pipLineID";
-            cbo_LineID2.ValueMember = "pipLineID";
+            cbo_LineID2.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
+            cbo_LineID2.DisplayMember = "STBOpLineNum";
+            cbo_LineID2.ValueMember = "STBOpLineNum";
             cbo_LineID2.SelectedIndex = -1;
         }
 
@@ -36,6 +37,8 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return;
             }
+            HDIC_Command.STBLineNum = Convert.ToInt32(cbo_LineID1.SelectedValue);
+
             gf_Serializer gf_serial = new gf_Serializer();
             gf_serial.ShowDialog();
         }
@@ -44,7 +47,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (cbo_LineID1.SelectedValue == null || cbo_LineID2.SelectedValue == null)
             {
-                HDIC_Message.ShowErrorDialog(this, "请将信息填写完整");
+                HDIC_Message.ShowErrorDialog(this, "请选择流水线");
                 return false;
             }
             else if (cbo_LineID1.SelectedValue.ToString().Trim() != cbo_LineID2.SelectedValue.ToString().Trim())

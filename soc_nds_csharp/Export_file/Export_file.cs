@@ -143,7 +143,7 @@ namespace soc_nds_csharp.Export_file
                         sw.Write(content);
                     }
                 }
-                catch (System.Exception ex)
+                catch
                 {
                     sw.Close();
                     myStream.Close();

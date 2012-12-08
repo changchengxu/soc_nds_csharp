@@ -24,7 +24,7 @@ namespace soc_nds_csharp.STB_Manage
 
         private void STBClient_Load(object sender, EventArgs e)
         {
-            dgv_STB.DataSource = HDIC_DB.GetList(@"select pipLineID as '流水线号',currentPipID as '当前流水号',piplineIDMax as '流水号最大值' from STBOp 
+            dgv_STB.DataSource = HDIC_DB.GetList(@"select STBOpLineNum as '流水线号',STBOpIndex as '当前流水号',piplineIDMax as '流水号最大值' from STBOp 
             order by pipLineID ");
         }
 

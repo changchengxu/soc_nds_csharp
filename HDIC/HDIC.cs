@@ -247,6 +247,7 @@ namespace HDICSoft.DB
         /// <returns></returns>
         public static string sqlQuery(string sqlStr)
         {
+            
             object i = ExecuteScalar(sqlStr, null);
             if (i == null)
             {
@@ -727,30 +728,31 @@ namespace HDICSoft.Func
             #endregion
 
             #region 2
-            TSCLIB_DLL.openport("TSC TTP-344M Plus");
-            TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "0", "0");                           //Setup the media size and sensor type info
-            TSCLIB_DLL.clearbuffer();
+          
+                TSCLIB_DLL.openport("TSC TTP-344M Plus");
+                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "0", "0");                           //Setup the media size and sensor type info
+                TSCLIB_DLL.clearbuffer();
 
-            TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
-            TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
-            if (flag == 0)
-            {
-                TSCLIB_DLL.printlabel("1", "3");  //户户通打印八份
-            }
-            if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号
-            {
-                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 280).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content3);//打印SmartCardID
-                TSCLIB_DLL.printlabel("1", "2");  //村村通打印七份
-            }
+                TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
+                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
+                if (flag == 0)
+                {
+                    TSCLIB_DLL.printlabel("1", "2");  //户户通打印八份
+                }
+                if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号
+                {
+                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 280).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content3);//打印SmartCardID
+                    TSCLIB_DLL.printlabel("1", "1");  //村村通打印七份
+                }
 
-            //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
-            //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font
+                //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
+                //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font
 
-            //TSCLIB_DLL.windowsfont(250, 350, 160, 0, 2, 0, "Times new Roman", "邱晓淯");  //Draw windows font
-            //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
-            //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
-            TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
-            TSCLIB_DLL.closeport();
+                //TSCLIB_DLL.windowsfont(250, 350, 160, 0, 2, 0, "Times new Roman", "邱晓淯");  //Draw windows font
+                //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
+                //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
+                TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
+                TSCLIB_DLL.closeport();
             #endregion
         }
 
@@ -1103,6 +1105,66 @@ namespace HDICSoft.Func
             ps.Start();
         }
 
+       /// <summary>
+       /// 字符串转换字符数组（长度除以2）
+       /// </summary>
+       /// <param name="str"></param>
+       /// <param name="buffer"></param>
+       /// <returns></returns>
+        public static bool CStringToByte(string str, ref Byte[] buffer)
+        {
+            int i, len;
+
+            if (str.Trim().Length == 0) return false;
+            len = (int)str.Length;
+            if ((len % 2) != 0) return false;
+            for (i = 0; i < len; i += 2)
+            {
+                if (str[i] >= '0' && str[i] <= '9')
+                {
+                    buffer[i / 2] = (Byte)((Byte)str[i] - 0x30);
+                }
+                else if (str[i] >= 'A' && str[i] <= 'F')
+                {
+                    buffer[i / 2] = (Byte)((Byte)str[i] - 'A' + 0xa);
+                }
+                else if (str[i] >= 'a' && str[i] <= 'f')
+                {
+                    buffer[i / 2] = (Byte)((Byte)str[i] - 'a' + 0xa);
+                }
+                else
+                {
+                    buffer[i / 2] = 0;
+                }
+                buffer[i / 2] = (Byte)((buffer[i / 2]) << 4);
+                if (str[i + 1] >= '0' && str[i + 1] <= '9')
+                {
+                    buffer[i / 2] = (Byte)((str[i + 1] - 0x30) + buffer[i / 2]);
+                }
+                else if (str[i + 1] >= 'A' && str[i + 1] <= 'F')
+                {
+                    buffer[i / 2] = (Byte)((str[i + 1] - 'A' + 0xa) + buffer[i / 2]);
+                }
+                else if (str[i] >= 'a' && str[i + 1] <= 'f')
+                {
+                    buffer[i / 2] = (Byte)((str[i + 1] - 'a' + 0xa) + buffer[i / 2]);
+                }
+            }
+            //length = i / 2;
+            return true;
+        }
+        //private  byte[] HexStringToByteArray(string s)//和上面CStringToByte功能一样
+        //{
+        //    s = s.Replace(" ", "");
+        //    byte[] buffer = new byte[s.Length / 2];
+        //    for (int i = 0; i < s.Length; i += 2)
+        //        buffer[i / 2] = (byte)Convert.ToByte(s.Substring(i, 2), 16);
+        //    return buffer;
+        //}
+
+
+
+
 
         //#region 下面加密和解密复制考勤机 长城暂时屏蔽
         ///// <summary>
@@ -1275,6 +1337,16 @@ namespace HDICSoft.Command
         {
             get { return _roleno; }
             set { _roleno = value; }
+        }
+
+       /// <summary>
+        /// STBLineNum
+       /// </summary>
+        private static Int32 _STBlinenum = 0;
+        public static Int32 STBLineNum
+        {
+            get { return _STBlinenum; }
+            set { _STBlinenum = value; }
         }
 
         //#region 条形码打印机变量

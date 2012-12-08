@@ -231,6 +231,7 @@
             this.Name = "gf_Serializer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "序列号工具";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.gf_Serializer_FormClosed);
             this.Load += new System.EventHandler(this.gf_Serializer_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
