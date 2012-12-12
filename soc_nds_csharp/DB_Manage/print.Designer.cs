@@ -41,6 +41,8 @@
             this.tsbPageSetup = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbPrint = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbBarcodePrint = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_STBID = new System.Windows.Forms.TextBox();
@@ -57,8 +59,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbo_Time = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsbBarcodePrint = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -165,6 +165,20 @@
             this.tsbPrint.Size = new System.Drawing.Size(75, 22);
             this.tsbPrint.Text = "内容打印";
             this.tsbPrint.Click += new System.EventHandler(this.tsbPrint_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbBarcodePrint
+            // 
+            this.tsbBarcodePrint.Image = ((System.Drawing.Image)(resources.GetObject("tsbBarcodePrint.Image")));
+            this.tsbBarcodePrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbBarcodePrint.Name = "tsbBarcodePrint";
+            this.tsbBarcodePrint.Size = new System.Drawing.Size(87, 22);
+            this.tsbBarcodePrint.Text = "条形码打印";
+            this.tsbBarcodePrint.Click += new System.EventHandler(this.tsbBarcodePrint_Click);
             // 
             // panel1
             // 
@@ -326,23 +340,10 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 97);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1112, 287);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // tsbBarcodePrint
-            // 
-            this.tsbBarcodePrint.Image = ((System.Drawing.Image)(resources.GetObject("tsbBarcodePrint.Image")));
-            this.tsbBarcodePrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbBarcodePrint.Name = "tsbBarcodePrint";
-            this.tsbBarcodePrint.Size = new System.Drawing.Size(87, 22);
-            this.tsbBarcodePrint.Text = "条形码打印";
-            this.tsbBarcodePrint.Click += new System.EventHandler(this.tsbBarcodePrint_Click);
             // 
             // print
             // 

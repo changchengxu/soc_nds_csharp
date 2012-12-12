@@ -28,7 +28,23 @@ namespace soc_nds_csharp.Delete_DBRecords
         {
             if (HDIC_Message.ShowQuestionDialog(this, "确定要清除CA_ID:" + txt_CAID.Text.Trim() + " 吗？") == DialogResult.OK)
             {
+                try
+                {
+                    if (HDIC_DB.sqlDelete("delete STBData where CAID='" + txt_CAID.Text.Trim() + "'") > 0)
+                    {
+                        HDIC_Message.ShowInfoDialog(this, "删除成功");
+                    }
+                    else
+                    {
+                        HDIC_Message.ShowInfoDialog(this, "删除失败,");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    HDIC_Message.ShowInfoDialog(this, "删除失败,原因是：\r\n"+ex.ToString());
+                }
 
+                txt_CAID.Text = "";
             }
         }
     }

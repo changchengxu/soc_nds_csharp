@@ -31,7 +31,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btn_ReadChipID = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richtxt_info = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +56,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.btn_ReadChipID);
-            this.panel1.Controls.Add(this.richTextBox1);
+            this.panel1.Controls.Add(this.richtxt_info);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(185, 125);
             this.panel1.Name = "panel1";
@@ -65,7 +65,7 @@
             // 
             // btn_ReadChipID
             // 
-            this.btn_ReadChipID.Font = new System.Drawing.Font("SimSun", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_ReadChipID.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_ReadChipID.Location = new System.Drawing.Point(77, 207);
             this.btn_ReadChipID.Name = "btn_ReadChipID";
             this.btn_ReadChipID.Size = new System.Drawing.Size(298, 53);
@@ -74,13 +74,13 @@
             this.btn_ReadChipID.UseVisualStyleBackColor = true;
             this.btn_ReadChipID.Click += new System.EventHandler(this.btn_ReadChipID_Click);
             // 
-            // richTextBox1
+            // richtxt_info
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(33, 116);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(376, 75);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.richtxt_info.Location = new System.Drawing.Point(33, 116);
+            this.richtxt_info.Name = "richtxt_info";
+            this.richtxt_info.Size = new System.Drawing.Size(376, 75);
+            this.richtxt_info.TabIndex = 2;
+            this.richtxt_info.Text = "";
             // 
             // gf_ReadChipID
             // 
@@ -101,7 +101,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn_ReadChipID;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richtxt_info;
 
     }
 }

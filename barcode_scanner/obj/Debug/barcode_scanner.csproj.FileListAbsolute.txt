@@ -1,0 +1,5 @@
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\barcode_scanner\bin\Debug\barcode_scanner.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\barcode_scanner\bin\Debug\barcode_scanner.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\barcode_scanner\obj\Debug\ResolveAssemblyReference.cache
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\barcode_scanner\obj\Debug\barcode_scanner.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\barcode_scanner\obj\Debug\barcode_scanner.pdb

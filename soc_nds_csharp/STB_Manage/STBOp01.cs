@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using HDICSoft.DB;
 using HDICSoft.Message;
+using HDICSoft.Func;
 
 namespace soc_nds_csharp.STB_Manage
 {
@@ -65,11 +66,12 @@ namespace soc_nds_csharp.STB_Manage
 
             if (intGloID == -1)// add
             {
-                object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where pipLineID='" + txt_pipID.Text.Trim() + "'", null);
+                object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where STBOpLineNum='" + txt_pipID.Text.Trim() + "'", null);
                 if (obj == null || (int)obj == 0)
                 {
-                    if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (pipLineID,currentPipID,piplineIDMax) values('" + txt_pipID.Text.Trim() + "','" +
-                        txt_currentPipID.Text.Trim() + "','" + txt_pipIDMax.Text.Trim() + "')", null) > 0)
+                    if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
+                        txt_currentPipID.Text.Trim() + "',1);insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
+                        txt_pipIDMax.Text.Trim() + "',3)", null) > 0)
                     {
                         HDIC_Message.ShowInfoDialog(this, "添加成功");
                         this.Close();
@@ -84,8 +86,10 @@ namespace soc_nds_csharp.STB_Manage
 
             else  if(intGloID >0)          //edit
             {
-                if (HDIC_DB.ExcuteNonQuery(@"update STBOp set currentPipID='" + txt_currentPipID.Text.Trim() + "',piplineIDMax='" +
-                    txt_pipIDMax.Text.Trim() + "' where pipLineID='" + txt_pipID.Text.Trim() + "'", null) > 0)
+                if (HDIC_DB.ExcuteNonQuery(@"update STBOp set STBOpIndex='" + txt_currentPipID.Text.Trim()
+                    + "' where STBOpLineNum='" + txt_pipID.Text.Trim() 
+                    + "' and STBOpFlag=1; update STBOp set STBOpIndex='" + txt_pipIDMax.Text.Trim()
+                    + "' where STBOpLineNum='" + txt_pipID.Text.Trim() + "' and STBOpFlag=3", null) > 0)
                 {
                     HDIC_Message.ShowInfoDialog(this, "修改成功");
                     this.Close();
@@ -107,7 +111,12 @@ namespace soc_nds_csharp.STB_Manage
                 txt_pipID.Focus();
                 return false;
             }
-
+            else if (!HDIC_Func.CheckObjectIsInteger(txt_pipID.Text.Trim()))
+            {
+                HDIC_Message.ShowWarnDialog(this, "流水号输入不是数字");
+                txt_pipID.Focus();
+                return false;
+            }
             else if (txt_currentPipID.Text.Trim() == "")
             {
                 HDIC_Message.ShowWarnDialog(this, "当前流水号未输入");
@@ -115,17 +124,31 @@ namespace soc_nds_csharp.STB_Manage
                 return false;
 
             }
-
+            else if (!HDIC_Func.CheckObjectIsInteger(txt_currentPipID.Text.Trim()))
+            {
+                HDIC_Message.ShowWarnDialog(this, "当前流水号输入不是数字");
+                txt_currentPipID.Text = "";
+                txt_currentPipID.Focus();
+                return false;
+            }
             else if (txt_pipIDMax.Text.Trim() == "")
             {
                 HDIC_Message.ShowWarnDialog(this, "流水号最大值未输入");
                 txt_pipIDMax.Focus();
                 return false;
             }
-
+            else if (!HDIC_Func.CheckObjectIsInteger(txt_pipIDMax.Text.Trim()))
+            {
+                HDIC_Message.ShowWarnDialog(this, "流水号最大值输入不是数字");
+                txt_pipIDMax.Text = "";
+                txt_pipIDMax.Focus();
+                return false;
+            }
             else if (Convert.ToInt32(txt_currentPipID.Text.Trim()) > Convert.ToInt32(txt_pipIDMax.Text.Trim()))
             {
                 HDIC_Message.ShowWarnDialog(this, "当前值不能大于最大值");
+                txt_currentPipID.Text = "";
+                txt_pipIDMax.Text = "";
                 return false;
             }
 

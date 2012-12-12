@@ -56,7 +56,7 @@ namespace soc_nds_csharp.Import_Data
                     }
                     i++;
 
-                    HDIC_DB.ExcuteNonQuery(@"insert into ChipData(id,a,b) values ('"+result[0]+"','"+result[1]+"','"+result[2]+"')",null);
+                    HDIC_DB.ExcuteNonQuery(@"insert into ChipData(ChipNO,ChipID,ChipInfo) values ('" + result[0] + "','" + result[1] + "','" + result[2] + "')", null);
                 }
                 HDIC_Message.ShowInfoDialog(this, "数据导入成功");
             }

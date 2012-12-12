@@ -751,7 +751,7 @@ namespace HDICSoft.Func
                 //TSCLIB_DLL.windowsfont(250, 350, 160, 0, 2, 0, "Times new Roman", "邱晓淯");  //Draw windows font
                 //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
                 //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
-                TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
+                //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
                 TSCLIB_DLL.closeport();
             #endregion
         }
@@ -1349,6 +1349,25 @@ namespace HDICSoft.Command
             set { _STBlinenum = value; }
         }
 
+       /// <summary>
+        ///STBType 数值0代表户户通，1代表村村通
+       /// </summary>
+        private static Int32 _STBType = 0;
+        public static Int32 STBType
+        {
+            get { return _STBType; }
+            set { _STBType = value; }
+        }
+
+       /// <summary>
+        /// 获取connectionStrings中数据库连接信息
+       /// </summary>
+        private static string _connectionStr;
+        public static string ConnectionStr
+        {
+            get { return _connectionStr; }
+            set { _connectionStr = value; }
+        }
         //#region 条形码打印机变量
         //        /// <summary>
         //        /// 卷标宽度

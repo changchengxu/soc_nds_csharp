@@ -99,6 +99,10 @@ namespace soc_nds_csharp
             {
                     f = (Form)Activator.CreateInstance(Type.GetType(MenuName));
                     f.Text = ((TaskItem)sender).Text;
+                    if (f.Text == "工位一操作")
+                    {
+                        ((soc_nds_csharp.Station_Operation.gf_SelectPipeLine)f).eventSend += new soc_nds_csharp.Station_Operation.mainFormTrans(eventSend);
+                    }
             }
             catch
             {
@@ -110,6 +114,17 @@ namespace soc_nds_csharp
             f.Show();
         }
 
+        private void eventSend(string sign)//用于工位序列化数据模块 时，锁定主窗体
+        {
+            if (sign == "off")
+            {
+                taskPane1.Enabled = false;
+            }
+            else if (sign == "open")
+            {
+                taskPane1.Enabled = true;
+            }
+        }
 
         private void AddTaskItem(Expando ep)
         {

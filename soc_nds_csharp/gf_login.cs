@@ -88,7 +88,6 @@ namespace soc_nds_csharp
                 {
                     HDIC_Message.ShowWarnDialog(this,"附加失败:" + ex.Message);
                 }
-                ipUserControl.Text = "";
 
                 #endregion
             }
@@ -204,6 +203,7 @@ namespace soc_nds_csharp
 
             gbx_NetWork.Visible = true;
         }
+     
         #endregion
 
         private void cbo_userRole_KeyDown(object sender, KeyEventArgs e)
@@ -213,7 +213,7 @@ namespace soc_nds_csharp
                 txt_username.Focus();
             }
         }
-
+       
         private void txt_username_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

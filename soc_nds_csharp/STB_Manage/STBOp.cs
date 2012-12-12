@@ -24,8 +24,9 @@ namespace soc_nds_csharp.STB_Manage
 
         private void STBClient_Load(object sender, EventArgs e)
         {
-            dgv_STB.DataSource = HDIC_DB.GetList(@"select STBOpLineNum as '流水线号',STBOpIndex as '当前流水号',piplineIDMax as '流水号最大值' from STBOp 
-            order by pipLineID ");
+            dgv_STB.DataSource = HDIC_DB.GetList(@"select distinct STBOpLineNum as '流水线号',STBOpIndex as '当前流水号',(select STBOpIndex from STBOp as a where STBOpFlag=3 and a.
+STBOpLineNum=b.STBOpLineNum) as '流水号最大值'
+ from STBOp as b  where STBOpFlag=1 order by STBOpLineNum");
         }
 
 
@@ -70,7 +71,7 @@ namespace soc_nds_csharp.STB_Manage
             {
                 //获取要删除行的ID号
                 intID = Convert.ToInt32(dgv_STB.SelectedRows[0].Cells["流水线号"].Value);
-                int a = HDIC_DB.sqlDelete("delete from STBOp where pipLineID='" + intID + "'");
+                int a = HDIC_DB.sqlDelete("delete from STBOp where STBOpLineNum='" + intID + "'");
                 if (a > 0)
                 {
                     HDIC_Message.ShowInfoDialog(this, "删除成功！");
@@ -84,7 +85,7 @@ namespace soc_nds_csharp.STB_Manage
             }
             else
             {
-                HDIC_Message.ShowWarnDialog(this, "请选择要删除的信息。");
+                HDIC_Message.ShowWarnDialog(this, "请选择要删除的信息");
             }
         }
     }

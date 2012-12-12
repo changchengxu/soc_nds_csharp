@@ -28,100 +28,123 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richtxt_info = new System.Windows.Forms.RichTextBox();
-            this.richtxt_Connect = new System.Windows.Forms.RichTextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.richtxt_SerialID = new System.Windows.Forms.RichTextBox();
-            this.btn_begin = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.txt_SerialID = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.richtxt_SmartCardID = new System.Windows.Forms.RichTextBox();
+            this.txt_STBID = new System.Windows.Forms.TextBox();
+            this.txt_ChipID = new System.Windows.Forms.TextBox();
+            this.txt_CAID = new System.Windows.Forms.TextBox();
+            this.txt_SmartCardID = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.richtxt_HardwareID = new System.Windows.Forms.RichTextBox();
             this.richtxt_ModelID = new System.Windows.Forms.RichTextBox();
             this.richtxt_ManufacturerID = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.richtxt_STBID = new System.Windows.Forms.RichTextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.richtxt_ChipID = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.richtxt_CAID = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.btn_begin = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.richtxt_Connect = new System.Windows.Forms.RichTextBox();
+            this.richtxt_info = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // richtxt_info
+            // tableLayoutPanel1
             // 
-            this.richtxt_info.Location = new System.Drawing.Point(20, 48);
-            this.richtxt_info.Name = "richtxt_info";
-            this.richtxt_info.Size = new System.Drawing.Size(371, 281);
-            this.richtxt_info.TabIndex = 1;
-            this.richtxt_info.Text = "";
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.708134F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.29186F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 6);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.25743F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.74258F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1045, 545);
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // richtxt_Connect
+            // panel1
             // 
-            this.richtxt_Connect.Location = new System.Drawing.Point(20, 14);
-            this.richtxt_Connect.Name = "richtxt_Connect";
-            this.richtxt_Connect.Size = new System.Drawing.Size(371, 28);
-            this.richtxt_Connect.TabIndex = 2;
-            this.richtxt_Connect.Text = "";
+            this.panel1.Controls.Add(this.txt_SerialID);
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.btn_begin);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.richtxt_Connect);
+            this.panel1.Controls.Add(this.richtxt_info);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(87, 75);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(881, 427);
+            this.panel1.TabIndex = 0;
             // 
-            // label1
+            // txt_SerialID
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 346);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "生产流水号:";
-            // 
-            // richtxt_SerialID
-            // 
-            this.richtxt_SerialID.Location = new System.Drawing.Point(100, 335);
-            this.richtxt_SerialID.Name = "richtxt_SerialID";
-            this.richtxt_SerialID.Size = new System.Drawing.Size(291, 28);
-            this.richtxt_SerialID.TabIndex = 4;
-            this.richtxt_SerialID.Text = "";
-            // 
-            // btn_begin
-            // 
-            this.btn_begin.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_begin.Location = new System.Drawing.Point(144, 372);
-            this.btn_begin.Name = "btn_begin";
-            this.btn_begin.Size = new System.Drawing.Size(465, 38);
-            this.btn_begin.TabIndex = 5;
-            this.btn_begin.Text = "  开  始  ";
-            this.btn_begin.UseVisualStyleBackColor = true;
-            this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
-            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
+            this.txt_SerialID.Enabled = false;
+            this.txt_SerialID.Location = new System.Drawing.Point(99, 343);
+            this.txt_SerialID.Name = "txt_SerialID";
+            this.txt_SerialID.Size = new System.Drawing.Size(299, 21);
+            this.txt_SerialID.TabIndex = 30;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.richtxt_SmartCardID);
+            this.groupBox1.Controls.Add(this.txt_STBID);
+            this.groupBox1.Controls.Add(this.txt_ChipID);
+            this.groupBox1.Controls.Add(this.txt_CAID);
+            this.groupBox1.Controls.Add(this.txt_SmartCardID);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.richtxt_HardwareID);
             this.groupBox1.Controls.Add(this.richtxt_ModelID);
             this.groupBox1.Controls.Add(this.richtxt_ManufacturerID);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.richtxt_STBID);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.richtxt_ChipID);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.richtxt_CAID);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(387, 13);
+            this.groupBox1.Location = new System.Drawing.Point(436, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(461, 350);
-            this.groupBox1.TabIndex = 6;
+            this.groupBox1.Size = new System.Drawing.Size(446, 321);
+            this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ID信息";
             // 
-            // richtxt_SmartCardID
+            // txt_STBID
             // 
-            this.richtxt_SmartCardID.Location = new System.Drawing.Point(131, 214);
-            this.richtxt_SmartCardID.Name = "richtxt_SmartCardID";
-            this.richtxt_SmartCardID.Size = new System.Drawing.Size(304, 28);
-            this.richtxt_SmartCardID.TabIndex = 16;
-            this.richtxt_SmartCardID.Text = "";
+            this.txt_STBID.Enabled = false;
+            this.txt_STBID.Location = new System.Drawing.Point(133, 165);
+            this.txt_STBID.Name = "txt_STBID";
+            this.txt_STBID.Size = new System.Drawing.Size(302, 21);
+            this.txt_STBID.TabIndex = 20;
+            // 
+            // txt_ChipID
+            // 
+            this.txt_ChipID.Enabled = false;
+            this.txt_ChipID.Location = new System.Drawing.Point(133, 112);
+            this.txt_ChipID.Name = "txt_ChipID";
+            this.txt_ChipID.Size = new System.Drawing.Size(302, 21);
+            this.txt_ChipID.TabIndex = 19;
+            // 
+            // txt_CAID
+            // 
+            this.txt_CAID.Enabled = false;
+            this.txt_CAID.Location = new System.Drawing.Point(133, 54);
+            this.txt_CAID.Name = "txt_CAID";
+            this.txt_CAID.Size = new System.Drawing.Size(302, 21);
+            this.txt_CAID.TabIndex = 18;
+            // 
+            // txt_SmartCardID
+            // 
+            this.txt_SmartCardID.Enabled = false;
+            this.txt_SmartCardID.Location = new System.Drawing.Point(133, 218);
+            this.txt_SmartCardID.Name = "txt_SmartCardID";
+            this.txt_SmartCardID.Size = new System.Drawing.Size(302, 21);
+            this.txt_SmartCardID.TabIndex = 17;
             // 
             // label6
             // 
@@ -134,6 +157,7 @@
             // 
             // richtxt_HardwareID
             // 
+            this.richtxt_HardwareID.Enabled = false;
             this.richtxt_HardwareID.Location = new System.Drawing.Point(267, 277);
             this.richtxt_HardwareID.Name = "richtxt_HardwareID";
             this.richtxt_HardwareID.Size = new System.Drawing.Size(65, 28);
@@ -142,6 +166,7 @@
             // 
             // richtxt_ModelID
             // 
+            this.richtxt_ModelID.Enabled = false;
             this.richtxt_ModelID.Location = new System.Drawing.Point(198, 277);
             this.richtxt_ModelID.Name = "richtxt_ModelID";
             this.richtxt_ModelID.Size = new System.Drawing.Size(69, 28);
@@ -150,6 +175,7 @@
             // 
             // richtxt_ManufacturerID
             // 
+            this.richtxt_ManufacturerID.Enabled = false;
             this.richtxt_ManufacturerID.Location = new System.Drawing.Point(131, 277);
             this.richtxt_ManufacturerID.Name = "richtxt_ManufacturerID";
             this.richtxt_ManufacturerID.Size = new System.Drawing.Size(70, 28);
@@ -165,14 +191,6 @@
             this.label5.TabIndex = 11;
             this.label5.Text = " STB Platform ID:";
             // 
-            // richtxt_STBID
-            // 
-            this.richtxt_STBID.Location = new System.Drawing.Point(131, 165);
-            this.richtxt_STBID.Name = "richtxt_STBID";
-            this.richtxt_STBID.Size = new System.Drawing.Size(304, 28);
-            this.richtxt_STBID.TabIndex = 10;
-            this.richtxt_STBID.Text = "";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -181,14 +199,6 @@
             this.label4.Size = new System.Drawing.Size(47, 12);
             this.label4.TabIndex = 9;
             this.label4.Text = "STB ID:";
-            // 
-            // richtxt_ChipID
-            // 
-            this.richtxt_ChipID.Location = new System.Drawing.Point(131, 105);
-            this.richtxt_ChipID.Name = "richtxt_ChipID";
-            this.richtxt_ChipID.Size = new System.Drawing.Size(304, 28);
-            this.richtxt_ChipID.TabIndex = 8;
-            this.richtxt_ChipID.Text = "";
             // 
             // label3
             // 
@@ -199,14 +209,6 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Chip ID:";
             // 
-            // richtxt_CAID
-            // 
-            this.richtxt_CAID.Location = new System.Drawing.Point(131, 51);
-            this.richtxt_CAID.Name = "richtxt_CAID";
-            this.richtxt_CAID.Size = new System.Drawing.Size(304, 28);
-            this.richtxt_CAID.TabIndex = 6;
-            this.richtxt_CAID.Text = "";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -216,50 +218,101 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "CA ID:";
             // 
+            // btn_begin
+            // 
+            this.btn_begin.Font = new System.Drawing.Font("宋体", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_begin.Location = new System.Drawing.Point(193, 387);
+            this.btn_begin.Name = "btn_begin";
+            this.btn_begin.Size = new System.Drawing.Size(491, 38);
+            this.btn_begin.TabIndex = 28;
+            this.btn_begin.Text = "  开  始  ";
+            this.btn_begin.UseVisualStyleBackColor = true;
+            this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
+            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(11, 348);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(71, 12);
+            this.label7.TabIndex = 27;
+            this.label7.Text = "生产流水号:";
+            // 
+            // richtxt_Connect
+            // 
+            this.richtxt_Connect.Enabled = false;
+            this.richtxt_Connect.Location = new System.Drawing.Point(3, 16);
+            this.richtxt_Connect.Name = "richtxt_Connect";
+            this.richtxt_Connect.Size = new System.Drawing.Size(430, 28);
+            this.richtxt_Connect.TabIndex = 26;
+            this.richtxt_Connect.Text = "";
+            // 
+            // richtxt_info
+            // 
+            this.richtxt_info.Enabled = false;
+            this.richtxt_info.Location = new System.Drawing.Point(0, 50);
+            this.richtxt_info.Name = "richtxt_info";
+            this.richtxt_info.Size = new System.Drawing.Size(433, 279);
+            this.richtxt_info.TabIndex = 25;
+            this.richtxt_info.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(-80, 330);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 12);
+            this.label1.TabIndex = 24;
+            this.label1.Text = "生产流水号:";
+            // 
             // gf_Serializer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(855, 419);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btn_begin);
-            this.Controls.Add(this.richtxt_SerialID);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.richtxt_Connect);
-            this.Controls.Add(this.richtxt_info);
+            this.ClientSize = new System.Drawing.Size(1049, 545);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "gf_Serializer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "序列号工具";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.gf_Serializer_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.gf_Serializer_FormClosing);
             this.Load += new System.EventHandler(this.gf_Serializer_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richtxt_info;
-        private System.Windows.Forms.RichTextBox richtxt_Connect;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox richtxt_SerialID;
-        private System.Windows.Forms.Button btn_begin;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txt_SerialID;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txt_STBID;
+        private System.Windows.Forms.TextBox txt_ChipID;
+        private System.Windows.Forms.TextBox txt_CAID;
+        private System.Windows.Forms.TextBox txt_SmartCardID;
+        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RichTextBox richtxt_HardwareID;
         private System.Windows.Forms.RichTextBox richtxt_ModelID;
         private System.Windows.Forms.RichTextBox richtxt_ManufacturerID;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox richtxt_STBID;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox richtxt_ChipID;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RichTextBox richtxt_CAID;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RichTextBox richtxt_SmartCardID;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btn_begin;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.RichTextBox richtxt_Connect;
+        private System.Windows.Forms.RichTextBox richtxt_info;
+        private System.Windows.Forms.Label label1;
+
 
     }
 }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using HDICSoft.Command;
 
 namespace soc_nds_csharp.Station_Operation
 {
@@ -13,6 +14,7 @@ namespace soc_nds_csharp.Station_Operation
         public gf_RemoteFlashProtect()
         {
             InitializeComponent();
+            this.BackColor = HDIC_Command.setColor();
         }
 
         private void btn_RemoteFlash_Click(object sender, EventArgs e)

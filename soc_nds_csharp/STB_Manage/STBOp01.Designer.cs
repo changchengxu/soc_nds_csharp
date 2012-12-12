@@ -60,7 +60,7 @@
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(75, 23);
             this.btn1.TabIndex = 2;
-            this.btn1.Text = "button1";
+            this.btn1.Text = " 提 交 ";
             this.btn1.UseVisualStyleBackColor = true;
             this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
@@ -106,7 +106,7 @@
             this.btn2.UseVisualStyleBackColor = true;
             this.btn2.Click += new System.EventHandler(this.btn2_Click);
             // 
-            // STBClient01
+            // STBOp01
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -121,7 +121,7 @@
             this.Controls.Add(this.txt_pipID);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "STBClient01";
+            this.Name = "STBOp01";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "STBClient01";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.STBClient01_MouseDown);

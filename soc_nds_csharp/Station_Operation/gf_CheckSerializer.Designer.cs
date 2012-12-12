@@ -30,6 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txt_SmartCardID = new System.Windows.Forms.TextBox();
             this.btn_begin = new System.Windows.Forms.Button();
@@ -38,7 +39,6 @@
             this.txt_CAID = new System.Windows.Forms.TextBox();
             this.richtxt_LincenseAdo = new System.Windows.Forms.RichTextBox();
             this.richtxt_LincenseBoard = new System.Windows.Forms.RichTextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.txt_STBID = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -79,10 +79,19 @@
             this.panel1.Size = new System.Drawing.Size(526, 613);
             this.panel1.TabIndex = 0;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(83, 353);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(101, 12);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "扫描机顶盒STBID:";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(73, 387);
+            this.label2.Location = new System.Drawing.Point(29, 387);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(155, 12);
             this.label2.TabIndex = 12;
@@ -90,10 +99,11 @@
             // 
             // txt_SmartCardID
             // 
-            this.txt_SmartCardID.Location = new System.Drawing.Point(246, 384);
+            this.txt_SmartCardID.Location = new System.Drawing.Point(201, 384);
             this.txt_SmartCardID.Name = "txt_SmartCardID";
-            this.txt_SmartCardID.Size = new System.Drawing.Size(184, 21);
+            this.txt_SmartCardID.Size = new System.Drawing.Size(278, 21);
             this.txt_SmartCardID.TabIndex = 13;
+            this.txt_SmartCardID.TextChanged += new System.EventHandler(this.txt_SmartCardID_TextChanged);
             // 
             // btn_begin
             // 
@@ -118,7 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(97, 318);
+            this.label1.Location = new System.Drawing.Point(53, 318);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(131, 12);
             this.label1.TabIndex = 9;
@@ -126,10 +136,11 @@
             // 
             // txt_CAID
             // 
-            this.txt_CAID.Location = new System.Drawing.Point(246, 313);
+            this.txt_CAID.Location = new System.Drawing.Point(202, 313);
             this.txt_CAID.Name = "txt_CAID";
-            this.txt_CAID.Size = new System.Drawing.Size(184, 21);
+            this.txt_CAID.Size = new System.Drawing.Size(278, 21);
             this.txt_CAID.TabIndex = 10;
+            this.txt_CAID.TextChanged += new System.EventHandler(this.txt_CAID_TextChanged);
             // 
             // richtxt_LincenseAdo
             // 
@@ -147,21 +158,13 @@
             this.richtxt_LincenseBoard.TabIndex = 6;
             this.richtxt_LincenseBoard.Text = "";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(127, 353);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 12);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "扫描机顶盒STBID:";
-            // 
             // txt_STBID
             // 
-            this.txt_STBID.Location = new System.Drawing.Point(246, 350);
+            this.txt_STBID.Location = new System.Drawing.Point(201, 349);
             this.txt_STBID.Name = "txt_STBID";
-            this.txt_STBID.Size = new System.Drawing.Size(184, 21);
-            this.txt_STBID.TabIndex = 15;
+            this.txt_STBID.Size = new System.Drawing.Size(278, 21);
+            this.txt_STBID.TabIndex = 17;
+            this.txt_STBID.TextChanged += new System.EventHandler(this.txt_STBID_TextChanged);
             // 
             // gf_CheckSerializer
             // 

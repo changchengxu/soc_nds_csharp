@@ -141,11 +141,11 @@ namespace soc_nds_csharp.DB_Manage
             {
                 if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue == true)
                 {
-                    rowSelect += Convert.ToInt32(dataGridView1.Rows[i].Cells[1].Value.ToString().Trim()) + ",";
+                    rowSelect += Convert.ToInt32(dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim()) + ",";
                 }
             }
 
-            if (HDIC_Message.ShowQuestionDialog(this,"Are you sure you want to delete the selected row " + (rowSelect.Split(',').Length - 1)) == DialogResult.No)
+            if (HDIC_Message.ShowQuestionDialog(this, "Are you sure you want to delete the selected row " + (rowSelect.Split(',').Length - 1)) == DialogResult.Cancel)
             {
                 return;
             }
@@ -193,7 +193,7 @@ namespace soc_nds_csharp.DB_Manage
 
         private void btn_Query_Click(object sender, EventArgs e)
         {
-            string sqlstr = "select * from STBData where 1=1";
+            string sqlstr = "select STBNO,ChipID,CAID,STBID,SmartCardID,ProductDate from STBData where 1=1";
             if (cbo_Time.Checked)
             {
                 sqlstr += " and ProductDate between '"+dateTimePicker_start.Value+"' and '"+dateTimePicker_end.Value+"'";

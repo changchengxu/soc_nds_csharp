@@ -11,11 +11,18 @@ using HDICSoft.Command;
 
 namespace soc_nds_csharp.Station_Operation
 {
+    public delegate void mainFormTrans(string mSign);// 传递给主窗体主窗体
+
     public partial class gf_SelectPipeLine : Form
     {
+
+        public  event mainFormTrans eventSend;//传递给主窗体，当打开工位一序列化模块时是主窗体TreeView不能点击
+
         public gf_SelectPipeLine()
         {
             InitializeComponent();
+            tableLayoutPanel1.BackColor = HDIC_Command.setColor();
+            this.BackColor = HDIC_Command.setColor();
         }
 
         private void gf_SelectPipeLine_Load(object sender, EventArgs e)
@@ -39,8 +46,31 @@ namespace soc_nds_csharp.Station_Operation
             }
             HDIC_Command.STBLineNum = Convert.ToInt32(cbo_LineID1.SelectedValue);
 
-            gf_Serializer gf_serial = new gf_Serializer();
-            gf_serial.ShowDialog();
+            gf_Serializer gf_serial = new gf_Serializer(this);
+            //gf_serial.ShowDialog();
+            gf_serial.TopLevel = true;
+            gf_serial.TopMost = true;
+            gf_serial.MdiParent = this.MdiParent;//父窗体是 父父窗体
+            gf_serial.WindowState = FormWindowState.Maximized;
+            gf_serial.MaximizeBox = false;
+
+            eventFunc("off");
+
+            gf_serial.Show();
+
+        }
+
+        public void eventFunc(string sign)//委托，父窗体和子窗体交互
+        {
+            eventSend(sign);
+            if (sign == "off")//子窗体开启
+            {
+                this.Enabled = false;
+            }
+            else if (sign == "open")//子窗体关闭
+            {
+                this.Enabled = true;
+            }
         }
 
         private bool checkPara()

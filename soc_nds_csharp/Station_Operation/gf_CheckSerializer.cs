@@ -8,12 +8,17 @@ using System.Windows.Forms;
 using HDICSoft.Message;
 using HDICSoft.DB;
 using HDICSoft.Func;
+using HDICSoft.Command;
 using soc_protocol;
+using System.Runtime.InteropServices;
+using barcode_scanner; 
 
 namespace soc_nds_csharp.Station_Operation
 {
     public partial class gf_CheckSerializer : Form
     {
+        BarCodeHook BarCode = new BarCodeHook();  //定义扫描仪对象
+
         Uart mSpSlot;//串口对象定义
         UartProtocol Protocol;
         Int32 ChipID = 0;
@@ -21,16 +26,28 @@ namespace soc_nds_csharp.Station_Operation
         public gf_CheckSerializer()
         {
             InitializeComponent();
+            tableLayoutPanel1.BackColor = HDIC_Command.setColor();
+            this.BackColor = HDIC_Command.setColor();
 
             this.richtxt_LincenseBoard.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.richtxt_LincenseAdo.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txt_CAID.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txt_STBID.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txt_SmartCardID.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.richtxt_Tips.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+
+            //文本内容居中显示
+            richtxt_LincenseAdo.SelectionAlignment = HorizontalAlignment.Center;
+            richtxt_LincenseBoard.SelectionAlignment = HorizontalAlignment.Center;
+
+            BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
+
         }
 
         private void gf_CheckSerializer_Load(object sender, EventArgs e)
         {
+            HDIC_Command.STBType = 1;//这个是测试 当前是村村通
+
             //打开串口
             mSpSlot = new Uart();
             mSpSlot.loadConfig();
@@ -38,19 +55,82 @@ namespace soc_nds_csharp.Station_Operation
 
             Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象 
 
+            richtxt_LincenseBoard.Enabled = false;
+            richtxt_LincenseAdo.Enabled = false;
+            richtxt_Tips.Enabled = false;
+            txt_CAID.Enabled = false;
+            txt_STBID.Enabled = false;
+            txt_SmartCardID.Enabled = false;
             btn_begin.Focus();
+
+            #region 让文本框失去焦点
+            txt_CAID.TabStop = false;
+            txt_SmartCardID.TabStop = false;
+            txt_STBID.TabStop = false;
+            richtxt_LincenseAdo.TabStop = false;
+            richtxt_LincenseBoard.TabStop = false;
+           #endregion
         }
+        ///////////////////////////////////////////////////////////////////////////////扫描仪
+        /// <summary>
+        /// 扫描仪
+        /// </summary>
+         private delegate void ShowInfoDelegate(BarCodeHook.BarCodes barCode);  
+        void BarCode_BarCodeEvent(BarCodeHook.BarCodes barCode)  
+        {  
+            ShowInfo(barCode);  
+        }
+
+        bool CheckCAID = false;
+        bool CheckSTBID = false;
+        bool CheckSmartCardID = false;
+
+         private void ShowInfo(BarCodeHook.BarCodes barCode)  
+        {  
+            if (this.InvokeRequired)  
+            {  
+                this.BeginInvoke(new ShowInfoDelegate(ShowInfo), new object[] { barCode });  
+            }  
+            else  
+            {  
+                //textBox1.Text = barCode.KeyName;  
+                //textBox2.Text = barCode.VirtKey.ToString();  
+                //textBox3.Text = barCode.ScanCode.ToString();  
+                //textBox4.Text = barCode.AscII.ToString();  
+                //textBox5.Text = barCode.Chr.ToString();  
+                //textBox6.Text = barCode.IsValid ? barCode.BarCode : "";  
+                
+                
+                if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 16) //获取扫描枪中的数据赋值到文本框
+                {
+                    txt_STBID.Text = barCode.IsValid ? barCode.BarCode : "";
+                }
+                else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 11)
+                {
+                    txt_CAID.Text = barCode.IsValid ? barCode.BarCode : "";
+                }
+                else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 12)
+                {
+                    txt_SmartCardID.Text = barCode.IsValid ? barCode.BarCode : "";
+                }
+              
+            }  
+        }  
+        ////////////////////////////////////////////////////////////////////////////////////
 
         private void initControl()
         {
-            richtxt_LincenseBoard.Enabled = false;
-            richtxt_LincenseAdo.Enabled = false;
-            richtxt_Tips.Enabled=false;
+            ChipID = 0;
+
+            CheckCAID = false;
+            CheckSTBID = false;
+            CheckSmartCardID = false;
 
             richtxt_LincenseBoard.Text = "";
             richtxt_LincenseAdo.Text="";
             txt_CAID.Text="";
-            txt_SmartCardID.Text="";
+            txt_STBID.Text="";
+            txt_SmartCardID.Text = "";
             richtxt_Tips.Text="";
 
             this.richtxt_LincenseBoard.ForeColor = System.Drawing.Color.Black;
@@ -58,7 +138,6 @@ namespace soc_nds_csharp.Station_Operation
             this.txt_CAID.ForeColor = System.Drawing.Color.Black;
             this.txt_SmartCardID.ForeColor = System.Drawing.Color.Black;
             this.richtxt_Tips.ForeColor = System.Drawing.Color.ForestGreen;
-
         }
 
         private void btn_begin_Click(object sender, EventArgs e)
@@ -68,7 +147,7 @@ namespace soc_nds_csharp.Station_Operation
 
         private void btn_begin_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Keys.KeyCode == Keys.Enter)
+            if (Keys.KeyCode == Keys.Enter || Keys.KeyCode==Keys.Back)
             {
                 Connect();
             }
@@ -82,6 +161,7 @@ namespace soc_nds_csharp.Station_Operation
             if (index != 0)
             {
                 richtxt_Tips.ForeColor = System.Drawing.Color.Red;
+                btn_begin.Enabled = true;
             }
 
             if (index == -1)
@@ -125,16 +205,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Tips.Text = "序列化校验失败！请检查或返回第一个工位!";
                 HDIC_Message.ShowWarnDialog(this, "序列化校验失败！请检查或返回第一个工位!");
             }
-            else if (index == -8)
-            {
-                richtxt_Tips.Text = "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!";
-                HDIC_Message.ShowWarnDialog(this, "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!");
-            }
-            else if (index == -88)
-            {
-                richtxt_Tips.Text = "数据库的CAID与扫描枪扫描的不一致!";
-                HDIC_Message.ShowWarnDialog(this, "数据库的CAID与扫描枪扫描的不一致!");
-            }
+           
             else if (index == -9)
             {
                 richtxt_Tips.Text = "向下位机获取ChipID失败";
@@ -143,14 +214,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 richtxt_Tips.Text = "向下位机获取STBID失败";
             }
-            else if (index == -101)
-            {
-                richtxt_Tips.Text = "数据库的STBID与扫描枪扫描的不一致";
-                HDIC_Message.ShowWarnDialog(this, "数据库的STBID与扫描枪扫描的不一致!");
-            }
             #endregion
-
-            btn_begin.Enabled = true;
         }
 
 
@@ -162,7 +226,7 @@ namespace soc_nds_csharp.Station_Operation
 
             // richtxt_Connect
             this.richtxt_Tips.Text = "正在建立连接,请稍后... ...";
-
+            
             //连接STB
             Int32 index = 0;
             Byte[] cmdlineACK = { };//只获取命令行前四个byte即可（主要用于判断当前什么命令）
@@ -267,62 +331,29 @@ namespace soc_nds_csharp.Station_Operation
                 }
                 #endregion
 
-                #region 下面是验证CAID
+                richtxt_Tips.Text = "请扫描标签上的序列号!";
+
+                BarCode.Start();  //开始监听扫描枪
                 
-                //根据ChipID生成CAID
-                char[] CAIDBuffer = new char[128];
-                string CAID = ((ulong)(ChipID + 0x80000000)).ToString().Trim();
-                for (int i = 0; i < CAID.Length; i++)
-                {
-                    CAIDBuffer[i] = Convert.ToChar(CAID[i]);
-                }
-                //char[] aa = CAID.ToCharArray();
-                CalculateLuhnAlgorithm(CAIDBuffer, 10);//不清楚这个到底什么用，而且文档和继平写的也不一样
-                string StrCAIDbuffer = new string(CAIDBuffer);
-                if (txt_CAID.Text.Trim() != StrCAIDbuffer.Trim())//机顶盒计算出的CAID和扫描枪扫描的CAID比较
-                {
-                    return -8;
-                }
-                else if (!FindCAID(txt_CAID.Text.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
-                {
-                    return -88;
-                }
-                richtxt_Tips.Text = "加密序列号校验成功!";
-                #endregion
-
-                #region 校验STBID
-                if (txt_STBID.Text.Trim().Length == 16)
-                {
-                    if (!FindSTBID(txt_STBID.Text.Trim()))//数据库的STBID与扫描枪扫描的CAID比较
-                    {
-                        return -101;
-                    }
-                }
-
-                //index = Protocol.Command(SERCOM_TYPE.COM_MFID, 0, 1, null, ref cmdlineACK);//调用类 ，获取STB中Flash信息
-                //if (index != 0)
-                //{
-                //    return -100;//向下位机获取STBID失败
-                //}
-                //if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_MFID)//下面是将从STB获取到的“序列化数据”赋值到文本框中
-                //{
-                //    cmdlineACK[(Int32)Index.buffer]
-                //}
-                #endregion
-
             }
-
+         
             return 0;
-
-            btn_begin.Enabled = true;
         }
 
-      //判断 ChipID
+        #region 方法
+        //判断 ChipID
         private bool FindChipID()
         {
-            if (HDIC_DB.sqlQuery("select count(*) from STBData where ChipID='" + String.Format("{0:X08}", ChipID).ToString() + "'") != "0")
+            try
             {
-                return true;
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where ChipID='" + String.Format("{0:X08}", ChipID).ToString() + "'") != "0")
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败，原因：\r\n" + ex.ToString());
             }
             return false;
         }
@@ -398,13 +429,208 @@ namespace soc_nds_csharp.Station_Operation
             return false;
         }
 
+        //判断SmartCardID
+        private bool FindSmartCardID(string mSmartCardID)
+        {
+            if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + mSmartCardID + "'") != "0")
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void gf_CheckSerializer_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (HDIC_Message.ShowQuestionDialog(this, "确定要关闭该窗体？") == DialogResult.OK)
             {
-                mSpSlot.close();
-                this.Close();
+                mSpSlot.close();//关闭串口
+                e.Cancel = false;;//关闭本窗体
+            }
+            else
+            {
+                e.Cancel = true;
             }
         }
+
+        #endregion
+
+        #region 校验
+        private Int32 Check(string txtInfo)
+            {
+            #region 校验CAID
+                if (txtInfo.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            {
+                //根据ChipID生成CAID
+                char[] CAIDBuffer = new char[128];
+                string CAID = ((ulong)(ChipID + 0x80000000)).ToString().Trim();
+                for (int i = 0; i < CAID.Length; i++)
+                {
+                    CAIDBuffer[i] = Convert.ToChar(CAID[i]);
+                }
+                //char[] aa = CAID.ToCharArray();
+                CalculateLuhnAlgorithm(CAIDBuffer, 10);//不清楚这个到底什么用，而且文档和继平写的也不一样
+                string StrCAIDbuffer = new string(CAIDBuffer);
+                if (txt_CAID.Text.Trim() != StrCAIDbuffer.Trim().Substring(0, txtInfo.Trim().Length))//机顶盒计算出的CAID和扫描枪扫描的CAID比较
+                {
+                    return -1;
+                }
+                else if (!FindCAID(txtInfo.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
+                {
+                    return -2;
+                }
+                else
+                {
+                    return 101;
+                }
+               
+            }
+
+            #endregion
+
+            #region 校验STBID
+                if (txtInfo.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            {
+
+                if (!FindSTBID(txtInfo.Trim()))//数据库的STBID与扫描枪扫描的CAID比较
+                {
+                    return -3;
+                }
+                ///////////////////////////////////////STBID条形码没有和机顶盒上的校验、、、、、、、、、、、、、、、
+                else
+                {
+                    return 102;
+                }
+                //index = Protocol.Command(SERCOM_TYPE.COM_MFID, 0, 1, null, ref cmdlineACK);//调用类 ，获取STB中Flash信息
+                //if (index != 0)
+                //{
+                //    return -100;//向下位机获取STBID失败
+                //}
+                //if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_MFID)//下面是将从STB获取到的“序列化数据”赋值到文本框中
+                //{
+                //    cmdlineACK[(Int32)Index.buffer]
+                //}
+            }
+            #endregion
+
+            #region 校验SmartCardID
+                if (HDIC_Command.STBType == 1 && txtInfo.Trim().Length == 12)//智能卡号不为空，说明是村村通
+            {
+                if (!FindSmartCardID(txtInfo.Trim()))//数据库的STBID与扫描枪扫描的CAID比较
+                {
+                    return -4;
+                }
+                else
+                {
+                    return 103;
+                }
+            }
+            #endregion
+
+            return 0;
+        }
+
+        private void printInfo(string txtInfo)
+        {
+            
+                Int32 index = Check(txtInfo);
+                if (index < 0)
+                {
+                    richtxt_Tips.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    richtxt_Tips.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                if (index == -1)
+                {
+                    richtxt_Tips.Text = "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!"; ;
+                    //HDIC_Message.ShowWarnDialog(this, "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!");
+                }
+                else if (index == -2)
+                {
+                    richtxt_Tips.Text = "数据库的CAID与扫描枪扫描的不一致!";
+                    //HDIC_Message.ShowWarnDialog(this, "数据库的CAID与扫描枪扫描的不一致!");
+                }
+                else if (index == 101) //【大于100的是成功的】
+                {
+                    richtxt_Tips.Text = "加密序列号校验成功!";
+                    CheckCAID = true;
+                }
+                else if (index == -3)
+                {
+                    richtxt_Tips.Text = "数据库的STBID与扫描枪扫描的不一致";
+                    //HDIC_Message.ShowWarnDialog(null, "数据库的STBID与扫描枪扫描的不一致!");
+                }
+                else if (index == 102) //【大于100的是成功的】
+                {
+                    richtxt_Tips.Text = "STBID校验成功!";
+                    CheckSTBID = true;
+                }
+                else if (index == -4)
+                {
+                    richtxt_Tips.Text = "数据库的SmartCardID与扫描枪扫描的不一致";
+                    //HDIC_Message.ShowWarnDialog(this, "数据库的SmartCardID与扫描枪扫描的不一致!");
+                }
+                else if (index == 103) //【大于100的是成功的】
+                {
+                    richtxt_Tips.Text = "智能卡号校验成功";
+                    CheckSmartCardID = true;
+                }
+
+                if (CheckCAID == true && CheckSTBID == true)//校验是否全部通过
+                {
+                    if ((HDIC_Command.STBType == 0) || (HDIC_Command.STBType == 1 && CheckSmartCardID == true))
+                    {
+
+                        richtxt_Tips.Text = "校验成功,请进行下一台!";
+                        //richtxt_Tips.Select(0, richtxt_Tips.Text.Length); 
+                        //richtxt_Tips.SelectionColor = System.Drawing.Color.ForestGreen;
+                        //richtxt_Tips.SelectionLength = 0; 
+
+                        BarCode.Stop();//关闭扫描仪
+                    }
+                }
+                btn_begin.Enabled = true;
+                btn_begin.Focus();
+        }
+        #endregion
+
+        /// <summary>
+        /// 校验CAID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txt_CAID_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_CAID.Text.Trim().Length == 11)
+            {
+                printInfo(txt_CAID.Text.Trim());
+            }
+        }
+        /// <summary>
+        /// 校验STBID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txt_STBID_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_STBID.Text.Trim().Length == 16)
+            {
+                printInfo(txt_STBID.Text.Trim());
+            }
+        }
+        /// <summary>
+        /// 校验SmartCardID
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txt_SmartCardID_TextChanged(object sender, EventArgs e)
+        {
+            if (txt_SmartCardID.Text.Trim().Length == 12)
+            {
+                printInfo(txt_SmartCardID.Text.Trim());
+            }
+        }
+
     }
 }

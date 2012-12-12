@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "soc_protocol", "soc_protoco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDIC", "HDIC\HDIC.csproj", "{7F5FC95C-F12E-4B9B-8FFC-A285D9C430FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "barcode_scanner", "barcode_scanner\barcode_scanner.csproj", "{713C9F30-DD28-4337-A58E-326A23B4EFD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{7F5FC95C-F12E-4B9B-8FFC-A285D9C430FF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7F5FC95C-F12E-4B9B-8FFC-A285D9C430FF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7F5FC95C-F12E-4B9B-8FFC-A285D9C430FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{713C9F30-DD28-4337-A58E-326A23B4EFD6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

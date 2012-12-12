@@ -382,6 +382,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\barcode_scanner\barcode_scanner.csproj">
+      <Project>{713C9F30-DD28-4337-A58E-326A23B4EFD6}</Project>
+      <Name>barcode_scanner</Name>
+    </ProjectReference>
     <ProjectReference Include="..\soc_protocol\soc_protocol.csproj">
       <Project>{4F03436A-4680-46A5-ABDF-F63E33E62828}</Project>
       <Name>soc_protocol</Name>
