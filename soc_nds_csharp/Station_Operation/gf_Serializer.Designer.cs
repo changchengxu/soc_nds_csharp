@@ -67,13 +67,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.6556F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.3444F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1297, 696);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 695);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -82,7 +82,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(157, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1066, 589);
+            this.panel1.Size = new System.Drawing.Size(1065, 588);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -97,7 +97,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1066, 589);
+            this.panel2.Size = new System.Drawing.Size(1065, 588);
             this.panel2.TabIndex = 1;
             // 
             // txt_SerialID
@@ -288,14 +288,14 @@
             this.工位一退出ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1297, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1296, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 工位一退出ToolStripMenuItem
             // 
             this.工位一退出ToolStripMenuItem.Name = "工位一退出ToolStripMenuItem";
-            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.工位一退出ToolStripMenuItem.Text = "工位一退出";
             this.工位一退出ToolStripMenuItem.Click += new System.EventHandler(this.工位一退出ToolStripMenuItem_Click);
             // 
@@ -303,7 +303,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1297, 720);
+            this.ClientSize = new System.Drawing.Size(1296, 720);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

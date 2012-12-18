@@ -170,6 +170,8 @@ namespace HDICSoft.DB
                 {
                     try
                     {
+                        cmd.CommandTimeout = 10;//长城设置，10s即超时
+
                         PrepareCommand(cmd, conn, trans, cmdType, cmdText, cmdParms);
                         using (DbDataAdapter da = provider.CreateDataAdapter())
                         {
@@ -204,7 +206,7 @@ namespace HDICSoft.DB
 
             cmd.Connection = conn;
             cmd.CommandText = cmdText;
-
+           
             if (trans != null)
                 cmd.Transaction = trans;
 

@@ -24,9 +24,16 @@ namespace soc_nds_csharp.STB_Manage
 
         private void STBClient_Load(object sender, EventArgs e)
         {
-            dgv_STB.DataSource = HDIC_DB.GetList(@"select distinct STBOpLineNum as '流水线号',STBOpIndex as '当前流水号',(select STBOpIndex from STBOp as a where STBOpFlag=3 and a.
-STBOpLineNum=b.STBOpLineNum) as '流水号最大值'
- from STBOp as b  where STBOpFlag=1 order by STBOpLineNum");
+            try
+            {
+                dgv_STB.DataSource = HDIC_DB.GetList(@"select distinct STBOpLineNum as '流水线号',STBOpIndex as '当前流水号',(select STBOpIndex from STBOp as a where STBOpFlag=3 and a.
+                                   STBOpLineNum=b.STBOpLineNum) as '流水号最大值'
+                                    from STBOp as b  where STBOpFlag=1 order by STBOpLineNum");
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
+            }
         }
 
 

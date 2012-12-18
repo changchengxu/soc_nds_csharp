@@ -80,17 +80,17 @@ namespace soc_nds_csharp.Export_file
             //RetFile_DTHUMC_STBman_MBB265_23Aug2010
             //由于是中文，所以“en_us”转换后月份才会是英文
             string Date = dateTimePicker1.Value.ToString("ddMMMyyyy", new System.Globalization.CultureInfo("en-us"));
-            string SaveFileName = "RetFile_DTHUMC_" + txt_ManufacturerName.Text.Trim() + "_" + txt_STBModel.Text.Trim() + "_" + Date+".txt";
+            string SaveFileName = "RetFile_"+cbox__BroadCaster.Text.Trim()+"_" + txt_ManufacturerName.Text.Trim() + "_" + txt_STBModel.Text.Trim() + "_" + Date;
             //前两行表示文件类型
-            string content = "STB_vendor_to_DTHUMC\r\nver101\r\n";
+            string ContentTitle = "STB_vendor_to_"+cbox__BroadCaster.Text.Trim()+"\r\nver101\r\n";
             //第三行为生产的日期和时间
-            content += dateTimePicker1.Value.ToString("ddd,dd MMM yyyy HH:mm:ss zzz", new System.Globalization.CultureInfo("en-us"))+"\r\n";
+            ContentTitle += dateTimePicker1.Value.ToString("ddd,dd MMM yyyy HH:mm:ss zzz", new System.Globalization.CultureInfo("en-us")) + "\r\n";
             //第四行用于描述机顶盒，必须包括"<STB model> with <STB chip> for <broadcaster>
-            content += txt_STBModel.Text.Trim() + " with " + txt_STBChip.Text.Trim() + " for " + cbox__BroadCaster.Text.Trim() + "\r\n";
+            ContentTitle += txt_STBModel.Text.Trim() + " with " + txt_STBChip.Text.Trim() + " for " + cbox__BroadCaster.Text.Trim() + "\r\n";
             //第五行用于描述机顶盒制造商的生产批次
-            content += txt_procBatch.Text.Trim() + "\r\n";
+            ContentTitle += txt_procBatch.Text.Trim() + "\r\n";
             //第六行为机顶盒平台标识，包括<Manufacturer ID>、<Model ID>和<Hardware ID>
-            content += txt_ManufacturerID.Text.Trim() + txt_ModelID.Text.Trim() + txt_HardwareID.Text.Trim()+"\r\n";
+            ContentTitle += txt_ManufacturerID.Text.Trim() + txt_ModelID.Text.Trim() + txt_HardwareID.Text.Trim() + "\r\n";
 
            
 
@@ -122,40 +122,117 @@ namespace soc_nds_csharp.Export_file
 
             string ChipIndex = "";
 
-#region 3
+
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "文本格式.txt|.txt";
             save.Title = "导出文件到";
-            save.FileName=SaveFileName;
+            save.FileName = SaveFileName + ".txt";
             if (save.ShowDialog() == DialogResult.OK)
             {
+                #region 临时用
                 myStream = save.OpenFile();
-                //sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding("GB2312"));
                 sw = new StreamWriter(myStream, System.Text.Encoding.ASCII);
-                try
+
+                for (int i = 0; i <10000000; i++)
                 {
-                    sw.Write(content);
+                    ContentTitle = String.Format("{0:d10}", i) + " " + String.Format("{0:d88}", i + 2) + "\r\n";
 
-                    //第六行之后的每一行列出了机顶盒的加密序列号＋空格＋芯片序列号+空格+智能卡号＋空格＋机顶盒序列号
-                    DataTable dt = HDIC_DB.GetList("select * from STBData where Flag =0 and  CONVERT(varchar(12) , ProductDate, 111 )='" + dateTimePicker1.Value.ToString("yyyy/MM/dd") + "'");
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        content = dt.Rows[i]["CAID"].ToString().Trim() + " " + dt.Rows[i]["ChipID"].ToString().Trim()
-                            + " " + dt.Rows[i]["SmartCardID"].ToString().Trim() + " " + dt.Rows[i]["STBID"].ToString().Trim() + "\r\n";
-
-                        sw.Write(content);
-                        ChipIndex += dt.Rows[i]["ChipID"].ToString().Trim() + ",";
-                    }
+                    sw.Write(ContentTitle);
                 }
-                catch
+                sw.Close();
+                myStream.Close();
+                HDIC_Message.ShowInfoDialog(null, "ok");
+                return;
+                #endregion
+
+
+                DataTable dt = HDIC_DB.GetList("select * from STBData where Flag =0 and  CONVERT(varchar(12) , ProductDate, 111 )='" + dateTimePicker1.Value.ToString("yyyy/MM/dd") + "'");
+                if (dt.Rows.Count < 100000)
                 {
+                    myStream = save.OpenFile();
+                    //sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding("GB2312"));
+                    sw = new StreamWriter(myStream, System.Text.Encoding.ASCII);
+                    try
+                    {
+                        sw.Write(ContentTitle);
+
+                        string content = "";
+                        //第六行之后的每一行列出了机顶盒的加密序列号＋空格＋芯片序列号+空格+智能卡号＋空格＋机顶盒序列号
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            content = dt.Rows[i]["CAID"].ToString().Trim() + " " + dt.Rows[i]["ChipID"].ToString().Trim()
+                                + " " + dt.Rows[i]["SmartCardID"].ToString().Trim() + " " + dt.Rows[i]["STBID"].ToString().Trim() + "\r\n";
+
+                            sw.Write(content);
+                            ChipIndex += dt.Rows[i]["ChipID"].ToString().Trim() + ",";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HDIC_Message.ShowWarnDialog(null, "创建文件时发生错误，原因是：" + ex.ToString());
+                        return;
+                    }
                     sw.Close();
                     myStream.Close();
                 }
-#endregion
 
-                sw.Close();
-                myStream.Close();
+                #region 数据大于十万条，需要创建两个文件
+                else
+                {
+                    FileStream fsFile = new FileStream(SaveFileName+"_1", FileMode.Open);
+
+                    sw = new StreamWriter(fsFile, System.Text.Encoding.ASCII);
+                    try
+                    {
+                        sw.Write(ContentTitle);
+
+                        string content = "";
+                        //第六行之后的每一行列出了机顶盒的加密序列号＋空格＋芯片序列号+空格+智能卡号＋空格＋机顶盒序列号
+                        for (int i = 0; i < 100000; i++)
+                        {
+                            content = dt.Rows[i]["CAID"].ToString().Trim() + " " + dt.Rows[i]["ChipID"].ToString().Trim()
+                               + " " + dt.Rows[i]["SmartCardID"].ToString().Trim() + " " + dt.Rows[i]["STBID"].ToString().Trim() + "\r\n";
+
+                            sw.Write(content);
+                            ChipIndex += dt.Rows[i]["ChipID"].ToString().Trim() + ",";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HDIC_Message.ShowWarnDialog(null, "创建文件时发生错误，原因是：" + ex.ToString());
+                        return;
+                    }
+                    sw.Close();
+                    //////////////////////////////////////////////////////////////////////////
+                    fsFile = new FileStream(SaveFileName + "_2", FileMode.Open);
+
+                    sw = new StreamWriter(fsFile, System.Text.Encoding.ASCII);
+                    try
+                    {
+                        sw.Write(ContentTitle);
+
+                        string content = "";
+                        //第六行之后的每一行列出了机顶盒的加密序列号＋空格＋芯片序列号+空格+智能卡号＋空格＋机顶盒序列号
+                        for (int i = 100000; i <dt.Rows.Count ; i++)
+                        {
+                            content = dt.Rows[i]["CAID"].ToString().Trim() + " " + dt.Rows[i]["ChipID"].ToString().Trim()
+                               + " " + dt.Rows[i]["SmartCardID"].ToString().Trim() + " " + dt.Rows[i]["STBID"].ToString().Trim() + "\r\n";
+
+                            sw.Write(content);
+                            ChipIndex += dt.Rows[i]["ChipID"].ToString().Trim() + ",";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        HDIC_Message.ShowWarnDialog(null, "创建文件时发生错误，原因是：" + ex.ToString());
+                        return;
+                    }
+                    sw.Close();
+                    myStream.Close();
+                }
+                #endregion
+
+               
                 //修改数据库
                 if (ChipIndex.Trim() != "")
                 {
@@ -168,7 +245,6 @@ namespace soc_nds_csharp.Export_file
                 }
 
                 MessageBox.Show("导出数据成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
         }
 

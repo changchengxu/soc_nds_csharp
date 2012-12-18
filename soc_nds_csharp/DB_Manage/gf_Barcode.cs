@@ -379,62 +379,86 @@ namespace soc_nds_csharp.DB_Manage
         }
         private void txt_STBID_TextChanged(object sender, EventArgs e)
         {
-            if (txt_STBID.Text.Trim().Length == 16)
+            try
             {
-                DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where STBID='" + txt_STBID.Text.Trim() + "'");
-                if (dt.Rows.Count > 0)
+                if (txt_STBID.Text.Trim().Length == 16)
                 {
-                    txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
-                    txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where STBID='" + txt_STBID.Text.Trim() + "'");
+                    if (dt.Rows.Count > 0)
+                    {
+                        txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
+                        txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    }
+                }
+                else
+                {
+                    ////txt_CAID.Text = "CAID是11位数字";
+                    ////txt_SmartCardID.Text = "智能卡号是12位数字";
+                    //txt_CAID.Text = "";
+                    //txt_SmartCardID.Text = "";
                 }
             }
-            else
+            catch (System.Exception ex)
             {
-                ////txt_CAID.Text = "CAID是11位数字";
-                ////txt_SmartCardID.Text = "智能卡号是12位数字";
-                //txt_CAID.Text = "";
-                //txt_SmartCardID.Text = "";
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
+           
         }
 
         private void txt_CAID_TextChanged(object sender, EventArgs e)
         {
-            if (txt_CAID.Text.Trim().Length == 11)
+            try
             {
-                DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where CAID='" + txt_CAID.Text.Trim() + "'");
-                if (dt.Rows.Count > 0)
+                if (txt_CAID.Text.Trim().Length == 11)
                 {
-                    txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
-                    txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where CAID='" + txt_CAID.Text.Trim() + "'");
+                    if (dt.Rows.Count > 0)
+                    {
+                        txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
+                        txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    }
+                }
+                else
+                {
+                    ////txt_STBID.Text = "STBID是16位数字";
+                    ////txt_SmartCardID.Text = "智能卡号是12位数字";
+                    //txt_STBID.Text = "";
+                    //txt_SmartCardID.Text = "";
                 }
             }
-            else 
+            catch (System.Exception ex)
             {
-                ////txt_STBID.Text = "STBID是16位数字";
-                ////txt_SmartCardID.Text = "智能卡号是12位数字";
-                //txt_STBID.Text = "";
-                //txt_SmartCardID.Text = "";
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
+          
         }
 
         private void txt_SmartCardID_TextChanged(object sender, EventArgs e)
         {
-            if (txt_SmartCardID.Text.Trim().Length == 12)
+            try
             {
-                DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where SmartCardID='" + txt_SmartCardID.Text.Trim() + "'");
-                if (dt.Rows.Count > 0)
+                if (txt_SmartCardID.Text.Trim().Length == 12)
                 {
-                    txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
-                    txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
+                    DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where SmartCardID='" + txt_SmartCardID.Text.Trim() + "'");
+                    if (dt.Rows.Count > 0)
+                    {
+                        txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
+                        txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
+                    }
+                }
+                else
+                {
+                    ////txt_STBID.Text = "STBID是16位数字";
+                    ////txt_CAID.Text = "CAID是11位数字";
+                    //txt_STBID.Text = "";
+                    //txt_CAID.Text = "";
                 }
             }
-            else
+            catch (System.Exception ex)
             {
-                ////txt_STBID.Text = "STBID是16位数字";
-                ////txt_CAID.Text = "CAID是11位数字";
-                //txt_STBID.Text = "";
-                //txt_CAID.Text = "";
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
+            
         }
         #endregion
 

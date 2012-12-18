@@ -52,42 +52,43 @@ namespace soc_nds_csharp
             }
             catch (System.Exception ex)
             {
+                throw new Exception();
                 #region 附加数据库
-                try
-                {
-                    //SqlParameter[] para={new SqlParameter("@dbname",SqlDbType.NVarChar),
-                    //                     new SqlParameter("@filename1",SqlDbType.NVarChar),
-                    //                     new SqlParameter("@filename2",SqlDbType.NVarChar),
-                    //};
-                    //para[0].Value = "STBInfo";
-                    //para[1].Value = path + @"\App_Data\STBInfo.mdf";
-                    //para[2].Value = path + @"\App_Data\STBInfo_log.ldf";
-                    // HDIC_DB.ExcuteNonQuery(CommandType.StoredProcedure,"sp_attach_db",para);
-                    //数据库连接对象
-                    using (SqlConnection Conn = new SqlConnection("Data Source=.;Persist Security Info=False;User ID=sa; pwd =sa"))
-                    {
-                        using (SqlCommand Comm = new SqlCommand())//命令
-                        {
-                            Comm.CommandText = "sp_attach_db";
-                            Comm.CommandType = CommandType.StoredProcedure;                         //引入存储过程
-                            Comm.Parameters.AddWithValue("@dbname", "STBInfo");                             //这个是数据库名字，也就是你写什么名字附加到数据库就是什么名字。
-                            Comm.Parameters.AddWithValue("@filename1", path + @"\App_Data\STBInfo.mdf");   //地址
-                            Comm.Parameters.AddWithValue("@filename2", path + @"\App_Data\STBInfo_log.ldf");
-                            Comm.Connection = Conn;    //初始化连接对象
-                            Conn.Open();   //打开连接对象
-                            Comm.ExecuteNonQuery();
-                            Conn.Close();   //关闭连接对象
+                //try
+                //{
+                //    //SqlParameter[] para={new SqlParameter("@dbname",SqlDbType.NVarChar),
+                //    //                     new SqlParameter("@filename1",SqlDbType.NVarChar),
+                //    //                     new SqlParameter("@filename2",SqlDbType.NVarChar),
+                //    //};
+                //    //para[0].Value = "STBInfo";
+                //    //para[1].Value = path + @"\App_Data\STBInfo.mdf";
+                //    //para[2].Value = path + @"\App_Data\STBInfo_log.ldf";
+                //    // HDIC_DB.ExcuteNonQuery(CommandType.StoredProcedure,"sp_attach_db",para);
+                //    //数据库连接对象
+                //    using (SqlConnection Conn = new SqlConnection("Data Source=.;Persist Security Info=False;User ID=sa; pwd =sa"))
+                //    {
+                //        using (SqlCommand Comm = new SqlCommand())//命令
+                //        {
+                //            Comm.CommandText = "sp_attach_db";
+                //            Comm.CommandType = CommandType.StoredProcedure;                         //引入存储过程
+                //            Comm.Parameters.AddWithValue("@dbname", "STBInfo");                             //这个是数据库名字，也就是你写什么名字附加到数据库就是什么名字。
+                //            Comm.Parameters.AddWithValue("@filename1", path + @"\App_Data\STBInfo.mdf");   //地址
+                //            Comm.Parameters.AddWithValue("@filename2", path + @"\App_Data\STBInfo_log.ldf");
+                //            Comm.Connection = Conn;    //初始化连接对象
+                //            Conn.Open();   //打开连接对象
+                //            Comm.ExecuteNonQuery();
+                //            Conn.Close();   //关闭连接对象
 
-                            HDIC_Message.ShowInfoDialog(this,"附加数据库成功,正在重新打开系统");
-                            HDICSoft.Func.HDIC_Func.Reset();
+                //            HDIC_Message.ShowInfoDialog(this,"附加数据库成功,正在重新打开系统");
+                //            HDICSoft.Func.HDIC_Func.Reset();
                            
-                        }
-                    }
-                }
-                catch 
-                {
-                    HDIC_Message.ShowWarnDialog(this,"附加失败:" + ex.Message);
-                }
+                //        }
+                //    }
+                //}
+                //catch 
+                //{
+                //    HDIC_Message.ShowWarnDialog(this,"附加失败:" + ex.Message);
+                //}
 
                 #endregion
             }

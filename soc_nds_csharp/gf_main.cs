@@ -25,36 +25,44 @@ namespace soc_nds_csharp
         {
             this.BackColor = HDIC_Command.setColor();
             taskPane1.CollapseAll();
-            using (gf_login login = new gf_login())
+            try
             {
-                if (login.ShowDialog() == DialogResult.OK)
+                using (gf_login login = new gf_login())
                 {
-                    //下面sql意思：通过用户权限编号在SysRoleMenu中获取 子菜单 和 主菜单
-                      string sqlstr="";
-                      if (HDIC_Command.UseName.ToLower().Trim() == "admin")//超级管理用户 可使用全部功能
-                      {
-                          sqlstr = "SELECT a.* FROM  SysMenuDisplay as a order by a.menuNo";
-                      }
-                      else
-                      {
-                          sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
-                        " where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.roleNo + "')" +
-                        "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')" +
-                        " order by a.menuNo";
-                      }
-                 
-                    dt = HDIC_DB.GetList(sqlstr);
+                    if (login.ShowDialog() == DialogResult.OK)
+                    {
+                        //下面sql意思：通过用户权限编号在SysRoleMenu中获取 子菜单 和 主菜单
+                        string sqlstr = "";
+                        if (HDIC_Command.UseName.ToLower().Trim() == "admin")//超级管理用户 可使用全部功能
+                        {
+                            sqlstr = "SELECT a.* FROM  SysMenuDisplay as a order by a.menuNo";
+                        }
+                        else
+                        {
+                            sqlstr = "SELECT a.* FROM  SysMenuDisplay as a " +
+                          " where a.menuNo in (select muOpt from SysRoleMenu as b where  b.isSelect=1  and roleNo='" + HDIC_Command.roleNo + "')" +
+                          "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')" +
+                          " order by a.menuNo";
+                        }
 
-                    taskPane1.Expandos.Clear();
-                    AddExpando();
-                }
-                else
-                {
-                    Application.Exit();
-                }
+                        dt = HDIC_DB.GetList(sqlstr);
 
-                toolStripStatusLabel1.Text="尊敬的<"+HDIC_Command.UseName+">用户，欢迎您登录直播星软件 | 今天的日期是："+DateTime.Now.ToString("yyyy-MM-dd");
+                        taskPane1.Expandos.Clear();
+                        AddExpando();
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+
+                    toolStripStatusLabel1.Text = "尊敬的<" + HDIC_Command.UseName + ">用户，欢迎您登录直播星软件 | 今天的日期是：" + DateTime.Now.ToString("yyyy-MM-dd");
+                }
             }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库连接失败,请检查服务器或者网络是否正常.");
+            }
+           
 
         }
 

@@ -220,7 +220,14 @@ namespace soc_nds_csharp.DB_Manage
             cb_check.Name = "cb_check";
             dataGridView1.Columns.Add(cb_check);
 
-            dataGridView1.DataSource = HDIC_DB.GetList(sqlstr);
+            try
+            {
+                dataGridView1.DataSource = HDIC_DB.GetList(sqlstr);
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
+            }
 
         }
 
