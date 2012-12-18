@@ -65,11 +65,11 @@ namespace soc_nds_csharp.Station_Operation
             eventSend(sign);
             if (sign == "off")//子窗体开启
             {
-                this.Enabled = false;
+                this.Visible = false;
             }
             else if (sign == "open")//子窗体关闭
             {
-                this.Enabled = true;
+                this.Visible = true;
             }
         }
 

@@ -59,16 +59,16 @@ namespace soc_nds_csharp.STB_Manage
         /// <param name="e"></param>
         private void btn1_Click(object sender, EventArgs e)
         {
-            if (!CheckData())
-            {
-                return;
-            }
-
             if (intGloID == -1)// add
             {
                 object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where STBOpLineNum='" + txt_pipID.Text.Trim() + "'", null);
                 if (obj == null || (int)obj == 0)
                 {
+                    if (!CheckData())
+                    {
+                        return;
+                    }
+
                     if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
                         txt_currentPipID.Text.Trim() + "',1);insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
                         txt_pipIDMax.Text.Trim() + "',3)", null) > 0)
@@ -86,6 +86,11 @@ namespace soc_nds_csharp.STB_Manage
 
             else  if(intGloID >0)          //edit
             {
+                if (!CheckData())
+                {
+                    return;
+                }
+
                 if (HDIC_DB.ExcuteNonQuery(@"update STBOp set STBOpIndex='" + txt_currentPipID.Text.Trim()
                     + "' where STBOpLineNum='" + txt_pipID.Text.Trim() 
                     + "' and STBOpFlag=1; update STBOp set STBOpIndex='" + txt_pipIDMax.Text.Trim()
@@ -114,6 +119,7 @@ namespace soc_nds_csharp.STB_Manage
             else if (!HDIC_Func.CheckObjectIsInteger(txt_pipID.Text.Trim()))
             {
                 HDIC_Message.ShowWarnDialog(this, "流水号输入不是数字");
+                txt_pipID.Text = "";
                 txt_pipID.Focus();
                 return false;
             }
@@ -128,6 +134,7 @@ namespace soc_nds_csharp.STB_Manage
             {
                 HDIC_Message.ShowWarnDialog(this, "当前流水号输入不是数字");
                 txt_currentPipID.Text = "";
+                txt_pipIDMax.Text = "";
                 txt_currentPipID.Focus();
                 return false;
             }
@@ -149,9 +156,18 @@ namespace soc_nds_csharp.STB_Manage
                 HDIC_Message.ShowWarnDialog(this, "当前值不能大于最大值");
                 txt_currentPipID.Text = "";
                 txt_pipIDMax.Text = "";
+                txt_pipIDMax.Text = "";
                 return false;
             }
 
+            ////string sqlstr="select count(STBOpIndex) from STBOp where (select max(STBOpIndex) from STBOp where STBOpFlag=3)>='"+txt_currentPipID.Text.Trim()+"'";
+            ////if (HDIC_DB.sqlQuery(sqlstr)!="0")//新建流水号最好范围是连续的
+            ////{
+            ////     HDIC_Message.ShowWarnDialog(this, "请保持流水线的连续，当前流水号范围存在重叠现象");
+            ////    txt_currentPipID.Text = "";
+            ////    txt_pipIDMax.Text = "";
+            ////    return false;
+            ////}
             return true;
         }
 

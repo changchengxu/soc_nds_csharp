@@ -114,7 +114,7 @@
             this.tsb_Exit.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Exit.Image")));
             this.tsb_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Exit.Name = "tsb_Exit";
-            this.tsb_Exit.Size = new System.Drawing.Size(51, 22);
+            this.tsb_Exit.Size = new System.Drawing.Size(52, 22);
             this.tsb_Exit.Text = "退出";
             this.tsb_Exit.Click += new System.EventHandler(this.tsb_Exit_Click);
             // 

@@ -48,7 +48,7 @@ namespace HDICSoft.DB
     {
 
         //   private static readonly string connStringName = ConfigurationManager.AppSettings["connStringName"].ToString();
-        private static readonly string connString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
+        ////private static readonly string connString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
         private static readonly string providerName = ConfigurationManager.ConnectionStrings["connStringName"].ProviderName;
         public static DbProviderFactory provider = DbProviderFactories.GetFactory(providerName);
 
@@ -197,7 +197,8 @@ namespace HDICSoft.DB
 
         private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType, string cmdText, DbParameter[] cmdParms)
         {
-            conn.ConnectionString = connString;
+            //conn.ConnectionString = connString;
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
             if (conn.State != ConnectionState.Open)
                 conn.Open();
 
@@ -730,19 +731,19 @@ namespace HDICSoft.Func
             #region 2
           
                 TSCLIB_DLL.openport("TSC TTP-344M Plus");
-                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "0", "0");                           //Setup the media size and sensor type info
+                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "2", "0");                           //Setup the media size and sensor type info
                 TSCLIB_DLL.clearbuffer();
 
                 TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
                 if (flag == 0)
                 {
-                    TSCLIB_DLL.printlabel("1", "2");  //户户通打印八份
+                    TSCLIB_DLL.printlabel("1", "3");  //户户通打印八份
                 }
                 if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号
                 {
                     TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 280).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content3);//打印SmartCardID
-                    TSCLIB_DLL.printlabel("1", "1");  //村村通打印七份
+                    TSCLIB_DLL.printlabel("1", "2");  //村村通打印七份
                 }
 
                 //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font

@@ -24,5 +24,10 @@ namespace soc_nds_csharp.Station_Operation
             this.richTextBox1.Text = "正在尝试连接,请稍后... ...";
 
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

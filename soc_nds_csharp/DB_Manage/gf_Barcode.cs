@@ -231,8 +231,13 @@ namespace soc_nds_csharp.DB_Manage
             //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
             //TSCLIB_DLL.closeport();
             //#endregion
+            int flag = 0;
+            if (txt_SmartCardID.Text.Trim().Length == 12)
+            {
+                flag = 1;
+            }
 
-            HDIC_Func.TSCPrinter(txt_tscWidth.Text.Trim(),txt_tscHeight.Text.Trim(),txt_tscSpeed.Text.Trim(),txt_tscDensity.Text.Trim(),txt_tscX.Text.Trim(),txt_tscY.Text.Trim(),cbEncodeType.SelectedItem.ToString().Trim(),Convert.ToString((int)chkGenerateLabel.CheckState),txt_STBID.Text.Trim(),txt_CAID.Text.Trim(),txt_SmartCardID.Text.Trim(),cbox_tscRotate.SelectedItem.ToString().Trim(),txt_tscBar.Text.Trim(),1);
+            HDIC_Func.TSCPrinter(txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), cbEncodeType.SelectedItem.ToString().Trim(), Convert.ToString((int)chkGenerateLabel.CheckState), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBar.Text.Trim(), flag);
         }
 
         #endregion

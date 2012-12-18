@@ -41,7 +41,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txt_procBatch = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.txt_BroadCaster = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_STBChip = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -55,6 +54,7 @@
             this.tsb_ExportData = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tst_Exit = new System.Windows.Forms.ToolStripButton();
+            this.cbox__BroadCaster = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -89,6 +89,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbox__BroadCaster);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.txt_HardwareID);
             this.groupBox1.Controls.Add(this.label9);
@@ -98,7 +99,6 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txt_procBatch);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.txt_BroadCaster);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.txt_STBChip);
             this.groupBox1.Controls.Add(this.label4);
@@ -187,13 +187,6 @@
             this.label6.Size = new System.Drawing.Size(59, 12);
             this.label6.TabIndex = 33;
             this.label6.Text = "生产批次:";
-            // 
-            // txt_BroadCaster
-            // 
-            this.txt_BroadCaster.Location = new System.Drawing.Point(158, 205);
-            this.txt_BroadCaster.Name = "txt_BroadCaster";
-            this.txt_BroadCaster.Size = new System.Drawing.Size(237, 21);
-            this.txt_BroadCaster.TabIndex = 32;
             // 
             // label5
             // 
@@ -288,7 +281,7 @@
             this.tsb_ExportData.Image = ((System.Drawing.Image)(resources.GetObject("tsb_ExportData.Image")));
             this.tsb_ExportData.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_ExportData.Name = "tsb_ExportData";
-            this.tsb_ExportData.Size = new System.Drawing.Size(76, 22);
+            this.tsb_ExportData.Size = new System.Drawing.Size(75, 22);
             this.tsb_ExportData.Text = "数据导出";
             this.tsb_ExportData.Click += new System.EventHandler(this.tsb_ExportData_Click);
             // 
@@ -302,9 +295,21 @@
             this.tst_Exit.Image = ((System.Drawing.Image)(resources.GetObject("tst_Exit.Image")));
             this.tst_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tst_Exit.Name = "tst_Exit";
-            this.tst_Exit.Size = new System.Drawing.Size(52, 22);
+            this.tst_Exit.Size = new System.Drawing.Size(51, 22);
             this.tst_Exit.Text = "退出";
             this.tst_Exit.Click += new System.EventHandler(this.tst_Exit_Click);
+            // 
+            // cbox__BroadCaster
+            // 
+            this.cbox__BroadCaster.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox__BroadCaster.FormattingEnabled = true;
+            this.cbox__BroadCaster.Items.AddRange(new object[] {
+            "DTHUM",
+            "SARFT"});
+            this.cbox__BroadCaster.Location = new System.Drawing.Point(158, 206);
+            this.cbox__BroadCaster.Name = "cbox__BroadCaster";
+            this.cbox__BroadCaster.Size = new System.Drawing.Size(121, 20);
+            this.cbox__BroadCaster.TabIndex = 42;
             // 
             // Export_file
             // 
@@ -315,7 +320,6 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Export_file";
             this.Text = "导出返回文件";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Export_file_FormClosed);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -345,7 +349,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txt_procBatch;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txt_BroadCaster;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_STBChip;
         private System.Windows.Forms.Label label4;
@@ -355,5 +358,6 @@
         private System.Windows.Forms.Button btn_Import;
         private System.Windows.Forms.TextBox txt_ManufacturerName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cbox__BroadCaster;
     }
 }

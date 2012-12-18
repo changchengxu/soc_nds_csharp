@@ -67,7 +67,7 @@ namespace soc_nds_csharp.Export_file
             //dr[1] = txt_STBModel.Text.Trim();
             //dr[2] = dateTimePicker1.Value;
             //dr[3] = txt_STBChip.Text.Trim();
-            //dr[4] = txt_BroadCaster.Text.Trim();
+            //dr[4] = cbox__BroadCaster.Text.Trim();
             //dr[5] = txt_procBatch.Text.Trim();
             //dr[6] = txt_ManufacturerID.Text.Trim();
             //dr[7] = txt_ModelID.Text.Trim();
@@ -84,9 +84,9 @@ namespace soc_nds_csharp.Export_file
             //前两行表示文件类型
             string content = "STB_vendor_to_DTHUMC\r\nver101\r\n";
             //第三行为生产的日期和时间
-            content += dateTimePicker1.Value.ToString("ddd,dd MMM yyyy HH:mm:ss", new System.Globalization.CultureInfo("en-us"))+"\r\n";
+            content += dateTimePicker1.Value.ToString("ddd,dd MMM yyyy HH:mm:ss zzz", new System.Globalization.CultureInfo("en-us"))+"\r\n";
             //第四行用于描述机顶盒，必须包括"<STB model> with <STB chip> for <broadcaster>
-            content += txt_STBModel.Text.Trim() + " with " + txt_STBChip.Text.Trim() + " for " + txt_BroadCaster.Text.Trim() + "\r\n";
+            content += txt_STBModel.Text.Trim() + " with " + txt_STBChip.Text.Trim() + " for " + cbox__BroadCaster.Text.Trim() + "\r\n";
             //第五行用于描述机顶盒制造商的生产批次
             content += txt_procBatch.Text.Trim() + "\r\n";
             //第六行为机顶盒平台标识，包括<Manufacturer ID>、<Model ID>和<Hardware ID>
@@ -120,6 +120,8 @@ namespace soc_nds_csharp.Export_file
 //            }
 #endregion
 
+            string ChipIndex = "";
+
 #region 3
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "文本格式.txt|.txt";
@@ -127,20 +129,22 @@ namespace soc_nds_csharp.Export_file
             save.FileName=SaveFileName;
             if (save.ShowDialog() == DialogResult.OK)
             {
-                 myStream = save.OpenFile();
-                 //sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding("GB2312"));
-                 sw = new StreamWriter(myStream, System.Text.Encoding.ASCII); 
+                myStream = save.OpenFile();
+                //sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding("GB2312"));
+                sw = new StreamWriter(myStream, System.Text.Encoding.ASCII);
                 try
                 {
                     sw.Write(content);
+
                     //第六行之后的每一行列出了机顶盒的加密序列号＋空格＋芯片序列号+空格+智能卡号＋空格＋机顶盒序列号
-                    DataTable dt = HDIC_DB.GetList("select * from STBData");
+                    DataTable dt = HDIC_DB.GetList("select * from STBData where Flag =0 and  CONVERT(varchar(12) , ProductDate, 111 )='" + dateTimePicker1.Value.ToString("yyyy/MM/dd") + "'");
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        content = dt.Rows[0]["CAID"].ToString().Trim() + " " + dt.Rows[0]["ChipID"].ToString().Trim()
-                            + " " + dt.Rows[0]["SmartCardID"].ToString().Trim() + " " + dt.Rows[0]["STBID"].ToString().Trim() + 0x0A;
+                        content = dt.Rows[i]["CAID"].ToString().Trim() + " " + dt.Rows[i]["ChipID"].ToString().Trim()
+                            + " " + dt.Rows[i]["SmartCardID"].ToString().Trim() + " " + dt.Rows[i]["STBID"].ToString().Trim() + "\r\n";
 
                         sw.Write(content);
+                        ChipIndex += dt.Rows[i]["ChipID"].ToString().Trim() + ",";
                     }
                 }
                 catch
@@ -148,23 +152,30 @@ namespace soc_nds_csharp.Export_file
                     sw.Close();
                     myStream.Close();
                 }
-            }
 #endregion
+
+                sw.Close();
+                myStream.Close();
+                //修改数据库
+                if (ChipIndex.Trim() != "")
+                {
+                    ChipIndex = ChipIndex.Substring(0, ChipIndex.LastIndexOf(','));
+                    if (HDIC_DB.ExcuteNonQuery("update STBData set Flag=1 where ChipID in (" + ChipIndex + ")", null) <= 0)
+                    {
+                        MessageBox.Show("数据库更新失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
+                MessageBox.Show("导出数据成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
         }
 
         //关闭本窗体，自动关闭返回文件创建
         private void tst_Exit_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("导出数据成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            sw.Close();
-            myStream.Close();
-
             this.Close();
-        }
-
-        private void Export_file_FormClosed(object sender, FormClosedEventArgs e)
-        {
-           
         }
     }
 }

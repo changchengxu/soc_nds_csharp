@@ -123,10 +123,11 @@
             // cbo_LineID2
             // 
             this.cbo_LineID2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_LineID2.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbo_LineID2.FormattingEnabled = true;
             this.cbo_LineID2.Location = new System.Drawing.Point(154, 94);
             this.cbo_LineID2.Name = "cbo_LineID2";
-            this.cbo_LineID2.Size = new System.Drawing.Size(121, 20);
+            this.cbo_LineID2.Size = new System.Drawing.Size(121, 23);
             this.cbo_LineID2.TabIndex = 11;
             // 
             // label2
@@ -142,10 +143,11 @@
             // cbo_LineID1
             // 
             this.cbo_LineID1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbo_LineID1.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbo_LineID1.FormattingEnabled = true;
             this.cbo_LineID1.Location = new System.Drawing.Point(154, 40);
             this.cbo_LineID1.Name = "cbo_LineID1";
-            this.cbo_LineID1.Size = new System.Drawing.Size(121, 20);
+            this.cbo_LineID1.Size = new System.Drawing.Size(121, 23);
             this.cbo_LineID1.TabIndex = 9;
             // 
             // label1

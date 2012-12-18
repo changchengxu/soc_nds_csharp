@@ -13,7 +13,7 @@ namespace soc_nds_csharp.Station_Operation
 {
     public partial class gf_ReadChipID : Form
     {
-        Uart mSpSlot;//串口对象定义
+        System.IO.Ports.SerialPort mSpSlot;//串口对象定义
         UartProtocol Protocol;
         Int32 ChipID = 0;
 
@@ -29,11 +29,16 @@ namespace soc_nds_csharp.Station_Operation
         private void btn_ReadChipID_Click(object sender, EventArgs e)
         {
             //打开串口
-            mSpSlot = new Uart();
-            mSpSlot.loadConfig();
-            mSpSlot.open();
-
-            Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象 
+            //mSpSlot = new Uart();
+            //mSpSlot.loadConfig();
+            //mSpSlot.open();
+            mSpSlot = Uart.slot;
+            if (mSpSlot.IsOpen == false)
+            {
+                HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+            }
+           
+            Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
             Connect();
         }
@@ -53,22 +58,22 @@ namespace soc_nds_csharp.Station_Operation
             else if (index == -2)
             {
                 richtxt_info.Text = "连接失败，请重新连接!";
-                HDIC_Message.ShowWarnDialog(this, "向下位机发送命令或者接收命令出错");
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒发送命令或者接收命令出错");
             }
             else if (index == -3)
             {
                 richtxt_info.Text = "连接失败，请重新连接!";
-                HDIC_Message.ShowWarnDialog(this, "与下位机连接失败");
+                HDIC_Message.ShowWarnDialog(this, "与机顶盒连接失败");
             }
             else if (index == -4)
             {
-                richtxt_info.Text = "向下位机获取信息失败!";
-                HDIC_Message.ShowWarnDialog(this, "向下位机获取信息失败");
+                richtxt_info.Text = "向机顶盒获取信息失败!";
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取信息失败");
             }
             else if (index == -5)
             {
-                richtxt_info.Text = "向下位机获取ChipID失败!";
-                HDIC_Message.ShowWarnDialog(this, "向下位机获取ChipID失败，请尝试重新获取!");
+                richtxt_info.Text = "向机顶盒获取ChipID失败!";
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取ChipID失败，请尝试重新获取!");
             }
             btn_ReadChipID.Enabled = true;
         }
@@ -120,6 +125,12 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_info.Text = String.Format("{0:X08}", ChipID).ToString(); 
             }
             return 0;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            mSpSlot.Close();
+            this.Close();
         }
 
     }

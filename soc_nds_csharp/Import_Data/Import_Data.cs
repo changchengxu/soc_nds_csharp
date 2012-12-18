@@ -43,7 +43,7 @@ namespace soc_nds_csharp.Import_Data
             {
                 string[] source;
                 string[] result ;
-                string split = "  ";
+                string split = " ";
                 while (reader.Peek() >= 0)
                 {
                     strRecord = reader.ReadLine();
