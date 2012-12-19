@@ -44,9 +44,15 @@ namespace soc_nds_csharp
                           "or a.menuNo in(select distinct left(muOpt,2) from SysRoleMenu as c where c.isSelect=1 and roleNo='" + HDIC_Command.roleNo + "')" +
                           " order by a.menuNo";
                         }
-
-                        dt = HDIC_DB.GetList(sqlstr);
-
+                        try
+                        {
+                            dt = HDIC_DB.GetList(sqlstr);
+                        }
+                        catch
+                        {
+                            HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
+                        }
+                      
                         taskPane1.Expandos.Clear();
                         AddExpando();
                     }
@@ -60,7 +66,6 @@ namespace soc_nds_csharp
             }
             catch (System.Exception ex)
             {
-                HDIC_Message.ShowWarnDialog(this, "数据库连接失败,请检查服务器或者网络是否正常.");
             }
            
 

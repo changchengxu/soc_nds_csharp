@@ -9,15 +9,24 @@ using System.IO;
 using HDICSoft.Message;
 using HDICSoft.DB;
 using HDICSoft.Command;
+using System.Diagnostics;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace soc_nds_csharp.Import_Data
 {
     public partial class Import_Data : Form
     {
+        DataTable DtContent=new DataTable();
+
         public Import_Data()
         {
             InitializeComponent();
             tableLayoutPanel1.BackColor = HDIC_Command.setColor();
+
+            DtContent.Columns.Add("ChipID", System.Type.GetType("System.String"));
+            DtContent.Columns.Add("ChipInfo", System.Type.GetType("System.String"));
+
         }
 
         #region 自己修改了网上的导出txt数据到SQL中
@@ -57,7 +66,11 @@ namespace soc_nds_csharp.Import_Data
                     i++;
                     try
                     {
-                        HDIC_DB.ExcuteNonQuery(@"insert into ChipData(ChipID,ChipInfo) values ('" + result[0] + "','" + result[1] + "')", null);
+                        DataRow dr = DtContent.NewRow();
+                        dr[0] = result[0];
+                        dr[1] = result[1];
+                        DtContent.Rows.Add(dr);
+                       // HDIC_DB.ExcuteNonQuery(@"insert into ChipData(ChipID,ChipInfo) values ('" + result[0] + "','" + result[1] + "')", null);
                     }
                     catch (System.Exception ex)
                     {
@@ -65,7 +78,7 @@ namespace soc_nds_csharp.Import_Data
                     }
                    
                 }
-                HDIC_Message.ShowInfoDialog(this, "数据导入成功");
+                HDIC_Message.ShowInfoDialog(this, "数据导入成功:"+DtContent.Rows.Count.ToString());
             }
             catch (Exception ex)
             {
@@ -122,8 +135,45 @@ namespace soc_nds_csharp.Import_Data
                 HDIC_Message.ShowErrorDialog(this, "请选择需要上传数据的文件");
                 return;
             }
-            ReadTextFromFileName(path);
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    if(conn.State!=ConnectionState.Open)
+                    conn.Open();
+
+                    cmd.Connection = conn;
+                    cmd.CommandTimeout = 900;//长城设置，15分钟即超时
+                    cmd.CommandText = "BULK INSERT ChipData FROM '" + path + "' WITH (FIELDTERMINATOR = ' ',KEEPIDENTITY,ROWTERMINATOR='\n',BATCHSIZE = 100000)";
+
+                    try
+                    {
+                        btn_add.Enabled = false;
+                        btn_exit.Enabled = false;
+                        btn_open.Enabled = false;
+
+                        Stopwatch timer = new Stopwatch();
+                        timer.Start();
+                        cmd.ExecuteNonQuery();
+                        timer.Stop();
+                        HDIC_Message.ShowInfoDialog(this, "数据导入成功,用时：" + timer.ElapsedMilliseconds.ToString() + "毫秒");
+                        conn.Close();
+
+                        btn_add.Enabled = false;
+                        btn_exit.Enabled = false;
+                        btn_open.Enabled = false;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        conn.Close();
+                        HDIC_Message.ShowInfoDialog(this, "导入数据库失败，原因：\r\n" + ex.ToString());
+                    }
+                }
+            }
+           
+           // ReadTextFromFileName(path);
         }
+
 
         string path; 
         private void btn_open_Click(object sender, EventArgs e)

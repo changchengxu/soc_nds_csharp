@@ -41,7 +41,7 @@ namespace soc_nds_csharp.Delete_DBRecords
                 }
                 catch (System.Exception ex)
                 {
-                    HDIC_Message.ShowInfoDialog(this, "删除失败,原因是：\r\n"+ex.ToString());
+                    HDIC_Message.ShowInfoDialog(this, "删除失败,请检查服务器是否已经打开：\r\n"+ex.ToString());
                 }
 
                 txt_CAID.Text = "";

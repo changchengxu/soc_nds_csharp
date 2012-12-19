@@ -40,6 +40,7 @@
             this.lbl_IP = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbo_userRole = new System.Windows.Forms.ComboBox();
+            this.btn_IPSave = new System.Windows.Forms.Button();
             this.gbx_NetWork.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -115,10 +116,11 @@
             // gbx_NetWork
             // 
             this.gbx_NetWork.BackColor = System.Drawing.Color.Transparent;
+            this.gbx_NetWork.Controls.Add(this.btn_IPSave);
             this.gbx_NetWork.Controls.Add(this.lbl_IP);
             this.gbx_NetWork.Location = new System.Drawing.Point(333, 356);
             this.gbx_NetWork.Name = "gbx_NetWork";
-            this.gbx_NetWork.Size = new System.Drawing.Size(227, 46);
+            this.gbx_NetWork.Size = new System.Drawing.Size(240, 49);
             this.gbx_NetWork.TabIndex = 21;
             this.gbx_NetWork.TabStop = false;
             this.gbx_NetWork.Text = "登录服务器";
@@ -152,6 +154,16 @@
             this.cbo_userRole.Size = new System.Drawing.Size(108, 20);
             this.cbo_userRole.TabIndex = 1;
             this.cbo_userRole.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbo_userRole_KeyDown);
+            // 
+            // btn_IPSave
+            // 
+            this.btn_IPSave.Location = new System.Drawing.Point(196, 16);
+            this.btn_IPSave.Name = "btn_IPSave";
+            this.btn_IPSave.Size = new System.Drawing.Size(38, 23);
+            this.btn_IPSave.TabIndex = 7;
+            this.btn_IPSave.Text = "保存";
+            this.btn_IPSave.UseVisualStyleBackColor = true;
+            this.btn_IPSave.Click += new System.EventHandler(this.btn_IPSave_Click);
             // 
             // gf_login
             // 
@@ -198,6 +210,7 @@
         private System.Windows.Forms.Label lbl_IP;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbo_userRole;
+        private System.Windows.Forms.Button btn_IPSave;
 
 
     }

@@ -67,13 +67,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.6556F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.3444F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 695);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 696);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -82,11 +82,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(157, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1065, 588);
+            this.panel1.Size = new System.Drawing.Size(1065, 589);
             this.panel1.TabIndex = 0;
             // 
             // panel2
             // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.txt_SerialID);
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Controls.Add(this.btn_begin);
@@ -94,7 +97,6 @@
             this.panel2.Controls.Add(this.richtxt_Connect);
             this.panel2.Controls.Add(this.richtxt_info);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1065, 588);
@@ -102,6 +104,7 @@
             // 
             // txt_SerialID
             // 
+            this.txt_SerialID.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txt_SerialID.Enabled = false;
             this.txt_SerialID.Location = new System.Drawing.Point(108, 461);
             this.txt_SerialID.Name = "txt_SerialID";
@@ -110,6 +113,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.groupBox1.Controls.Add(this.txt_STBID);
             this.groupBox1.Controls.Add(this.txt_ChipID);
             this.groupBox1.Controls.Add(this.txt_CAID);
@@ -236,8 +240,9 @@
             // 
             // btn_begin
             // 
+            this.btn_begin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btn_begin.Font = new System.Drawing.Font("宋体", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_begin.Location = new System.Drawing.Point(288, 513);
+            this.btn_begin.Location = new System.Drawing.Point(288, 512);
             this.btn_begin.Name = "btn_begin";
             this.btn_begin.Size = new System.Drawing.Size(491, 38);
             this.btn_begin.TabIndex = 28;
@@ -257,6 +262,7 @@
             // 
             // richtxt_Connect
             // 
+            this.richtxt_Connect.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.richtxt_Connect.Enabled = false;
             this.richtxt_Connect.Location = new System.Drawing.Point(12, 17);
             this.richtxt_Connect.Name = "richtxt_Connect";
@@ -266,6 +272,7 @@
             // 
             // richtxt_info
             // 
+            this.richtxt_info.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.richtxt_info.Enabled = false;
             this.richtxt_info.Location = new System.Drawing.Point(10, 58);
             this.richtxt_info.Name = "richtxt_info";
@@ -288,14 +295,14 @@
             this.工位一退出ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1296, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1296, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 工位一退出ToolStripMenuItem
             // 
             this.工位一退出ToolStripMenuItem.Name = "工位一退出ToolStripMenuItem";
-            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
+            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.工位一退出ToolStripMenuItem.Text = "工位一退出";
             this.工位一退出ToolStripMenuItem.Click += new System.EventHandler(this.工位一退出ToolStripMenuItem_Click);
             // 

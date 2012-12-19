@@ -474,9 +474,16 @@ namespace soc_nds_csharp.Station_Operation
         //判断加密序列号
         private bool FindCAID(string CAID)
         {
-            if (HDIC_DB.sqlQuery("select count(*) from STBData where CAID='" + CAID + "'") != "0")
+            try
             {
-                return true;
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where CAID='" + CAID + "'") != "0")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
             return false;
         }
@@ -484,9 +491,16 @@ namespace soc_nds_csharp.Station_Operation
         //判断STBID
         private bool FindSTBID(string mSTBID)
         {
-            if (HDIC_DB.sqlQuery("select count(*) from STBData where STBID='" + mSTBID + "'") != "0")
+            try
             {
-                return true;
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where STBID='" + mSTBID + "'") != "0")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
             return false;
         }
@@ -494,9 +508,16 @@ namespace soc_nds_csharp.Station_Operation
         //判断SmartCardID
         private bool FindSmartCardID(string mSmartCardID)
         {
-            if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + mSmartCardID + "'") != "0")
+            try
             {
-                return true;
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + mSmartCardID + "'") != "0")
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
             return false;
         }

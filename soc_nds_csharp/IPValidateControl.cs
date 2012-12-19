@@ -268,6 +268,18 @@ namespace soc_nds_csharp
             textBox1.Focus();
         }
 
+        public void SetText(string ip)
+        {
+            if (ip != "")
+            {
+                string[] MIp = ip.Split('.');
+                textBox1.Text = MIp[0];
+                textBox2.Text = MIp[1];
+                textBox3.Text = MIp[2];
+                textBox4.Text = MIp[3];
+            }
+        }
+
         /// <summary>
         /// 禁止当窗体改变时控件也会开发
         /// </summary>

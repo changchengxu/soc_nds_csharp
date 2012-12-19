@@ -130,19 +130,19 @@ namespace soc_nds_csharp.Export_file
             if (save.ShowDialog() == DialogResult.OK)
             {
                 #region 临时用
-                myStream = save.OpenFile();
-                sw = new StreamWriter(myStream, System.Text.Encoding.ASCII);
+                //myStream = save.OpenFile();
+                //sw = new StreamWriter(myStream, System.Text.Encoding.ASCII);
 
-                for (int i = 0; i <10000000; i++)
-                {
-                    ContentTitle = String.Format("{0:d10}", i) + " " + String.Format("{0:d88}", i + 2) + "\r\n";
+                //for (int i = 0; i < 20000000; i++)
+                //{
+                //    ContentTitle = String.Format("{0:d10}", i) + " " + String.Format("{0:D99}", i + 2) + "\r\n";
 
-                    sw.Write(ContentTitle);
-                }
-                sw.Close();
-                myStream.Close();
-                HDIC_Message.ShowInfoDialog(null, "ok");
-                return;
+                //    sw.Write(ContentTitle);
+                //}
+                //sw.Close();
+                //myStream.Close();
+                //HDIC_Message.ShowInfoDialog(null, "ok");
+                //return;
                 #endregion
 
 

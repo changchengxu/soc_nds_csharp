@@ -22,6 +22,8 @@ using System.Data.SqlClient;
 using System.Configuration;
 using HDICSoft.Func;
 using HDICSoft.Command;
+using System.Configuration;
+using System.Data;
 
 namespace soc_nds_csharp
 {
@@ -37,8 +39,13 @@ namespace soc_nds_csharp
             gbx_NetWork.Visible = false;
         }
 
+
         private void gf_login_Load(object sender, EventArgs e)
         {
+            //if (!HDIC_DB.TestConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString, 1433, 4))
+            //{
+            //    throw new Exception();
+            //}
             try
             {
                 DataTable dt = HDIC_DB.GetList("select distinct roleNo,roleName from SysRole");
@@ -52,7 +59,7 @@ namespace soc_nds_csharp
             }
             catch (System.Exception ex)
             {
-                throw new Exception();
+                //throw new Exception();
                 #region 附加数据库
                 //try
                 //{
@@ -202,9 +209,32 @@ namespace soc_nds_csharp
             ipUserControl.Location = new System.Drawing.Point(lbl_IP.Location.X + 35, lbl_IP.Location.Y-8);
             this.lbl_IP.Name = "IPmyControl";
 
-            gbx_NetWork.Visible = true;
+            gbx_NetWork.Visible = !gbx_NetWork.Visible;
+
+            string MIp = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
+            MIp = MIp.Substring(MIp.IndexOf('=') + 1);
+            MIp = MIp.Substring(0, MIp.IndexOf(';'));
+
+            ipUserControl.SetText(MIp);
+
         }
-     
+        private void btn_IPSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //长城添加，目的是实时更新到app.config中
+                HDIC_Func.SetValue("connStringName", "Data Source=" + ipUserControl.Text + ";Initial Catalog=STBInfo;Persist Security Info=False;User ID=sa; pwd =sa");
+            }
+            catch (System.Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "保存失败");
+            }
+            
+            if (HDIC_Message.ShowQuestionDialog(this, "保存IP成功，请重启程序？") == DialogResult.OK)
+            {
+                HDIC_Func.Reset();
+            }
+        }
         #endregion
 
         private void cbo_userRole_KeyDown(object sender, KeyEventArgs e)

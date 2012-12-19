@@ -30,7 +30,7 @@ namespace soc_nds_csharp.STB_Manage
                                    STBOpLineNum=b.STBOpLineNum) as '流水号最大值'
                                     from STBOp as b  where STBOpFlag=1 order by STBOpLineNum");
             }
-            catch (System.Exception ex)
+            catch 
             {
                 HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
@@ -76,18 +76,25 @@ namespace soc_nds_csharp.STB_Manage
             }
             if (dgv_STB.SelectedRows.Count > 0)
             {
-                //获取要删除行的ID号
-                intID = Convert.ToInt32(dgv_STB.SelectedRows[0].Cells["流水线号"].Value);
-                int a = HDIC_DB.sqlDelete("delete from STBOp where STBOpLineNum='" + intID + "'");
-                if (a > 0)
+                try
                 {
-                    HDIC_Message.ShowInfoDialog(this, "删除成功！");
-                    this.STBClient_Load(sender, e);
+                    //获取要删除行的ID号
+                    intID = Convert.ToInt32(dgv_STB.SelectedRows[0].Cells["流水线号"].Value);
+                    int a = HDIC_DB.sqlDelete("delete from STBOp where STBOpLineNum='" + intID + "'");
+                    if (a > 0)
+                    {
+                        HDIC_Message.ShowInfoDialog(this, "删除成功！");
+                        this.STBClient_Load(sender, e);
 
+                    }
+                    else
+                    {
+                        HDIC_Message.ShowErrorDialog(this, "删除失败！");
+                    }
                 }
-                else
+                catch
                 {
-                    HDIC_Message.ShowErrorDialog(this, "删除失败！");
+                    HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
                 }
             }
             else

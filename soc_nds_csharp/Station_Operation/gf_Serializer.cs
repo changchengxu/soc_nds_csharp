@@ -462,9 +462,9 @@ namespace soc_nds_csharp.Station_Operation
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                HDIC_Message.ShowWarnDialog(this, "数据库打开失败，原因：\r\n" + ex.ToString());
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
             return false;
         }

@@ -27,15 +27,22 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_SelectPipeLine_Load(object sender, EventArgs e)
         {
-            cbo_LineID1.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
-            cbo_LineID1.DisplayMember = "STBOpLineNum";
-            cbo_LineID1.ValueMember = "STBOpLineNum";
-            cbo_LineID1.SelectedIndex = -1;
+            try
+            {
+                cbo_LineID1.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
+                cbo_LineID1.DisplayMember = "STBOpLineNum";
+                cbo_LineID1.ValueMember = "STBOpLineNum";
+                cbo_LineID1.SelectedIndex = -1;
 
-            cbo_LineID2.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
-            cbo_LineID2.DisplayMember = "STBOpLineNum";
-            cbo_LineID2.ValueMember = "STBOpLineNum";
-            cbo_LineID2.SelectedIndex = -1;
+                cbo_LineID2.DataSource = HDIC_DB.GetList("select distinct STBOpLineNum from STBOp order by STBOpLineNum");
+                cbo_LineID2.DisplayMember = "STBOpLineNum";
+                cbo_LineID2.ValueMember = "STBOpLineNum";
+                cbo_LineID2.SelectedIndex = -1;
+            }
+            catch
+            {
+                HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
+            }
         }
 
         private void tsb_Ok_Click(object sender, EventArgs e)

@@ -61,48 +61,64 @@ namespace soc_nds_csharp.STB_Manage
         {
             if (intGloID == -1)// add
             {
-                object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where STBOpLineNum='" + txt_pipID.Text.Trim() + "'", null);
-                if (obj == null || (int)obj == 0)
+                try
                 {
-                    if (!CheckData())
+                    object obj = HDIC_DB.ExecuteScalar("select count(*) from STBOp where STBOpLineNum='" + txt_pipID.Text.Trim() + "'", null);
+
+                    if (obj == null || (int)obj == 0)
                     {
+                        if (!CheckData())
+                        {
+                            return;
+                        }
+
+                        if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
+                            txt_currentPipID.Text.Trim() + "',1);insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
+                            txt_pipIDMax.Text.Trim() + "',3)", null) > 0)
+                        {
+                            HDIC_Message.ShowInfoDialog(this, "添加成功");
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        HDIC_Message.ShowWarnDialog(this, "该流水线已经分配");
                         return;
                     }
 
-                    if (HDIC_DB.ExcuteNonQuery(@"insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
-                        txt_currentPipID.Text.Trim() + "',1);insert into STBOp (STBOpLineNum,STBOpIndex,STBOpFlag) values('" + txt_pipID.Text.Trim() + "','" +
-                        txt_pipIDMax.Text.Trim() + "',3)", null) > 0)
-                    {
-                        HDIC_Message.ShowInfoDialog(this, "添加成功");
-                        this.Close();
-                    }
                 }
-                else
+                catch
                 {
-                    HDIC_Message.ShowWarnDialog(this, "该流水线已经分配");
-                    return;
+                    HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
                 }
             }
 
-            else  if(intGloID >0)          //edit
+            else if (intGloID > 0)          //edit
             {
                 if (!CheckData())
                 {
                     return;
                 }
 
-                if (HDIC_DB.ExcuteNonQuery(@"update STBOp set STBOpIndex='" + txt_currentPipID.Text.Trim()
-                    + "' where STBOpLineNum='" + txt_pipID.Text.Trim() 
-                    + "' and STBOpFlag=1; update STBOp set STBOpIndex='" + txt_pipIDMax.Text.Trim()
-                    + "' where STBOpLineNum='" + txt_pipID.Text.Trim() + "' and STBOpFlag=3", null) > 0)
+                try
                 {
-                    HDIC_Message.ShowInfoDialog(this, "修改成功");
-                    this.Close();
+                    if (HDIC_DB.ExcuteNonQuery(@"update STBOp set STBOpIndex='" + txt_currentPipID.Text.Trim()
+                   + "' where STBOpLineNum='" + txt_pipID.Text.Trim()
+                   + "' and STBOpFlag=1; update STBOp set STBOpIndex='" + txt_pipIDMax.Text.Trim()
+                   + "' where STBOpLineNum='" + txt_pipID.Text.Trim() + "' and STBOpFlag=3", null) > 0)
+                    {
+                        HDIC_Message.ShowInfoDialog(this, "修改成功");
+                        this.Close();
+                    }
+                    else
+                    {
+                        HDIC_Message.ShowWarnDialog(this, "修改该流水线失败");
+                        return;
+                    }
                 }
-                else
+                catch
                 {
-                    HDIC_Message.ShowWarnDialog(this, "修改该流水线失败");
-                    return;
+                    HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
                 }
 
             }

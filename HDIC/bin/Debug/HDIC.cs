@@ -170,8 +170,7 @@ namespace HDICSoft.DB
                 {
                     try
                     {
-                        cmd.CommandTimeout = 10;//长城设置，10s即超时
-
+                        cmd.CommandTimeout = 6;//长城设置，5s即超时
                         PrepareCommand(cmd, conn, trans, cmdType, cmdText, cmdParms);
                         using (DbDataAdapter da = provider.CreateDataAdapter())
                         {
@@ -201,12 +200,38 @@ namespace HDICSoft.DB
         {
             //conn.ConnectionString = connString;
             conn.ConnectionString = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
-            if (conn.State != ConnectionState.Open)
-                conn.Open();
+
+            try
+            {
+                #region  长城添加，测试当前网络是否正常
+                string MIp = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
+                MIp = MIp.Substring(0, MIp.IndexOf(';'));
+                MIp=MIp.Substring(MIp.IndexOf('=')+1);
+                if (!HDIC_DB.TestConnection(MIp, 1433, 4))//
+                {
+                    //throw new Exception();
+                    HDICSoft.Message.HDIC_Message.ShowWarnDialog(null, "数据库连接失败,请检查服务器或者网络是否正常.");
+                    return;
+                }
+
+                #endregion
+               
+                if (conn.State != ConnectionState.Open)
+                    conn.Open();
+            }
+            //catch (System.Exception ex)
+            //{
+            //    HDICSoft.Message.HDIC_Message.ShowWarnDialog(null, "数据库连接失败,请检查服务器或者网络是否正常.");
+            //}
+            catch (System.TimeoutException ex)
+            {
+                throw new Exception();
+            }
 
             cmd.Connection = conn;
             cmd.CommandText = cmdText;
            
+
             if (trans != null)
                 cmd.Transaction = trans;
 
@@ -257,6 +282,32 @@ namespace HDICSoft.DB
                 return "0";
             }
             return i.ToString();
+        }
+
+       /// <summary>
+       /// 测试服务器通信是否正常
+       /// </summary>
+       /// <param name="host">服务器IP地址</param>
+       /// <param name="port">服务器端口号， sql一般是1433</param>
+       /// <param name="millisecondsTimeout">超时</param>
+       /// <returns></returns>
+        public static bool TestConnection(string host, int port, int millisecondsTimeout)
+        {
+            var client = new System.Net.Sockets.TcpClient();
+            try
+            {
+                var ar = client.BeginConnect(host, port, null, null);
+                ar.AsyncWaitHandle.WaitOne(millisecondsTimeout);
+                return client.Connected;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                client.Close();
+            }
         }
     }
 }
