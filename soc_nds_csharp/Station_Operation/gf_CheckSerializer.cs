@@ -40,8 +40,7 @@ namespace soc_nds_csharp.Station_Operation
             //文本内容居中显示
             richtxt_LincenseAdo.SelectionAlignment = HorizontalAlignment.Center;
             richtxt_LincenseBoard.SelectionAlignment = HorizontalAlignment.Center;
-
-            BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
+           
         }
 
         private void gf_CheckSerializer_Load(object sender, EventArgs e)
@@ -58,29 +57,37 @@ namespace soc_nds_csharp.Station_Operation
             if (mSpSlot.IsOpen == false)
             {
                 HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                btn_begin.Enabled = false;
             }
+            else
+            {
+                BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
 
-            //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象 
-            Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
+                //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象 
+                Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
-            richtxt_connect.TabStop = false;
-            richtxt_Tips.TabStop = false;
-            richtxt_LincenseBoard.Enabled = false;
-            richtxt_LincenseAdo.Enabled = false;
-            richtxt_connect.Enabled = false;
-            richtxt_Tips.Enabled = false;
-            txt_CAID.Enabled = false;
-            txt_STBID.Enabled = false;
-            txt_SmartCardID.Enabled = false;
-            btn_begin.Focus();
+                richtxt_LincenseBoard.Enabled = false;
+                richtxt_LincenseAdo.Enabled = false;
+                richtxt_connect.Enabled = false;
+                richtxt_Tips.Enabled = false;
+                txt_CAID.Enabled = false;
+                txt_STBID.Enabled = false;
+                txt_SmartCardID.Enabled = false;
+                btn_begin.Focus();
 
-            #region 让文本框失去焦点
-            txt_CAID.TabStop = false;
-            txt_SmartCardID.TabStop = false;
-            txt_STBID.TabStop = false;
-            richtxt_LincenseAdo.TabStop = false;
-            richtxt_LincenseBoard.TabStop = false;
-           #endregion
+                #region 让文本框失去焦点
+                richtxt_connect.TabStop = false;
+                richtxt_Tips.TabStop = false;
+                txt_CAID.TabStop = false;
+                txt_SmartCardID.TabStop = false;
+                txt_STBID.TabStop = false;
+                richtxt_LincenseAdo.TabStop = false;
+                richtxt_LincenseBoard.TabStop = false;
+                #endregion
+
+                btn_begin.Enabled = true;
+            }
+           
         }
         ///////////////////////////////////////////////////////////////////////////////扫描仪
         /// <summary>

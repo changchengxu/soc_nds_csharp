@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("soc_nds_csharp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("长城开发")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("WwW.DEEPbbS.Org")]
+[assembly: AssemblyCompany("HDIC")]
 [assembly: AssemblyProduct("soc_nds_csharp")]
 [assembly: AssemblyCopyright("Copyright © WwW.DEEPbbS.Org 2012")]
 [assembly: AssemblyTrademark("")]

@@ -398,7 +398,7 @@ namespace soc_nds_csharp.DB_Manage
                     //txt_SmartCardID.Text = "";
                 }
             }
-            catch (System.Exception ex)
+            catch 
             {
                 HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
@@ -426,7 +426,7 @@ namespace soc_nds_csharp.DB_Manage
                     //txt_SmartCardID.Text = "";
                 }
             }
-            catch (System.Exception ex)
+            catch 
             {
                 HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }
@@ -454,7 +454,7 @@ namespace soc_nds_csharp.DB_Manage
                     //txt_CAID.Text = "";
                 }
             }
-            catch (System.Exception ex)
+            catch
             {
                 HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }

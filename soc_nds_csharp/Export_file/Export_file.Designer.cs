@@ -32,6 +32,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbox__BroadCaster = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.txt_HardwareID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -54,7 +55,6 @@
             this.tsb_ExportData = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tst_Exit = new System.Windows.Forms.ToolStripButton();
-            this.cbox__BroadCaster = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -114,6 +114,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "导出文件操作";
+            // 
+            // cbox__BroadCaster
+            // 
+            this.cbox__BroadCaster.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox__BroadCaster.FormattingEnabled = true;
+            this.cbox__BroadCaster.Items.AddRange(new object[] {
+            "DTHUM",
+            "SARFT"});
+            this.cbox__BroadCaster.Location = new System.Drawing.Point(158, 206);
+            this.cbox__BroadCaster.Name = "cbox__BroadCaster";
+            this.cbox__BroadCaster.Size = new System.Drawing.Size(121, 20);
+            this.cbox__BroadCaster.TabIndex = 42;
             // 
             // dateTimePicker1
             // 
@@ -299,18 +311,6 @@
             this.tst_Exit.Text = "退出";
             this.tst_Exit.Click += new System.EventHandler(this.tst_Exit_Click);
             // 
-            // cbox__BroadCaster
-            // 
-            this.cbox__BroadCaster.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbox__BroadCaster.FormattingEnabled = true;
-            this.cbox__BroadCaster.Items.AddRange(new object[] {
-            "DTHUM",
-            "SARFT"});
-            this.cbox__BroadCaster.Location = new System.Drawing.Point(158, 206);
-            this.cbox__BroadCaster.Name = "cbox__BroadCaster";
-            this.cbox__BroadCaster.Size = new System.Drawing.Size(121, 20);
-            this.cbox__BroadCaster.TabIndex = 42;
-            // 
             // Export_file
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -320,6 +320,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Export_file";
             this.Text = "导出返回文件";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Export_file_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

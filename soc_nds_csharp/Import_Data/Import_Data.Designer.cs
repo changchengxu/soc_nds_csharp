@@ -112,6 +112,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Import_Data";
             this.Text = "导入序列化数据";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Import_Data_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

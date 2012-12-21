@@ -37,10 +37,12 @@ namespace soc_nds_csharp.Station_Operation
             {
                 HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
             }
-           
-            Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
+            else
+            {
+                Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
-            Connect();
+                Connect();
+            }
         }
 
         private void Connect()

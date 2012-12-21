@@ -22,8 +22,6 @@ using System.Data.SqlClient;
 using System.Configuration;
 using HDICSoft.Func;
 using HDICSoft.Command;
-using System.Configuration;
-using System.Data;
 
 namespace soc_nds_csharp
 {
@@ -57,7 +55,7 @@ namespace soc_nds_csharp
                 cbo_userRole.Focus();
 
             }
-            catch (System.Exception ex)
+            catch 
             {
                 //throw new Exception();
                 #region 附加数据库
@@ -225,7 +223,7 @@ namespace soc_nds_csharp
                 //长城添加，目的是实时更新到app.config中
                 HDIC_Func.SetValue("connStringName", "Data Source=" + ipUserControl.Text + ";Initial Catalog=STBInfo;Persist Security Info=False;User ID=sa; pwd =sa");
             }
-            catch (System.Exception ex)
+            catch 
             {
                 HDIC_Message.ShowWarnDialog(this, "保存失败");
             }

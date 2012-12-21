@@ -170,7 +170,7 @@ namespace HDICSoft.DB
                 {
                     try
                     {
-                        cmd.CommandTimeout = 6;//长城设置，5s即超时
+                        cmd.CommandTimeout = 4;//长城设置，25s即超时
                         PrepareCommand(cmd, conn, trans, cmdType, cmdText, cmdParms);
                         using (DbDataAdapter da = provider.CreateDataAdapter())
                         {
@@ -207,7 +207,7 @@ namespace HDICSoft.DB
                 string MIp = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
                 MIp = MIp.Substring(0, MIp.IndexOf(';'));
                 MIp=MIp.Substring(MIp.IndexOf('=')+1);
-                if (!HDIC_DB.TestConnection(MIp, 1433, 4))//
+                if (!HDIC_DB.TestConnection(MIp, 1433, 3000))
                 {
                     //throw new Exception();
                     HDICSoft.Message.HDIC_Message.ShowWarnDialog(null, "数据库连接失败,请检查服务器或者网络是否正常.");
@@ -223,9 +223,10 @@ namespace HDICSoft.DB
             //{
             //    HDICSoft.Message.HDIC_Message.ShowWarnDialog(null, "数据库连接失败,请检查服务器或者网络是否正常.");
             //}
-            catch (System.TimeoutException ex)
+            catch 
             {
-                throw new Exception();
+                HDICSoft.Message.HDIC_Message.ShowWarnDialog(null, "数据库连接失败,请检查服务器或者网络是否正常.");
+                //throw new Exception();
             }
 
             cmd.Connection = conn;
@@ -300,14 +301,16 @@ namespace HDICSoft.DB
                 ar.AsyncWaitHandle.WaitOne(millisecondsTimeout);
                 return client.Connected;
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                MessageBox.Show("在检测网络是否正常时发生错误.当前参数是\r\nhost:"+host+"port:"+port+"timeout:"+millisecondsTimeout+"\r\n错误原因是\r\n"+ex.ToString());
             }
+              
             finally
             {
                 client.Close();
             }
+            return false;
         }
     }
 }

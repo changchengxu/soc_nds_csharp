@@ -64,7 +64,7 @@ namespace soc_nds_csharp
                     toolStripStatusLabel1.Text = "尊敬的<" + HDIC_Command.UseName + ">用户，欢迎您登录直播星软件 | 今天的日期是：" + DateTime.Now.ToString("yyyy-MM-dd");
                 }
             }
-            catch (System.Exception ex)
+            catch 
             {
             }
            

@@ -63,21 +63,11 @@ namespace soc_nds_csharp.Station_Operation
            
             this.richtxt_HardwareID.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 
-            richtxt_Connect.Enabled = false;
-            richtxt_info.Enabled = false;
-            txt_SerialID.Enabled = false;
-            txt_CAID.Enabled = false;
-            txt_ChipID.Enabled = false;
-            txt_STBID.Enabled = false;
-            richtxt_ManufacturerID.Enabled = false; richtxt_ModelID.Enabled = false; richtxt_HardwareID.Enabled = false;
-
-            BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
-           
-            //btn_begin.TabStop = false;
         }
 
         private void gf_Serializer_Load(object sender, EventArgs e)
         {
+            HDIC_Command.STBType = 1;//这个是测试 当前是村村通
 
             //打开串口
             //mSpSlot = new Uart();
@@ -87,17 +77,41 @@ namespace soc_nds_csharp.Station_Operation
             if (mSpSlot.IsOpen == false)
             {
                 HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                btn_begin.Enabled = false;
             }
+            else
+            {
+                BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
 
-            //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象
-            Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
+                //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象
+                Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
-            variable_assignment();
+                richtxt_Connect.Enabled = false;
+                richtxt_info.Enabled = false;
+                txt_SerialID.Enabled = false;
+                txt_CAID.Enabled = false;
+                txt_ChipID.Enabled = false;
+                txt_STBID.Enabled = false;
+                richtxt_ManufacturerID.Enabled = false; richtxt_ModelID.Enabled = false; richtxt_HardwareID.Enabled = false;
 
-            HDIC_Command.STBType = 1;//这个是测试 当前是村村通
+                #region 失去焦点
+                richtxt_Connect.TabStop = false;
+                richtxt_info.TabStop = false;
+                txt_SerialID.TabStop = false;
+                txt_CAID.TabStop = false;
+                txt_STBID.TabStop = false;
+                txt_ChipID.TabStop = false;
+                richtxt_ManufacturerID.TabStop = false;
+                richtxt_ModelID.TabStop = false;
+                richtxt_HardwareID.TabStop = false;
+                #endregion
 
-            initControl();
+                variable_assignment();
 
+                initControl();
+                btn_begin.Enabled = true;
+
+            }
            
         }
 

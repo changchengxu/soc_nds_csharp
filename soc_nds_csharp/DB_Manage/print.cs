@@ -224,7 +224,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 dataGridView1.DataSource = HDIC_DB.GetList(sqlstr);
             }
-            catch (System.Exception ex)
+            catch 
             {
                 HDIC_Message.ShowWarnDialog(this, "数据库打开失败,请检查服务器或者网络");
             }

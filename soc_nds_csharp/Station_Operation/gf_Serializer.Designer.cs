@@ -62,8 +62,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 3;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.60997F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.39003F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.591837F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 92.40816F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -80,9 +80,9 @@
             // 
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(157, 89);
+            this.panel1.Location = new System.Drawing.Point(96, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1065, 589);
+            this.panel1.Size = new System.Drawing.Size(1126, 589);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -99,7 +99,7 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1065, 588);
+            this.panel2.Size = new System.Drawing.Size(1126, 588);
             this.panel2.TabIndex = 1;
             // 
             // txt_SerialID
@@ -113,7 +113,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.groupBox1.Controls.Add(this.txt_STBID);
             this.groupBox1.Controls.Add(this.txt_ChipID);
             this.groupBox1.Controls.Add(this.txt_CAID);
@@ -126,7 +126,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(578, 16);
+            this.groupBox1.Location = new System.Drawing.Point(560, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(476, 420);
             this.groupBox1.TabIndex = 29;
@@ -242,7 +242,7 @@
             // 
             this.btn_begin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btn_begin.Font = new System.Drawing.Font("宋体", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_begin.Location = new System.Drawing.Point(288, 512);
+            this.btn_begin.Location = new System.Drawing.Point(319, 512);
             this.btn_begin.Name = "btn_begin";
             this.btn_begin.Size = new System.Drawing.Size(491, 38);
             this.btn_begin.TabIndex = 28;
@@ -253,6 +253,7 @@
             // 
             // label7
             // 
+            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(20, 466);
             this.label7.Name = "label7";
