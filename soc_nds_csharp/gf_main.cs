@@ -16,13 +16,64 @@ namespace soc_nds_csharp
     public partial class gf_main : Form
     {
         private DataTable dt = null;
+        List<byte> mReadBuffer = new List<byte>(4096);
         public gf_main()
         {
             InitializeComponent();
         }
-
+        List<byte> mReadBuffer1 = new List<byte>(2048);
         private void gf_main_Load(object sender, EventArgs e)
         {
+            //byte[] b = new byte[4];
+            //b[0] = 0x84;
+            //b[1] = 0x01;
+            //b[2] = 0x89;
+            //b[3] = 0x6b;
+            //string ttt = String.Format("{0:X02}", b[0]).ToString() + String.Format("{0:X02}", b[1]).ToString() + String.Format("{0:X02}", b[2]).ToString() + String.Format("{0:X02}", b[3]).ToString();
+            //string ttt1 = Convert.ToInt64(ttt,16).ToString();
+
+            //int a = 0;
+            //byte[] bb ;
+            //List<byte> buffer = new List<byte>(2048);
+            //byte[] reciveBuffer = { 0x44, 0x48, 0x01, 0x00, 0x67, 0x32, 0x43, 0x48, 0x10, 0x00, 0x02, 0x49, 0x48, 0xEB, 0x48 };
+            //buffer.AddRange(reciveBuffer);
+
+            //while (true)
+            //{
+            //    buffer.RemoveRange(0, buffer.IndexOf(0x48));
+            //    int len = buffer[3];
+            //    if (len == 2)
+            //    {
+            //        byte cell = 0;
+            //        for (int i = 0; i < 4 + len; i++)
+            //        {
+            //            cell += buffer[i];
+            //        }
+            //        if (cell == buffer[4 + len])
+            //        {
+            //            bb = new byte[5 + len];
+            //            buffer.CopyTo(0, bb, 0, 5 + len);
+            //        }
+            //        else
+            //        {
+            //            System.Threading.Thread.Sleep(5);
+            //            break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        buffer.RemoveAt(0);
+            //    }
+            //}
+            //byte[] b = new byte[5];
+            //b[0] = 0x11;
+            //b[1] = 0x00;
+            //b[3] = 0x03;
+            //byte[] bb = { 0x55, 0x66, 0x00, 0x11 };
+            //mReadBuffer1.AddRange(b);
+            //mReadBuffer1.AddRange(bb);
+            //mReadBuffer1.RemoveRange(0, p);
+
             this.BackColor = HDIC_Command.setColor();
             taskPane1.CollapseAll();
             try

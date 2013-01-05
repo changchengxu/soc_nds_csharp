@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gf_CheckSerializer));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.btn_begin = new System.Windows.Forms.Button();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.richtxt_LincenseAdo = new System.Windows.Forms.RichTextBox();
+            this.richtxt_LincenseBoard = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.richtxt_connect = new System.Windows.Forms.RichTextBox();
             this.txt_STBID = new System.Windows.Forms.TextBox();
@@ -44,14 +44,16 @@
             this.richtxt_Tips = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_CAID = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.richtxt_LincenseAdo = new System.Windows.Forms.RichTextBox();
-            this.richtxt_LincenseBoard = new System.Windows.Forms.RichTextBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.btn_begin = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -85,50 +87,33 @@
             this.panel1.Size = new System.Drawing.Size(1106, 574);
             this.panel1.TabIndex = 0;
             // 
-            // richTextBox1
+            // groupBox2
             // 
-            this.richTextBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.richTextBox1.Enabled = false;
-            this.richTextBox1.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.richTextBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.richTextBox1.Location = new System.Drawing.Point(141, 480);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(181, 60);
-            this.richTextBox1.TabIndex = 19;
-            this.richTextBox1.Text = "说明：\n    按下键盘的回车或空格 \n键，代表执行下一台。";
+            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.groupBox2.Controls.Add(this.richtxt_LincenseAdo);
+            this.groupBox2.Controls.Add(this.richtxt_LincenseBoard);
+            this.groupBox2.Location = new System.Drawing.Point(579, 34);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(463, 432);
+            this.groupBox2.TabIndex = 21;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "序列化数据";
             // 
-            // btn_begin
+            // richtxt_LincenseAdo
             // 
-            this.btn_begin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btn_begin.Font = new System.Drawing.Font("宋体", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_begin.Location = new System.Drawing.Point(363, 492);
-            this.btn_begin.Name = "btn_begin";
-            this.btn_begin.Size = new System.Drawing.Size(453, 46);
-            this.btn_begin.TabIndex = 8;
-            this.btn_begin.Text = "  开      始   ";
-            this.btn_begin.UseVisualStyleBackColor = true;
-            this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
-            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
+            this.richtxt_LincenseAdo.Location = new System.Drawing.Point(5, 233);
+            this.richtxt_LincenseAdo.Name = "richtxt_LincenseAdo";
+            this.richtxt_LincenseAdo.Size = new System.Drawing.Size(457, 188);
+            this.richtxt_LincenseAdo.TabIndex = 9;
+            this.richtxt_LincenseAdo.Text = "";
             // 
-            // toolStrip1
+            // richtxt_LincenseBoard
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1280, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
-            this.toolStripButton1.Text = "退出";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.richtxt_LincenseBoard.Location = new System.Drawing.Point(5, 19);
+            this.richtxt_LincenseBoard.Name = "richtxt_LincenseBoard";
+            this.richtxt_LincenseBoard.Size = new System.Drawing.Size(457, 193);
+            this.richtxt_LincenseBoard.TabIndex = 8;
+            this.richtxt_LincenseBoard.Text = "";
             // 
             // groupBox1
             // 
@@ -214,33 +199,54 @@
             this.txt_CAID.TabIndex = 20;
             this.txt_CAID.TextChanged += new System.EventHandler(this.txt_CAID_TextChanged);
             // 
-            // groupBox2
+            // richTextBox1
             // 
-            this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.groupBox2.Controls.Add(this.richtxt_LincenseAdo);
-            this.groupBox2.Controls.Add(this.richtxt_LincenseBoard);
-            this.groupBox2.Location = new System.Drawing.Point(579, 34);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(463, 432);
-            this.groupBox2.TabIndex = 21;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "序列化数据";
+            this.richTextBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.richTextBox1.Enabled = false;
+            this.richTextBox1.Font = new System.Drawing.Font("宋体", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.richTextBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.richTextBox1.Location = new System.Drawing.Point(141, 480);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(181, 60);
+            this.richTextBox1.TabIndex = 19;
+            this.richTextBox1.Text = "说明：\n    按下键盘的回车或空格 \n键，代表执行下一台。";
             // 
-            // richtxt_LincenseAdo
+            // btn_begin
             // 
-            this.richtxt_LincenseAdo.Location = new System.Drawing.Point(5, 233);
-            this.richtxt_LincenseAdo.Name = "richtxt_LincenseAdo";
-            this.richtxt_LincenseAdo.Size = new System.Drawing.Size(457, 188);
-            this.richtxt_LincenseAdo.TabIndex = 9;
-            this.richtxt_LincenseAdo.Text = "";
+            this.btn_begin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btn_begin.Font = new System.Drawing.Font("宋体", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn_begin.Location = new System.Drawing.Point(363, 492);
+            this.btn_begin.Name = "btn_begin";
+            this.btn_begin.Size = new System.Drawing.Size(453, 46);
+            this.btn_begin.TabIndex = 8;
+            this.btn_begin.Text = "  开      始   ";
+            this.btn_begin.UseVisualStyleBackColor = true;
+            this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
+            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
             // 
-            // richtxt_LincenseBoard
+            // toolStrip1
             // 
-            this.richtxt_LincenseBoard.Location = new System.Drawing.Point(5, 19);
-            this.richtxt_LincenseBoard.Name = "richtxt_LincenseBoard";
-            this.richtxt_LincenseBoard.Size = new System.Drawing.Size(457, 193);
-            this.richtxt_LincenseBoard.TabIndex = 8;
-            this.richtxt_LincenseBoard.Text = "";
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1280, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButton1.Text = "退出";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // gf_CheckSerializer
             // 
@@ -255,11 +261,11 @@
             this.Load += new System.EventHandler(this.gf_CheckSerializer_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,6 +291,7 @@
         private System.Windows.Forms.RichTextBox richtxt_Tips;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_CAID;
+        private System.Windows.Forms.Timer timer1;
 
     }
 }

@@ -94,14 +94,14 @@ namespace soc_nds_csharp.Station_Operation
             Int32 index = 0;
             //Byte[] cmdlineACK = new Byte[Protocol.CONTAINER_LENGTH - 1];//只获取命令行前四个byte即可（主要用于判断当前什么命令）
             Byte[] cmdlineACK = { };
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT,SERCOM_TYPE.COM_HANDINFO, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 return -2;
             }
             if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_HANDINFO)
             {
-                index = Protocol.Command(SERCOM_TYPE.COM_OK, 0, 0, null, ref cmdlineACK);//调用类 ，尝试连接
+                index = Protocol.Command(SERCOM_TYPE.COM_OK,SERCOM_TYPE.COM_START, 0, 0, null, ref cmdlineACK);//调用类 ，尝试连接
                 if (index != 0)
                 {
                     return -3;
@@ -110,7 +110,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_START)
             {
-                index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, 0, 4, null, ref cmdlineACK);//调用类 ，获取所有的信息
+                index = Protocol.Command(SERCOM_TYPE.COM_CHIPID,SERCOM_TYPE.COM_CHIPID, 0, 4, null, ref cmdlineACK);//调用类 ，获取所有的信息
                 if (index != 0)
                 {
                     return -4;

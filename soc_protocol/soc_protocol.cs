@@ -28,6 +28,7 @@ namespace soc_protocol
         COM_NULL = 0,
         COM_START,
         COM_CONNECT = 0x10,
+        COM_ASKHAND,
         COM_HANDINFO,
         COM_OK,
         COM_RESET,
@@ -36,7 +37,9 @@ namespace soc_protocol
         COM_MFID,
         COM_MDID,
         COM_HWID,
-        COM_LICENSE,		/*授权信息*/
+        COM_STBTYPE,
+        COM_CAID,
+        COM_LICENSE = 0x30,		/*授权信息*/
         COM_LICENSEOK,		/*授权信息ok*/
         COM_GETLICENSE,		/*flash上授权信息*/
         COM_GETLICENSEOK,	/*flash上授权信息ok*/
@@ -47,8 +50,9 @@ namespace soc_protocol
         COM_SECURITY,
         COM_SECURITYOK,
 
-        COM_DEBUG = 0x80,	/* 发送debug信息，机顶盒内存的值 addr + val*/
+        COM_DEBUG = 0x80,	/* 发送debug信息，下位机内存的值 addr + val*/
         COM_RETURN,
+        COM_FAIL,
         COM_END
     };
     //========================================================================================
@@ -58,28 +62,26 @@ namespace soc_protocol
     public class UartProtocol
     {
         Byte  FRAMESTARTCODE=0x48;
-        //int BufferLength = 128;
-        //Int32 CONTAINER_LENGTH = 5;//命令行长度 5+data.Length
-        int packetLength = 256;
+        Int32 packetLength = 4096;
 
         SerialPort mSpSlot;
 
         System.Threading.Semaphore mSemaphore;
 
-        static Byte[] mReadBuffer;//串口读到的数据
-        int mBytesRead = 0;//串口读到的数据个数
+        Int32 CONTAINER_LENGTH = 5;
 
-        Int32 mBytesWantToRead;//读取串口指定个数的数据
-       public Int32 CONTAINER_LENGTH = 5;
+        static Int32 resendCount=3;//间歇重发次数
 
         public  UartProtocol(SerialPort SpSlot)
         {
             mSpSlot = SpSlot;
-            mSpSlot.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
-
-            mReadBuffer = new Byte[packetLength];
 
             mSemaphore = new System.Threading.Semaphore(0, 1);
+
+           
+            mSpSlot.ReceivedBytesThreshold = 5;
+
+
         }
 
         /// <summary>
@@ -90,57 +92,56 @@ namespace soc_protocol
         /// <param name="dataAck">发送的数据</param>
         /// <param name="dataReq">返回的数据</param>
         /// <returns></returns>
-        public Int32 Command(SERCOM_TYPE cmd, int ReqdataLength,int AckdataLength, Byte[] dataReq, ref Byte[] cmdlineAck)
+        public Int32 Command(SERCOM_TYPE Reqcmd,SERCOM_TYPE Ackcmd, int ReqdataLength,int AckdataLength, Byte[] dataReq, ref Byte[] cmdlineAck)
         {
+            mReadBuffer.Clear();
             Int32 errCode = 0;
+            Int32 ReqCount = 0;
 
-            // set bytes want to read before writing
-            mBytesWantToRead = CONTAINER_LENGTH + AckdataLength;
-
-            // flush serial port
-            mSpSlot.DiscardInBuffer();
-            mReadBuffer.Initialize();
-            //////////////////////////////////////////////////////////////////////////发送
-            ////////if (dataReq != null)
-            ////////{
-            ////////    CONTAINER_LENGTH += dataReq.Length;
-            ////////}
-            Byte[] packet = new Byte[CONTAINER_LENGTH + ReqdataLength];
-            bool ACKData = PutCommData(cmd, ReqdataLength, dataReq, packet);//组建发送命令包
-            if (!ACKData)
+            if (ReceiveBytes != null)
             {
-                return -1;
+                Array.Clear(ReceiveBytes, 0, ReceiveBytes.Length);
+            }
+            mSpSlot.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
+
+            if (Ackcmd != SERCOM_TYPE.COM_NULL)
+            {
+                // flush serial port
+                mSpSlot.DiscardInBuffer();
+            //mReadBuffer.Initialize();
+            //////////////////////////////////////////////////////////////////////////发送
+            ReqCount = CONTAINER_LENGTH;
+            if (dataReq != null)
+            {
+                ReqCount +=dataReq.Length;
+            }
+            Byte[] packet = new Byte[ReqCount];
+            bool ReqData = PutCommData(Reqcmd, ReqdataLength, dataReq, packet);//组建发送命令包
+            if (!ReqData)
+            {
+                return -100;
             }
             try
             {
                 mSpSlot.Write(packet, 0, packet.Length);       //发送命令
             }
-            catch(Exception ex)
+            catch
             {
-                HDIC_Message.ShowWarnDialog(null, "发送命令的时候出错！\r\n"+ex.ToString());
-                return -2;
+                return -110;
+            }
+
             }
             //////////////////////////////////////////////////////////////////////////接收
-            if (!mSemaphore.WaitOne(5000))//超时
+            if (!mSemaphore.WaitOne(1000))//超时
             {
-                return -5; // timeout
+                    return -120; // timeout
             }
-            // read
-            //Byte[] dataR = new Byte[dataIndex(mReadBuffer)];//读取指定个数的byte值
-            Byte[] dataR = new Byte[mBytesWantToRead];//读取指定个数的byte值
-            Int32 numbers = read(dataR);
 
-            if (!GetCommData(dataR))
-            {
-                return -3;
-            }
-            else
-            {
-                cmdlineAck = dataR;  
-            }
-            //Array.Copy(mReadBuffer, 0, dataR, 0, dataR.Length);
-            //HDIC_Message.ShowInfoDialog(null, dataR.ToString());
-            return errCode;
+                cmdlineAck = ReceiveBytes;
+                mSpSlot.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
+
+                return errCode;
+           
         }
         /// <summary>
         /// 发送命令
@@ -163,6 +164,12 @@ namespace soc_protocol
                Packet[(Int32)Index.startcode] =(Byte)FRAMESTARTCODE;
                sum += Packet[(Int32)Index.startcode];
 
+               //Packet[(Int32)Index.protocol_type] = (Byte)FRAMEPRO_TYPE;
+               //sum += Packet[(Int32)Index.protocol_type];
+
+               //Packet[(Int32)Index.command_direction] = (Byte)FRAMECOMM_DIR;
+               //sum += Packet[(Int32)Index.command_direction];
+
                Packet[(Int32)Index.cmdone] = (Byte)cmd;
                sum += Packet[(Int32)Index.cmdone];
 
@@ -183,7 +190,7 @@ namespace soc_protocol
                    }
                }
 
-               if (sendData != null) { Packet[CONTAINER_LENGTH-1 + sendData.Length] = sum; }//应该是从第五个开始,先临时这样写
+               if (sendData != null) { Packet[CONTAINER_LENGTH-1 + sendData.Length] = sum; }
                else { Packet[CONTAINER_LENGTH-1] = sum; }
 
                if (sum==0)
@@ -200,89 +207,12 @@ namespace soc_protocol
            return true;
         }
 
-        /// <summary>
-        /// 接受命令
-        /// </summary>
-        /// <param name="GetPacket"></param>
-        /// <param name="cmdone"></param>
-        /// <param name="dataAck"></param>
-        /// <returns></returns>
-        private bool GetCommData(Byte[] GetPacket)
-        {
-            Byte cell=0;
-            // check startcode
-            cell = GetPacket[(Int32)Index.startcode];
-            if (cell != FRAMESTARTCODE)
-            {
-                HDIC_Message.ShowWarnDialog(null, String.Format("check start code[{0}] error", cell));
-                return false;
-            }
-
-            ////check cmdone
-            //cell = GetPacket[(Int32)Index.cmdone];
-            //if (cell != (Byte)cmdone)
-            //{
-            //    HDIC_Message.ShowWarnDialog(null, String.Format("check command code[{0}] error", cell));
-            //    return false;
-            //}
-
-            ////check cmdtwo
-            //cell = GetPacket[(Int32)Index.cmdtwo];
-            //if (cell != 0)
-            //{
-            //    HDIC_Message.ShowWarnDialog(null, String.Format("check cmdtwo code[{0}] error", cell));
-            //    return false;
-            //}
-
-            ////check dataLength
-            //cell = GetPacket[(Int32)Index.length];
-            //checkSum += cell;
-            //if (cell != dataLength)
-            //{
-            //    HDIC_Message.ShowWarnDialog(null, String.Format("check dataLength code[{0}] error", cell));
-            //    return false;
-            //}
-
-            for (int i = 1; i < GetPacket.Length-1; i++)
-            {
-                cell += GetPacket[i];
-            }
-            //if ((Int32)GetPacket[(Int32)Index.length] > 0)
-            //{
-            //    // check sum
-            //    for (Int32 i = (Int32)Index.buffer; i < GetPacket.Length - 1; i++)
-            //    {
-            //        cell += GetPacket[i];
-            //    }
-            //    ////get data
-            //    //Array.Copy(GetPacket, (Int32)Index.buffer, dataAck, 0, dataLength);
-            //}
-
-            if (cell != GetPacket[GetPacket.Length - 1])
-            {
-                HDIC_Message.ShowWarnDialog(null, String.Format("check sum({0} != {1}) error", cell.ToString("X2"),
-            GetPacket[GetPacket.Length - 1].ToString("X2")));
-                return false;
-            }
-
-            return true;
-        }
-
-        Int32 read(Byte[] data)
-        {
-            Array.Copy(mReadBuffer, data, data.Length);
-
-            // get current port buffer
-            mBytesRead -= data.Length;
-            if (mBytesRead < 0)
-            {
-                mBytesRead = 0;
-            }
-            return data.Length;
-        }
-
+        private List<byte> mReadBuffer = new List<byte>(2048);
+        byte[] ReceiveBytes;
+        Int32 ErrorCount = 0;
         void dataReceived(System.Object sender, System.IO.Ports.SerialDataReceivedEventArgs e) //received data
         {
+            System.Threading.Thread.Sleep(50); //等待100毫秒
             try
             {
                 if (mSpSlot.BytesToRead <= 0)
@@ -290,13 +220,55 @@ namespace soc_protocol
                     return;
                 }
 
-                // move bytes from serial port to built-in read buffer
-                mBytesRead += mSpSlot.Read(mReadBuffer, mBytesRead, mSpSlot.BytesToRead);
+                int n = mSpSlot.BytesToRead;
+                byte[] buf = new byte[n];
+                mSpSlot.Read(buf, 0, n);
+                //1.缓存数据           
+                mReadBuffer.AddRange(buf);
 
-                if (mBytesRead >= mBytesWantToRead)
+                ///////////////////////////////////////////////
+                while (true)
                 {
-                    mSemaphore.Release();
-                    mBytesRead = 0; // reset
+                    int CutBufferIndex = mReadBuffer.IndexOf(FRAMESTARTCODE);
+                    if (mReadBuffer.Count > 0 && CutBufferIndex > 0)
+                    {
+                        mReadBuffer.RemoveRange(0, mReadBuffer.IndexOf(0x48));
+                    }
+                    if (mReadBuffer.Count < 5)
+                    {
+                        return;
+                    }
+                    int len = mReadBuffer[3];
+                    if (len == 0 || len == 1 || len == 4 || len == 7 || len == 88)
+                    {
+                        byte cell = 0;
+                        for (int i = 0; i < 4 + len; i++)
+                        {
+                            cell += mReadBuffer[i];
+                        }
+                        if (cell == mReadBuffer[CONTAINER_LENGTH + len - 1])
+                        {
+                            ReceiveBytes = new byte[CONTAINER_LENGTH + len];
+                            mReadBuffer.CopyTo(0, ReceiveBytes, 0, CONTAINER_LENGTH + len);
+                            mReadBuffer.Clear();
+                            mSemaphore.Release();
+                        }
+                        else
+                        {
+                            System.Threading.Thread.Sleep(5);
+                            ErrorCount++;
+                            if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
+                            {
+                                mReadBuffer.RemoveAt(0);
+                                ErrorCount = 0;
+                            }
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        mReadBuffer.RemoveAt(0);
+                    }
                 }
             }
             catch (Exception ex)
@@ -304,7 +276,71 @@ namespace soc_protocol
                 HDIC_Message.ShowWarnDialog(null, ex.ToString());
                 return;
             }
+                ////////////////////////////////////////////
+                #region 暂时屏蔽
+            //////    int CutBufferIndex=mReadBuffer.IndexOf(FRAMESTARTCODE);
+            //////    if (mReadBuffer.Count>0 && CutBufferIndex > 0)
+            //////    {
+            //////        mReadBuffer.RemoveRange(0, CutBufferIndex);
+            //////    }
+            //////    //2.完整性判断           
+            //////    while (mReadBuffer.Count >= 5)
+            //////    {
+            //////        //2.1 查找数据头       
+            //////        if (mReadBuffer[0] == FRAMESTARTCODE) //传输数据有帧头，用于判断        
+            //////        {
+            //////                int len = mReadBuffer[3];
+            //////                if (mReadBuffer[1] != (Byte)SERCOM_TYPE.COM_ALLINFO || mReadBuffer[1] != (Byte)SERCOM_TYPE.COM_CHIPID)
+            //////                {
+            //////                    if (len > 0)
+            //////                    {
+            //////                        mReadBuffer.RemoveAt(0);
+            //////                        return;
+            //////                    }
+            //////                }
+            //////                //if (mReadBuffer.Count < len + CONTAINER_LENGTH) //数据区尚未接收完整         
+            //////                //{
+            //////                //    return;
+            //////                //}
+            //////                //得到完整的数据，复制到ReceiveBytes中进行校验  
+            //////                ReceiveBytes = new byte[len + CONTAINER_LENGTH];
+            //////                mReadBuffer.CopyTo(0, ReceiveBytes, 0, len + CONTAINER_LENGTH-1);
+
+            //////                #region 校验
+            //////                byte cell = 0;
+            //////                for (int i = 0; i < ReceiveBytes.Length - 1; i++)
+            //////                {
+            //////                    cell += ReceiveBytes[i];
+            //////                }
+            //////                if (cell != ReceiveBytes[ReceiveBytes.Length - 1])
+            //////                {
+            //////                    //    HDIC_Message.ShowWarnDialog(null, String.Format("check sum({0} != {1}) error", cell.ToString("X2"),
+            //////                    //ReceiveBytes[ReceiveBytes.Length - 1].ToString("X2")));
+            //////                    //mReadBuffer.Clear();
+            //////                    if (mReadBuffer.Count > 0)  {  mReadBuffer.RemoveAt(0); }
+                              
+            //////                    return;
+            //////                }
+            //////                #endregion
+            //////                mReadBuffer.Clear();
+            //////                mSemaphore.Release();
+            //////        }
+            //////        else //帧头不正确时，记得清除            
+            //////        {
+            //////            if (mReadBuffer.Count > 0) { mReadBuffer.RemoveAt(0); }
+            //////        }        
+            //////    }
+            //////}
+            //////catch (Exception ex)
+            //////{
+            //////    HDIC_Message.ShowWarnDialog(null, ex.ToString());
+            //////    return;
+            //////}
+                #endregion
         }
+        ////////////////////////////////////////////////////////////////////////////
+      
+        ///////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// 获取串口中有效的数据
         /// </summary>
@@ -374,7 +410,6 @@ namespace soc_protocol
            return offset;
        }
        #endregion
-
     }
     //==============================================================================
     /// <summary>
@@ -402,7 +437,7 @@ namespace soc_protocol
             mStopBit = (StopBits)Enum.Parse(typeof(Parity), dt.Rows[0]["stop_bit"].ToString().Trim());
 
             mSpSlot = new SerialPort(mPortName, mBaudRate, mParity, mDataBits, mStopBit);
-            open();
+            //open();
         }
         /// <summary>
         /// open port
@@ -421,7 +456,7 @@ namespace soc_protocol
                     mSpSlot.Open();
                 //}
             }
-            catch (System.Exception ex)
+            catch 
             {
                 return false;
             }

@@ -42,7 +42,10 @@ namespace soc_nds_csharp.Station_Operation
             this.BackColor = HDIC_Command.setColor();
 
             mObj = obj;
-
+            //Int32[] aa = new Int32[11];
+            //aa[0]=4;aa[1]=3;aa[2]=1;aa[3]=1;aa[4]=7;aa[5]=4;aa[6]=6;aa[7]=5;aa[8]=6;aa[9]=1;
+            //CalculateLuhnAlgorithm(aa, 11);
+            
             this.richtxt_Connect.Font = new System.Drawing.Font("SimSun", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             
             this.richtxt_info.Font = new System.Drawing.Font("SimSun", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -67,52 +70,61 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_Serializer_Load(object sender, EventArgs e)
         {
-            HDIC_Command.STBType = 1;//这个是测试 当前是村村通
+            //Int32[] CAID = new Int32[10];
+            //Int32[] CAIDBuffer=new Int32[11];
+
+            //    CAIDBuffer[0] = 4;
+            //    CAIDBuffer[1] = 3;
+            //    CAIDBuffer[2] = 1;
+            //    CAIDBuffer[3] = 1;
+            //    CAIDBuffer[4] =7;
+            //    CAIDBuffer[5] =4;
+            //    CAIDBuffer[6] = 6;
+            //    CAIDBuffer[7] =5;
+            //    CAIDBuffer[8] =6;
+            //    CAIDBuffer[9] =1;
+
+            //CalculateLuhnAlgorithm(CAIDBuffer, 11);
 
             //打开串口
             //mSpSlot = new Uart();
             //mSpSlot.loadConfig();
             //mSpSlot.open();
             mSpSlot = Uart.slot;
-            if (mSpSlot.IsOpen == false)
-            {
-                HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
-                btn_begin.Enabled = false;
-            }
-            else
-            {
-                BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
 
-                //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象
-                Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
+            BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
 
-                richtxt_Connect.Enabled = false;
-                richtxt_info.Enabled = false;
-                txt_SerialID.Enabled = false;
-                txt_CAID.Enabled = false;
-                txt_ChipID.Enabled = false;
-                txt_STBID.Enabled = false;
-                richtxt_ManufacturerID.Enabled = false; richtxt_ModelID.Enabled = false; richtxt_HardwareID.Enabled = false;
+            //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象
+            Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
-                #region 失去焦点
-                richtxt_Connect.TabStop = false;
-                richtxt_info.TabStop = false;
-                txt_SerialID.TabStop = false;
-                txt_CAID.TabStop = false;
-                txt_STBID.TabStop = false;
-                txt_ChipID.TabStop = false;
-                richtxt_ManufacturerID.TabStop = false;
-                richtxt_ModelID.TabStop = false;
-                richtxt_HardwareID.TabStop = false;
-                #endregion
+            richtxt_Connect.Enabled = false;
+            richtxt_info.Enabled = false;
+            txt_SerialID.Enabled = false;
+            txt_CAID.Enabled = false;
+            txt_ChipID.Enabled = false;
+            txt_STBID.Enabled = false;
+            richtxt_ManufacturerID.Enabled = false; richtxt_ModelID.Enabled = false; richtxt_HardwareID.Enabled = false;
 
-                variable_assignment();
+            #region 失去焦点
+            richtxt_Connect.TabStop = false;
+            richtxt_info.TabStop = false;
+            txt_SerialID.TabStop = false;
+            txt_CAID.TabStop = false;
+            txt_STBID.TabStop = false;
+            txt_ChipID.TabStop = false;
+            richtxt_ManufacturerID.TabStop = false;
+            richtxt_ModelID.TabStop = false;
+            richtxt_HardwareID.TabStop = false;
+            #endregion
 
-                initControl();
-                btn_begin.Enabled = true;
+            variable_assignment();
 
-            }
-           
+            initControl();
+            btn_begin.Enabled = true;
+
+            timer1.Interval = 1000;
+            timer1.Enabled = false;
+
         }
 
         private void initControl()
@@ -205,6 +217,22 @@ namespace soc_nds_csharp.Station_Operation
 
         private void Connect()
         {
+            try
+            {
+                mSpSlot.Open();
+            }
+            catch
+            {
+                if (mSpSlot.IsOpen == false)
+                {
+                    HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                    btn_begin.Focus();
+                    btn_begin.Enabled = true;
+
+                    return;
+                }
+            }
+
             Int32 index = CommandSerial();
             if (index != 0)
             {
@@ -216,37 +244,37 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Connect.Text = "当前流水线已经超过了最大值，请更换流水线!";
                 HDIC_Message.ShowWarnDialog(this, "该流水线号已经达到最大值，请重新选择流水线号");
             }
-            if (index == -2)
+            else if (index == -2)
             {
                 richtxt_Connect.Text = "流水线号不能为空!";
                 HDIC_Message.ShowWarnDialog(this, "流水线号不能为空");
             }
 
-            else if(index == -10)
-            {
-                richtxt_info.Text += "连接失败，请重新连接!\r\n";
-                richtxt_Connect.Text = "连接失败，请重新连接!";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒发送命令或者接收命令出错");
-            }
-            else if (index == -11)
+            else if (index == -10)
             {
                 richtxt_info.Text += "连接失败，请重新连接!\r\n";
                 richtxt_Connect.Text = "连接失败，请重新连接!";
                 HDIC_Message.ShowWarnDialog(this, "与机顶盒连接失败");
             }
-            else if (index == -12)
+            else if (index == -20)
+            {
+                richtxt_info.Text += "向机顶盒获取机顶盒类型失败!\r\n";
+                richtxt_Connect.Text = "向机顶盒获取机顶盒类型失败!";
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取机顶盒类型失败");
+            }
+            else if (index == -21)
             {
                 richtxt_info.Text += "向机顶盒获取信息失败!\r\n";
                 richtxt_Connect.Text = "向机顶盒获取信息失败!";
                 HDIC_Message.ShowWarnDialog(this, "向机顶盒获取信息失败");
             }
-            else if (index == -20)
+            else if (index == -22)
             {
                 richtxt_info.Text += "向机顶盒获取的ChipID不正确!\r\n";
                 richtxt_Connect.Text = "向机顶盒获取的ChipID不正确!";
                 HDIC_Message.ShowWarnDialog(this, "向机顶盒获取ChipID失败，请尝试重新获取!");
             }
-            else if (index == -21)
+            else if (index == -23)
             {
                 richtxt_Connect.Text = "Chip id 重复，请检查是否重复序列化!";
                 richtxt_info.Text += "Chip id 重复\r\n";
@@ -279,8 +307,42 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Connect.Text = "上传序列号数据到数据库失败";
                 richtxt_info.Text += "上传序列号数据到数据库失败!\r\n";
             }
+            else if (index == -100)
+            {
+                richtxt_Connect.Text = "发送的命令包创建失败";
+                richtxt_info.Text += "发送的命令包创建失败!\r\n";
+                HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+            }
+            else if (index == -110)
+            {
+                richtxt_Connect.Text = "发送命令包失败";
+                richtxt_info.Text += "发送命令包失败!\r\n";
+                HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+            }
             btn_begin.Focus();
         }
+
+        Int32 timeCount = 60;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timeCount--;
+           
+            if (timeCount==0)
+            {
+                timer1.Enabled = false;
+                richtxt_Connect.ForeColor = System.Drawing.Color.Red;
+                richtxt_info.Text += "接收机顶盒数据超时!\r\n";
+                richtxt_Connect.Text = "接收机顶盒数据超时!";
+                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+                btn_begin.Focus();
+                btn_begin.Enabled = true;
+            }
+            else
+            {
+                Connect();
+            }
+        }
+
 
         private int CommandSerial()
         {
@@ -309,96 +371,143 @@ namespace soc_nds_csharp.Station_Operation
             }
 
             //////////////////////////////////////////////////////////////////////////
-            //读取chipID 和 STBID
+           
             Int32 index = 0;
             //Byte[] cmdlineACK = new Byte[Protocol.CONTAINER_LENGTH - 1];//只获取命令行前四个byte即可（主要用于判断当前什么命令）
             Byte[] cmdlineACK = { };
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
+
+            index = Protocol.Command(SERCOM_TYPE.COM_NULL, SERCOM_TYPE.COM_NULL, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
+            {
+                if (index == -120)
+                {
+
+                    timer1.Enabled = true;
+                    return 0;
+                }
+                else
+                {
+                    return index;
+                }
+            }
+            timer1.Enabled = false;
+
+            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {
                 return -10;
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_HANDINFO)
+
+            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, SERCOM_TYPE.COM_HANDINFO, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
+            if (index != 0)
             {
-                index = Protocol.Command(SERCOM_TYPE.COM_OK, 0, 0, null, ref cmdlineACK);//调用类 ，尝试连接
+                return index;
+            }
+            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_HANDINFO)
+            {
+                return -10;
+            }
+            //if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_HANDINFO)
+            //{
+                index = Protocol.Command(SERCOM_TYPE.COM_OK,SERCOM_TYPE.COM_START, 0, 0, null, ref cmdlineACK);//调用类 ，尝试连接
                 if (index != 0)
                 {
-                    return -11;
+                    return index;
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_START)
+                {
+                    return -10;
                 }
                 richtxt_info.Text += "连接成功，请勿断电!\r\n";
                 richtxt_Connect.Text = "连接成功，请勿断电!";
-            }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_START)
-            {
-                index = Protocol.Command(SERCOM_TYPE.COM_ALLINFO, 0, 7, null, ref cmdlineACK);//调用类 ，获取所有的信息
+            //}
+            //if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_START)
+            //{
+                index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, SERCOM_TYPE.COM_STBTYPE, 0, 1, null, ref cmdlineACK);//调用类 ，获取所有的信息
                 if (index != 0)
                 {
-                    return -12;
+                    return index;
                 }
-            }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_ALLINFO)
-            {
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBTYPE)
+                {
+                    return -20;
+                }
+                HDIC_Command.STBType = (Int32)cmdlineACK[(Int32)Index.buffer]; //从下位机获取机顶盒类型
+
+                index = Protocol.Command(SERCOM_TYPE.COM_ALLINFO,SERCOM_TYPE.COM_ALLINFO, 0, 7, null, ref cmdlineACK);//调用类 ，获取所有的信息
+                if (index != 0)
+                {
+                    return index;
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ALLINFO)
+                {
+                    return -21;
+                }
+            //}
+            //if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_ALLINFO)
+            //{
                 Int32 a = (Int32)cmdlineACK[(Int32)Index.buffer + 3];
                 Int32 b = (Int32)(cmdlineACK[(Int32)Index.buffer + 2] << 8);
                 Int32 c = (Int32)(cmdlineACK[(Int32)Index.buffer + 1] << 16);
                 Int32 d = (Int32)(cmdlineACK[(Int32)Index.buffer] << 24);
-                ChipID = a + b + c + d;
-            }
+              
+
+                ChipID = (Int32)(a + b + c + d);
+            //}
             //////////////////////////////////////////////////////////////////////////
             #region ChipID的处理
-            if (ChipID == 0)
-            {
-                return -20;//向机顶盒获取ChipID失败
-            }
+                txt_ChipID.Text = Convert.ToInt64(Convert.ToString(ChipID, 16).ToString(), 16).ToString();
 
-            txt_ChipID.Text = String.Format("{0:X08}", ChipID).ToString();
+                if (Convert.ToInt64(txt_ChipID.Text.Trim()) == 0 || Convert.ToInt64(txt_ChipID.Text.Trim()) < 0)
+                {
+                    return -22;//向机顶盒获取ChipID失败
+                }
 
-            if (FindChipID())
-            {
-                return -21; // 重复序列化
-            }
+                if (FindChipID())
+                {
+                    return -23; // 重复序列化
+                }
 
             #endregion
 
-            else
-            {
-                #region 获取CAID
-                //根据ChipID生成CAID
-                Int32[] CAIDBuffer = new Int32[11];
-                string CAID = ((ulong)(ChipID ^ 0x80000000)).ToString().Trim();
-                for (int i = 0; i < CAID.Length; i++)
+                else
                 {
-                    CAIDBuffer[i] = Convert.ToInt32(CAID[i].ToString());
+                    #region 获取CAID
+                    //根据ChipID生成CAID
+                    Int32[] CAIDBuffer = new Int32[11];
+                    string CAID = ((ulong)(Convert.ToInt64(txt_ChipID.Text.Trim()) ^ 0x80000000)).ToString().Trim();
+                    for (int i = 0; i < CAID.Length; i++)
+                    {
+                        CAIDBuffer[i] = Convert.ToInt32(CAID[i].ToString());
+                    }
+                    CalculateLuhnAlgorithm(CAIDBuffer, 11);
+                    txt_CAID.Text = CAIDBuffer.ToString().Trim();
+                    string CAIDBufferStr = "";
+                    foreach (int temp in CAIDBuffer)
+                    {
+                        CAIDBufferStr += temp.ToString();
+                    }
+                    txt_CAID.Text = CAIDBufferStr.Trim();
+                    #endregion
+
+                    richtxt_ManufacturerID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 4]).ToString();
+                    richtxt_ModelID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 5]).ToString();
+                    richtxt_HardwareID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 6]).ToString();
+
+                    #region 获取STBID
+                    DateTime nowdate = DateTime.Now;
+                    //二.获取今天是一年当中的第几天
+                    int iDays = DateTime.Today.DayOfYear;
+
+                    //一.找到第一周的最后一天（先获取1月1日是星期几，从而得知第一周周末是几）
+                    int firstWeekend = 7 - Convert.ToInt32(DateTime.Parse(nowdate.Year + "-1-1").DayOfWeek);
+                    //三.（今天 减去 第一周周末）/7 等于 距第一周有多少周 再加上第一周的1 就是今天是今年的第几周了 // 刚好考虑了惟一的特殊情况就是，今天刚好在第一周内，那么距第一周就是0 再加上第一周的1 最后还是1
+                    int weeknums = Convert.ToInt32(Math.Ceiling((iDays - firstWeekend) / 7.0)) + 1;
+                    #endregion
+                    txt_STBID.Text = String.Format("{0:d03}{1:d02}{2:d02}{3:d02}{4:d07}", cmdlineACK[((Int32)Index.buffer) + 4], m_STBType, (nowdate.Year % 100), weeknums, ProductIndex);
+
+                    richtxt_Connect.Text = "获取ChipID、ManufactualID,HardwareID 成功";
+                    richtxt_info.Text += "获取ChipID、ManufactualID,HardwareID 成功!\r\n";
                 }
-                CalculateLuhnAlgorithm(CAIDBuffer, 11);
-                txt_CAID.Text = CAIDBuffer.ToString().Trim();
-                string CAIDBufferStr = "";
-                foreach (int temp in CAIDBuffer)
-                {
-                    CAIDBufferStr += temp.ToString();
-                }
-                txt_CAID.Text = CAIDBufferStr.Trim();
-                #endregion
-
-                richtxt_ManufacturerID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 4]).ToString();
-                richtxt_ModelID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 5]).ToString();
-                richtxt_HardwareID.Text = String.Format("{0:X}", cmdlineACK[((Int32)Index.buffer) + 6]).ToString();
-
-                #region 获取STBID
-                DateTime nowdate = DateTime.Now;
-                //二.获取今天是一年当中的第几天
-                int iDays = DateTime.Today.DayOfYear;
-
-                //一.找到第一周的最后一天（先获取1月1日是星期几，从而得知第一周周末是几）
-                int firstWeekend = 7 - Convert.ToInt32(DateTime.Parse(nowdate.Year + "-1-1").DayOfWeek);
-                //三.（今天 减去 第一周周末）/7 等于 距第一周有多少周 再加上第一周的1 就是今天是今年的第几周了 // 刚好考虑了惟一的特殊情况就是，今天刚好在第一周内，那么距第一周就是0 再加上第一周的1 最后还是1
-                int weeknums = Convert.ToInt32(Math.Ceiling((iDays - firstWeekend) / 7.0)) + 1;
-                #endregion
-                txt_STBID.Text = String.Format("{0:d03}{1:d02}{2:d02}{3:d02}{4:d07}", cmdlineACK[((Int32)Index.buffer) + 4], m_STBType, (nowdate.Year % 100), weeknums, ProductIndex);
-
-                richtxt_Connect.Text = "获取ChipID、ManufactualID,HardwareID 成功";
-                richtxt_info.Text += "获取ChipID、ManufactualID,HardwareID 成功!\r\n";
-            }
 
             //////////////////////////////////////////////////////////////////////////序列化数据
             string ChipInfo = SearchSerializeData();
@@ -419,15 +528,17 @@ namespace soc_nds_csharp.Station_Operation
 
                 int length = (ChipInfo.Length) / 2;
 
-                index = Protocol.Command(SERCOM_TYPE.COM_LICENSE, length, 0, dataBuffer, ref cmdlineACK);//调用类 ，获取所有的信息
+                index = Protocol.Command(SERCOM_TYPE.COM_LICENSE,SERCOM_TYPE.COM_LICENSEOK, length, 0, dataBuffer, ref cmdlineACK);//调用类 ，获取所有的信息
                 if (index != 0)
                 {
-                    return -32;//向机顶盒发送序列化数据失败
+                    return index;//向机顶盒发送序列化数据失败
                 }
-
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_LICENSEOK && cmdlineACK[(Int32)Index.cmdtwo] == (Byte)SERCOM_TYPE.COM_RETURN)
+            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_LICENSEOK && cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {
+                return -32;
+            }
+
                 richtxt_Connect.Text = "发送序列化数据成功";
                 richtxt_info.Text += "发送序列化数据成功!\r\n";
 
@@ -440,7 +551,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_info.Text += "Flash写保护成功!\r\n";
                 #endregion
 
-                if (HDIC_Command.STBType == 1)//表示是村村通
+                if (HDIC_Command.STBType == 0)//表示是村村通
                 {
                     richtxt_Connect.Text = "请扫描条形码的智能卡号……";
                     BarCode.Start();  //开始监听扫描枪
@@ -460,7 +571,6 @@ namespace soc_nds_csharp.Station_Operation
                         return -50; //上传序列化数据到数据库失败
                     }
                 }
-            }
            
             return 0;
         }
@@ -528,7 +638,7 @@ namespace soc_nds_csharp.Station_Operation
             string ChipIDInfo = "";
             try
             {
-                ChipIDInfo = HDIC_DB.sqlQuery("select ChipInfo from ChipData where ChipID='" + Convert.ToInt32(txt_ChipID.Text.Trim(), 16) + "'");
+                ChipIDInfo = HDIC_DB.sqlQuery("select ChipInfo from ChipData where ChipID='" +txt_ChipID.Text.Trim()+ "'");
             }
             catch (System.Exception ex)
             {
@@ -631,15 +741,13 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_SmartCardID.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()))
             {
+                BarCode.Stop();
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
                     HDIC_Func.TSCPrinter(tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscX, tscY, tscEncodeType, tscGeneratelabel, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBar, 1);
 
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";
-                    BarCode.Stop();
-                    btn_begin.Enabled = true;
-                    //initControl();
 
                 }
                 else
@@ -647,6 +755,8 @@ namespace soc_nds_csharp.Station_Operation
                     richtxt_info.Text += "上传序列号数据到数据库失败!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库失败";
                 }
+                btn_begin.Focus();
+                btn_begin.Enabled = true;
             }
         }
 
@@ -658,7 +768,6 @@ namespace soc_nds_csharp.Station_Operation
             this.Close();
 
         }
-
     }
 
 }

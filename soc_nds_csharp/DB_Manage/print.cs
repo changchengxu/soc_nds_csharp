@@ -141,7 +141,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue == true)
                 {
-                    rowSelect += Convert.ToInt32(dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim()) + ",";
+                    rowSelect += dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim() + ",";
                 }
             }
 
