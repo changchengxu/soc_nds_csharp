@@ -21,9 +21,15 @@ namespace soc_nds_csharp
         {
             InitializeComponent();
         }
-        List<byte> mReadBuffer1 = new List<byte>(2048);
+       // List<byte> mReadBuffer1 = new List<byte>(2048);
         private void gf_main_Load(object sender, EventArgs e)
         {
+            ////string chiptxt = "2164262913";
+            ////string str = Convert.ToString(Convert.ToInt64(chiptxt), 16);
+            ////long b = Convert.ToInt64(str);
+            ////Byte bb = Convert.ToByte(b);
+            ////string CAID = ((Convert.ToByte(chiptxt, 16) ^ 0x80000000)).ToString().Trim();
+
             //byte[] b = new byte[4];
             //b[0] = 0x84;
             //b[1] = 0x01;

@@ -30,7 +30,7 @@ namespace soc_nds_csharp.Station_Operation
         System.IO.Ports.SerialPort mSpSlot ;//串口对象定义
         UartProtocol Protocol;
         Int32 m_STBType = 01;//临时，到时候看看如何获取
-        Int32 ChipID = 0;
+        UInt32 ChipID = 0;
         long STBOpIndex;//当前流水号（工位一选择工位线时得到的）
         long ProductIndex;//根据当前流水号拼凑生产流水号
 
@@ -451,10 +451,10 @@ namespace soc_nds_csharp.Station_Operation
                 Int32 d = (Int32)(cmdlineACK[(Int32)Index.buffer] << 24);
               
 
-                ChipID = (Int32)(a + b + c + d);
+                ChipID = (UInt32)(a + b + c + d);
             //}
             //////////////////////////////////////////////////////////////////////////
-            #region ChipID的处理
+                    #region ChipID的处理
                 txt_ChipID.Text = Convert.ToInt64(Convert.ToString(ChipID, 16).ToString(), 16).ToString();
 
                 if (Convert.ToInt64(txt_ChipID.Text.Trim()) == 0 || Convert.ToInt64(txt_ChipID.Text.Trim()) < 0)
@@ -474,12 +474,14 @@ namespace soc_nds_csharp.Station_Operation
                     #region 获取CAID
                     //根据ChipID生成CAID
                     Int32[] CAIDBuffer = new Int32[11];
-                    string CAID = ((ulong)(Convert.ToInt64(txt_ChipID.Text.Trim()) ^ 0x80000000)).ToString().Trim();
+                    string CAID = string.Format("{0:d010}", ChipID ^ 0x80000000);
+                   // string CAID = Convert.ToInt32(Convert.ToString((ChipID ^ 0x80000000)), 16).ToString().PadLeft(8, '0');
                     for (int i = 0; i < CAID.Length; i++)
                     {
                         CAIDBuffer[i] = Convert.ToInt32(CAID[i].ToString());
                     }
                     CalculateLuhnAlgorithm(CAIDBuffer, 11);
+
                     txt_CAID.Text = CAIDBuffer.ToString().Trim();
                     string CAIDBufferStr = "";
                     foreach (int temp in CAIDBuffer)
@@ -631,7 +633,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             return true;
         }
-
+       
         //查找指定的序列化数据
         private string SearchSerializeData()
         {
@@ -721,7 +723,6 @@ namespace soc_nds_csharp.Station_Operation
         #endregion
 
         #endregion
-
 
         private void gf_Serializer_FormClosing(object sender, FormClosingEventArgs e)
         {

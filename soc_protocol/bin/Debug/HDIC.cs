@@ -849,7 +849,7 @@ namespace HDICSoft.Func
                     Directory.CreateDirectory(strPath);
                 }
 
-                strPath = strPath + "\\HXECard_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+                strPath = strPath + "\\STBLog_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
 
                 // 初始化文件流
                 tmpStreamWriter = new StreamWriter(strPath, true, Encoding.GetEncoding("GB2312"));
@@ -1163,7 +1163,7 @@ namespace HDICSoft.Func
         }
 
        /// <summary>
-       /// 字符串转换字符数组（长度除以2）
+       /// 字符串转换字节数组（长度除以2）
        /// </summary>
        /// <param name="str"></param>
        /// <param name="buffer"></param>
@@ -1218,9 +1218,23 @@ namespace HDICSoft.Func
         //        buffer[i / 2] = (byte)Convert.ToByte(s.Substring(i, 2), 16);
         //    return buffer;
         //}
-
-
-
+       /// <summary>
+        /// 字节数组转换字符串
+       /// </summary>
+       /// <param name="bytes"></param>
+       /// <returns></returns>
+        public static string byteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("X2");
+                }
+            }
+            return returnStr;
+        }
 
 
         //#region 下面加密和解密复制考勤机 长城暂时屏蔽

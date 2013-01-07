@@ -212,21 +212,25 @@ namespace soc_protocol
         Int32 ErrorCount = 0;
         void dataReceived(System.Object sender, System.IO.Ports.SerialDataReceivedEventArgs e) //received data
         {
-            System.Threading.Thread.Sleep(50); //等待100毫秒
+            System.Threading.Thread.Sleep(50); //等待50毫秒
             try
             {
                 if (mSpSlot.BytesToRead <= 0)
                 {
                     return;
                 }
-
+                
                 int n = mSpSlot.BytesToRead;
                 byte[] buf = new byte[n];
                 mSpSlot.Read(buf, 0, n);
                 //1.缓存数据           
                 mReadBuffer.AddRange(buf);
 
-                ///////////////////////////////////////////////
+                #region 打印
+                string log = System.Text.Encoding.ASCII.GetString(buf, 0, buf.Length);
+                HDIC_Func.LogRecord(log);
+                #endregion
+
                 while (true)
                 {
                     int CutBufferIndex = mReadBuffer.IndexOf(FRAMESTARTCODE);
@@ -239,8 +243,20 @@ namespace soc_protocol
                         return;
                     }
                     int len = mReadBuffer[3];
-                    if (len == 0 || len == 1 || len == 4 || len == 7 || len == 88)
+                    if (len == 0 || len == 1 || len == 4 || len == 7 || len == 88|| len==11 || len==12)
                     {
+                        if (len != mReadBuffer.Count - 5)//如果数据长度 ！= 数据长度位，则说明不是命令包
+                        {
+                            System.Threading.Thread.Sleep(5);
+                            ErrorCount++;
+                            if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
+                            {
+                                mReadBuffer.RemoveAt(0);
+                                ErrorCount = 0;
+                            }
+                            break;
+                        }
+
                         byte cell = 0;
                         for (int i = 0; i < 4 + len; i++)
                         {
@@ -252,16 +268,17 @@ namespace soc_protocol
                             mReadBuffer.CopyTo(0, ReceiveBytes, 0, CONTAINER_LENGTH + len);
                             mReadBuffer.Clear();
                             mSemaphore.Release();
+                            System.Threading.Thread.Sleep(50); //等待50毫秒
                         }
                         else
                         {
-                            System.Threading.Thread.Sleep(5);
-                            ErrorCount++;
-                            if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
-                            {
+                            //System.Threading.Thread.Sleep(5);
+                            //ErrorCount++;
+                            //if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
+                            //{
                                 mReadBuffer.RemoveAt(0);
                                 ErrorCount = 0;
-                            }
+                            //}
                             break;
                         }
                     }

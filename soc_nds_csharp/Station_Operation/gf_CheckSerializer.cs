@@ -22,6 +22,8 @@ namespace soc_nds_csharp.Station_Operation
         System.IO.Ports.SerialPort mSpSlot;//串口对象定义
         UartProtocol Protocol;
         Int32 ChipID = 0;
+        String CAID ;
+        String STBID;
 
         System.Threading.Semaphore mSemaphore = new System.Threading.Semaphore(0, 1);//用于循环尝试连接时，超时标识
 
@@ -47,7 +49,6 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_CheckSerializer_Load(object sender, EventArgs e)
         {
-            HDIC_Command.STBType = 1;//这个是测试 当前是村村通
 
             //打开串口
             //mSpSlot = new Uart();
@@ -301,7 +302,7 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_connect.Text = "正在建立连接,请稍后... ...";
           
             Int32 index = 0;
-            Byte[] cmdlineACK = { };//只获取命令行前四个byte即可（主要用于判断当前什么命令）
+            Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
            
             index = Protocol.Command(SERCOM_TYPE.COM_NULL, SERCOM_TYPE.COM_NULL, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
@@ -400,6 +401,7 @@ namespace soc_nds_csharp.Station_Operation
             #region 校验序列化数据
 
             string StrBarcode = "";  //byte[] bb = new byte[cmdlineACK.Length - 5];
+           // Byte[] bb = new Byte[88];
             for (int i = 0; i < cmdlineACK.Length - 5; i++)
             {
                 if (i != 0 && i % 20 == 0)//用于分页
@@ -409,7 +411,8 @@ namespace soc_nds_csharp.Station_Operation
                 StrBarcode += String.Format("{0:X02}", cmdlineACK[(Int32)Index.buffer + i]).ToString().Trim();//从STB获取ChipInfo
                 //bb[i]= cmdlineACK[(Int32)Index.buffer + i];
             }
-            richtxt_LincenseBoard.Text = StrBarcode;  //string aa = byteToHexStr(bb);
+            //string aa = HDIC_Func.byteToHexStr(bb);//测试用；字节数组转换字符串
+            richtxt_LincenseBoard.Text = StrBarcode; 
             string ChipInfo = SearchSerializeData();
             if (ChipInfo.Trim() == "0")//搜索ChipInfo失败
             {
@@ -451,20 +454,6 @@ namespace soc_nds_csharp.Station_Operation
 
             return 0;
         }
-
-        public static string byteToHexStr(byte[] bytes)
-        {
-            string returnStr = "";
-            if (bytes != null)
-            {
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    returnStr += bytes[i].ToString("X2");
-                }
-            }
-            return returnStr;
-        }
-
 
         #region 方法
         //判断 ChipID
@@ -643,25 +632,47 @@ namespace soc_nds_csharp.Station_Operation
                     //    CAIDBufferStr += temp.ToString();
                     //}
                     //string StrCAIDbuffer = new string(CAIDBuffer);
-                //if (txt_CAID.Text.Trim() != StrCAIDbuffer.Trim().Substring(0, txtInfo.Trim().Length))//机顶盒计算出的CAID和扫描枪扫描的CAID比较
-                //{
-                //    return -1;
-                //}
+                    //if (txt_CAID.Text.Trim() != StrCAIDbuffer.Trim().Substring(0, txtInfo.Trim().Length))//机顶盒计算出的CAID和扫描枪扫描的CAID比较
+                    //{
+                    //    return -1;
+                    //}
+                    Int32 index = 0;
+                    Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
+                    index = Protocol.Command(SERCOM_TYPE.COM_CAID, SERCOM_TYPE.COM_CAID, 0, 11, null, ref cmdlineACK);//调用类 ，获取ChipID信息
+                    if (index != 0)
+                    {
+                        return index;
+                    }
+                    if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_CAID)
+                    {
+                        return -20;
+                    }
 
-                    if (false) //发送命令，获取机顶盒上CAID与标签CAID比较  目前没有做
+
+                    Byte[] temp = new Byte[cmdlineACK.Length - 5];
+                    for (int i = 0; i < cmdlineACK.Length - 5; i++)
+                    {
+                        temp[i] = cmdlineACK[(Int32)Index.buffer + i];
+
+                    }
+                    CAID = "";
+                    CAID = System.Text.Encoding.ASCII.GetString(temp);//得到unicode字符串
+
+
+                    if (CAID != txtInfo.Trim()) //发送命令，获取机顶盒上CAID与标签CAID比较  目前没有做
                     {
                         return -30;
                     }
 
-                if (!FindCAID(txtInfo.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
-                {
-                    return -31;
-                }
+                    if (!FindCAID(txtInfo.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
+                    {
+                        return -31;
+                    }
 
-                else
-                {
-                    return 30;
-                }
+                    else
+                    {
+                        return 30;//校验成功
+                    }
                 }
 
             #endregion
@@ -690,7 +701,7 @@ namespace soc_nds_csharp.Station_Operation
             #endregion
 
             #region 校验SmartCardID
-                if (HDIC_Command.STBType == 1 && txtInfo.Trim().Length == 12)//智能卡号不为空，说明是村村通
+                if (HDIC_Command.STBType == 0 && txtInfo.Trim().Length == 12)//智能卡号不为空，说明是村村通
             {
                 if (!FindSmartCardID(txtInfo.Trim()))//数据库的STBID与扫描枪扫描的CAID比较
                 {
@@ -715,8 +726,31 @@ namespace soc_nds_csharp.Station_Operation
                 {
                     richtxt_connect.ForeColor = System.Drawing.Color.Red;
                 }
-              
-                if (index == -30)
+                if (index == -100)
+                {
+                    richtxt_connect.Text = "发送的命令包创建失败!";
+                    richtxt_Tips.Text += "发送的命令包创建失败!\r\n";
+                    HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+                }
+                else if (index == -110)
+                {
+                    richtxt_connect.Text = "发送命令包失败!";
+                    richtxt_Tips.Text += "发送命令包失败!\r\n";
+                    HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+                }
+                else if (index == -120)
+                {
+                    richtxt_connect.Text = "接收机顶盒CAID超时!";
+                    richtxt_Tips.Text += "接收机顶盒CAID超时!\r\n";
+                    HDIC_Message.ShowWarnDialog(this, "接收机顶盒CAID超时");
+                }
+                else if (index == -20)
+                {
+                    richtxt_connect.Text = "接收机顶盒CAID失败!";
+                    richtxt_Tips.Text += "接收机顶盒CAID失败!\r\n";
+                    HDIC_Message.ShowWarnDialog(this, "接收机顶盒CAID失败");
+                }
+                else if (index == -30)
                 {
                     richtxt_connect.Text = "机顶盒中的CAID和扫描枪扫描的CAID不一致!";
                     richtxt_Tips.Text += "机顶盒中的CAID和扫描枪扫描的CAID不一致!\r\n"; 
@@ -791,8 +825,6 @@ namespace soc_nds_csharp.Station_Operation
                         {
                             HDIC_Message.ShowErrorDialog(this, "校验数据成功后修改标志位失败，原因：" + ex.ToString());
                         }
-
-
 
                         //richtxt_Tips.Select(0, richtxt_Tips.Text.Length); 
                         //richtxt_Tips.SelectionColor = System.Drawing.Color.ForestGreen;
