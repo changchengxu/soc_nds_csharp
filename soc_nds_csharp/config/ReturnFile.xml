@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   
-  <manufacturer_name>80</manufacturer_name>
+  <manufacturer_name>STBman</manufacturer_name>
   
-  <STB_model>55</STB_model>
+  <STB_model>TBS265</STB_model>
   
-  <STB_chip>4</STB_chip>
+  <STB_chip>STi5107RBB</STB_chip>
   
-  <broadcater>8</broadcater>
+  <broadcater>DTHUMC</broadcater>
   
-  <production_batch>200</production_batch>
+  <production_batch>Production batch #5 300</production_batch>
   
-  <manufacturer_id>100</manufacturer_id>
+  <manufacturer_id>C2</manufacturer_id>
   
-  <model_id>128</model_id>
+  <model_id>6E</model_id>
   
-  <hardware_id>1</hardware_id>
+  <hardware_id>EF</hardware_id>
 
 </root>

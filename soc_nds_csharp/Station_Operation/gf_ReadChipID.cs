@@ -26,98 +26,140 @@ namespace soc_nds_csharp.Station_Operation
 
         }
 
-        private void btn_ReadChipID_Click(object sender, EventArgs e)
+        private void gf_ReadChipID_Load(object sender, EventArgs e)
         {
-            //打开串口
-            //mSpSlot = new Uart();
-            //mSpSlot.loadConfig();
-            //mSpSlot.open();
             mSpSlot = Uart.slot;
-            if (mSpSlot.IsOpen == false)
-            {
-                HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
-            }
-            else
-            {
-                Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
 
-                Connect();
-            }
-        }
+            btn_ReadChipID.Focus();
 
-        private void Connect()
-        {
-            Int32 index = CommandSerial();
-            if (index != 0)
-            {
-                richtxt_info.ForeColor = System.Drawing.Color.Red;
-            }
+            timer1.Interval = 1000;
+            timer1.Enabled = false;
 
-            if (index == -1)
-            {
-                HDIC_Message.ShowWarnDialog(this, "该流水线号已经达到最大值，请重新选择流水线号");
-            }
-            else if (index == -2)
-            {
-                richtxt_info.Text = "连接失败，请重新连接!";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒发送命令或者接收命令出错");
-            }
-            else if (index == -3)
-            {
-                richtxt_info.Text = "连接失败，请重新连接!";
-                HDIC_Message.ShowWarnDialog(this, "与机顶盒连接失败");
-            }
-            else if (index == -4)
-            {
-                richtxt_info.Text = "向机顶盒获取信息失败!";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取信息失败");
-            }
-            else if (index == -5)
-            {
-                richtxt_info.Text = "向机顶盒获取ChipID失败!";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取ChipID失败，请尝试重新获取!");
-            }
             btn_ReadChipID.Enabled = true;
         }
 
-        private int CommandSerial()
+        private void btn_ReadChipID_Click(object sender, EventArgs e)
         {
-            ////获取所有的串口    
-            //String[] ports = System.IO.Ports.SerialPort.GetPortNames();
+            Connect();
+        }
 
-            richtxt_info.Text = "";
-            richtxt_info.ForeColor = System.Drawing.Color.ForestGreen;
-            btn_ReadChipID.Enabled = false;
-
-            this.richtxt_info.Text = "正在尝试连接,请稍后... ...";   // richtxt_Connect
-
-            Int32 index = 0;
-            //Byte[] cmdlineACK = new Byte[Protocol.CONTAINER_LENGTH - 1];//只获取命令行前四个byte即可（主要用于判断当前什么命令）
-            Byte[] cmdlineACK = { };
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT,SERCOM_TYPE.COM_HANDINFO, 0, 0, null, ref cmdlineACK);//调用类 ，发送命令
-            if (index != 0)
+        private void btn_ReadChipID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Keys.KeyCode == Keys.Enter || Keys.KeyCode == Keys.Back)
             {
-                return -2;
+                Connect();
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_HANDINFO)
+        }
+        private void Connect()
+        {
+
+            try
             {
-                index = Protocol.Command(SERCOM_TYPE.COM_OK,SERCOM_TYPE.COM_START, 0, 0, null, ref cmdlineACK);//调用类 ，尝试连接
-                if (index != 0)
-                {
-                    return -3;
-                }
-                richtxt_info.Text = "连接成功，请勿断电!";
+                mSpSlot.Open();
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_START)
+            catch
             {
-                index = Protocol.Command(SERCOM_TYPE.COM_CHIPID,SERCOM_TYPE.COM_CHIPID, 0, 4, null, ref cmdlineACK);//调用类 ，获取所有的信息
-                if (index != 0)
+                if (mSpSlot.IsOpen == false)
                 {
-                    return -4;
+                    HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                    btn_ReadChipID.Focus();
+                    btn_ReadChipID.Enabled = true;
+
+                    return;
                 }
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_CHIPID)
+
+            Int32 index = CommandSerial();
+
+            if (index == -1)
             {
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒连接失败");
+            }
+
+            else if (index == -11)
+            {
+                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取ChipID信息失败");
+            }
+            else if (index == -12)
+            {
+                HDIC_Message.ShowWarnDialog(this, "机顶盒获取的ChipID不正确");
+            }
+            else if (index == -100)
+            {
+                HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+            }
+            else if (index == -110)
+            {
+                HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+            }
+            else if (index == -120)
+            {
+                HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
+            }
+            btn_ReadChipID.Enabled = true;
+            btn_ReadChipID.Focus();
+        }
+
+            private Int32 CommandSerial()
+            {
+                btn_ReadChipID.Enabled = false;
+
+                ChipID = 0;
+                btn_ReadChipID.Focus();
+
+                Int32 index = 0;
+                Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
+
+                index = Protocol.Command(SERCOM_TYPE.COM_NULL, SERCOM_TYPE.COM_NULL, null, ref cmdlineACK);//调用类 ，发送命令
+                if (index != 0)
+                {
+                    if (index == -120)
+                    {
+
+                        timer1.Enabled = true;
+                        return 0;
+                    }
+                    else
+                    {
+                        return index;
+                    }
+                }
+                timer1.Enabled = false;
+
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
+                {
+                    return -1;
+                }
+                index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, SERCOM_TYPE.COM_HANDINFO, null, ref cmdlineACK);//调用类 ，发送命令
+                if (index != 0)
+                {
+                    return index;
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_HANDINFO)
+                {
+                    return -1;
+                }
+                index = Protocol.Command(SERCOM_TYPE.COM_OK, SERCOM_TYPE.COM_START, null, ref cmdlineACK);//调用类 ，尝试连接
+                if (index != 0)
+                {
+                    return index;
+                }
+
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_START)
+                {
+                    return -1;
+                }
+
+                ///////////////////从下位机获取ChipID信息
+                index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, SERCOM_TYPE.COM_CHIPID, null, ref cmdlineACK);
+                if (index != 0)
+                {
+                    return index;
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_CHIPID)
+                {
+                    return -11;
+                }
                 Int32 a = (Int32)cmdlineACK[(Int32)Index.buffer + 3];
                 Int32 b = (Int32)(cmdlineACK[(Int32)Index.buffer + 2] << 8);
                 Int32 c = (Int32)(cmdlineACK[(Int32)Index.buffer + 1] << 16);
@@ -125,7 +167,6 @@ namespace soc_nds_csharp.Station_Operation
                 ChipID = a + b + c + d;
 
                 richtxt_info.Text = String.Format("{0:X08}", ChipID).ToString(); 
-            }
             return 0;
         }
 
@@ -135,5 +176,23 @@ namespace soc_nds_csharp.Station_Operation
             this.Close();
         }
 
+        Int32 timeCount = 60;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timeCount--;
+
+            if (timeCount == 0)
+            {
+                timer1.Enabled = false;
+                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+                btn_ReadChipID.Focus();
+                btn_ReadChipID.Enabled = true;
+            }
+            else
+            {
+                Connect();
+            }
+        }
+      
     }
 }

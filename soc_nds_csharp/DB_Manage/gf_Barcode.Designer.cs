@@ -43,7 +43,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.cbEncodeType = new System.Windows.Forms.ComboBox();
             this.txt_tscBar = new System.Windows.Forms.TextBox();
-            this.chkGenerateLabel = new System.Windows.Forms.CheckBox();
+            this.chk_PrintBarCode = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -76,6 +76,16 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pic_barcode = new System.Windows.Forms.PictureBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txt_codeInterval = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txt_barCodeInterval = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txt_OutPutPort = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txt_FontMagnify1 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txt_FontMagnify2 = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.panel_Detail.SuspendLayout();
             this.gbox_Detail.SuspendLayout();
@@ -129,6 +139,14 @@
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label20);
+            this.groupBox8.Controls.Add(this.txt_FontMagnify2);
+            this.groupBox8.Controls.Add(this.label19);
+            this.groupBox8.Controls.Add(this.txt_FontMagnify1);
+            this.groupBox8.Controls.Add(this.label17);
+            this.groupBox8.Controls.Add(this.txt_barCodeInterval);
+            this.groupBox8.Controls.Add(this.label15);
+            this.groupBox8.Controls.Add(this.txt_codeInterval);
             this.groupBox8.Controls.Add(this.label12);
             this.groupBox8.Controls.Add(this.txt_tscX);
             this.groupBox8.Controls.Add(this.label16);
@@ -139,10 +157,10 @@
             this.groupBox8.Controls.Add(this.label14);
             this.groupBox8.Controls.Add(this.cbEncodeType);
             this.groupBox8.Controls.Add(this.txt_tscBar);
-            this.groupBox8.Controls.Add(this.chkGenerateLabel);
-            this.groupBox8.Location = new System.Drawing.Point(358, 5);
+            this.groupBox8.Controls.Add(this.chk_PrintBarCode);
+            this.groupBox8.Location = new System.Drawing.Point(293, 5);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(489, 144);
+            this.groupBox8.Size = new System.Drawing.Size(554, 144);
             this.groupBox8.TabIndex = 63;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "条形码设置";
@@ -158,7 +176,7 @@
             // 
             // txt_tscX
             // 
-            this.txt_tscX.Location = new System.Drawing.Point(141, 53);
+            this.txt_tscX.Location = new System.Drawing.Point(134, 53);
             this.txt_tscX.Name = "txt_tscX";
             this.txt_tscX.Size = new System.Drawing.Size(90, 21);
             this.txt_tscX.TabIndex = 53;
@@ -167,16 +185,16 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(64, 114);
+            this.label16.Location = new System.Drawing.Point(27, 87);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(71, 12);
+            this.label16.Size = new System.Drawing.Size(107, 12);
             this.label16.TabIndex = 61;
-            this.label16.Text = " 旋转角度：";
+            this.label16.Text = " 条形码旋转角度：";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(249, 61);
+            this.label13.Location = new System.Drawing.Point(256, 60);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(119, 12);
             this.label13.TabIndex = 54;
@@ -192,14 +210,14 @@
             "90",
             "180",
             "270"});
-            this.cbox_tscRotate.Location = new System.Drawing.Point(141, 109);
+            this.cbox_tscRotate.Location = new System.Drawing.Point(134, 82);
             this.cbox_tscRotate.Name = "cbox_tscRotate";
             this.cbox_tscRotate.Size = new System.Drawing.Size(121, 20);
             this.cbox_tscRotate.TabIndex = 60;
             // 
             // txt_tscY
             // 
-            this.txt_tscY.Location = new System.Drawing.Point(374, 56);
+            this.txt_tscY.Location = new System.Drawing.Point(381, 55);
             this.txt_tscY.Name = "txt_tscY";
             this.txt_tscY.Size = new System.Drawing.Size(90, 21);
             this.txt_tscY.TabIndex = 55;
@@ -208,7 +226,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(64, 85);
+            this.label3.Location = new System.Drawing.Point(304, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 12);
             this.label3.TabIndex = 35;
@@ -217,11 +235,11 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(16, 34);
+            this.label14.Location = new System.Drawing.Point(16, 116);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(119, 12);
+            this.label14.Size = new System.Drawing.Size(95, 12);
             this.label14.TabIndex = 56;
-            this.label14.Text = "    条形码宽窄bar：";
+            this.label14.Text = "条形码宽窄bar：";
             // 
             // cbEncodeType
             // 
@@ -251,7 +269,7 @@
             "UPCE",
             "UPCE+2",
             "UPCE+5"});
-            this.cbEncodeType.Location = new System.Drawing.Point(141, 80);
+            this.cbEncodeType.Location = new System.Drawing.Point(381, 82);
             this.cbEncodeType.Name = "cbEncodeType";
             this.cbEncodeType.Size = new System.Drawing.Size(121, 20);
             this.cbEncodeType.TabIndex = 2;
@@ -259,24 +277,26 @@
             // 
             // txt_tscBar
             // 
-            this.txt_tscBar.Location = new System.Drawing.Point(141, 29);
+            this.txt_tscBar.Location = new System.Drawing.Point(109, 111);
             this.txt_tscBar.Name = "txt_tscBar";
-            this.txt_tscBar.Size = new System.Drawing.Size(90, 21);
+            this.txt_tscBar.Size = new System.Drawing.Size(63, 21);
             this.txt_tscBar.TabIndex = 57;
             this.txt_tscBar.Text = "300";
             // 
-            // chkGenerateLabel
+            // chk_PrintBarCode
             // 
-            this.chkGenerateLabel.AutoSize = true;
-            this.chkGenerateLabel.Location = new System.Drawing.Point(251, 34);
-            this.chkGenerateLabel.Name = "chkGenerateLabel";
-            this.chkGenerateLabel.Size = new System.Drawing.Size(108, 16);
-            this.chkGenerateLabel.TabIndex = 40;
-            this.chkGenerateLabel.Text = "打印条形码码文";
-            this.chkGenerateLabel.UseVisualStyleBackColor = true;
+            this.chk_PrintBarCode.AutoSize = true;
+            this.chk_PrintBarCode.Location = new System.Drawing.Point(424, 28);
+            this.chk_PrintBarCode.Name = "chk_PrintBarCode";
+            this.chk_PrintBarCode.Size = new System.Drawing.Size(96, 16);
+            this.chk_PrintBarCode.TabIndex = 40;
+            this.chk_PrintBarCode.Text = "打印系统码文";
+            this.chk_PrintBarCode.UseVisualStyleBackColor = true;
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.label18);
+            this.groupBox7.Controls.Add(this.txt_OutPutPort);
             this.groupBox7.Controls.Add(this.label10);
             this.groupBox7.Controls.Add(this.label8);
             this.groupBox7.Controls.Add(this.txt_tscWidth);
@@ -285,9 +305,9 @@
             this.groupBox7.Controls.Add(this.txt_tscSpeed);
             this.groupBox7.Controls.Add(this.label11);
             this.groupBox7.Controls.Add(this.txt_tscDensity);
-            this.groupBox7.Location = new System.Drawing.Point(94, 5);
+            this.groupBox7.Location = new System.Drawing.Point(25, 5);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(192, 144);
+            this.groupBox7.Size = new System.Drawing.Size(236, 144);
             this.groupBox7.TabIndex = 62;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "打印机设置";
@@ -295,7 +315,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(23, 86);
+            this.label10.Location = new System.Drawing.Point(23, 97);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(65, 12);
             this.label10.TabIndex = 48;
@@ -304,7 +324,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 30);
+            this.label8.Location = new System.Drawing.Point(24, 49);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(65, 12);
             this.label8.TabIndex = 44;
@@ -312,7 +332,7 @@
             // 
             // txt_tscWidth
             // 
-            this.txt_tscWidth.Location = new System.Drawing.Point(88, 27);
+            this.txt_tscWidth.Location = new System.Drawing.Point(88, 46);
             this.txt_tscWidth.Name = "txt_tscWidth";
             this.txt_tscWidth.Size = new System.Drawing.Size(90, 21);
             this.txt_tscWidth.TabIndex = 45;
@@ -321,7 +341,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 57);
+            this.label9.Location = new System.Drawing.Point(24, 73);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(65, 12);
             this.label9.TabIndex = 46;
@@ -329,7 +349,7 @@
             // 
             // txt_tscHeight
             // 
-            this.txt_tscHeight.Location = new System.Drawing.Point(88, 54);
+            this.txt_tscHeight.Location = new System.Drawing.Point(88, 70);
             this.txt_tscHeight.Name = "txt_tscHeight";
             this.txt_tscHeight.Size = new System.Drawing.Size(90, 21);
             this.txt_tscHeight.TabIndex = 47;
@@ -337,7 +357,7 @@
             // 
             // txt_tscSpeed
             // 
-            this.txt_tscSpeed.Location = new System.Drawing.Point(87, 83);
+            this.txt_tscSpeed.Location = new System.Drawing.Point(87, 94);
             this.txt_tscSpeed.Name = "txt_tscSpeed";
             this.txt_tscSpeed.Size = new System.Drawing.Size(90, 21);
             this.txt_tscSpeed.TabIndex = 49;
@@ -346,7 +366,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(23, 117);
+            this.label11.Location = new System.Drawing.Point(23, 121);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(65, 12);
             this.label11.TabIndex = 50;
@@ -354,7 +374,7 @@
             // 
             // txt_tscDensity
             // 
-            this.txt_tscDensity.Location = new System.Drawing.Point(87, 114);
+            this.txt_tscDensity.Location = new System.Drawing.Point(87, 118);
             this.txt_tscDensity.Name = "txt_tscDensity";
             this.txt_tscDensity.Size = new System.Drawing.Size(90, 21);
             this.txt_tscDensity.TabIndex = 51;
@@ -600,6 +620,90 @@
             this.pic_barcode.TabIndex = 15;
             this.pic_barcode.TabStop = false;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(22, 32);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(113, 12);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "码文与条形码间距：";
+            // 
+            // txt_codeInterval
+            // 
+            this.txt_codeInterval.Location = new System.Drawing.Point(134, 27);
+            this.txt_codeInterval.Name = "txt_codeInterval";
+            this.txt_codeInterval.Size = new System.Drawing.Size(90, 21);
+            this.txt_codeInterval.TabIndex = 63;
+            this.txt_codeInterval.Text = "115";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(227, 31);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(101, 12);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "条形码之间间距：";
+            // 
+            // txt_barCodeInterval
+            // 
+            this.txt_barCodeInterval.Location = new System.Drawing.Point(328, 27);
+            this.txt_barCodeInterval.Name = "txt_barCodeInterval";
+            this.txt_barCodeInterval.Size = new System.Drawing.Size(90, 21);
+            this.txt_barCodeInterval.TabIndex = 65;
+            this.txt_barCodeInterval.Text = "140";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(12, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(77, 12);
+            this.label18.TabIndex = 52;
+            this.label18.Text = "电脑输出口：";
+            // 
+            // txt_OutPutPort
+            // 
+            this.txt_OutPutPort.Location = new System.Drawing.Point(88, 22);
+            this.txt_OutPutPort.Name = "txt_OutPutPort";
+            this.txt_OutPutPort.Size = new System.Drawing.Size(128, 21);
+            this.txt_OutPutPort.TabIndex = 53;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(184, 116);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(107, 12);
+            this.label19.TabIndex = 66;
+            this.label19.Text = "文字放大倍率(1)：";
+            // 
+            // txt_FontMagnify1
+            // 
+            this.txt_FontMagnify1.Location = new System.Drawing.Point(291, 112);
+            this.txt_FontMagnify1.Name = "txt_FontMagnify1";
+            this.txt_FontMagnify1.Size = new System.Drawing.Size(69, 21);
+            this.txt_FontMagnify1.TabIndex = 67;
+            this.txt_FontMagnify1.Text = "300";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(368, 116);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(107, 12);
+            this.label20.TabIndex = 68;
+            this.label20.Text = "文字放大倍率(2)：";
+            // 
+            // txt_FontMagnify2
+            // 
+            this.txt_FontMagnify2.Location = new System.Drawing.Point(480, 112);
+            this.txt_FontMagnify2.Name = "txt_FontMagnify2";
+            this.txt_FontMagnify2.Size = new System.Drawing.Size(69, 21);
+            this.txt_FontMagnify2.TabIndex = 69;
+            this.txt_FontMagnify2.Text = "300";
+            // 
             // gf_Barcode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -655,7 +759,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbEncodeType;
         private System.Windows.Forms.TextBox txt_tscBar;
-        private System.Windows.Forms.CheckBox chkGenerateLabel;
+        private System.Windows.Forms.CheckBox chk_PrintBarCode;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
@@ -688,5 +792,15 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pic_barcode;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txt_barCodeInterval;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txt_codeInterval;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txt_OutPutPort;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txt_FontMagnify1;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txt_FontMagnify2;
     }
 }

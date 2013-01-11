@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gf_ReadChipID));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -35,6 +36,7 @@
             this.richtxt_info = new System.Windows.Forms.RichTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -76,6 +78,7 @@
             this.btn_ReadChipID.Text = " 读 取 Chip ID";
             this.btn_ReadChipID.UseVisualStyleBackColor = true;
             this.btn_ReadChipID.Click += new System.EventHandler(this.btn_ReadChipID_Click);
+            this.btn_ReadChipID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.btn_ReadChipID_KeyPress);
             // 
             // richtxt_info
             // 
@@ -105,6 +108,10 @@
             this.toolStripButton1.Text = "退出";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // gf_ReadChipID
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -114,6 +121,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "gf_ReadChipID";
             this.Text = "读取 ChipID";
+            this.Load += new System.EventHandler(this.gf_ReadChipID_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
@@ -131,6 +139,7 @@
         private System.Windows.Forms.RichTextBox richtxt_info;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.Timer timer1;
 
     }
 }

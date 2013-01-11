@@ -142,7 +142,7 @@
             // 
             // txt_STBID
             // 
-            this.txt_STBID.Location = new System.Drawing.Point(217, 368);
+            this.txt_STBID.Location = new System.Drawing.Point(218, 339);
             this.txt_STBID.Name = "txt_STBID";
             this.txt_STBID.Size = new System.Drawing.Size(278, 21);
             this.txt_STBID.TabIndex = 25;
@@ -151,7 +151,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(99, 372);
+            this.label3.Location = new System.Drawing.Point(100, 343);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(101, 12);
             this.label3.TabIndex = 24;
@@ -185,7 +185,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 337);
+            this.label1.Location = new System.Drawing.Point(69, 376);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(131, 12);
             this.label1.TabIndex = 19;
@@ -193,7 +193,7 @@
             // 
             // txt_CAID
             // 
-            this.txt_CAID.Location = new System.Drawing.Point(218, 332);
+            this.txt_CAID.Location = new System.Drawing.Point(218, 371);
             this.txt_CAID.Name = "txt_CAID";
             this.txt_CAID.Size = new System.Drawing.Size(278, 21);
             this.txt_CAID.TabIndex = 20;

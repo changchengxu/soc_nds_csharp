@@ -143,7 +143,7 @@ namespace soc_nds_csharp
                     return;
                 }
                 string sqlstr = @"select a.userNo,a.userName,b.roleNo from SysUser as a inner join SysUserRole as b on a.userNo=b.userNo 
-                                   where a.userName='" + txt_username.Text.Trim() + "' and a.pwd='" + txt_pwd.Text.Trim()
+                                   where a.userName='" + HDIC_Func.InputText(txt_username.Text.Trim()) + "' and a.pwd='" + HDIC_Func.InputText(txt_pwd.Text.Trim())
                                     + "' and b.roleNo='"+cbo_userRole.SelectedValue.ToString().Trim()+"'";
 
                 using (DataTable dt =HDIC_DB.GetList(sqlstr))

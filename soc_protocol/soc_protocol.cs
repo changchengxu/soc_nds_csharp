@@ -25,35 +25,36 @@ namespace soc_protocol
 
    public enum SERCOM_TYPE
     {
-        COM_NULL = 0,
-        COM_START,
-        COM_CONNECT = 0x10,
-        COM_ASKHAND,
-        COM_HANDINFO,
-        COM_OK,
-        COM_RESET,
-        COM_ALLINFO = 0x20,	/* chipid, manufactureid, modelid, hardwareid */
-        COM_CHIPID,
-        COM_MFID,
-        COM_MDID,
-        COM_HWID,
-        COM_STBTYPE,
-        COM_CAID,
-        COM_LICENSE = 0x30,		/*授权信息*/
-        COM_LICENSEOK,		/*授权信息ok*/
-        COM_GETLICENSE,		/*flash上授权信息*/
-        COM_GETLICENSEOK,	/*flash上授权信息ok*/
-        COM_OPENFLASH,
-        COM_OPENFLASHOK,
-        COM_CLOSEFLASH,
-        COM_CLOSEFLASHOK,
-        COM_SECURITY,
-        COM_SECURITYOK,
+       COM_NULL = 0,
+	COM_START,
+	COM_CONNECT = 0x10,
+	COM_ASKHAND,
+	COM_HANDINFO,
+	COM_OK,
+	COM_RESET,
+	//COM_ALLINFO = 0x20,	/* chipid, manufactureid, modelid, hardwareid */
 
-        COM_DEBUG = 0x80,	/* 发送debug信息，下位机内存的值 addr + val*/
-        COM_RETURN,
-        COM_FAIL,
-        COM_END
+    COM_CHIPID = 0x20,
+    COM_MFID,
+    COM_MDID,
+    COM_HWID,
+    COM_STBTYPE,					/* 00 */
+    COM_CAID,
+    COM_STBIDPC,       				/*序列化工位中，上位机拼接STBID后 发送给下位机（以ASCII码格式发送）*/
+    COM_STBIDPCOK,  				/*序列化工位中，下位机收到STBID成功后返回给上位机作为成功标识*/
+    COM_STBIDSTB,     				/*校验工位中，下位机将STBID(以ASCII码发送)发送给上位机，用于校验*/
+
+    COM_FLASHWRITELICENSE = 0x30, 	/*序列化工位中，上位机向下位机发送序列化数据（88个字节）*/
+    COM_FLASHWRITELICENSEOK,		/*序列化工位中，下位机写序列化数据成功后返回给上位机作为成功标识*/
+    COM_GETLICENSE,					/*flash上授权信息*/
+    COM_GETLICENSEOK,				/*flash上授权信息ok*/
+    COM_FLASHSTATUS,            	/*校验工位中，获取Flash当前写保护状态（0为未写保护/1为写保护）*/
+    COM_SECURITYSTATUS,            	/*校验工位中，获取高级安全状态（0为未打开/1为已打开*/
+
+	COM_DEBUG = 0x80,	/* 发送debug信息，下位机内存的值 addr + val*/
+	COM_RETURN,
+	COM_FAIL,
+	COM_END
     };
     //========================================================================================
    /// <summary>
@@ -92,7 +93,7 @@ namespace soc_protocol
         /// <param name="dataAck">发送的数据</param>
         /// <param name="dataReq">返回的数据</param>
         /// <returns></returns>
-        public Int32 Command(SERCOM_TYPE Reqcmd,SERCOM_TYPE Ackcmd, int ReqdataLength,int AckdataLength, Byte[] dataReq, ref Byte[] cmdlineAck)
+        public Int32 Command(SERCOM_TYPE Reqcmd,SERCOM_TYPE Ackcmd, Byte[] dataReq, ref Byte[] cmdlineAck)
         {
             mReadBuffer.Clear();
             Int32 errCode = 0;
@@ -116,7 +117,7 @@ namespace soc_protocol
                 ReqCount +=dataReq.Length;
             }
             Byte[] packet = new Byte[ReqCount];
-            bool ReqData = PutCommData(Reqcmd, ReqdataLength, dataReq, packet);//组建发送命令包
+            bool ReqData = PutCommData(Reqcmd, dataReq, packet);//组建发送命令包
             if (!ReqData)
             {
                 return -100;
@@ -132,13 +133,12 @@ namespace soc_protocol
 
             }
             //////////////////////////////////////////////////////////////////////////接收
-            if (!mSemaphore.WaitOne(1000))//超时
+            if (!mSemaphore.WaitOne(2000))//超时
             {
                     return -120; // timeout
             }
 
                 cmdlineAck = ReceiveBytes;
-                mSpSlot.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
 
                 return errCode;
            
@@ -150,7 +150,7 @@ namespace soc_protocol
         /// <param name="Packet">返回包</param>
         /// <param name="sendData">要发送的数据</param>
         /// <returns></returns>
-        private bool PutCommData(SERCOM_TYPE cmd,int dataLength, Byte[] sendData,Byte[] Packet)
+        private bool PutCommData(SERCOM_TYPE cmd, Byte[] sendData,Byte[] Packet)
         {
            try
            {
@@ -176,14 +176,19 @@ namespace soc_protocol
                Packet[(Int32)Index.cmdtwo] = (Byte)SERCOM_TYPE.COM_NULL;
                sum += Packet[(Int32)Index.cmdtwo];
 
-               Packet[(Int32)Index.length] = (Byte)dataLength;
-               sum += (Byte)dataLength;
+               if (sendData != null)
+               {
+                   Packet[(Int32)Index.length] = (Byte)sendData.Length;
+                   sum += (Byte)sendData.Length;
+               }
+               else
+                   Packet[(Int32)Index.length] = 0;
 
                if (sendData!=null)
                {
                   
                    //sendData.CopyTo(Packet, (Int32)Index.buffer);
-                   for (int i = 0; i < dataLength; i++)
+                   for (int i = 0; i < sendData.Length; i++)
                    {
                        Packet[((Int32)Index.buffer)+i]=sendData[i];
                        sum += (Byte)sendData[i];
@@ -212,9 +217,17 @@ namespace soc_protocol
         Int32 ErrorCount = 0;
         void dataReceived(System.Object sender, System.IO.Ports.SerialDataReceivedEventArgs e) //received data
         {
-            System.Threading.Thread.Sleep(50); //等待50毫秒
+            System.Threading.Thread.Sleep(150); //等待150毫秒
             try
             {
+                ////if (!mSpSlot.IsOpen)//如果串口已经关闭，则不执行下面的代码
+                ////{
+                ////    return;
+                ////}
+                if (!mSpSlot.IsOpen)
+                {
+                    return;
+                }
                 if (mSpSlot.BytesToRead <= 0)
                 {
                     return;
@@ -226,9 +239,13 @@ namespace soc_protocol
                 //1.缓存数据           
                 mReadBuffer.AddRange(buf);
 
-                #region 打印
+                #region 打印1
                 string log = System.Text.Encoding.ASCII.GetString(buf, 0, buf.Length);
                 HDIC_Func.LogRecord(log);
+                #endregion
+
+                #region 打印2
+                //System.IO.File.AppendAllText("D:\\直播星日志.txt",DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +log+ "\r\n");
                 #endregion
 
                 while (true)
@@ -243,11 +260,11 @@ namespace soc_protocol
                         return;
                     }
                     int len = mReadBuffer[3];
-                    if (len == 0 || len == 1 || len == 4 || len == 7 || len == 88|| len==11 || len==12)
+                    if (len == 0 || len == 1 || len == 4 || len == 88|| len==11 || len==12|| len==16)
                     {
                         if (len != mReadBuffer.Count - 5)//如果数据长度 ！= 数据长度位，则说明不是命令包
                         {
-                            System.Threading.Thread.Sleep(5);
+                            //System.Threading.Thread.Sleep(5);
                             ErrorCount++;
                             if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
                             {
@@ -268,7 +285,7 @@ namespace soc_protocol
                             mReadBuffer.CopyTo(0, ReceiveBytes, 0, CONTAINER_LENGTH + len);
                             mReadBuffer.Clear();
                             mSemaphore.Release();
-                            System.Threading.Thread.Sleep(50); //等待50毫秒
+                            mSpSlot.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
                         }
                         else
                         {

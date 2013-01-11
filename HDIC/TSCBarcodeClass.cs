@@ -21,7 +21,7 @@ public class TSCLIB_DLL
     /// <returns></returns>
     [DllImport("TSCLIB.dll", EntryPoint = "openport")]
     public static extern int openport(string printername);
-
+    
     /// <summary>
     /// 使用条形码机内建条形码打印
     /// </summary>

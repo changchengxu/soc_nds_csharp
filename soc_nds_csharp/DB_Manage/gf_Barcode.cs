@@ -67,6 +67,7 @@ namespace soc_nds_csharp.DB_Manage
             DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
               if (dt.Rows.Count > 0)
               {
+                  txt_OutPutPort.Text = dt.Rows[0]["tscOutPutPort"].ToString().Trim();
                   txt_tscWidth.Text = dt.Rows[0]["tscWidth"].ToString().Trim();
                   txt_tscHeight.Text = dt.Rows[0]["tscHeight"].ToString().Trim();
                   txt_tscSpeed.Text = dt.Rows[0]["tscPrintSpeed"].ToString().Trim();
@@ -74,9 +75,14 @@ namespace soc_nds_csharp.DB_Manage
                   txt_tscX.Text = dt.Rows[0]["tscX"].ToString().Trim();
                   txt_tscY.Text = dt.Rows[0]["tscY"].ToString().Trim();
                   cbEncodeType.Text = dt.Rows[0]["tscEncodeType"].ToString().Trim();
-                  chkGenerateLabel.Checked = Convert.ToBoolean(Convert.ToInt32(dt.Rows[0]["tscGeneratelabel"].ToString().Trim()));
+                  chk_PrintBarCode.Checked = Convert.ToBoolean(Convert.ToInt32(dt.Rows[0]["tscPrintCode"].ToString().Trim()));
                   cbox_tscRotate.Text = dt.Rows[0]["tscRotate"].ToString().Trim();
                   txt_tscBar.Text = dt.Rows[0]["tscBar"].ToString().Trim();
+
+                  txt_codeInterval.Text = dt.Rows[0]["tscCodeInterval"].ToString().Trim();
+                  txt_barCodeInterval.Text = dt.Rows[0]["tscBarCodeInterval"].ToString().Trim();
+                  txt_FontMagnify1.Text = dt.Rows[0]["tscFontMagnify1"].ToString().Trim();
+                  txt_FontMagnify2.Text = dt.Rows[0]["tscFontMagnify2"].ToString().Trim();
               }
         }
         #endregion
@@ -126,7 +132,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 if (type != BarcodeLib.TYPE.UNSPECIFIED)
                 {
-                    b.IncludeLabel = this.chkGenerateLabel.Checked;
+                    b.IncludeLabel = this.chk_PrintBarCode.Checked;
 
                     //===== Encoding performed here =====
                     pic_barcode.Image = b.Encode(type, this.txt_STBID.Text.Trim(), Color.Black, Color.White, W, H);
@@ -237,7 +243,7 @@ namespace soc_nds_csharp.DB_Manage
                 flag = 1;
             }
 
-            HDIC_Func.TSCPrinter(txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), cbEncodeType.SelectedItem.ToString().Trim(), Convert.ToString((int)chkGenerateLabel.CheckState), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBar.Text.Trim(), flag);
+            HDIC_Func.TSCPrinter(txt_OutPutPort.Text.Trim(), txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), cbEncodeType.SelectedItem.ToString().Trim(), Convert.ToString((int)chk_PrintBarCode.CheckState), txt_codeInterval.Text.Trim(),txt_FontMagnify1.Text.Trim(), txt_FontMagnify2.Text.Trim(),txt_barCodeInterval.Text.Trim(), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBar.Text.Trim(), flag);
         }
 
         #endregion

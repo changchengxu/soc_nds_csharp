@@ -32,7 +32,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbox__BroadCaster = new System.Windows.Forms.ComboBox();
+            this.cbox_BroadCaster = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.txt_HardwareID = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -89,7 +89,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cbox__BroadCaster);
+            this.groupBox1.Controls.Add(this.cbox_BroadCaster);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
             this.groupBox1.Controls.Add(this.txt_HardwareID);
             this.groupBox1.Controls.Add(this.label9);
@@ -115,17 +115,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "导出文件操作";
             // 
-            // cbox__BroadCaster
+            // cbox_BroadCaster
             // 
-            this.cbox__BroadCaster.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbox__BroadCaster.FormattingEnabled = true;
-            this.cbox__BroadCaster.Items.AddRange(new object[] {
-            "DTHUM",
+            this.cbox_BroadCaster.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_BroadCaster.FormattingEnabled = true;
+            this.cbox_BroadCaster.Items.AddRange(new object[] {
+            "DTHUMC",
             "SARFT"});
-            this.cbox__BroadCaster.Location = new System.Drawing.Point(158, 206);
-            this.cbox__BroadCaster.Name = "cbox__BroadCaster";
-            this.cbox__BroadCaster.Size = new System.Drawing.Size(121, 20);
-            this.cbox__BroadCaster.TabIndex = 42;
+            this.cbox_BroadCaster.Location = new System.Drawing.Point(158, 206);
+            this.cbox_BroadCaster.Name = "cbox_BroadCaster";
+            this.cbox_BroadCaster.Size = new System.Drawing.Size(121, 20);
+            this.cbox_BroadCaster.TabIndex = 42;
             // 
             // dateTimePicker1
             // 
@@ -359,6 +359,6 @@
         private System.Windows.Forms.Button btn_Import;
         private System.Windows.Forms.TextBox txt_ManufacturerName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbox__BroadCaster;
+        private System.Windows.Forms.ComboBox cbox_BroadCaster;
     }
 }

@@ -752,6 +752,7 @@ namespace HDICSoft.Func
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="OutPutPort">电脑端的输出口</param>
         /// <param name="width">卷标宽度</param>
         /// <param name="height">卷标高度</param>
         /// <param name="printSpeed">打印速度</param>
@@ -759,14 +760,18 @@ namespace HDICSoft.Func
         /// <param name="X">条形码X方向起始点</param>
         /// <param name="Y">条形码Y方向起始点</param>
         /// <param name="EncodeType">编码类型</param>
-        /// <param name="GenerateLabel">打印码文</param>
+        /// <param name="PrintCode">打印码文</param>
+        /// <param name="CodeInterval">自定义码文与标签间隔</param>
+        /// <param name="BarCodeInterval">条形码之间的间隔</param>
+        /// <param name="FontMagnify1">设定文字X方向放大倍率,1-8</param>
+        /// <param name="FontMagnify2">设定文字X方向放大倍率,1-8</param>
         /// <param name="content1">打印STB ID</param>
         /// <param name="content2">打印CA ID</param>
         /// <param name="content3">打印 SmartCardID</param>
         /// <param name="rotate">设定条形码旋转角度</param>
         /// <param name="bar">条形码宽窄bar 比例因子</param>
         /// <param name="flag">0：不打印SmartCardID；1打印</param>
-        public static void TSCPrinter(string width, string height, string printSpeed, string density, string X, string Y, string EncodeType, string GenerateLabel, string content1, string content2, string content3, string rotate, string bar, int flag)
+        public static void TSCPrinter(string OutPutPort,string width, string height, string printSpeed, string density, string X, string Y, string EncodeType, string PrintCode, string CodeInterval,string FontMagnify1,string FontMagnify2, string BarCodeInterval, string content1, string content2, string content3, string rotate, string bar, int flag)
         {
             #region 1
             //TSCLIB_DLL.openport("TSC TTP-344M Plus");                                           //Open specified printer driver
@@ -785,23 +790,30 @@ namespace HDICSoft.Func
             #endregion
 
             #region 2
-          
-                TSCLIB_DLL.openport("TSC TTP-344M Plus");
+
+                TSCLIB_DLL.openport(OutPutPort);
                 TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "2", "0");                           //Setup the media size and sensor type info
                 TSCLIB_DLL.clearbuffer();
+                //打印STB ID
+                TSCLIB_DLL.barcode(X, Y, EncodeType, "100", PrintCode, rotate, bar, "2", content1);
+                //Drawing printer font,打印STBID的码文
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STBID:" + content1);
 
-                TSCLIB_DLL.barcode(X, Y, EncodeType, "100", GenerateLabel, rotate, bar, "2", content1);//打印STB ID
-                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 140).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content2);//打印STB ID
-                if (flag == 0)
+                //打印CA ID
+                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content2);
+                //Drawing printer font,打印CAID的码文
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CAID:" + content2);
+
+                if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
                 {
-                    TSCLIB_DLL.printlabel("1", "3");  //户户通打印八份
-                }
-                if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号
-                {
-                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 280).ToString(), EncodeType, "100", GenerateLabel, rotate, bar, "2", content3);//打印SmartCardID
-                    TSCLIB_DLL.printlabel("1", "2");  //村村通打印七份
+                    //打印SmartCardID
+                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content3);
+                    //Drawing printer font,打印SmartCardID的码文
+                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SmartCardID:" + content3); 
                 }
 
+                TSCLIB_DLL.printlabel("1", "1");//开始打印
+                TSCLIB_DLL.closeport();
                 //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
                 //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font
 
@@ -809,7 +821,7 @@ namespace HDICSoft.Func
                 //TSCLIB_DLL.downloadpcx("UL.PCX", "UL.PCX");                                         //Download PCX file into printer
                 //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
                 //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
-                TSCLIB_DLL.closeport();
+               
             #endregion
         }
 
@@ -874,7 +886,7 @@ namespace HDICSoft.Func
         /// 添加串口相关的下拉列表项
         /// </summary>
         /// <param name="comboBox">下拉列表</param>
-        public static void AddIRPortsToComboBox(ComboBox comboBox)
+        public static void AddIRPortsToComboBox(ComboBox comboBox,string[] portNames)
         {
             comboBox.Items.Clear();
             comboBox.DisplayMember = "data";
@@ -888,11 +900,11 @@ namespace HDICSoft.Func
             r["key"] = -1;
             r["data"] = string.Empty;
             t.Rows.Add(r);
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < portNames.Length; i++)
             {
                 r = t.NewRow();
                 r["key"] = i;
-                r["data"] = "MX" + i.ToString();
+                r["data"] = portNames[i];
                 t.Rows.Add(r);
             }
             comboBox.DataSource = t;
@@ -1420,15 +1432,15 @@ namespace HDICSoft.Command
             set { _STBlinenum = value; }
         }
 
-       /// <summary>
-        ///STBType 数值0代表户户通，1代表村村通
-       /// </summary>
-        private static Int32 _STBType = 0;
-        public static Int32 STBType
-        {
-            get { return _STBType; }
-            set { _STBType = value; }
-        }
+       ///// <summary>
+       // ///STBType 数值0代表户户通，1代表村村通
+       ///// </summary>
+       // private static Int32 _STBType = 0;
+       // public static Int32 STBType
+       // {
+       //     get { return _STBType; }
+       //     set { _STBType = value; }
+       // }
 
        /// <summary>
         /// 获取connectionStrings中数据库连接信息

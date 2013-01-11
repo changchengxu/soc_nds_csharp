@@ -379,6 +379,7 @@
     </Content>
     <Content Include="config\ReturnFile.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="config\Serial.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
