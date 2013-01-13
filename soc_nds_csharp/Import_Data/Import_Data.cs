@@ -176,9 +176,9 @@ namespace soc_nds_csharp.Import_Data
                         
                         Stopwatch timer = new Stopwatch();
                         timer.Start();
-                        cmd.ExecuteNonQuery();
+                        Int32 InsertCount=cmd.ExecuteNonQuery();
                         timer.Stop();
-                        HDIC_Message.ShowInfoDialog(null, "数据导入成功,用时：" + timer.ElapsedMilliseconds.ToString() + "毫秒");
+                        HDIC_Message.ShowInfoDialog(null, "数据导入成功,用时：" + timer.ElapsedMilliseconds.ToString() + "毫秒\r\n"+"导入数据个数:"+InsertCount+"条");
                         conn.Close();
                        
                     }

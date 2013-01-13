@@ -12,9 +12,12 @@ using HDICSoft.Command;
 using soc_protocol;
 using System.Runtime.InteropServices;
 using barcode_scanner; 
+using System.Threading;
 
 namespace soc_nds_csharp.Station_Operation
 {
+    public delegate void MyInvoke();
+
     public partial class gf_CheckSerializer : Form
     {
         BarCodeHook BarCode = new BarCodeHook();  //定义扫描仪对象
@@ -27,8 +30,6 @@ namespace soc_nds_csharp.Station_Operation
         Int32 SECURITYSTATUS = 0;//高级安全当前状态
         String CAID ;
         String STBID;
-
-        System.Threading.Semaphore mSemaphore = new System.Threading.Semaphore(0, 1);//用于循环尝试连接时，超时标识
 
         public gf_CheckSerializer()
         {
@@ -163,16 +164,27 @@ namespace soc_nds_csharp.Station_Operation
 
         private void btn_begin_Click(object sender, EventArgs e)
         {
-            Connect();
+            Thread thread = new Thread(new ThreadStart(DoWork));
+            thread.Start();
+
         }
 
         private void btn_begin_KeyDown(object sender, KeyEventArgs e)
         {
             if (Keys.KeyCode == Keys.Enter || Keys.KeyCode==Keys.Back)
             {
-                Connect();
+                Thread thread = new Thread(new ThreadStart(DoWork));
+                thread.Start();
+
             }
         }
+
+        public void DoWork()
+        {
+            MyInvoke mi = new MyInvoke(Connect);
+            this.BeginInvoke(mi);
+        }
+
 
         private void Connect()
         {
@@ -308,7 +320,7 @@ namespace soc_nds_csharp.Station_Operation
             btn_begin.Focus();
         }
 
-        Int32 timeCount = 60;
+        Int32 timeCount = 6;
         private void timer1_Tick(object sender, EventArgs e)
         {
             timeCount--;
@@ -510,8 +522,8 @@ namespace soc_nds_csharp.Station_Operation
             {
                 StrBarcode = "";
 
-                richtxt_connect.Text = "搜索序列化数据成功";
-                richtxt_Tips.Text += "搜索序列化数据成功\r\n";
+                richtxt_connect.Text = "搜索序列化数据成功!";
+                richtxt_Tips.Text += "搜索序列化数据成功!\r\n";
 
                 Byte[] DbChipInfoBuffer = new Byte[ChipInfo.Length / 2];
                 if (!HDIC_Func.CStringToByte(ChipInfo, ref DbChipInfoBuffer))
@@ -700,96 +712,96 @@ namespace soc_nds_csharp.Station_Operation
 
         #region 校验
         private Int32 Check(string txtInfo)
-            {
+        {
             #region 校验CAID
-                if (txtInfo.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            if (txtInfo.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            {
+                Int32 index = 0;
+                Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
+                index = Protocol.Command(SERCOM_TYPE.COM_CAID, SERCOM_TYPE.COM_CAID, null, ref cmdlineACK);//调用类 ，获取CAID信息
+                if (index != 0)
                 {
-                    Int32 index = 0;
-                    Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-                    index = Protocol.Command(SERCOM_TYPE.COM_CAID, SERCOM_TYPE.COM_CAID, null, ref cmdlineACK);//调用类 ，获取ChipID信息
-                    if (index != 0)
-                    {
-                        return index;
-                    }
-                    if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_CAID)
-                    {
-                        return -20;
-                    }
-
-
-                    Byte[] temp = new Byte[cmdlineACK.Length - 5];
-                    for (int i = 0; i < cmdlineACK.Length - 5; i++)
-                    {
-                        temp[i] = cmdlineACK[(Int32)Index.buffer + i];
-
-                    }
-                    CAID = "";
-                    CAID = System.Text.Encoding.ASCII.GetString(temp);//得到unicode字符串
-
-
-                    if (CAID != txtInfo.Trim()) //发送命令，获取机顶盒上CAID与标签CAID比较  目前没有做
-                    {
-                        return -30;
-                    }
-
-                    if (!FindCAID(txtInfo.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
-                    {
-                        return -31;
-                    }
-
-                    else
-                    {
-                        return 30;//校验成功
-                    }
+                    return index;
                 }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_CAID)
+                {
+                    return -20;
+                }
+
+
+                Byte[] temp = new Byte[cmdlineACK.Length - 5];
+                for (int i = 0; i < cmdlineACK.Length - 5; i++)
+                {
+                    temp[i] = cmdlineACK[(Int32)Index.buffer + i];
+
+                }
+                CAID = "";
+                CAID = System.Text.Encoding.ASCII.GetString(temp);//得到unicode字符串
+
+
+                if (CAID != txtInfo.Trim()) //获取机顶盒上CAID与标签CAID比较
+                {
+                    return -30;
+                }
+
+                if (!FindCAID(txtInfo.Trim()))        //数据库的CAID与扫描枪扫描的CAID比较
+                {
+                    return -31;
+                }
+
+                else
+                {
+                    return 30;//校验成功
+                }
+            }
 
             #endregion
 
             #region 校验STBID
-                    if (txtInfo.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            if (txtInfo.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txtInfo.Trim()))
+            {
+                //index = Protocol.Command(SERCOM_TYPE.COM_MFID, 0, 1, null, ref cmdlineACK);//调用类 ，获取STB中Flash信息
+
+                Int32 index = 0;
+                Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
+                index = Protocol.Command(SERCOM_TYPE.COM_STBIDSTB, SERCOM_TYPE.COM_STBIDSTB, null, ref cmdlineACK);//调用类 ，获取STBID信息
+                if (index != 0)
                 {
-                    //index = Protocol.Command(SERCOM_TYPE.COM_MFID, 0, 1, null, ref cmdlineACK);//调用类 ，获取STB中Flash信息
+                    return index;
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBIDSTB)
+                {
 
-                    Int32 index = 0;
-                    Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-                        index = Protocol.Command(SERCOM_TYPE.COM_STBIDSTB, SERCOM_TYPE.COM_STBIDSTB, null, ref cmdlineACK);//调用类 ，获取ChipID信息
-                    if (index != 0)
-                    {
-                        return index;
-                    }
-                    if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBIDSTB)
-                    {
+                    return -40;
+                }
 
-                        return -40;
-                    }
-
-                    Byte[] temp = new Byte[cmdlineACK.Length - 5];
-                    for (int i = 0; i < cmdlineACK.Length - 5; i++)
-                    {
-                        temp[i] = cmdlineACK[(Int32)Index.buffer + i];
-
-                    }
-                    if (txtInfo.Trim() != Encoding.ASCII.GetString(temp))//机顶盒与标签上比较
-                    {
-                        string a = Encoding.ASCII.GetString(temp);
-                        return -41;
-                    }
-
-                    if (!FindSTBID(txtInfo.Trim()))//数据库的STBID与标签上STBID比较
-                    {
-                        return -42;
-                    }
-
-                    else
-                    {
-                        return 40;
-                    }
+                Byte[] temp = new Byte[cmdlineACK.Length - 5];
+                for (int i = 0; i < cmdlineACK.Length - 5; i++)
+                {
+                    temp[i] = cmdlineACK[(Int32)Index.buffer + i];
 
                 }
+                if (txtInfo.Trim() != Encoding.ASCII.GetString(temp))//机顶盒与标签上比较
+                {
+                    string a = Encoding.ASCII.GetString(temp);
+                    return -41;
+                }
+
+                if (!FindSTBID(txtInfo.Trim()))//数据库的STBID与标签上STBID比较
+                {
+                    return -42;
+                }
+
+                else
+                {
+                    return 40;
+                }
+
+            }
             #endregion
 
             #region 校验SmartCardID
-                if (STBType == 0 && txtInfo.Trim().Length == 12)//智能卡号不为空，说明是村村通
+            if (STBType == 0 && txtInfo.Trim().Length == 12)//智能卡号不为空，说明是村村通
             {
                 if (!FindSmartCardID(txtInfo.Trim()))//数据库的STBID与扫描枪扫描的CAID比较
                 {
@@ -859,19 +871,19 @@ namespace soc_nds_csharp.Station_Operation
                 else if (index == -40)
                 {
                     richtxt_connect.Text = "从机顶盒获取STBID失败";
-                    richtxt_Tips.Text += "从机顶盒获取STBID失败\r\n";
+                    richtxt_Tips.Text += "从机顶盒获取STBID失败!\r\n";
                     HDIC_Message.ShowWarnDialog(null, "从机顶盒获取STBID失败!");
                 }
                 else if (index == -41)
                 {
-                    richtxt_connect.Text = "机顶盒中的STBID和扫描枪扫描的STBID不一致";
-                    richtxt_Tips.Text += "机顶盒中的STBID和扫描枪扫描的STBID不一致\r\n";
+                    richtxt_connect.Text = "机顶盒中的STBID和扫描枪扫描的STBID不一致!";
+                    richtxt_Tips.Text += "机顶盒中的STBID和扫描枪扫描的STBID不一致!\r\n";
                     HDIC_Message.ShowWarnDialog(null, "数据库的STBID与扫描枪扫描的不一致!");
                 }
                 else if (index == -42)
                 {
-                    richtxt_connect.Text = "数据库的STBID与扫描枪扫描的不一致";
-                    richtxt_Tips.Text += "数据库的STBID与扫描枪扫描的不一致\r\n";
+                    richtxt_connect.Text = "数据库的STBID与扫描枪扫描的不一致!";
+                    richtxt_Tips.Text += "数据库的STBID与扫描枪扫描的不一致!\r\n";
                     HDIC_Message.ShowWarnDialog(null, "数据库的STBID与扫描枪扫描的不一致!");
                 }
                 else if (index == 40) //【大于100的是成功的】
@@ -882,13 +894,13 @@ namespace soc_nds_csharp.Station_Operation
                 }
                 else if (index == -50)
                 {
-                    richtxt_connect.Text = "数据库的SmartCardID与扫描枪扫描的不一致";
-                    richtxt_Tips.Text += "数据库的SmartCardID与扫描枪扫描的不一致\r\n";
+                    richtxt_connect.Text = "数据库的SmartCardID与扫描枪扫描的不一致!";
+                    richtxt_Tips.Text += "数据库的SmartCardID与扫描枪扫描的不一致!\r\n";
                 }
                 else if (index == 50) //【大于100的是成功的】
                 {
                     richtxt_connect.Text = "智能卡号校验成功!";
-                    richtxt_Tips.Text += "智能卡号校验成功\r\n";
+                    richtxt_Tips.Text += "智能卡号校验成功!\r\n";
                     CheckSmartCardID = true;
                 }
 

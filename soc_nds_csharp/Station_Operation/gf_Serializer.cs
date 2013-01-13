@@ -183,7 +183,8 @@ namespace soc_nds_csharp.Station_Operation
 
             if (Keys.KeyCode == Keys.Enter || Keys.KeyCode==Keys.Back)//回车或者空格
             {
-                Connect();
+                Thread thread = new Thread(new ThreadStart(DoWork));
+                thread.Start();
             }
 
             // Release the Mutex.
@@ -195,11 +196,18 @@ namespace soc_nds_csharp.Station_Operation
             // Wait until it is safe to enter.
             mutex.WaitOne();
 
-                Connect();
+            Thread thread = new Thread(new ThreadStart(DoWork));
+            thread.Start();
           
             // Release the Mutex.
             mutex.ReleaseMutex();
 
+        }
+
+        public void DoWork()
+        {
+            MyInvoke mi = new MyInvoke(Connect);
+            this.BeginInvoke(mi);
         }
 
         private void Connect()
@@ -548,7 +556,7 @@ namespace soc_nds_csharp.Station_Operation
                 //制造商ID / 机顶盒类型号 / 生产年号 / 生产周号 / 生产流水号
                 txt_STBID.Text = String.Format("{0:d03}{1:d02}{2:d02}{3:d02}{4:d07}", MFID, STBType, (nowdate.Year % 100), weeknums, ProductIndex);
 
-                richtxt_Connect.Text = "从机顶盒获取信息成功";
+                richtxt_Connect.Text = "从机顶盒获取信息成功!";
                 richtxt_info.Text += "从机顶盒获取信息成功!\r\n";
 
                 ///////////////////////////////////////////发送STBID到下位机
@@ -578,7 +586,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -24;//搜索数据库中序列化数据（chipinfo）失败
             }
-            richtxt_Connect.Text = "搜索序列化数据成功";
+            richtxt_Connect.Text = "搜索序列化数据成功!";
             richtxt_info.Text += "搜索序列化数据成功!\r\n";
 
             Byte[] dataBuffer = new Byte[ChipInfo.Length / 2];
@@ -599,7 +607,7 @@ namespace soc_nds_csharp.Station_Operation
                 return -70;
             }
 
-            richtxt_Connect.Text = "发送序列化数据成功";
+            richtxt_Connect.Text = "发送序列化数据成功!";
             richtxt_info.Text += "发送序列化数据成功!\r\n";
 
             ///////////////////////////////////////////////flash写保护 目前没有写
