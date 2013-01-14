@@ -320,7 +320,7 @@ namespace soc_nds_csharp.Station_Operation
             btn_begin.Focus();
         }
 
-        Int32 timeCount = 6;
+        Int32 timeCount = 60;
         private void timer1_Tick(object sender, EventArgs e)
         {
             timeCount--;
