@@ -32,13 +32,16 @@ namespace soc_nds_csharp.Station_Operation
 
         long STBOpIndex;//当前流水号（工位一选择工位线时得到的）
         long ProductIndex;//根据当前流水号拼凑生产流水号
-
+        Int32 ReceiveLength = 0;//接收串口数据包中数据的长度
 
         UInt32 ChipID = 0;
         Int32 STBType = 0;//机顶盒类型 目前下位机暂定0是村村通
         Int32 MFID, MDID, HDID;
 
+        System.Threading.Semaphore mSemaphore;//用于为扫描枪设置超时时间
+
         gf_SelectPipeLine mObj;//目的和主窗体练习，打开则主窗体不可点击，关闭主窗体恢复
+
         public gf_Serializer(gf_SelectPipeLine obj)
         {
             InitializeComponent();
@@ -105,6 +108,8 @@ namespace soc_nds_csharp.Station_Operation
 
             initControl();
             btn_begin.Enabled = true;
+
+            mSemaphore = new System.Threading.Semaphore(0, 1);
 
             timer1.Interval = 1000;
             timer1.Enabled = false;
@@ -315,11 +320,17 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_info.Text += "向机顶盒发送序列化数据失败!\r\n";
                 HDIC_Message.ShowWarnDialog(this, "向机顶盒发送序列化数据失败");
             }
-            else if (index == -80)
+            else if (index == -71)
             {
 
                 richtxt_Connect.Text = "向机顶盒发送Flash写保护失败";
                 richtxt_info.Text += "向机顶盒发送Flash写保护失败\r\n";
+            }
+            else if (index == -80)
+            {
+
+                richtxt_Connect.Text = "超时! 没有在规定的时间内扫描智能卡号";
+                richtxt_info.Text += "超时! 没有在规定的时间内扫描智能卡号\r\n";
             }
             else if (index == -90)
             {
@@ -360,7 +371,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Connect.Text = "接收机顶盒数据超时!";
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
                 btn_begin.Enabled = true;
-                timeCount = 6;
+                timeCount = 60;
                 btn_begin.Focus();
             }
             else
@@ -400,7 +411,7 @@ namespace soc_nds_csharp.Station_Operation
 
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-            index = Protocol.Command(SERCOM_TYPE.COM_NULL, SERCOM_TYPE.COM_NULL, null, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 if (index == -120)
@@ -420,7 +431,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -10;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, SERCOM_TYPE.COM_HANDINFO, null, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 return index;
@@ -429,7 +440,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -10;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_OK, SERCOM_TYPE.COM_START, null, ref cmdlineACK);//调用类 ，尝试连接
+            index = Protocol.Command(SERCOM_TYPE.COM_OK, null, ReceiveLength, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
                 return index;
@@ -440,7 +451,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             richtxt_info.Text += "连接成功，请勿断电!\r\n";
             richtxt_Connect.Text = "连接成功，请勿断电!";
-            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, SERCOM_TYPE.COM_STBTYPE, null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null,ReceiveLength+1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -452,7 +463,7 @@ namespace soc_nds_csharp.Station_Operation
             /////////////////从下位机获取机顶盒类型
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
             //////////////////从下位机获取ChipID
-            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, SERCOM_TYPE.COM_CHIPID, null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null,ReceiveLength+4, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -506,7 +517,7 @@ namespace soc_nds_csharp.Station_Operation
                 txt_CAID.Text = CAIDBufferStr.Trim();
                 #endregion
                 ///////////////////////////////////////////从下位机获取制造商ID
-                index = Protocol.Command(SERCOM_TYPE.COM_MFID, SERCOM_TYPE.COM_MFID, null, ref cmdlineACK);
+                index = Protocol.Command(SERCOM_TYPE.COM_MFID, null,ReceiveLength+1,ref cmdlineACK);
                 if (index != 0)
                 {
                     return index;
@@ -519,7 +530,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_ManufacturerID.Text = String.Format("{0:X02}", MFID).ToString();
 
                 //////////////////////////////////////////从下位机获取机顶盒型号
-                index = Protocol.Command(SERCOM_TYPE.COM_MDID, SERCOM_TYPE.COM_MDID, null, ref cmdlineACK);
+                index = Protocol.Command(SERCOM_TYPE.COM_MDID, null,ReceiveLength+1, ref cmdlineACK);
                 if (index != 0)
                 {
                     return index;
@@ -531,7 +542,7 @@ namespace soc_nds_csharp.Station_Operation
                 MDID = (Int32)cmdlineACK[((Int32)Index.buffer)];
                 richtxt_ModelID.Text = String.Format("{0:X02}", MDID).ToString();
                 //////////////////////////////////////////从下位机获取硬件ID
-                index = Protocol.Command(SERCOM_TYPE.COM_HWID, SERCOM_TYPE.COM_HWID, null, ref cmdlineACK);
+                index = Protocol.Command(SERCOM_TYPE.COM_HWID,null,ReceiveLength+1, ref cmdlineACK);
                 if (index != 0)
                 {
                     return index;
@@ -561,14 +572,14 @@ namespace soc_nds_csharp.Station_Operation
 
                 ///////////////////////////////////////////发送STBID到下位机
                 Byte[] STBIDByte = Encoding.ASCII.GetBytes(txt_STBID.Text);
-                index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC, SERCOM_TYPE.COM_STBIDPCOK, STBIDByte, ref cmdlineACK);
+                index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC,STBIDByte,ReceiveLength, ref cmdlineACK);
                 if (index != 0)
                 {
                     return index;
                 }
                 if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBIDPCOK)//如果下位机没有回应，上位机重发一次
                 {
-                    index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC, SERCOM_TYPE.COM_STBIDPCOK, STBIDByte, ref cmdlineACK);
+                    index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC,STBIDByte,ReceiveLength, ref cmdlineACK);
                     if (index != 0)
                     {
                         return index;
@@ -597,7 +608,7 @@ namespace soc_nds_csharp.Station_Operation
 
             int length = (ChipInfo.Length) / 2;
             ////////////////////////////////////////////向下位机发送写序列化数据
-            index = Protocol.Command(SERCOM_TYPE.COM_FLASHWRITELICENSE, SERCOM_TYPE.COM_FLASHWRITELICENSEOK, dataBuffer, ref cmdlineACK);//调用类 ，获取所有的信息
+            index = Protocol.Command(SERCOM_TYPE.COM_FLASHWRITELICENSE, dataBuffer,ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
             if (index != 0)
             {
                 return index;//向机顶盒发送序列化数据失败
@@ -614,7 +625,7 @@ namespace soc_nds_csharp.Station_Operation
             #region flash写保护 目前没有写
             if (false) 
             {
-                return -80;
+                return -71;
             }
             //richtxt_Connect.Text = "Flash写保护成功";
             //richtxt_info.Text += "Flash写保护成功!\r\n";
@@ -625,6 +636,10 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Connect.Text = "请扫描条形码的智能卡号……";
                 richtxt_info.Text += "等待扫描仪扫描智能卡号... ...\r\n";
                 BarCode.Start();  //开始监听扫描枪
+                if (!mSemaphore.WaitOne(60000))//没有在规定的时候扫描智能卡号，暂定1分钟
+                {
+                    return -80;
+                }
             }
 
             else if (STBType == 1)//表示是户户通
@@ -821,6 +836,7 @@ namespace soc_nds_csharp.Station_Operation
             if (txt_SmartCardID.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()))
             {
                 BarCode.Stop();
+                mSemaphore.Release();
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
                     HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscX, tscY, tscEncodeType, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBar, 1);

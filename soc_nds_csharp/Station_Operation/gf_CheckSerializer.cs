@@ -29,7 +29,7 @@ namespace soc_nds_csharp.Station_Operation
         Int32 FlashStatus = 0;//Flash写保护状态
         Int32 SECURITYSTATUS = 0;//高级安全当前状态
         String CAID ;
-        String STBID;
+        Int32 ReceiveLength = 0;//接收串口数据包中数据的长度
 
         public gf_CheckSerializer()
         {
@@ -333,7 +333,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Tips.Text += "接收机顶盒数据超时!\r\n";
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
                 btn_begin.Enabled = true;
-                timeCount = 6;
+                timeCount = 60;
                 btn_begin.Focus();
             }
             else
@@ -360,7 +360,7 @@ namespace soc_nds_csharp.Station_Operation
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
            
-            index = Protocol.Command(SERCOM_TYPE.COM_NULL, SERCOM_TYPE.COM_NULL, null, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_NULL, null,ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 if (index == -120)
@@ -380,7 +380,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, SERCOM_TYPE.COM_HANDINFO, null, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, null,ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 return index;
@@ -389,7 +389,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_OK, SERCOM_TYPE.COM_START,  null, ref cmdlineACK);//调用类 ，尝试连接
+            index = Protocol.Command(SERCOM_TYPE.COM_OK,  null,ReceiveLength, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
                 return index;
@@ -404,7 +404,7 @@ namespace soc_nds_csharp.Station_Operation
 
             ////////////////////////////////从下位机获取机顶盒类型
 
-            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, SERCOM_TYPE.COM_STBTYPE,  null, ref cmdlineACK);//调用类 ，尝试连接
+            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null,ReceiveLength+1, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
                 return index;
@@ -416,7 +416,7 @@ namespace soc_nds_csharp.Station_Operation
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
 
             ///////////////////从下位机获取ChipID信息
-            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, SERCOM_TYPE.COM_CHIPID, null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null,ReceiveLength+4, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -448,7 +448,7 @@ namespace soc_nds_csharp.Station_Operation
 
             /////////////////////////从下位机获取Flash当前状态（0为未写保护/1为写保护）
             #region 校验Flash写保护状态
-            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, SERCOM_TYPE.COM_FLASHSTATUS, null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null,ReceiveLength+1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -468,7 +468,7 @@ namespace soc_nds_csharp.Station_Operation
 
             ////////////////////////从下位机获取高级安全状态（0为未打开/1为已打开）
             #region 校验高级安全状态 
-            index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, SERCOM_TYPE.COM_SECURITYSTATUS, null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, null,ReceiveLength+1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -487,7 +487,7 @@ namespace soc_nds_csharp.Station_Operation
             #endregion
 
             ///////////////////从机顶盒获取序列化数据
-            index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, SERCOM_TYPE.COM_GETLICENSEOK,  null, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE,  null,ReceiveLength+88, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -718,7 +718,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 Int32 index = 0;
                 Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-                index = Protocol.Command(SERCOM_TYPE.COM_CAID, SERCOM_TYPE.COM_CAID, null, ref cmdlineACK);//调用类 ，获取CAID信息
+                index = Protocol.Command(SERCOM_TYPE.COM_CAID,null,ReceiveLength+11,ref cmdlineACK);//调用类 ，获取CAID信息
                 if (index != 0)
                 {
                     return index;
@@ -764,7 +764,7 @@ namespace soc_nds_csharp.Station_Operation
 
                 Int32 index = 0;
                 Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-                index = Protocol.Command(SERCOM_TYPE.COM_STBIDSTB, SERCOM_TYPE.COM_STBIDSTB, null, ref cmdlineACK);//调用类 ，获取STBID信息
+                index = Protocol.Command(SERCOM_TYPE.COM_STBIDSTB, null,ReceiveLength+16, ref cmdlineACK);//调用类 ，获取STBID信息
                 if (index != 0)
                 {
                     return index;

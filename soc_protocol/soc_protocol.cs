@@ -63,25 +63,22 @@ namespace soc_protocol
     public class UartProtocol
     {
         Byte  FRAMESTARTCODE=0x48;
-        Int32 packetLength = 4096;
+        Int32 ReceiveLength = 0;//用于串口接收个数
 
         SerialPort mSpSlot;
 
-        System.Threading.Semaphore mSemaphore;
+        System.Threading.Semaphore mSemaphore;//用于异步处理串口接收和处理数据模块
 
         Int32 CONTAINER_LENGTH = 5;
 
-        static Int32 resendCount=3;//间歇重发次数
 
         public  UartProtocol(SerialPort SpSlot)
         {
             mSpSlot = SpSlot;
 
             mSemaphore = new System.Threading.Semaphore(0, 1);
-
            
-            mSpSlot.ReceivedBytesThreshold = 5;
-
+            mSpSlot.ReceivedBytesThreshold = 1;
 
         }
 
@@ -93,19 +90,19 @@ namespace soc_protocol
         /// <param name="dataAck">发送的数据</param>
         /// <param name="dataReq">返回的数据</param>
         /// <returns></returns>
-        public Int32 Command(SERCOM_TYPE Reqcmd,SERCOM_TYPE Ackcmd, Byte[] dataReq, ref Byte[] cmdlineAck)
+        public Int32 Command(SERCOM_TYPE Reqcmd,Byte[] dataReq,Int32 MReceiveLength,ref Byte[] cmdlineAck)
         {
             mReadBuffer.Clear();
             Int32 errCode = 0;
             Int32 ReqCount = 0;
-
+            ReceiveLength = MReceiveLength;
             if (ReceiveBytes != null)
             {
                 Array.Clear(ReceiveBytes, 0, ReceiveBytes.Length);
             }
             mSpSlot.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
 
-            if (Ackcmd != SERCOM_TYPE.COM_NULL)
+            if (Reqcmd != SERCOM_TYPE.COM_NULL)
             {
                 // flush serial port
                 mSpSlot.DiscardInBuffer();
@@ -240,8 +237,8 @@ namespace soc_protocol
                 mReadBuffer.AddRange(buf);
 
                 #region 打印1
-                string log = System.Text.Encoding.ASCII.GetString(buf, 0, buf.Length);
-                HDIC_Func.LogRecord(log);
+                //string log = System.Text.Encoding.ASCII.GetString(buf, 0, buf.Length);
+                //HDIC_Func.LogRecord(log);
                 #endregion
 
                 #region 打印2
@@ -260,7 +257,8 @@ namespace soc_protocol
                         return;
                     }
                     int len = mReadBuffer[3];
-                    if (len == 0 || len == 1 || len == 4 || len == 88|| len==11 || len==12|| len==16)
+                    //if (len == 0 || len == 1 || len == 4 || len == 88|| len==11 || len==12|| len==16)
+                    if(len==ReceiveLength)
                     {
                         if (len != mReadBuffer.Count - 5)//如果数据长度 ！= 数据长度位，则说明不是命令包
                         {
