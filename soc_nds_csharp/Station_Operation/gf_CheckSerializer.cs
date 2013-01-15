@@ -31,6 +31,8 @@ namespace soc_nds_csharp.Station_Operation
         String CAID ;
         Int32 ReceiveLength = 0;//接收串口数据包中数据的长度
 
+        System.Threading.Semaphore mSemaphore;//用于为扫描枪设置超时时间
+
         public gf_CheckSerializer()
         {
             InitializeComponent();
@@ -53,6 +55,8 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_CheckSerializer_Load(object sender, EventArgs e)
         {
+
+            mSemaphore = new System.Threading.Semaphore(0, 1);
 
             //打开串口
             //mSpSlot = new Uart();
@@ -349,18 +353,18 @@ namespace soc_nds_csharp.Station_Operation
         }
 
         private Int32 CommandSerial()
-        { 
+        {
             btn_begin.Enabled = false;
 
             initControl();
 
             // richtxt_Connect
             richtxt_connect.Text = "正在建立连接,请稍后... ...";
-          
+
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-           
-            index = Protocol.Command(SERCOM_TYPE.COM_NULL, null,ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
+
+            index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 if (index == -120)
@@ -380,7 +384,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, null,ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
+            index = Protocol.Command(SERCOM_TYPE.COM_CONNECT, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
                 return index;
@@ -389,7 +393,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            index = Protocol.Command(SERCOM_TYPE.COM_OK,  null,ReceiveLength, ref cmdlineACK);//调用类 ，尝试连接
+            index = Protocol.Command(SERCOM_TYPE.COM_OK, null, ReceiveLength, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
                 return index;
@@ -404,7 +408,7 @@ namespace soc_nds_csharp.Station_Operation
 
             ////////////////////////////////从下位机获取机顶盒类型
 
-            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null,ReceiveLength+1, ref cmdlineACK);//调用类 ，尝试连接
+            index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null, ReceiveLength + 1, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
                 return index;
@@ -416,7 +420,7 @@ namespace soc_nds_csharp.Station_Operation
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
 
             ///////////////////从下位机获取ChipID信息
-            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null,ReceiveLength+4, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null, ReceiveLength + 4, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -448,7 +452,7 @@ namespace soc_nds_csharp.Station_Operation
 
             /////////////////////////从下位机获取Flash当前状态（0为未写保护/1为写保护）
             #region 校验Flash写保护状态
-            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null,ReceiveLength+1, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null, ReceiveLength + 1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -467,8 +471,8 @@ namespace soc_nds_csharp.Station_Operation
             #endregion
 
             ////////////////////////从下位机获取高级安全状态（0为未打开/1为已打开）
-            #region 校验高级安全状态 
-            index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, null,ReceiveLength+1, ref cmdlineACK);
+            #region 校验高级安全状态
+            index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, null, ReceiveLength + 1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -487,20 +491,20 @@ namespace soc_nds_csharp.Station_Operation
             #endregion
 
             ///////////////////从机顶盒获取序列化数据
-            index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE,  null,ReceiveLength+88, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, null, ReceiveLength + 88, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
             }
             #endregion
 
-            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_GETLICENSEOK)//下面是将从STB获取到的“序列化数据”赋值到文本框中
+            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_GETLICENSEOK)
             {
                 return -40;
             }
             #region 校验序列化数据
 
-            string StrBarcode = "";  //byte[] bb = new byte[cmdlineACK.Length - 5];
+            string StrBarcode = "";
             //Byte[] bb = new Byte[88];
             for (int i = 0; i < cmdlineACK.Length - 5; i++)
             {
@@ -512,46 +516,53 @@ namespace soc_nds_csharp.Station_Operation
                 //bb[i]= cmdlineACK[(Int32)Index.buffer + i];
             }
             //string aa = HDIC_Func.byteToHexStr(bb);//测试用；字节数组转换字符串
-            richtxt_LincenseBoard.Text = StrBarcode; 
+            richtxt_LincenseBoard.Text = StrBarcode;
             string ChipInfo = SearchSerializeData();
             if (ChipInfo.Trim() == "0")//搜索ChipInfo失败
             {
                 return -41;
             }
-            else
+
+            StrBarcode = "";
+
+            richtxt_connect.Text = "搜索序列化数据成功!";
+            richtxt_Tips.Text += "搜索序列化数据成功!\r\n";
+
+            Byte[] DbChipInfoBuffer = new Byte[ChipInfo.Length / 2];
+            if (!HDIC_Func.CStringToByte(ChipInfo, ref DbChipInfoBuffer))
             {
-                StrBarcode = "";
-
-                richtxt_connect.Text = "搜索序列化数据成功!";
-                richtxt_Tips.Text += "搜索序列化数据成功!\r\n";
-
-                Byte[] DbChipInfoBuffer = new Byte[ChipInfo.Length / 2];
-                if (!HDIC_Func.CStringToByte(ChipInfo, ref DbChipInfoBuffer))
-                {
-                    return -42;
-                }
-                for (int i = 0; i < DbChipInfoBuffer.Length; i++)
-                {
-                    if (i != 0 && i % 20 == 0)//用于分页
-                    {
-                        StrBarcode += "\r\n";
-                    }
-                    StrBarcode += String.Format("{0:X02}", DbChipInfoBuffer[i]).ToString().Trim();//从数据库获取ChipInfo
-                }
-                richtxt_LincenseAdo.Text = StrBarcode;
-
-                if (richtxt_LincenseAdo.Text.Trim() != richtxt_LincenseBoard.Text.Trim())//校验序列化数据
-                {
-                    return -43;
-                }
-                richtxt_Tips.Text += "序列化校验成功!\r\n";
-                richtxt_connect.Text = "序列化校验成功! 请扫描机顶盒标签上的条形码!";
-                richtxt_Tips.Text += "等待扫描仪扫描标签ID... ...\r\n";
+                return -42;
             }
+            for (int i = 0; i < DbChipInfoBuffer.Length; i++)
+            {
+                if (i != 0 && i % 20 == 0)//用于分页
+                {
+                    StrBarcode += "\r\n";
+                }
+                StrBarcode += String.Format("{0:X02}", DbChipInfoBuffer[i]).ToString().Trim();//从数据库获取ChipInfo
+            }
+            richtxt_LincenseAdo.Text = StrBarcode;
+
+            if (richtxt_LincenseAdo.Text.Trim() != richtxt_LincenseBoard.Text.Trim())//校验序列化数据
+            {
+                return -43;
+            }
+            richtxt_Tips.Text += "序列化校验成功!\r\n";
+            richtxt_connect.Text = "序列化校验成功! 请扫描机顶盒标签上的条形码!";
+            richtxt_Tips.Text += "等待扫描仪扫描标签ID... ...\r\n";
             #endregion
 
             BarCode.Start();  //开始监听扫描枪
-          
+
+            if (!mSemaphore.WaitOne(60000))//设定1分钟为超时 目前没有写成函数（原因是与别的主调函数冲突了）
+            {
+                richtxt_connect.Text = "超时! 没有在规定的时间内扫描标签序列号";
+                richtxt_Tips.Text += "超时! 没有在规定的时间内扫描标签序列号\r\n";
+                btn_begin.Enabled = true;
+                btn_begin.Focus();
+                BarCode.Stop();
+            }
+         
             return 0;
         }
 
@@ -915,6 +926,7 @@ namespace soc_nds_csharp.Station_Operation
                             {
                                 richtxt_connect.Text = "校验成功,请进行下一台!";
                                 richtxt_Tips.Text += "校验成功,请进行下一台!\r\n";
+                                mSemaphore.Release();
                             }
                         }
                         catch (System.Exception ex)
@@ -943,7 +955,9 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_CAID.Text.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txt_CAID.Text.Trim()))
             {
+                mSemaphore.Release();
                 printInfo(txt_CAID.Text.Trim());
+                SemaphoreWaitOne("加密序列化");
             }
         }
         /// <summary>
@@ -955,7 +969,9 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_STBID.Text.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txt_STBID.Text.Trim()))
             {
+                mSemaphore.Release();
                 printInfo(txt_STBID.Text.Trim());
+                SemaphoreWaitOne("机顶盒序列号");
             }
         }
         /// <summary>
@@ -967,10 +983,26 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_SmartCardID.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()))
             {
+                mSemaphore.Release();
                 printInfo(txt_SmartCardID.Text.Trim());
+                SemaphoreWaitOne("智能卡号");
             }
         }
 
+        /// <summary>
+        /// 用于设置扫描枪超时时间
+        /// </summary>
+        private void SemaphoreWaitOne(string info)
+        {
+            if (!mSemaphore.WaitOne(60000))//设定1分钟为超时
+            {
+                richtxt_connect.Text = "超时! 没有在规定的时间内扫描"+info;
+                richtxt_Tips.Text += "超时! 没有在规定的时间内扫描"+info+"\r\n";
+                btn_begin.Enabled = true;
+                btn_begin.Focus();
+                BarCode.Stop();
+            }
+        }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
