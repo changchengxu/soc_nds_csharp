@@ -80,6 +80,7 @@ namespace soc_nds_csharp
             //mReadBuffer1.AddRange(bb);
             //mReadBuffer1.RemoveRange(0, p);
 
+            this.Text = "直播星生产线数据库管理系统[" + GetAssemblyVersion()+"]";
             this.BackColor = HDIC_Command.setColor();
             taskPane1.CollapseAll();
             try
@@ -124,10 +125,26 @@ namespace soc_nds_csharp
             catch 
             {
             }
-           
 
         }
+        /// <summary>
+        /// 获取当前版本号
+        /// </summary>
+        /// <returns></returns>
+        private string GetAssemblyVersion()
+        {
+            object[] attributes = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(System.Reflection.AssemblyFileVersionAttribute), false);
+            if (attributes.Length == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return ((System.Reflection.AssemblyFileVersionAttribute)attributes[0]).Version;
+            } 
 
+
+        }
         private void AddExpando()
         {
             dt.DefaultView.RowFilter = "isModel =1";
@@ -309,7 +326,7 @@ namespace soc_nds_csharp
             Application.Exit();
         }
 
-#region Reset
+ #region Reset
         private void tsm_reset_Click(object sender, EventArgs e)
         {
             if (HDIC_Message.ShowQuestionDialog(this, "确定要重启程序吗？") == DialogResult.OK)
@@ -322,6 +339,12 @@ namespace soc_nds_csharp
         private void gf_main_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = (HDIC_Message.ShowQuestionDialog(this, "是否确定退出系统？") != DialogResult.OK);
+        }
+
+        private void 版本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 aboutbox = new AboutBox1();
+            aboutbox.ShowDialog();
         }
 
 

@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dsafToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_reset = new System.Windows.Forms.ToolStripMenuItem();
+            this.版本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.文件FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.锁屏LToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,22 +63,30 @@
             // 
             this.dsafToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsm_reset,
+            this.版本ToolStripMenuItem,
             this.tsm_exit});
             this.dsafToolStripMenuItem.Name = "dsafToolStripMenuItem";
             this.dsafToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.dsafToolStripMenuItem.Text = "文件";
+            this.dsafToolStripMenuItem.Text = "程序";
             // 
             // tsm_reset
             // 
             this.tsm_reset.Name = "tsm_reset";
-            this.tsm_reset.Size = new System.Drawing.Size(98, 22);
+            this.tsm_reset.Size = new System.Drawing.Size(152, 22);
             this.tsm_reset.Text = "重启";
             this.tsm_reset.Click += new System.EventHandler(this.tsm_reset_Click);
+            // 
+            // 版本ToolStripMenuItem
+            // 
+            this.版本ToolStripMenuItem.Name = "版本ToolStripMenuItem";
+            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.版本ToolStripMenuItem.Text = "版本";
+            this.版本ToolStripMenuItem.Click += new System.EventHandler(this.版本ToolStripMenuItem_Click);
             // 
             // tsm_exit
             // 
             this.tsm_exit.Name = "tsm_exit";
-            this.tsm_exit.Size = new System.Drawing.Size(98, 22);
+            this.tsm_exit.Size = new System.Drawing.Size(152, 22);
             this.tsm_exit.Text = "退出";
             this.tsm_exit.Click += new System.EventHandler(this.tsm_exit_Click);
             // 
@@ -176,7 +185,6 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "gf_main";
-            this.Text = "直播星生产线数据库管理系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.gf_main_FormClosing);
             this.Load += new System.EventHandler(this.gf_main_Load);
@@ -206,6 +214,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripMenuItem tsm_reset;
+        private System.Windows.Forms.ToolStripMenuItem 版本ToolStripMenuItem;
     }
 }
 

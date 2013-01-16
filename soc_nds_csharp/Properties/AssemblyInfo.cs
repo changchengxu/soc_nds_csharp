@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("soc_nds_csharp")]
-[assembly: AssemblyDescription("长城开发")]
+[assembly: AssemblyTitle("版本")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HDIC")]
-[assembly: AssemblyProduct("soc_nds_csharp")]
-[assembly: AssemblyCopyright("Copyright © WwW.DEEPbbS.Org 2012")]
+[assembly: AssemblyProduct("直播星生产工具")]
+[assembly: AssemblyCopyright("本系统属上海高清所有")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

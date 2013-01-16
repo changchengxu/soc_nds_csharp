@@ -339,7 +339,7 @@ namespace soc_nds_csharp.DB_Manage
         #region 文本框获取值 以及 清空提示信息
         private void txt_STBID_MouseDown(object sender, MouseEventArgs e)
         {
-            if (txt_STBID.Text.Trim().Length != 16)
+            if (!HDIC_Func.CheckObjectIsInteger(txt_STBID.Text.Trim()) || txt_STBID.Text.Trim().Length != 16)
             {
                 txt_STBID.Text = "";
             }
@@ -354,7 +354,7 @@ namespace soc_nds_csharp.DB_Manage
         }
         private void txt_CAID_MouseDown(object sender, MouseEventArgs e)
         {
-            if (txt_CAID.Text.Trim().Length != 11)
+            if (!HDIC_Func.CheckObjectIsInteger(txt_CAID.Text.Trim()) ||txt_CAID.Text.Trim().Length != 11)
             {
                 txt_CAID.Text = "";
             }
@@ -370,7 +370,7 @@ namespace soc_nds_csharp.DB_Manage
 
         private void txt_SmartCardID_MouseDown(object sender, MouseEventArgs e)
         {
-            if (txt_SmartCardID.Text.Trim().Length != 12)
+            if (!HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()) || txt_SmartCardID.Text.Trim().Length != 12)
             {
                 txt_SmartCardID.Text = "";
             }
@@ -387,13 +387,19 @@ namespace soc_nds_csharp.DB_Manage
         {
             try
             {
-                if (txt_STBID.Text.Trim().Length == 16)
+                //if (txt_STBID.Text.Trim().Length == 16)
+                if (txt_STBID.Text.Trim().Length > 0)
                 {
                     DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where STBID='" + txt_STBID.Text.Trim() + "'");
                     if (dt.Rows.Count > 0)
                     {
                         txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
                         txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    }
+                    else
+                    {
+                        txt_CAID.Text = "CAID是11位数字";
+                        txt_SmartCardID.Text = "智能卡号是12位数字";
                     }
                 }
                 else
@@ -415,13 +421,19 @@ namespace soc_nds_csharp.DB_Manage
         {
             try
             {
-                if (txt_CAID.Text.Trim().Length == 11)
+                //if (txt_CAID.Text.Trim().Length == 11)
+                if (txt_CAID.Text.Trim().Length > 0)
                 {
                     DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where CAID='" + txt_CAID.Text.Trim() + "'");
                     if (dt.Rows.Count > 0)
                     {
                         txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
                         txt_SmartCardID.Text = dt.Rows[0]["SmartCardID"].ToString().Trim();
+                    }
+                    else
+                    {
+                        txt_STBID.Text = "STBID是16位数字";
+                        txt_SmartCardID.Text = "智能卡号是12位数字";
                     }
                 }
                 else
@@ -443,13 +455,19 @@ namespace soc_nds_csharp.DB_Manage
         {
             try
             {
-                if (txt_SmartCardID.Text.Trim().Length == 12)
+                //if (txt_SmartCardID.Text.Trim().Length == 12)
+                if (txt_SmartCardID.Text.Trim().Length >0)
                 {
                     DataTable dt = HDIC_DB.GetList("select STBID,CAID,SmartCardID from STBData where SmartCardID='" + txt_SmartCardID.Text.Trim() + "'");
                     if (dt.Rows.Count > 0)
                     {
                         txt_STBID.Text = dt.Rows[0]["STBID"].ToString().Trim();
                         txt_CAID.Text = dt.Rows[0]["CAID"].ToString().Trim();
+                    }
+                    else
+                    {
+                        txt_STBID.Text = "STBID是16位数字";
+                        txt_CAID.Text = "CAID是11位数字";
                     }
                 }
                 else

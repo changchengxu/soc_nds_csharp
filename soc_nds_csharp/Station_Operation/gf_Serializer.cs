@@ -316,15 +316,15 @@ namespace soc_nds_csharp.Station_Operation
             }
             else if (index == -70)
             {
-                richtxt_Connect.Text = "向机顶盒发送序列化数据失败!";
-                richtxt_info.Text += "向机顶盒发送序列化数据失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒发送序列化数据失败");
+                richtxt_Connect.Text = "写序列化数据失败!";
+                richtxt_info.Text += "写序列化数据失败!\r\n";
+                HDIC_Message.ShowWarnDialog(this, "写序列化数据失败");
             }
             else if (index == -71)
             {
 
-                richtxt_Connect.Text = "向机顶盒发送Flash写保护失败";
-                richtxt_info.Text += "向机顶盒发送Flash写保护失败\r\n";
+                richtxt_Connect.Text = "Flash写保护失败";
+                richtxt_info.Text += "Flash写保护失败\r\n";
             }
             else if (index == -80)
             {

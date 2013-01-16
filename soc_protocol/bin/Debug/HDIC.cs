@@ -798,12 +798,15 @@ namespace HDICSoft.Func
                 TSCLIB_DLL.barcode(X, Y, EncodeType, "100", PrintCode, rotate, bar, "2", content1);
                 //Drawing printer font,打印STBID的码文
                 TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STBID:" + content1);
-
+                //打印分隔符
+                TSCLIB_DLL.printerfont(X, ((Convert.ToInt32(X) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
+               
                 //打印CA ID
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content2);
                 //Drawing printer font,打印CAID的码文
                 TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CAID:" + content2);
-
+                //打印分隔符
+                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)) + (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval)))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
                 if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
                 {
                     //打印SmartCardID
