@@ -797,22 +797,23 @@ namespace HDICSoft.Func
                 //打印STB ID
                 TSCLIB_DLL.barcode(X, Y, EncodeType, "100", PrintCode, rotate, bar, "2", content1);
                 //Drawing printer font,打印STBID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STBID:" + content1);
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STB ID:" + content1);
                 //打印分隔符
-                TSCLIB_DLL.printerfont(X, ((Convert.ToInt32(X) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
+                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
                
                 //打印CA ID
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content2);
                 //Drawing printer font,打印CAID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CAID:" + content2);
-                //打印分隔符
-                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)) + (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval)))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CA ID:" + content2);
                 if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
                 {
+                    //打印分隔符
+                    TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
+
                     //打印SmartCardID
                     TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content3);
                     //Drawing printer font,打印SmartCardID的码文
-                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SmartCardID:" + content3); 
+                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SC ID:" + content3); 
                 }
 
                 TSCLIB_DLL.printlabel("1", "1");//开始打印

@@ -750,13 +750,14 @@ namespace HDICSoft.Func
         }
 
         /// <summary>
-        /// 
+        /// TSC 344打印机
         /// </summary>
         /// <param name="OutPutPort">电脑端的输出口</param>
         /// <param name="width">卷标宽度</param>
         /// <param name="height">卷标高度</param>
         /// <param name="printSpeed">打印速度</param>
         /// <param name="density">打印浓度</param>
+       
         /// <param name="X">条形码X方向起始点</param>
         /// <param name="Y">条形码Y方向起始点</param>
         /// <param name="EncodeType">编码类型</param>
@@ -792,27 +793,28 @@ namespace HDICSoft.Func
             #region 2
 
                 TSCLIB_DLL.openport(OutPutPort);
-                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "2", "0");                           //Setup the media size and sensor type info
+                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "2", "0");  //Setup the media size and sensor type info
                 TSCLIB_DLL.clearbuffer();
                 //打印STB ID
                 TSCLIB_DLL.barcode(X, Y, EncodeType, "100", PrintCode, rotate, bar, "2", content1);
                 //Drawing printer font,打印STBID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STBID:" + content1);
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STB ID:" + content1);
                 //打印分隔符
-                TSCLIB_DLL.printerfont(X, ((Convert.ToInt32(X) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
+                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
                
                 //打印CA ID
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content2);
                 //Drawing printer font,打印CAID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CAID:" + content2);
-                //打印分隔符
-                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)) + (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval)))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-");
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CA ID:" + content2);
                 if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
                 {
+                    //打印分隔符
+                    TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
+
                     //打印SmartCardID
                     TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content3);
                     //Drawing printer font,打印SmartCardID的码文
-                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SmartCardID:" + content3); 
+                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SC ID:" + content3); 
                 }
 
                 TSCLIB_DLL.printlabel("1", "1");//开始打印

@@ -10,10 +10,10 @@
   <tscEncodeType>128</tscEncodeType>             <!--编码格式-->
   <!--<tscGeneratelabel>1</tscGeneratelabel>-->
   <tscPrintCode>0</tscPrintCode>                 <!--是否打印系统码文（如果用自定义的码文，则不打印）0为不打印，1为打印-->
-  <tscCodeInterval>115</tscCodeInterval>         <!--自定义码文与条形码之间间隔-->
+  <tscCodeInterval>100</tscCodeInterval>         <!--自定义码文与条形码之间间隔-->
   <tscFontMagnify1>1</tscFontMagnify1>           <!--设定文字X方向放大倍率,1-8-->
   <tscFontMagnify2>1</tscFontMagnify2>           <!--设定文字X方向放大倍率,1-8-->
-  <tscBarCodeInterval>140</tscBarCodeInterval>   <!--条形码之间的间隔2222-->
+  <tscBarCodeInterval>140</tscBarCodeInterval>   <!--条形码之间的间隔-->
   <tscRotate>0</tscRotate>                       <!--设定条形码旋转角度-->
   <tscBar>2</tscBar>                             <!--条形码宽窄bar 比例因子-->
 </root>

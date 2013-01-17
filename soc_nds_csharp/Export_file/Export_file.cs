@@ -22,7 +22,6 @@ namespace soc_nds_csharp.Export_file
         {
             InitializeComponent();
             tableLayoutPanel1.BackColor = HDIC_Command.setColor();
-          
         }
 
         //导入数据

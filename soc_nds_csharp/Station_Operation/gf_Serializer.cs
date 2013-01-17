@@ -736,6 +736,18 @@ namespace soc_nds_csharp.Station_Operation
         //将序列数据添加到数据库中
         private bool insertDB(string SmartCardID)
         {
+            #region 判断智能卡号是否数据库中重复
+            if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + SmartCardID.Trim() + "'") != "0")
+            {
+                richtxt_info.Text += "数据库中存在该智能卡号，请检查是否重复!\r\n";
+                richtxt_Connect.ForeColor = System.Drawing.Color.Red;
+                richtxt_Connect.Text = "数据库中存在该智能卡号，请检查是否重复";
+                HDIC_Message.ShowErrorDialog(this, "数据库中存在该智能卡号，请检查是否重复");
+
+                return false;
+            }
+            #endregion
+
             ++STBOpIndex;
             string sqlstr="";
             //插入新的序列号数据到数据库
