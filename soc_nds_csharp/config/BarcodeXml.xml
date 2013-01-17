@@ -5,9 +5,15 @@
   <tscHeight>55</tscHeight>                      <!--卷标高度-->
   <tscPrintSpeed>4</tscPrintSpeed>               <!--打印速度-->
   <tscDensity>8</tscDensity>                     <!--打印浓度-->
+  <tscSensor>0</tscSensor>                      <!--感应器类别,不常用2222-->
+  <tscVertical>2</tscVertical>                    <!--垂直间距单位mm，不常用2222-->
+  <tscOffset>0</tscOffset>                        <!--偏移距离单位mm，不常用2222-->
   <tscX>200</tscX>                               <!--条形码X方向起始点-->
   <tscY>150</tscY>                               <!--条形码Y方向起始点-->
+  <tscFontType>3</tscFontType>                    <!--文字类型，不常用2222-->
+  <tscFontRotation>0</tscFontRotation>            <!--文字旋转角度，不常用22222-->
   <tscEncodeType>128</tscEncodeType>             <!--编码格式-->
+  <tscBarcodeHeight>100</tscBarcodeHeight>        <!--条码高度，不常用22222-->
   <!--<tscGeneratelabel>1</tscGeneratelabel>-->
   <tscPrintCode>0</tscPrintCode>                 <!--是否打印系统码文（如果用自定义的码文，则不打印）0为不打印，1为打印-->
   <tscCodeInterval>100</tscCodeInterval>         <!--自定义码文与条形码之间间隔-->
@@ -15,7 +21,10 @@
   <tscFontMagnify2>1</tscFontMagnify2>           <!--设定文字X方向放大倍率,1-8-->
   <tscBarCodeInterval>140</tscBarCodeInterval>   <!--条形码之间的间隔-->
   <tscRotate>0</tscRotate>                       <!--设定条形码旋转角度-->
-  <tscBar>2</tscBar>                             <!--条形码宽窄bar 比例因子-->
+  <tscBarNarrow>2</tscBarNarrow>                 <!--条形码窄bar 比例因子2222 要更换下-->
+  <tscBarWide>2</tscBarWide>                     <!--条形码宽bar 比例因子，不常用2222-->
+  <tscPrintLabelSetNum>1</tscPrintLabelSetNum>    <!--打印式数2222-->
+  <tscPrintLabelCopeNum>1</tscPrintLabelCopeNum>  <!--打印份数2222-->
 </root>
 
 

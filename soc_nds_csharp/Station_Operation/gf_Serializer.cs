@@ -646,7 +646,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscX, tscY, tscEncodeType, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBar, 0);
+                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 0, tscPrintLabelSetNum, tscPrintLabelCopeNum);
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";
                     btn_begin.Enabled = true;
@@ -789,16 +789,25 @@ namespace soc_nds_csharp.Station_Operation
         string tscHeight = "";
         string tscPrintSpeed = "";
         string tscDensity = "";
+        string tscSensor="";
+        string tscVertical = "";
+        string tscOffset = "";
         string tscX = "";
         string tscY = "";
+        string tscFontType = "";
+        string tscFontRotation = "";
         string tscEncodeType = "";
+        string tscBarcodeHeight = "";
         string tscPrintCode = "";
         string tscCodeInterval = "";
         string tscFontMagnify1 = "";
         string tscFontMagnify2 = "";
         string tscBarCodeInterval = "";
         string tscRotate = "";
-        string tscBar = "";
+        string tscBarNarrow = "";
+        string tscBarWide = "";
+        string tscPrintLabelSetNum = "";
+        string tscPrintLabelCopeNum = "";
         /// <summary>
         /// 为条形码参数变量赋值
         /// </summary>
@@ -813,16 +822,25 @@ namespace soc_nds_csharp.Station_Operation
                 tscHeight = dt.Rows[0]["tscHeight"].ToString().Trim();
                 tscPrintSpeed = dt.Rows[0]["tscPrintSpeed"].ToString().Trim();
                 tscDensity = dt.Rows[0]["tscDensity"].ToString().Trim();
+                tscSensor = dt.Rows[0]["tscSensor"].ToString().Trim(); ;
+                tscVertical = dt.Rows[0]["tscVertical"].ToString().Trim(); ;
+                tscOffset = dt.Rows[0]["tscOffset"].ToString().Trim(); ;
                 tscX = dt.Rows[0]["tscX"].ToString().Trim();
                 tscY = dt.Rows[0]["tscY"].ToString().Trim();
+                tscFontType=dt.Rows[0]["tscFontType"].ToString().Trim();;
+                tscFontRotation=dt.Rows[0]["tscFontRotation"].ToString().Trim();;
                 tscEncodeType = dt.Rows[0]["tscEncodeType"].ToString().Trim();
+                tscBarcodeHeight=dt.Rows[0]["tscBarcodeHeight"].ToString().Trim();;
                 tscPrintCode = dt.Rows[0]["tscPrintCode"].ToString().Trim();
                 tscCodeInterval = dt.Rows[0]["tscCodeInterval"].ToString().Trim();
                 tscFontMagnify1 = dt.Rows[0]["tscFontMagnify1"].ToString().Trim();
                 tscFontMagnify2 = dt.Rows[0]["tscFontMagnify2"].ToString().Trim();
                 tscBarCodeInterval = dt.Rows[0]["tscBarCodeInterval"].ToString().Trim();
                 tscRotate = dt.Rows[0]["tscRotate"].ToString().Trim();
-                tscBar = dt.Rows[0]["tscBar"].ToString().Trim();
+                tscBarNarrow = dt.Rows[0]["tscBar"].ToString().Trim();
+                tscBarWide=dt.Rows[0]["tscBarWide"].ToString().Trim();;
+                tscPrintLabelSetNum=dt.Rows[0]["tscPrintLabelSetNum"].ToString().Trim();;
+                tscPrintLabelCopeNum=dt.Rows[0]["tscPrintLabelCopeNum"].ToString().Trim();;
             }
         }
         #endregion
@@ -851,7 +869,7 @@ namespace soc_nds_csharp.Station_Operation
                 mSemaphore.Release();
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscX, tscY, tscEncodeType, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBar, 1);
+                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 1, tscPrintLabelSetNum, tscPrintLabelCopeNum);
 
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";

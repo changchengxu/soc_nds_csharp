@@ -757,10 +757,15 @@ namespace HDICSoft.Func
         /// <param name="height">卷标高度</param>
         /// <param name="printSpeed">打印速度</param>
         /// <param name="density">打印浓度</param>
-       
+        /// <param name="sensor">感应器类别</param>
+        /// <param name="vertical">垂直间距</param>
+        /// <param name="offset">偏移距离</param>
         /// <param name="X">条形码X方向起始点</param>
         /// <param name="Y">条形码Y方向起始点</param>
+        /// <param name="FontType">文字类型</param>
+        /// <param name="FontRotation">文字旋转角度</param>
         /// <param name="EncodeType">编码类型</param>
+        /// <param name="BarcodeHeight">条码高度</param>
         /// <param name="PrintCode">打印码文</param>
         /// <param name="CodeInterval">自定义码文与标签间隔</param>
         /// <param name="BarCodeInterval">条形码之间的间隔</param>
@@ -770,9 +775,12 @@ namespace HDICSoft.Func
         /// <param name="content2">打印CA ID</param>
         /// <param name="content3">打印 SmartCardID</param>
         /// <param name="rotate">设定条形码旋转角度</param>
-        /// <param name="bar">条形码宽窄bar 比例因子</param>
+        /// <param name="BarNarrow">条形码窄bar 比例因子</param>
+        /// <param name="BarWide">条形码宽bar 比例因子</param>
         /// <param name="flag">0：不打印SmartCardID；1打印</param>
-        public static void TSCPrinter(string OutPutPort,string width, string height, string printSpeed, string density, string X, string Y, string EncodeType, string PrintCode, string CodeInterval,string FontMagnify1,string FontMagnify2, string BarCodeInterval, string content1, string content2, string content3, string rotate, string bar, int flag)
+        /// <param name="PrintLabelSetNum">打印式数</param>
+        /// <param name="PrintLabelCopeNum">打印份数</param>
+        public static void TSCPrinter(string OutPutPort, string width, string height, string printSpeed, string density, string sensor, string vertical, string offset, string X, string Y, string FontType, string FontRotation, string EncodeType, string BarcodeHeight, string PrintCode, string CodeInterval, string FontMagnify1, string FontMagnify2, string BarCodeInterval, string content1, string content2, string content3, string rotate, string BarNarrow, string BarWide, int flag, string PrintLabelSetNum, string PrintLabelCopeNum)
         {
             #region 1
             //TSCLIB_DLL.openport("TSC TTP-344M Plus");                                           //Open specified printer driver
@@ -793,31 +801,34 @@ namespace HDICSoft.Func
             #region 2
 
                 TSCLIB_DLL.openport(OutPutPort);
-                TSCLIB_DLL.setup(width, height, printSpeed, density, "0", "2", "0");  //Setup the media size and sensor type info
+                TSCLIB_DLL.setup(width, height, printSpeed, density,sensor, vertical, offset);  //Setup the media size and sensor type info
                 TSCLIB_DLL.clearbuffer();
                 //打印STB ID
-                TSCLIB_DLL.barcode(X, Y, EncodeType, "100", PrintCode, rotate, bar, "2", content1);
+                TSCLIB_DLL.barcode(X, Y, EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow,BarWide, content1);
                 //Drawing printer font,打印STBID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), "3", "0", FontMagnify1, FontMagnify2, "STB ID:" + content1);
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "STB ID:" + content1);
                 //打印分隔符
-                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
+                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
                
                 //打印CA ID
-                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content2);
+                TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content2);
                 //Drawing printer font,打印CAID的码文
-                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "CA ID:" + content2);
-                if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
+                TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "CA ID:" + content2);
+                if (flag == 1)//0，表示不用打印智能卡号（户户通打印八份） ；1表示打印智能卡号（村村通打印七份）
                 {
                     //打印分隔符
-                    TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), "3", "0", FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
+                    TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
 
                     //打印SmartCardID
-                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, "100", PrintCode, rotate, bar, "2", content3);
+                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content3);
                     //Drawing printer font,打印SmartCardID的码文
-                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), "3", "0", FontMagnify1, FontMagnify2, "SC ID:" + content3); 
+                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "SC ID:" + content3);
+                    TSCLIB_DLL.printlabel(PrintLabelSetNum, PrintLabelCopeNum);//开始打印村村通
                 }
-
-                TSCLIB_DLL.printlabel("1", "1");//开始打印
+                else
+                {
+                    TSCLIB_DLL.printlabel(PrintLabelSetNum, (Convert.ToInt32(PrintLabelCopeNum) + 1).ToString());//开始打印户户通
+                }
                 TSCLIB_DLL.closeport();
                 //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
                 //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font
