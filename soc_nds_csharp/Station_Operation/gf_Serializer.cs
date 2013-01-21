@@ -646,7 +646,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 0, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 1, tscPrintLabelSetNum, tscPrintLabelCopeNum);
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";
                     btn_begin.Enabled = true;
@@ -869,7 +869,7 @@ namespace soc_nds_csharp.Station_Operation
                 mSemaphore.Release();
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 1, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 0, tscPrintLabelSetNum, tscPrintLabelCopeNum);
 
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";

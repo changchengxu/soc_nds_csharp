@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="gb2312"?>
 <root>
+  <CurrentPrinter></CurrentPrinter>                 <!--选择当前打印机-->
+  
   <tscOutPutPort>TSC TTP-344M Plus</tscOutPutPort> <!--TSC TTP-344M Plus-->
   <tscWidth>80</tscWidth>                        <!--卷标宽度-->
   <tscHeight>55</tscHeight>                      <!--卷标高度-->

@@ -33,6 +33,14 @@
             this.panel_Detail = new System.Windows.Forms.Panel();
             this.gbox_Detail = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txt_FontMagnify2 = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txt_FontMagnify1 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txt_barCodeInterval = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txt_codeInterval = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txt_tscX = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
@@ -42,9 +50,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cbEncodeType = new System.Windows.Forms.ComboBox();
-            this.txt_tscBar = new System.Windows.Forms.TextBox();
+            this.txt_tscBarNarrow = new System.Windows.Forms.TextBox();
             this.chk_PrintBarCode = new System.Windows.Forms.CheckBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txt_OutPutPort = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txt_tscWidth = new System.Windows.Forms.TextBox();
@@ -76,16 +86,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pic_barcode = new System.Windows.Forms.PictureBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txt_codeInterval = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txt_barCodeInterval = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.txt_OutPutPort = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txt_FontMagnify1 = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txt_FontMagnify2 = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             this.panel_Detail.SuspendLayout();
             this.gbox_Detail.SuspendLayout();
@@ -156,7 +156,7 @@
             this.groupBox8.Controls.Add(this.label3);
             this.groupBox8.Controls.Add(this.label14);
             this.groupBox8.Controls.Add(this.cbEncodeType);
-            this.groupBox8.Controls.Add(this.txt_tscBar);
+            this.groupBox8.Controls.Add(this.txt_tscBarNarrow);
             this.groupBox8.Controls.Add(this.chk_PrintBarCode);
             this.groupBox8.Location = new System.Drawing.Point(293, 5);
             this.groupBox8.Name = "groupBox8";
@@ -164,6 +164,74 @@
             this.groupBox8.TabIndex = 63;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "条形码设置";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(368, 116);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(107, 12);
+            this.label20.TabIndex = 68;
+            this.label20.Text = "文字放大倍率(2)：";
+            // 
+            // txt_FontMagnify2
+            // 
+            this.txt_FontMagnify2.Location = new System.Drawing.Point(480, 112);
+            this.txt_FontMagnify2.Name = "txt_FontMagnify2";
+            this.txt_FontMagnify2.Size = new System.Drawing.Size(69, 21);
+            this.txt_FontMagnify2.TabIndex = 69;
+            this.txt_FontMagnify2.Text = "300";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(184, 116);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(107, 12);
+            this.label19.TabIndex = 66;
+            this.label19.Text = "文字放大倍率(1)：";
+            // 
+            // txt_FontMagnify1
+            // 
+            this.txt_FontMagnify1.Location = new System.Drawing.Point(291, 112);
+            this.txt_FontMagnify1.Name = "txt_FontMagnify1";
+            this.txt_FontMagnify1.Size = new System.Drawing.Size(69, 21);
+            this.txt_FontMagnify1.TabIndex = 67;
+            this.txt_FontMagnify1.Text = "300";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(227, 31);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(101, 12);
+            this.label17.TabIndex = 64;
+            this.label17.Text = "条形码之间间距：";
+            // 
+            // txt_barCodeInterval
+            // 
+            this.txt_barCodeInterval.Location = new System.Drawing.Point(328, 27);
+            this.txt_barCodeInterval.Name = "txt_barCodeInterval";
+            this.txt_barCodeInterval.Size = new System.Drawing.Size(90, 21);
+            this.txt_barCodeInterval.TabIndex = 65;
+            this.txt_barCodeInterval.Text = "140";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(22, 32);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(113, 12);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "码文与条形码间距：";
+            // 
+            // txt_codeInterval
+            // 
+            this.txt_codeInterval.Location = new System.Drawing.Point(134, 27);
+            this.txt_codeInterval.Name = "txt_codeInterval";
+            this.txt_codeInterval.Size = new System.Drawing.Size(90, 21);
+            this.txt_codeInterval.TabIndex = 63;
+            this.txt_codeInterval.Text = "115";
             // 
             // label12
             // 
@@ -237,9 +305,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(16, 116);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(95, 12);
+            this.label14.Size = new System.Drawing.Size(83, 12);
             this.label14.TabIndex = 56;
-            this.label14.Text = "条形码宽窄bar：";
+            this.label14.Text = "条形码窄bar：";
             // 
             // cbEncodeType
             // 
@@ -275,13 +343,13 @@
             this.cbEncodeType.TabIndex = 2;
             this.cbEncodeType.SelectedIndexChanged += new System.EventHandler(this.cbEncodeType_SelectedIndexChanged);
             // 
-            // txt_tscBar
+            // txt_tscBarNarrow
             // 
-            this.txt_tscBar.Location = new System.Drawing.Point(109, 111);
-            this.txt_tscBar.Name = "txt_tscBar";
-            this.txt_tscBar.Size = new System.Drawing.Size(63, 21);
-            this.txt_tscBar.TabIndex = 57;
-            this.txt_tscBar.Text = "300";
+            this.txt_tscBarNarrow.Location = new System.Drawing.Point(109, 111);
+            this.txt_tscBarNarrow.Name = "txt_tscBarNarrow";
+            this.txt_tscBarNarrow.Size = new System.Drawing.Size(63, 21);
+            this.txt_tscBarNarrow.TabIndex = 57;
+            this.txt_tscBarNarrow.Text = "300";
             // 
             // chk_PrintBarCode
             // 
@@ -311,6 +379,22 @@
             this.groupBox7.TabIndex = 62;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "打印机设置";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(12, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(77, 12);
+            this.label18.TabIndex = 52;
+            this.label18.Text = "电脑输出口：";
+            // 
+            // txt_OutPutPort
+            // 
+            this.txt_OutPutPort.Location = new System.Drawing.Point(88, 22);
+            this.txt_OutPutPort.Name = "txt_OutPutPort";
+            this.txt_OutPutPort.Size = new System.Drawing.Size(128, 21);
+            this.txt_OutPutPort.TabIndex = 53;
             // 
             // label10
             // 
@@ -620,90 +704,6 @@
             this.pic_barcode.TabIndex = 15;
             this.pic_barcode.TabStop = false;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(22, 32);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(113, 12);
-            this.label15.TabIndex = 62;
-            this.label15.Text = "码文与条形码间距：";
-            // 
-            // txt_codeInterval
-            // 
-            this.txt_codeInterval.Location = new System.Drawing.Point(134, 27);
-            this.txt_codeInterval.Name = "txt_codeInterval";
-            this.txt_codeInterval.Size = new System.Drawing.Size(90, 21);
-            this.txt_codeInterval.TabIndex = 63;
-            this.txt_codeInterval.Text = "115";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(227, 31);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(101, 12);
-            this.label17.TabIndex = 64;
-            this.label17.Text = "条形码之间间距：";
-            // 
-            // txt_barCodeInterval
-            // 
-            this.txt_barCodeInterval.Location = new System.Drawing.Point(328, 27);
-            this.txt_barCodeInterval.Name = "txt_barCodeInterval";
-            this.txt_barCodeInterval.Size = new System.Drawing.Size(90, 21);
-            this.txt_barCodeInterval.TabIndex = 65;
-            this.txt_barCodeInterval.Text = "140";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 25);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(77, 12);
-            this.label18.TabIndex = 52;
-            this.label18.Text = "电脑输出口：";
-            // 
-            // txt_OutPutPort
-            // 
-            this.txt_OutPutPort.Location = new System.Drawing.Point(88, 22);
-            this.txt_OutPutPort.Name = "txt_OutPutPort";
-            this.txt_OutPutPort.Size = new System.Drawing.Size(128, 21);
-            this.txt_OutPutPort.TabIndex = 53;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(184, 116);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(107, 12);
-            this.label19.TabIndex = 66;
-            this.label19.Text = "文字放大倍率(1)：";
-            // 
-            // txt_FontMagnify1
-            // 
-            this.txt_FontMagnify1.Location = new System.Drawing.Point(291, 112);
-            this.txt_FontMagnify1.Name = "txt_FontMagnify1";
-            this.txt_FontMagnify1.Size = new System.Drawing.Size(69, 21);
-            this.txt_FontMagnify1.TabIndex = 67;
-            this.txt_FontMagnify1.Text = "300";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(368, 116);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(107, 12);
-            this.label20.TabIndex = 68;
-            this.label20.Text = "文字放大倍率(2)：";
-            // 
-            // txt_FontMagnify2
-            // 
-            this.txt_FontMagnify2.Location = new System.Drawing.Point(480, 112);
-            this.txt_FontMagnify2.Name = "txt_FontMagnify2";
-            this.txt_FontMagnify2.Size = new System.Drawing.Size(69, 21);
-            this.txt_FontMagnify2.TabIndex = 69;
-            this.txt_FontMagnify2.Text = "300";
-            // 
             // gf_Barcode
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -758,7 +758,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cbEncodeType;
-        private System.Windows.Forms.TextBox txt_tscBar;
+        private System.Windows.Forms.TextBox txt_tscBarNarrow;
         private System.Windows.Forms.CheckBox chk_PrintBarCode;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label10;

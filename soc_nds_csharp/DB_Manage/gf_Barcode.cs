@@ -36,6 +36,15 @@ namespace soc_nds_csharp.DB_Manage
         }
 
         #region 为条形码参数变量赋值 并将值赋给相应控件
+        string tscSensor = "";
+        string tscVertical = "";
+        string tscOffset = "";
+        string tscFontType = "";
+        string tscFontRotation = "";
+        string tscBarcodeHeight = "";
+        string tscBarWide = "";
+        string tscPrintLabelSetNum = "";
+        string tscPrintLabelCopeNum = "";
         /// <summary>
         /// 为条形码参数变量赋值
         /// </summary>
@@ -77,12 +86,22 @@ namespace soc_nds_csharp.DB_Manage
                   cbEncodeType.Text = dt.Rows[0]["tscEncodeType"].ToString().Trim();
                   chk_PrintBarCode.Checked = Convert.ToBoolean(Convert.ToInt32(dt.Rows[0]["tscPrintCode"].ToString().Trim()));
                   cbox_tscRotate.Text = dt.Rows[0]["tscRotate"].ToString().Trim();
-                  txt_tscBar.Text = dt.Rows[0]["tscBar"].ToString().Trim();
+                  txt_tscBarNarrow.Text = dt.Rows[0]["tscBarNarrow"].ToString().Trim();
 
                   txt_codeInterval.Text = dt.Rows[0]["tscCodeInterval"].ToString().Trim();
                   txt_barCodeInterval.Text = dt.Rows[0]["tscBarCodeInterval"].ToString().Trim();
                   txt_FontMagnify1.Text = dt.Rows[0]["tscFontMagnify1"].ToString().Trim();
                   txt_FontMagnify2.Text = dt.Rows[0]["tscFontMagnify2"].ToString().Trim();
+
+                  tscSensor = dt.Rows[0]["tscSensor"].ToString().Trim();
+                  tscVertical = dt.Rows[0]["tscVertical"].ToString().Trim();
+                  tscOffset = dt.Rows[0]["tscOffset"].ToString().Trim();
+                  tscFontType = dt.Rows[0]["tscFontType"].ToString().Trim();
+                  tscFontRotation = dt.Rows[0]["tscFontRotation"].ToString().Trim();
+                  tscBarcodeHeight = dt.Rows[0]["tscBarcodeHeight"].ToString().Trim();
+                  tscBarWide = dt.Rows[0]["tscBarWide"].ToString().Trim();
+                  tscPrintLabelSetNum = dt.Rows[0]["tscPrintLabelSetNum"].ToString().Trim();
+                  tscPrintLabelCopeNum = dt.Rows[0]["tscPrintLabelCopeNum"].ToString().Trim();
               }
         }
         #endregion
@@ -237,13 +256,13 @@ namespace soc_nds_csharp.DB_Manage
             //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
             //TSCLIB_DLL.closeport();
             //#endregion
-            int flag = 0;
+            int flag = 1;
             if (txt_SmartCardID.Text.Trim().Length == 12)
             {
-                flag = 1;
+                flag = 0;
             }
 
-            HDIC_Func.TSCPrinter(txt_OutPutPort.Text.Trim(), txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), cbEncodeType.SelectedItem.ToString().Trim(), Convert.ToString((int)chk_PrintBarCode.CheckState), txt_codeInterval.Text.Trim(),txt_FontMagnify1.Text.Trim(), txt_FontMagnify2.Text.Trim(),txt_barCodeInterval.Text.Trim(), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBar.Text.Trim(), flag);
+            HDIC_Func.TSCPrinter(txt_OutPutPort.Text.Trim(), txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), tscSensor, tscVertical, tscOffset, txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), tscFontType, tscFontRotation, cbEncodeType.SelectedItem.ToString().Trim(), tscBarcodeHeight, Convert.ToString((int)chk_PrintBarCode.CheckState), txt_codeInterval.Text.Trim(), txt_FontMagnify1.Text.Trim(), txt_FontMagnify2.Text.Trim(), txt_barCodeInterval.Text.Trim(), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBarNarrow.Text.Trim(), tscBarWide, flag, tscPrintLabelSetNum, tscPrintLabelCopeNum);
         }
 
         #endregion

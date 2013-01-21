@@ -814,18 +814,21 @@ namespace HDICSoft.Func
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content2);
                 //Drawing printer font,打印CAID的码文
                 TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "CA ID:" + content2);
-                if (flag == 1)//0，表示不用打印智能卡号 ；1表示打印智能卡号//村村通打印七份//户户通打印八份
+                if (flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
                 {
                     //打印分隔符
                     TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
 
                     //打印SmartCardID
-                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow,BarWide, content3);
+                    TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content3);
                     //Drawing printer font,打印SmartCardID的码文
-                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(),FontType, FontRotation, FontMagnify1, FontMagnify2, "SC ID:" + content3); 
+                    TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval))).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "SC ID:" + content3);
+                    TSCLIB_DLL.printlabel(PrintLabelSetNum, PrintLabelCopeNum);//开始打印村村通
                 }
-
-                TSCLIB_DLL.printlabel(PrintLabelSetNum, PrintLabelCopeNum);//开始打印
+                else
+                {
+                    TSCLIB_DLL.printlabel(PrintLabelSetNum, (Convert.ToInt32(PrintLabelCopeNum) + 1).ToString());//开始打印户户通
+                }
                 TSCLIB_DLL.closeport();
                 //TSCLIB_DLL.printerfont("200", "250", "3", "0", "1", "1", "ShangHai HDIC");        //Drawing printer font
                 //TSCLIB_DLL.windowsfont(200, 300, 24, 0, 2, 0, "ARIAL", "长城测试");  //Draw windows font

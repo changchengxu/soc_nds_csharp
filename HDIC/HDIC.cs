@@ -814,7 +814,7 @@ namespace HDICSoft.Func
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content2);
                 //Drawing printer font,打印CAID的码文
                 TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "CA ID:" + content2);
-                if (flag == 1)//0，表示不用打印智能卡号（户户通打印八份） ；1表示打印智能卡号（村村通打印七份）
+                if (flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
                 {
                     //打印分隔符
                     TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
