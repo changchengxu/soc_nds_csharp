@@ -104,7 +104,7 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_HardwareID.TabStop = false;
             #endregion
 
-            variable_assignment();
+            TSCVariableInit();
 
             initControl();
             btn_begin.Enabled = true;
@@ -646,7 +646,8 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 1, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+                    printBar();
+
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";
                     btn_begin.Enabled = true;
@@ -783,7 +784,7 @@ namespace soc_nds_csharp.Station_Operation
            
         }
       
-        #region 为条形码参数变量赋值 并将值赋给条形码打印机
+        #region 为TSC条形码参数变量赋值 并将值赋给条形码打印机
         string tscOutPutPort = "";
         string tscWidth = "";
         string tscHeight = "";
@@ -811,7 +812,7 @@ namespace soc_nds_csharp.Station_Operation
         /// <summary>
         /// 为条形码参数变量赋值
         /// </summary>
-        private void variable_assignment()
+        private void TSCVariableInit()
         {
 
             DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
@@ -845,7 +846,82 @@ namespace soc_nds_csharp.Station_Operation
         }
         #endregion
 
+        #region 博思得条形码参数变量赋值 并将值赋给条形码打印机
+        string POSTEKOutPutPort="";
+        string POSTEKPrintSpeed="";
+        string POSTEKDensity="";
+        string POSTEKHeight="";
+        string POSTEKInterval="";
+        string POSTEKWidth="";
+        string POSTEKX="";
+        string POSTEKY="";
+        string POSTEKBarRotation="";
+        string POSTEKEncodeType="";
+        string POSTEKBarNarrow="";
+        string POSTEKBarWide="";
+        string POSTEKBarcodeHeight="";
+        string POSTEKPrintCode="";
+        string POSTEKBarCodeInterval="";
+        string POSTEKCodeInterval="";
+        string POSTEKFontHeight="";
+        string POSTEKFontWidth="";
+        string POSTEKFontType="";
+        string POSTEKFontAlign="";
+        string POSTEKFontWeight="";
+        string POSTEKPrintLabelSetNum="";
+        string POSTEKPrintLabelCopeNum="";
+
+        private void POSTEKVariableInit()
+        {
+            DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
+            if (dt.Rows.Count > 0)
+            {
+                POSTEKOutPutPort = dt.Rows[0]["POSTEKOutPutPort"].ToString().Trim();
+                POSTEKPrintSpeed = dt.Rows[0]["POSTEKPrintSpeed"].ToString().Trim();
+                POSTEKDensity = dt.Rows[0]["POSTEKDensity"].ToString().Trim();
+                POSTEKHeight = dt.Rows[0]["POSTEKHeight"].ToString().Trim();
+                POSTEKInterval = dt.Rows[0]["POSTEKInterval"].ToString().Trim();
+                POSTEKWidth = dt.Rows[0]["POSTEKWidth"].ToString().Trim();
+                POSTEKX = dt.Rows[0]["POSTEKX"].ToString().Trim();
+                POSTEKY = dt.Rows[0]["POSTEKY"].ToString().Trim();
+                POSTEKBarRotation = dt.Rows[0]["POSTEKBarRotation"].ToString().Trim();
+                POSTEKEncodeType = dt.Rows[0]["POSTEKEncodeType"].ToString().Trim();
+                POSTEKBarNarrow = dt.Rows[0]["POSTEKBarNarrow"].ToString().Trim();
+                POSTEKBarWide = dt.Rows[0]["POSTEKBarWide"].ToString().Trim();
+                POSTEKBarcodeHeight = dt.Rows[0]["POSTEKBarcodeHeight"].ToString().Trim();
+                POSTEKPrintCode = dt.Rows[0]["POSTEKPrintCode"].ToString().Trim();
+                POSTEKBarCodeInterval = dt.Rows[0]["POSTEKBarCodeInterval"].ToString().Trim();
+                POSTEKCodeInterval = dt.Rows[0]["POSTEKCodeInterval"].ToString().Trim();
+                POSTEKFontHeight = dt.Rows[0]["POSTEKFontHeight"].ToString().Trim();
+                POSTEKFontWidth = dt.Rows[0]["POSTEKFontWidth"].ToString().Trim();
+                POSTEKFontType = dt.Rows[0]["POSTEKFontType"].ToString().Trim();
+                POSTEKFontAlign = dt.Rows[0]["POSTEKFontAlign"].ToString().Trim();
+                POSTEKFontWeight = dt.Rows[0]["POSTEKFontWeight"].ToString().Trim();
+                POSTEKPrintLabelSetNum = dt.Rows[0]["POSTEKPrintLabelSetNum"].ToString().Trim();
+                POSTEKPrintLabelCopeNum = dt.Rows[0]["POSTEKPrintLabelCopeNum"].ToString().Trim();
+            }
+        }
+#endregion
+
         #endregion
+
+        #region 打印标签
+        private void printBar()
+        {
+            string CurrentPrinter = "";
+              DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
+              if (dt.Rows.Count > 0)
+              {
+                  CurrentPrinter = dt.Rows[0]["CurrentPrinter"].ToString().Trim();
+              }
+
+            if (CurrentPrinter==dt.Rows[0]["CurrentPrinter"].ToString().Trim())
+            {
+            }
+              HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 0, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+        }
+        #endregion
+
 
         private void gf_Serializer_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -869,7 +945,7 @@ namespace soc_nds_csharp.Station_Operation
                 mSemaphore.Release();
                 if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
-                    HDIC_Func.TSCPrinter(tscOutPutPort, tscWidth, tscHeight, tscPrintSpeed, tscDensity, tscSensor, tscVertical, tscOffset, tscX, tscY, tscFontType, tscFontRotation, tscEncodeType, tscBarcodeHeight, tscPrintCode, tscCodeInterval, tscFontMagnify1, tscFontMagnify2, tscBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), tscRotate, tscBarNarrow, tscBarWide, 0, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+                    printBar();
 
                     richtxt_info.Text += "上传序列号数据到数据库成功,请进行下一台!\r\n";
                     richtxt_Connect.Text = "上传序列号数据到数据库成功,请进行下一台";

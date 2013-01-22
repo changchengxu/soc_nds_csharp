@@ -21,7 +21,7 @@ using System.Net;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Xml;
-using TSC;
+using HDICPrinter;
 
 namespace HDICSoft.Security
 {
@@ -838,6 +838,101 @@ namespace HDICSoft.Func
                 //TSCLIB_DLL.sendcommand("PUTPCX 100,400,\"UL.PCX\"");                                //Drawing PCX graphic
                 //TSCLIB_DLL.printlabel("1", "1");                                                    //Print labels
                
+            #endregion
+        }
+
+       /// <summary>
+       /// 博思得打印机
+       /// </summary>
+        /// <param name="OutPutPort">打印机端口</param>
+        /// <param name="printSpeed">打印速度</param>
+        /// <param name="density">打印黑度</param>
+        /// <param name="height">标签高度</param>
+        /// <param name="interval">定位间隔</param>
+        /// <param name="width">标签宽度</param>
+        /// <param name="X">条形码X坐标</param>
+        /// <param name="Y">条形码Y坐标</param>
+       /// <param name="BarRotation">条码打印方向</param>
+       /// <param name="EncodeType">条码类型</param>
+        /// <param name="BarNarrow">条形码窄单元的宽度（以点dots为单位）</param>
+       /// <param name="BarWide">条形码宽单元的宽度（以点dots为单位）</param>
+       /// <param name="BarcodeHeight">条形码高度</param>
+       /// <param name="PrintCode">打印码文</param>
+        /// <param name="BarCodeInterval">条形码之间的间距</param>
+       /// <param name="content1">打印STB ID</param>
+       /// <param name="content2">打印CA ID</param>
+       /// <param name="content3">打印SmartCardID</param>
+       /// <param name="CodeInterval">自定义码文与标签间隔</param>
+       /// <param name="FontHeight">字型高度</param>
+       /// <param name="FontWidth">字型宽度</param>
+       /// <param name="FontType">字型名称</param>
+       /// <param name="FontAlign">字体旋转角度以及对齐方式</param>
+       /// <param name="FontWeight">字体粗细</param>
+        /// <param name="Flag">0：不打印SmartCardID；1打印</param>
+       /// <param name="PrintLabelSetNum">打印标签</param>
+       /// <param name="PrintLabelCopeNum">复制标签份数</param>
+        public static void POSTEKPrinter(string OutPutPort, string printSpeed, string density, string height, string interval, string width, string X, string Y, string BarRotation, string EncodeType, string BarNarrow, string BarWide, string BarcodeHeight, string PrintCode,string BarCodeInterval, string content1, string content2, string content3, string CodeInterval,string FontHeight,string FontWidth,string FontType, string FontAlign, string FontWeight, Int32 Flag, string PrintLabelSetNum, string PrintLabelCopeNum)
+        {
+            #region 1
+            //PrintLab.OpenPort("POSTEK C168 200s");//打开打印机端口
+            //PrintLab.PTK_ClearBuffer();//清空缓冲区
+            //PrintLab.PTK_SetPrintSpeed(3);//设置打印速度
+            //PrintLab.PTK_SetDarkness(8);//设置打印黑度
+            //PrintLab.PTK_SetLabelHeight(600, 200);//设置标签的高度和定位间隙\黑线\穿孔的高度
+            //PrintLab.PTK_SetLabelWidth(800);//设置标签的宽度
+            //for (int i = 1; i <= 5; i++)
+            //{
+            //    PrintLab.PTK_DrawTextTrueTypeW(200, 300, 40, 40, "宋体", 1, 400, false, true, true, "1", "12456789");//打印一行 TrueType Font文字
+            //    PrintLab.PTK_DrawBarcode(100, 20, 0, "1", 3, 3, 80, 'N', "12345");//打印一个条码
+            //    PrintLab.PTK_SetPagePrintCount(1, 1);//命令打印机执行打印工作
+            //}
+            //PrintLab.PTK_WritePrinter();
+            //PrintLab.ClosePort();//关闭打印机端口
+            #endregion
+
+            char MPrintCode;
+            if (PrintCode == "N")
+            {
+                MPrintCode='N';
+            }
+            else
+            {
+                MPrintCode='B';
+            }
+
+            #region 2
+            PrintLab.OpenPort(OutPutPort);//打开打印机端口
+            PrintLab.PTK_ClearBuffer();//清空缓冲区
+            PrintLab.PTK_SetPrintSpeed(Convert.ToUInt32(printSpeed));//设置打印速度
+            PrintLab.PTK_SetDarkness(Convert.ToUInt32(density));//设置打印黑度
+            PrintLab.PTK_SetLabelHeight(Convert.ToUInt32(height), Convert.ToUInt32(interval));//设置标签的高度和定位间隙\黑线\穿孔的高度（以dots为单位200DPI:1点＝1/8mm 300DPI:1点=1/12mm）
+            PrintLab.PTK_SetLabelWidth(Convert.ToUInt32(width));//设置标签的宽度
+
+            //打印STBID条形码
+            PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
+            //打印码文
+            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth),FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+
+            //打印CAID条形码
+            PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
+            //打印码文
+            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+
+            if (Flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
+            {
+                //打印SC ID条形码
+                PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
+                //打印码文
+                PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+2*Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+                PrintLab.PTK_SetPagePrintCount(Convert.ToUInt32(PrintLabelSetNum), Convert.ToUInt32(PrintLabelCopeNum));//命令打印机执行打印 村村通 工作
+            }
+            else
+            {
+                PrintLab.PTK_SetPagePrintCount(Convert.ToUInt32(PrintLabelSetNum), Convert.ToUInt32(PrintLabelCopeNum)+1);//命令打印机执行打印 户户通 工作
+            }
+        
+            PrintLab.PTK_WritePrinter();
+            PrintLab.ClosePort();//关闭打印机端口
             #endregion
         }
 
