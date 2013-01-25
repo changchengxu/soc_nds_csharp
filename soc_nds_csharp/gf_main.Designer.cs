@@ -72,21 +72,21 @@
             // tsm_reset
             // 
             this.tsm_reset.Name = "tsm_reset";
-            this.tsm_reset.Size = new System.Drawing.Size(152, 22);
+            this.tsm_reset.Size = new System.Drawing.Size(98, 22);
             this.tsm_reset.Text = "重启";
             this.tsm_reset.Click += new System.EventHandler(this.tsm_reset_Click);
             // 
             // 版本ToolStripMenuItem
             // 
             this.版本ToolStripMenuItem.Name = "版本ToolStripMenuItem";
-            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.版本ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.版本ToolStripMenuItem.Text = "版本";
             this.版本ToolStripMenuItem.Click += new System.EventHandler(this.版本ToolStripMenuItem_Click);
             // 
             // tsm_exit
             // 
             this.tsm_exit.Name = "tsm_exit";
-            this.tsm_exit.Size = new System.Drawing.Size(152, 22);
+            this.tsm_exit.Size = new System.Drawing.Size(98, 22);
             this.tsm_exit.Text = "退出";
             this.tsm_exit.Click += new System.EventHandler(this.tsm_exit_Click);
             // 
@@ -132,7 +132,7 @@
             this.taskPane1.AutoScrollMargin = new System.Drawing.Size(12, 12);
             this.taskPane1.CustomSettings.GradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
             this.taskPane1.CustomSettings.GradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(213)))), ((int)(((byte)(235)))), ((int)(((byte)(252)))));
-            this.taskPane1.CustomSettings.Padding = new XPExplorerBar.Padding(1, 0, 0, 0);
+            this.taskPane1.CustomSettings.Padding = ((XPExplorerBar.Padding)(resources.GetObject("resource.Padding")));
             this.taskPane1.Dock = System.Windows.Forms.DockStyle.Left;
             this.taskPane1.Location = new System.Drawing.Point(0, 33);
             this.taskPane1.Name = "taskPane1";

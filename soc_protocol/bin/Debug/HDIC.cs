@@ -800,7 +800,15 @@ namespace HDICSoft.Func
 
             #region 2
 
+            try
+            {
                 TSCLIB_DLL.openport(OutPutPort);
+
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
                 TSCLIB_DLL.setup(width, height, printSpeed, density,sensor, vertical, offset);  //Setup the media size and sensor type info
                 TSCLIB_DLL.clearbuffer();
                 //打印STB ID
@@ -808,7 +816,7 @@ namespace HDICSoft.Func
                 //Drawing printer font,打印STBID的码文
                 TSCLIB_DLL.printerfont(X, (Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "STB ID:" + content1);
                 //打印分隔符
-                TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
+                //TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)) + (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("STB ID:" + content1).Length, '-'));
                
                 //打印CA ID
                 TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content2);
@@ -817,7 +825,7 @@ namespace HDICSoft.Func
                 if (flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
                 {
                     //打印分隔符
-                    TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
+                    //TSCLIB_DLL.printerfont(X, (((Convert.ToInt32(Y) + (Convert.ToInt32(CodeInterval) + Convert.ToInt32(BarCodeInterval))) + (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval))) / 2).ToString(), FontType, FontRotation, FontMagnify1, FontMagnify2, "-".PadRight(("CA ID:" + content2).Length, '-'));
 
                     //打印SmartCardID
                     TSCLIB_DLL.barcode(X, (Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval)).ToString(), EncodeType, BarcodeHeight, PrintCode, rotate, BarNarrow, BarWide, content3);
@@ -842,7 +850,7 @@ namespace HDICSoft.Func
         }
 
        /// <summary>
-       /// 博思得打印机
+        /// 博思得打印机
        /// </summary>
         /// <param name="OutPutPort">打印机端口</param>
         /// <param name="printSpeed">打印速度</param>
@@ -852,25 +860,25 @@ namespace HDICSoft.Func
         /// <param name="width">标签宽度</param>
         /// <param name="X">条形码X坐标</param>
         /// <param name="Y">条形码Y坐标</param>
-       /// <param name="BarRotation">条码打印方向</param>
-       /// <param name="EncodeType">条码类型</param>
+        /// <param name="BarRotation">条码打印方向</param>
+        /// <param name="EncodeType">条码类型</param>
         /// <param name="BarNarrow">条形码窄单元的宽度（以点dots为单位）</param>
-       /// <param name="BarWide">条形码宽单元的宽度（以点dots为单位）</param>
+        /// <param name="BarWide">条形码宽单元的宽度（以点dots为单位）</param>
        /// <param name="BarcodeHeight">条形码高度</param>
        /// <param name="PrintCode">打印码文</param>
         /// <param name="BarCodeInterval">条形码之间的间距</param>
-       /// <param name="content1">打印STB ID</param>
-       /// <param name="content2">打印CA ID</param>
-       /// <param name="content3">打印SmartCardID</param>
-       /// <param name="CodeInterval">自定义码文与标签间隔</param>
-       /// <param name="FontHeight">字型高度</param>
-       /// <param name="FontWidth">字型宽度</param>
-       /// <param name="FontType">字型名称</param>
-       /// <param name="FontAlign">字体旋转角度以及对齐方式</param>
-       /// <param name="FontWeight">字体粗细</param>
+        /// <param name="content1">打印STB ID</param>
+        /// <param name="content2">打印CA ID</param>
+        /// <param name="content3">打印SmartCardID</param>
+        /// <param name="CodeInterval">自定义码文与标签间隔</param>
+        /// <param name="FontHeight">字型高度</param>
+        /// <param name="FontWidth">字型宽度</param>
+        /// <param name="FontType">字型名称</param>
+        /// <param name="FontAlign">字体旋转角度以及对齐方式</param>
+        /// <param name="FontWeight">字体粗细</param>
         /// <param name="Flag">0：不打印SmartCardID；1打印</param>
-       /// <param name="PrintLabelSetNum">打印标签</param>
-       /// <param name="PrintLabelCopeNum">复制标签份数</param>
+        /// <param name="PrintLabelSetNum">打印标签</param>
+        /// <param name="PrintLabelCopeNum">复制标签份数</param>
         public static void POSTEKPrinter(string OutPutPort, string printSpeed, string density, string height, string interval, string width, string X, string Y, string BarRotation, string EncodeType, string BarNarrow, string BarWide, string BarcodeHeight, string PrintCode,string BarCodeInterval, string content1, string content2, string content3, string CodeInterval,string FontHeight,string FontWidth,string FontType, string FontAlign, string FontWeight, Int32 Flag, string PrintLabelSetNum, string PrintLabelCopeNum)
         {
             #region 1
@@ -934,6 +942,341 @@ namespace HDICSoft.Func
             PrintLab.PTK_WritePrinter();
             PrintLab.ClosePort();//关闭打印机端口
             #endregion
+        }
+
+       /// <summary>
+        /// 立像(ARGOX)打印机
+       /// </summary>
+        /// <param name="nEnable">設定除錯環境,1 -> 除錯環境致能, 0 -> 除錯環境關閉</param>
+        /// <param name="Arogox_hor">設定開始列印點,hor;水平邊界基點。單位 dot</param>
+        /// <param name="Arogox_ver">設定開始列印點,ver: 垂直邊界基點。單位 dot</param>
+        /// <param name="Arogox_object"> 印表機功能選項</param>
+        /// <param name="darkness"> 設定熱感頭列印熱度，範圍：0～15，內定是 8</param>
+        /// <param name="IsImmediate">用來立即將資料傳送出或暫時寫入暫存區中（1為立即傳送, 只傳pbuf中的內容至輸出埠，0為將資料加到暫存區後, 等呼叫B_Print_Out()時才傳送）</param>
+        /// <param name="Arogox_pbuf">用來立即將資料傳送出或暫時寫入暫存區中（要傳送的資料指標）</param>
+        /// <param name="X">X 座標</param>
+        /// <param name="Y">Y 座標</param>
+        /// <param name="ori">列印方向定位，'0'是 0°，'1'是90°、'2'是180°，'3'是270°</param>
+        /// <param name="EncodeType">条码类型</param>
+        /// <param name="BarNarrow">条形码窄单元的宽度</param>
+        /// <param name="BarWide">条形码宽单元的宽度</param>
+        /// <param name="BarcodeHeight">條碼高度</param>
+        /// <param name="PrintCode">打印码文</param>
+        /// <param name="BarCodeInterval">条形码之间的间距</param>
+        /// <param name="content1">打印STB ID</param>
+        /// <param name="content2">打印CA ID</param>
+        /// <param name="content3">打印SmartCardID</param>
+        /// <param name="CodeInterval">自定义码文与标签间隔</param>
+        /// <param name="font">選擇字形，1～5 選擇常佇字形</param>
+        /// <param name="hor_factor">水平放大比例，範圍：1～24。</param>
+        /// <param name="ver_factor">垂直放大比例，範圍：1～24</param>
+        /// <param name="mode">反白功能，'N'普通文字，'R'反白文字。</param>
+        /// <param name="Flag">0：不打印SmartCardID；1打印</param>
+        /// <param name="PrintLabelCopeNum">复制标签份数</param>
+        public static void ArogoxPrinter(string OutPutPort,string nEnable, string Arogox_hor, string Arogox_ver, string Arogox_object, string darkness, string IsImmediate, string Arogox_pbuf, string X, string Y, string ori, string EncodeType, string BarNarrow, string BarWide, string BarcodeHeight, string PrintCode, string BarCodeInterval, string content1, string content2, string content3, string CodeInterval, string font, string hor_factor, string ver_factor, string mode, Int32 Flag, string PrintLabelCopeNum)
+        {
+            #region 1
+            //// sample setting.
+            //Argox_Dll.B_Set_DebugDialog(1);//設定除錯環境,1 -> 除錯環境致能, 0 -> 除錯環境關閉
+            //Argox_Dll.B_Set_Originpoint(0, 0);//設定開始列印點,hor;水平邊界基點,ver: 垂直邊界基點。單位 dot.
+            ////設定轉印模式、啟動 Cutter 或 Peel
+            //// 1 -> 開啟熱轉，關閉 Cutter 和 Peel。
+            ////2 -> 開啟熱感，關閉 Cutter 和 Peel。
+            ////3 -> 開啟熱感和 Cutter，關閉 Peel。
+            ////4 -> 開啟熱感和 Peel，關閉 Cutter。
+            ////5 -> 開啟熱轉和 Cutter，關閉 Peel。
+            ////6 -> 開啟熱轉和 Peel，關閉 Cutter。     
+            //Argox_Dll.B_Select_Option(2);
+            //Argox_Dll.B_Set_Darkness(8);
+            //Argox_Dll.B_Del_Pcx("*");// delete all picture.
+            //Argox_Dll.B_WriteData(0, encAscII.GetBytes(Argox_Dll.sznop2), Argox_Dll.sznop2.Length);
+            //Argox_Dll.B_WriteData(1, encAscII.GetBytes(Argox_Dll.sznop1), Argox_Dll.sznop1.Length);
+
+            ////draw box.
+            //Argox_Dll.B_Draw_Box(20, 20, 4, 760, 560);
+            //Argox_Dll.B_Draw_Line('O', 400, 20, 4, 540);
+
+            ////print text, true type text.
+            //Argox_Dll.B_Prn_Text(30, 40, 0, 2, 1, 1, 'N', "PPLB Lib Example");
+            //Argox_Dll.B_Prn_Text_TrueType(30, 100, 30, "Arial", 1, 400, 0, 0, 0, "AA", "TrueType Font");//save in printer.
+            //Argox_Dll.B_Prn_Text_TrueType_W(30, 160, 20, 20, "Times New Roman", 1, 400, 0, 0, 0, "AB", "TT_W: 多字元測試");
+            //Argox_Dll.B_Prn_Text_TrueType_Uni(30, 220, 30, "Times New Roman", 1, 400, 0, 0, 0, "AC", Encoding.Unicode.GetBytes("TT_Uni: 多字元測試"), 1);//UTF-16
+            //encUnicode.GetBytes("\xFEFF", 0, 1, pbuf, 0);//UTF-16.//pbuf[0]=0xFF,pbuf[1]=0xFE;
+            //encUnicode.GetBytes("TT_UniB: 多字元測試", 0, 14, pbuf, 2);//copy mutil byte.
+            //encUnicode.GetBytes("\x0000", 0, 1, pbuf, 30);//null.//pbuf[30]=0x00,pbuf[31]=0x00;
+            //Argox_Dll.B_Prn_Text_TrueType_UniB(30, 280, 30, "Times New Roman", 1, 400, 0, 0, 0, "AD", pbuf, 0);//Byte Order Mark.
+
+            ////barcode.
+            //Argox_Dll.B_Prn_Barcode(420, 100, 0, "3", 2, 3, 40, 'B', "1234<+1>");//have a counter
+            //Argox_Dll.B_Bar2d_QR(420, 200, 1, 3, 'M', 'A', 0, 0, 0, "QR CODE");
+
+            ////picture.
+            //Argox_Dll.B_Get_Graphic_ColorBMP(420, 280, "bb.bmp");// Color bmp file.
+            //Argox_Dll.B_Get_Graphic_ColorBMPEx(420, 320, 200, 150, 2, "bb1", "bb.bmp");//180 angle.
+            //IntPtr himage = Argox_Dll.LoadImage(IntPtr.Zero, "bb.bmp", Argox_Dll.IMAGE_BITMAP, 0, 0, Argox_Dll.LR_LOADFROMFILE);
+            //Argox_Dll.B_Get_Graphic_ColorBMP_HBitmap(630, 280, 250, 80, 1, "bb2", himage);//90 angle.
+            //if (IntPtr.Zero != himage)
+            //    Argox_Dll.DeleteObject(himage);
+
+            //// output.
+            //Argox_Dll.B_Print_Out(2);// copy 2.
+
+            //// close port.
+            //Argox_Dll.B_ClosePrn();
+            #endregion
+
+            #region 判断当前打印机是否打开
+            //Test code start
+                // open port.
+                int nLen, ret, sw;
+                byte[] pbuf = new byte[128];
+                string ver, strmsg;
+                System.Text.Encoding encAscII = System.Text.Encoding.ASCII;
+                System.Text.Encoding encUnicode = System.Text.Encoding.Unicode;
+
+                // dll version.
+                ver = Argox_Dll.B_Get_DLL_Version(0);
+
+                // search port.
+                nLen = Argox_Dll.B_GetUSBBufferLen() + 1;
+                strmsg = "DLL ";
+                strmsg += ver;
+                strmsg += "\r\n";
+                if (nLen > 1)
+                {
+                    byte[] buf1, buf2;
+                    int len1 = 128, len2 = 128;
+                    buf1 = new byte[len1];
+                    buf2 = new byte[len2];
+                    Argox_Dll.B_EnumUSB(pbuf);
+                    Argox_Dll.B_GetUSBDeviceInfo(1, buf1, out len1, buf2, out len2);
+                    sw = 1;
+                    if (1 == sw)
+                    {
+                        ret = Argox_Dll.B_CreatePrn(12, encAscII.GetString(buf2, 0, len2));// open usb.
+                    }
+                    else
+                    {
+                        ret = Argox_Dll.B_CreateUSBPort(1);// must call B_GetUSBBufferLen() function fisrt.
+                    }
+                    if (0 != ret)
+                    {
+                        strmsg += "Open USB fail!";
+                    }
+                    else
+                    {
+                        strmsg += "Open USB:\r\nDevice name: ";
+                        strmsg += encAscII.GetString(buf1, 0, len1);
+                        strmsg += "\r\nDevice path: ";
+                        strmsg += encAscII.GetString(buf2, 0, len2);
+                        //sw = 2;
+                        if (2 == sw)
+                        {
+                            //Immediate Error Report.
+                            Argox_Dll.B_WriteData(1, encAscII.GetBytes("^ee\r\n"), 5);//^ee
+                            ret = Argox_Dll.B_ReadData(pbuf, 4, 1000);
+                        }
+                    }
+                }
+                else
+                {
+                    System.IO.Directory.CreateDirectory(Argox_Dll.szSavePath);
+                    ret = Argox_Dll.B_CreatePrn(0, Argox_Dll.szSaveFile);// open file.
+                    strmsg += "Open ";
+                    strmsg += Argox_Dll.szSaveFile;
+                    if (0 != ret)
+                    {
+                        strmsg += " file fail!";
+                    }
+                    else
+                    {
+                        strmsg += " file succeed!";
+                    }
+                }
+                MessageBox.Show(strmsg);
+                if (0 != ret)
+                    return;
+#endregion
+            #region 2
+
+            //////////Argox_Dll.B_CreatePrn(12, OutPutPort);
+
+            // sample setting.
+            Argox_Dll.B_Set_DebugDialog(Convert.ToInt32(nEnable));//設定除錯環境,1 -> 除錯環境致能, 0 -> 除錯環境關閉
+            Argox_Dll.B_Set_Originpoint(Convert.ToInt32(Arogox_hor), Convert.ToInt32(Arogox_ver));//設定開始列印點,hor;水平邊界基點,ver: 垂直邊界基點。單位 dot.
+            //object;設定轉印模式、啟動 Cutter 或 Peel
+            // 1 -> 開啟熱轉，關閉 Cutter 和 Peel。
+            //2 -> 開啟熱感，關閉 Cutter 和 Peel。
+            //3 -> 開啟熱感和 Cutter，關閉 Peel。
+            //4 -> 開啟熱感和 Peel，關閉 Cutter。
+            //5 -> 開啟熱轉和 Cutter，關閉 Peel。
+            //6 -> 開啟熱轉和 Peel，關閉 Cutter。     
+            Argox_Dll.B_Select_Option(Convert.ToInt32(Arogox_object));
+            Argox_Dll.B_Set_Darkness(Convert.ToInt32(darkness));// 設定熱感頭列印熱度
+            Argox_Dll.B_Del_Pcx("*");// delete all picture.
+            //用來立即將資料傳送出或暫時寫入暫存區中
+            //  IsImmediate;
+            //  1為立即傳送, 只傳pbuf中的內容至輸出埠; 
+            //  0為將資料加到暫存區後, 等呼叫B_Print_Out()時才傳送。
+            //pbuf;
+            //  要傳送的資料指標。
+            //length;
+            //  pbuf的資料長度。
+            Argox_Dll.B_WriteData(Convert.ToInt32(IsImmediate), encAscII.GetBytes(Arogox_pbuf), Arogox_pbuf.Length);//用來立即將資料傳送出或暫時寫入暫存區中
+
+            /////////////////////////////////////////////////////////////////////////////
+            char mPrintCode = ' ';
+            if (PrintCode == "N")
+            {
+                mPrintCode = 'N';
+            }
+            else if (PrintCode == "B")
+            {
+                mPrintCode = 'B';
+            }
+            #region 参数说明
+            //barcode.
+            //          x;
+            //  X 座標。
+            //y;
+            //  Y 座標。
+            //ori;
+            //  列印方向定位，'0'是 0°，'1'是90°、'2'是180°，'3'是270°
+            //       type;
+            //  條碼型式
+            //條碼型式、如下表：
+            //+========================================================================+
+            //| type|          條碼總類           | type|           條碼總類           |
+            //+========================================================================+
+            //|  0  | Code 128 UCC (shipping cont-|  E80| EAN-8                        |  
+            //|     | ainer code)                 +-----+------------------------------+
+            //+-----+-----------------------------+  E82| EAN-8 2 digit add-on         |
+            //|  1  | Code 128 subset A,B and C   +-----+------------------------------+
+            //+-----+-----------------------------+  E85| EAN-8 5 digit add-on         |
+            //|  1E | UCC/EAN                     +-----+------------------------------+
+            //+-----+-----------------------------+  K  | Codabar                      |
+            //|  2  | Interleaved 2 of 5          +-----+------------------------------+
+            //+-----+-----------------------------+  P  | Postnet                      |
+            //|  2C | Interleaved 2 of 5 with che-+-----+------------------------------+
+            //|     | ck sum digit                |  UA0| UPC-A                        |
+            //+-----+-----------------------------+-----+------------------------------+
+            //|  2D | Interleaved 2 of 5 with hum-|  UA2| UPC-A 2 digit add-on         |
+            //|     | an readable check digit     +-----+------------------------------+
+            //+-----+-----------------------------+  UA5| UPC-A 5 digit add-on         |
+            //|  2G | German Postcode             +-----+------------------------------+
+            //+-----+-----------------------------+  UE0| UPC-E                        |
+            //|  2M | Matrix 2 of 5               +-----+------------------------------+
+            //+-----+-----------------------------+  UE2| UPC-E 2 digit add-on         |
+            //|  2U | UPC Interleaved 2 of 5      +-----+------------------------------+
+            //+-----+-----------------------------+  UE5| UPC-E 5 digit add-on         |
+            //|  3  | Code 3 of 9                 +-----+------------------------------+
+            //+-----+-----------------------------+  R14|RSS-14                        |
+            //|  3C | Code 3 of 9 with check sum  +-----+------------------------------+
+            //|     | digit                       |  RL |RSS Limited                   |
+            //+-----+-----------------------------+-----+------------------------------+
+            //|  9  | Code 93                     |  RS |RSS Stacked                   | 
+            //+-----+-----------------------------+-----+------------------------------+
+            //|  E30| EAN-13                      |  RT |RSS Truncated                 |
+            //+-----+-----------------------------+-----+------------------------------+
+            //|  E32| EAN-13 2 digit add-on       |  RSO|RSS Stacked Omnidirectiona    |
+            //+-----+-----------------------------+-----+------------------------------+
+            //|  E35| EAN-13 5 digit add-on       |  REX|RSS Expanded                  |
+            //+-----+-----------------------------+-----+------------------------------+
+            //       n;
+            //  NARROW bar 寬度在最小單位，
+            //  若是RSS條碼，則此參數為條碼寬度的倍數，範圍為1~10，預設值為1。
+            //w;
+            //  WIDE bar 寬度在最小單位，
+            //  若是RSS條碼，則此參數為每列條碼可包含的最大資料區塊數量，只在使用RSS Expanded條碼時
+            //  有效，在其它類型的RSS條碼中則為無效參數，範圍為2~22，預設值為22，且此值必需為偶數。
+            //height;
+            //  條碼高度。
+            //  RSS條碼的標準的最小高度限制:
+            //  R14 -> 33 pixels
+            //  RL  -> 10 pixels
+            //  RS  -> 13 pixels
+            //  RT  -> 13 pixels
+            //  RSO -> 69 pixels
+            //  REX -> 34 pixels
+            //PrintCode;
+            //  當 human 是'N'時，則不列印文字，當 human 是'B'時，則列印可讀文字。
+            //data;
+            //  資料字串，於資料末端加上<Operation Number>，則可有跳號功能，
+            //  Operation: + or - 記號，Number: 0 ~ 32768 數值。
+            //  若在RSS需要加上2D(composite symbol)的資料時, 需加上'|'符號, 如1234567890123|123.
+            //  RSS條碼的最大數值限制:
+            //  R14 -> 9999999999999
+            //  RL  -> 1999999999999
+            //  RS  -> 9999999999999
+            //  RT  -> 9999999999999
+            //  RSO -> 9999999999999
+            //  REX -> 74 digits
+            #endregion
+
+            //打印STB ID
+            Argox_Dll.B_Prn_Barcode(Convert.ToInt32(X), Convert.ToInt32(Y), Convert.ToInt32(ori), EncodeType, Convert.ToInt32(BarNarrow), Convert.ToInt32(BarWide), Convert.ToInt32(BarcodeHeight), mPrintCode, content1 + "<+1>");//have a counter
+
+            #region 参数说明
+            //print text, true type text.
+             //印出一行文字和加上跳號功能
+             //  X 座標。
+             //  Y 座標。
+             //ori;
+             //  列印方向定位，'0'是 0°，'1'是90°、'2'是180°，'3'是270°
+             //font;
+             //  選擇字形，1～5 選擇常佇字形。
+             //hor_factor;
+             //  水平放大比例，範圍：1～24。
+             //ver_factor;
+             //  垂直放大比例，範圍：1～24。
+             //mode;
+             //  反白功能，'N'普通文字，'R'反白文字。
+             //data;
+             //  資料字串，當尾端資料加上 <Operation Number> 格式為加上跳號功能，
+            //  Operation: + or - 記號，Number: 0 ~ 32768 數值。
+            #endregion
+
+            char mMode;
+            if (mode == "N")
+            {
+                mMode='N';
+            }
+            else
+            {
+                mMode='Y';
+            }
+            //  打印 STB ID 码文
+            Argox_Dll.B_Prn_Text( Convert.ToInt32(X), Convert.ToInt32(Y)+Convert.ToInt32(CodeInterval),   Convert.ToInt32(ori),   Convert.ToInt32(font),   Convert.ToInt32(hor_factor),   Convert.ToInt32(ver_factor), mMode,  content1);
+            
+            //打印 CA ID 
+            Argox_Dll.B_Prn_Barcode(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), EncodeType, Convert.ToInt32(BarNarrow), Convert.ToInt32(BarWide), Convert.ToInt32(BarcodeHeight), mPrintCode, content2 + "<+1>");//have a counter
+            //打印CA ID 码文
+            Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode, content2);
+
+            if (Flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
+            {
+                //打印 SC ID 
+                Argox_Dll.B_Prn_Barcode(Convert.ToInt32(X), Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), EncodeType, Convert.ToInt32(BarNarrow), Convert.ToInt32(BarWide), Convert.ToInt32(BarcodeHeight), mPrintCode, content3 + "<+1>");//have a counter
+                //打印 SC ID 码文
+                Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode, content3);
+                //列印所有資料
+                //列印的份數
+                Argox_Dll.B_Print_Out(Convert.ToInt32(PrintLabelCopeNum));// copy 2.
+            }
+            else
+            {
+                Argox_Dll.B_Print_Out(Convert.ToInt32(PrintLabelCopeNum)+1);// copy 2.
+            }
+            // output.
+            //列印所有資料
+            //列印的份數
+            Argox_Dll.B_Print_Out(Convert.ToInt32(PrintLabelCopeNum));// copy 2.
+
+            // close port.
+            //關閉 Printer 工作
+            Argox_Dll.B_ClosePrn();
+            #endregion
+
         }
 
         /// <param name="xmlPath">xml字符串</param>

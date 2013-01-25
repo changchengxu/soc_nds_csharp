@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="gb2312"?>
 <root>
-  <CurrentPrinter>TSC TTP-344M Plus</CurrentPrinter>                 <!--选择当前打印机-->
+  <CurrentPrinter>TSC  TTP-344M Plus</CurrentPrinter>                 <!--选择当前打印机-->
   
-  <tscOutPutPort>TSC TTP-344M Plus</tscOutPutPort>  <!--TSC TTP-344M Plus-->
+  <tscOutPutPort>TSC  TTP-344M Plus</tscOutPutPort>  <!--TSC TTP-344M Plus-->
   <tscWidth>80</tscWidth>                           <!--卷标宽度-->
   <tscHeight>55</tscHeight>                         <!--卷标高度-->
   <tscPrintSpeed>4</tscPrintSpeed>                  <!--打印速度-->
@@ -40,7 +40,7 @@
   <POSTEKBarNarrow>3</POSTEKBarNarrow>                     <!--条形码窄单元的宽度（以点dots为单位）-->
   <POSTEKBarWide>3</POSTEKBarWide>                         <!--条形码宽单元的宽度（以点dots为单位）-->
   <POSTEKBarcodeHeight>80</POSTEKBarcodeHeight>            <!--条形码高度-->
-  <POSTEKPrintCode>N</POSTEKPrintCode>                     <!--打印码文-->
+  <POSTEKPrintCode>N</POSTEKPrintCode>                     <!--打印码文（如果用自定义的码文，则不打印）0为不打印，1为打印-->
   <POSTEKBarCodeInterval>140</POSTEKBarCodeInterval>       <!--条形码之间的间距-->
   <POSTEKCodeInterval>100</POSTEKCodeInterval>             <!--自定义码文与标签间隔-->
   <POSTEKFontHeight>40</POSTEKFontHeight>                  <!--字型高度-->
@@ -48,8 +48,32 @@
   <POSTEKFontType></POSTEKFontType>                        <!--字型名称-->
   <POSTEKFontAlign></POSTEKFontAlign>                      <!--字体旋转角度以及对齐方式-->
   <POSTEKFontWeight></POSTEKFontWeight>                    <!--字体粗细-->
-  <POSTEKPrintLabelSetNum>1</POSTEKPrintLabelSetNum>        <!--打印标签-->
-  <POSTEKPrintLabelCopeNum>1</POSTEKPrintLabelCopeNum>      <!--复制标签份数-->
+  <POSTEKPrintLabelSetNum>1</POSTEKPrintLabelSetNum>       <!--打印标签-->
+  <POSTEKPrintLabelCopeNum>1</POSTEKPrintLabelCopeNum>     <!--复制标签份数-->
+
+  <ArogoxOutPutPort>Arogox</ArogoxOutPutPort>                        <!--立像打印机-->
+  <ArogoxnEnable>1</ArogoxnEnable>                             <!--設定除錯環境,1 -> 除錯環境致能, 0 -> 除錯環境關閉-->
+  <Arogoxhor>0</Arogoxhor>                                     <!--設定開始列印點,hor;水平邊界基點。單位 dot-->
+  <Arogoxver>0</Arogoxver>                                     <!--設定開始列印點,ver: 垂直邊界基點。單位 dot-->
+  <Arogoxobject>2</Arogoxobject>                               <!--印表機功能選項-->
+  <Arogoxdarkness>8</Arogoxdarkness>                           <!--設定熱感頭列印熱度，範圍：0～15，內定是 8-->
+  <ArogoxIsImmediate>1</ArogoxIsImmediate>                     <!--用來立即將資料傳送出或暫時寫入暫存區中（1為立即傳送, 只傳pbuf中的內容至輸出埠，0為將資料加到暫存區後, 等呼叫B_Print_Out()時才傳送）-->
+  <Arogoxpbuf>nop_front\r\n</Arogoxpbuf>                       <!--用來立即將資料傳送出或暫時寫入暫存區中（要傳送的資料指標）-->
+  <ArogoxX>100</ArogoxX>                                       <!--X 座標-->
+  <ArogoxY>20</ArogoxY>                                        <!--Y 座標-->
+  <Arogoxori>0</Arogoxori>                                     <!--列印方向定位，'0'是 0°，'1'是90°、'2'是180°，'3'是270°-->
+  <ArogoxEncodeType>1</ArogoxEncodeType>                       <!--条码类型-->
+  <ArogoxBarNarrow>2</ArogoxBarNarrow>                         <!--条形码窄单元的宽度-->
+  <ArogoxBarWide>3</ArogoxBarWide>                             <!--条形码宽单元的宽度-->
+  <ArogoxBarcodeHeight>40</ArogoxBarcodeHeight>                <!--條碼高度-->
+  <ArogoxPrintCode>N</ArogoxPrintCode>                         <!--打印码文(當 human 是'N'時，則不列印文字，當 human 是'B'時，則列印可讀文字)-->
+  <ArogoxBarCodeInterval>140</ArogoxBarCodeInterval>           <!--条形码之间的间距-->
+  <ArogoxCodeInterval>100</ArogoxCodeInterval>                 <!--自定义码文与标签间隔-->
+  <Arogoxfont>2</Arogoxfont>                                   <!--選擇字形，1～5 選擇常佇字形-->
+  <Arogoxhor_factor>1</Arogoxhor_factor>                       <!--水平放大比例，範圍：1～24-->
+  <Arogoxver_factor>1</Arogoxver_factor>                       <!--垂直放大比例，範圍：1～24-->
+  <Arogoxmode>N</Arogoxmode>                                   <!--反白功能，'N'普通文字，'R'反白文字-->
+  <ArogoxPrintLabelCopeNum>1</ArogoxPrintLabelCopeNum>         <!--复制标签份数-->
 </root>
 
 

@@ -31,11 +31,9 @@ namespace soc_nds_csharp.DB_Manage
             temp.SetPixel(0, 0, this.BackColor);
             pic_barcode.Image = (Image)temp;
             cbEncodeType.SelectedIndex = 0;
-
-            variable_assignment();
         }
 
-        #region 为条形码参数变量赋值 并将值赋给相应控件
+        #region 为TSC TTP-344M Plus打印机参数变量赋值 并将值赋给相应控件
         string tscSensor = "";
         string tscVertical = "";
         string tscOffset = "";
@@ -48,30 +46,8 @@ namespace soc_nds_csharp.DB_Manage
         /// <summary>
         /// 为条形码参数变量赋值
         /// </summary>
-        private void variable_assignment()
+        private void TSCVariableInit()
         {
-            //HDIC_Command.tscWidth = "83";
-            //HDIC_Command.tscHeight = "58";
-            //HDIC_Command.tscPrintSpeed = "4";
-            //HDIC_Command.tscDensity = "8";
-            //HDIC_Command.tscX="200";
-            //HDIC_Command.tscY="100";
-            //HDIC_Command.tscEncodeType = "128";
-            //HDIC_Command.tscGeneratelabel = "1";
-            //HDIC_Command.tscRotate = "0";
-            //HDIC_Command.tscBar = "4";
-            //HDIC_Command.tscFlag = 1;
-
-            //txt_tscWidth.Text= HDIC_Command.tscWidth;
-            //txt_tscHeight.Text= HDIC_Command.tscHeight;
-            //txt_tscSpeed.Text=HDIC_Command.tscPrintSpeed;
-            //txt_tscDensity.Text=HDIC_Command.tscDensity;
-            //txt_tscX.Text=HDIC_Command.tscX;
-            //txt_tscY.Text=HDIC_Command.tscY;
-            //cbEncodeType.Text = HDIC_Command.tscEncodeType;
-            //chkGenerateLabel.Checked=Convert.ToBoolean(Convert.ToInt32(HDIC_Command.tscGeneratelabel));
-            //cbox_tscRotate.Text = HDIC_Command.tscRotate;
-            //txt_tscBar.Text = HDIC_Command.tscBar;
 
             DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"];
               if (dt.Rows.Count > 0)
@@ -103,6 +79,122 @@ namespace soc_nds_csharp.DB_Manage
                   tscPrintLabelSetNum = dt.Rows[0]["tscPrintLabelSetNum"].ToString().Trim();
                   tscPrintLabelCopeNum = dt.Rows[0]["tscPrintLabelCopeNum"].ToString().Trim();
               }
+        }
+        #endregion
+
+        #region 博思得打印机参数变量赋值 并将值赋给条形码打印机
+        string POSTEKOutPutPort = "";
+        string POSTEKPrintSpeed = "";
+        string POSTEKDensity = "";
+        string POSTEKHeight = "";
+        string POSTEKInterval = "";
+        string POSTEKWidth = "";
+        string POSTEKX = "";
+        string POSTEKY = "";
+        string POSTEKBarRotation = "";
+        string POSTEKEncodeType = "";
+        string POSTEKBarNarrow = "";
+        string POSTEKBarWide = "";
+        string POSTEKBarcodeHeight = "";
+        string POSTEKPrintCode = "";
+        string POSTEKBarCodeInterval = "";
+        string POSTEKCodeInterval = "";
+        string POSTEKFontHeight = "";
+        string POSTEKFontWidth = "";
+        string POSTEKFontType = "";
+        string POSTEKFontAlign = "";
+        string POSTEKFontWeight = "";
+        string POSTEKPrintLabelSetNum = "";
+        string POSTEKPrintLabelCopeNum = "";
+
+        private void POSTEKVariableInit()
+        {
+            using (DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"])
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    POSTEKOutPutPort = dt.Rows[0]["POSTEKOutPutPort"].ToString().Trim();
+                    POSTEKPrintSpeed = dt.Rows[0]["POSTEKPrintSpeed"].ToString().Trim();
+                    POSTEKDensity = dt.Rows[0]["POSTEKDensity"].ToString().Trim();
+                    POSTEKHeight = dt.Rows[0]["POSTEKHeight"].ToString().Trim();
+                    POSTEKInterval = dt.Rows[0]["POSTEKInterval"].ToString().Trim();
+                    POSTEKWidth = dt.Rows[0]["POSTEKWidth"].ToString().Trim();
+                    POSTEKX = dt.Rows[0]["POSTEKX"].ToString().Trim();
+                    POSTEKY = dt.Rows[0]["POSTEKY"].ToString().Trim();
+                    POSTEKBarRotation = dt.Rows[0]["POSTEKBarRotation"].ToString().Trim();
+                    POSTEKEncodeType = dt.Rows[0]["POSTEKEncodeType"].ToString().Trim();
+                    POSTEKBarNarrow = dt.Rows[0]["POSTEKBarNarrow"].ToString().Trim();
+                    POSTEKBarWide = dt.Rows[0]["POSTEKBarWide"].ToString().Trim();
+                    POSTEKBarcodeHeight = dt.Rows[0]["POSTEKBarcodeHeight"].ToString().Trim();
+                    POSTEKPrintCode = dt.Rows[0]["POSTEKPrintCode"].ToString().Trim();
+                    POSTEKBarCodeInterval = dt.Rows[0]["POSTEKBarCodeInterval"].ToString().Trim();
+                    POSTEKCodeInterval = dt.Rows[0]["POSTEKCodeInterval"].ToString().Trim();
+                    POSTEKFontHeight = dt.Rows[0]["POSTEKFontHeight"].ToString().Trim();
+                    POSTEKFontWidth = dt.Rows[0]["POSTEKFontWidth"].ToString().Trim();
+                    POSTEKFontType = dt.Rows[0]["POSTEKFontType"].ToString().Trim();
+                    POSTEKFontAlign = dt.Rows[0]["POSTEKFontAlign"].ToString().Trim();
+                    POSTEKFontWeight = dt.Rows[0]["POSTEKFontWeight"].ToString().Trim();
+                    POSTEKPrintLabelSetNum = dt.Rows[0]["POSTEKPrintLabelSetNum"].ToString().Trim();
+                    POSTEKPrintLabelCopeNum = dt.Rows[0]["POSTEKPrintLabelCopeNum"].ToString().Trim();
+                }
+            }
+        }
+        #endregion
+
+        #region 立像打印机参数变量赋值 并将值赋给条形码打印机
+        string ArogoxOutPutPort = "";
+        string ArogoxnEnable = "";
+        string Arogoxhor = "";
+        string Arogoxver = "";
+        string Arogoxobject = "";
+        string Arogoxdarkness = "";
+        string ArogoxIsImmediate = "";
+        string Arogoxpbuf = "";
+        string ArogoxX = "";
+        string ArogoxY = "";
+        string Arogoxori = "";
+        string ArogoxEncodeType = "";
+        string ArogoxBarNarrow = "";
+        string ArogoxBarWide = "";
+        string ArogoxBarcodeHeight = "";
+        string ArogoxPrintCode = "";
+        string ArogoxBarCodeInterval = "";
+        string ArogoxCodeInterval = "";
+        string Arogoxfont = "";
+        string Arogoxhor_factor = "";
+        string Arogoxver_factor = "";
+        string Arogoxmode = "";
+        string ArogoxPrintLabelCopeNum = "";
+        private void ArogoxVariableInit()
+        {
+            using (DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"])
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    ArogoxOutPutPort = dt.Rows[0]["ArogoxOutPutPort"].ToString().Trim();
+                    Arogoxhor = dt.Rows[0]["Arogoxhor"].ToString().Trim();
+                    Arogoxver = dt.Rows[0]["Arogoxver"].ToString().Trim();
+                    Arogoxobject = dt.Rows[0]["Arogoxobject"].ToString().Trim();
+                    Arogoxdarkness = dt.Rows[0]["Arogoxdarkness"].ToString().Trim();
+                    ArogoxIsImmediate = dt.Rows[0]["ArogoxIsImmediate"].ToString().Trim();
+                    Arogoxpbuf = dt.Rows[0]["Arogoxpbuf"].ToString().Trim();
+                    ArogoxX = dt.Rows[0]["ArogoxX"].ToString().Trim();
+                    ArogoxY = dt.Rows[0]["ArogoxY"].ToString().Trim();
+                    Arogoxori = dt.Rows[0]["Arogoxori"].ToString().Trim();
+                    ArogoxEncodeType = dt.Rows[0]["ArogoxEncodeType"].ToString().Trim();
+                    ArogoxBarNarrow = dt.Rows[0]["ArogoxBarNarrow"].ToString().Trim();
+                    ArogoxBarWide = dt.Rows[0]["ArogoxBarWide"].ToString().Trim();
+                    ArogoxBarcodeHeight = dt.Rows[0]["ArogoxBarcodeHeight"].ToString().Trim();
+                    ArogoxPrintCode = dt.Rows[0]["ArogoxPrintCode"].ToString().Trim();
+                    ArogoxBarCodeInterval = dt.Rows[0]["ArogoxBarCodeInterval"].ToString().Trim();
+                    ArogoxCodeInterval = dt.Rows[0]["ArogoxCodeInterval"].ToString().Trim();
+                    Arogoxfont = dt.Rows[0]["Arogoxfont"].ToString().Trim();
+                    Arogoxhor_factor = dt.Rows[0]["Arogoxhor_factor"].ToString().Trim();
+                    Arogoxver_factor = dt.Rows[0]["Arogoxver_factor"].ToString().Trim();
+                    Arogoxmode = dt.Rows[0]["Arogoxmode"].ToString().Trim();
+                    ArogoxPrintLabelCopeNum = dt.Rows[0]["ArogoxPrintLabelCopeNum"].ToString().Trim();
+                }
+            }
         }
         #endregion
 
@@ -262,7 +354,34 @@ namespace soc_nds_csharp.DB_Manage
                 flag = 0;
             }
 
-            HDIC_Func.TSCPrinter(txt_OutPutPort.Text.Trim(), txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), tscSensor, tscVertical, tscOffset, txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), tscFontType, tscFontRotation, cbEncodeType.SelectedItem.ToString().Trim(), tscBarcodeHeight, Convert.ToString((int)chk_PrintBarCode.CheckState), txt_codeInterval.Text.Trim(), txt_FontMagnify1.Text.Trim(), txt_FontMagnify2.Text.Trim(), txt_barCodeInterval.Text.Trim(), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBarNarrow.Text.Trim(), tscBarWide, flag, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+       
+        /////////////////////////////////////
+            string CurrentPrinter = "";
+            using (DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\BarcodeXml.xml").Tables["root"])
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    CurrentPrinter = dt.Rows[0]["CurrentPrinter"].ToString().Trim();
+                }
+
+                if (CurrentPrinter == dt.Rows[0]["tscOutPutPort"].ToString().Trim())//TSC TTP-344M Plus 打印机
+                {
+                    TSCVariableInit();
+                    HDIC_Func.TSCPrinter(txt_OutPutPort.Text.Trim(), txt_tscWidth.Text.Trim(), txt_tscHeight.Text.Trim(), txt_tscSpeed.Text.Trim(), txt_tscDensity.Text.Trim(), tscSensor, tscVertical, tscOffset, txt_tscX.Text.Trim(), txt_tscY.Text.Trim(), tscFontType, tscFontRotation, cbEncodeType.SelectedItem.ToString().Trim(), tscBarcodeHeight, Convert.ToString((int)chk_PrintBarCode.CheckState), txt_codeInterval.Text.Trim(), txt_FontMagnify1.Text.Trim(), txt_FontMagnify2.Text.Trim(), txt_barCodeInterval.Text.Trim(), txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), cbox_tscRotate.SelectedItem.ToString().Trim(), txt_tscBarNarrow.Text.Trim(), tscBarWide, flag, tscPrintLabelSetNum, tscPrintLabelCopeNum);
+
+                }
+                else if (CurrentPrinter == dt.Rows[0]["POSTEKOutPutPort"].ToString().Trim())//博思得打印机
+                {
+                    POSTEKVariableInit();
+                    HDIC_Func.POSTEKPrinter(POSTEKOutPutPort, POSTEKPrintSpeed, POSTEKDensity, POSTEKHeight, POSTEKInterval, POSTEKWidth, POSTEKX, POSTEKY, POSTEKBarRotation, POSTEKEncodeType, POSTEKBarNarrow, POSTEKBarWide, POSTEKBarcodeHeight, POSTEKPrintCode, POSTEKBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), POSTEKCodeInterval, POSTEKFontHeight, POSTEKFontWidth, POSTEKFontType, POSTEKFontAlign, POSTEKFontWeight, flag, POSTEKPrintLabelSetNum, POSTEKPrintLabelCopeNum);
+                }
+                else if (CurrentPrinter == dt.Rows[0]["ArogoxOutPutPort"].ToString().Trim())//立像打印机
+                {
+                    ArogoxVariableInit();
+                    HDIC_Func.ArogoxPrinter(ArogoxOutPutPort, ArogoxnEnable, Arogoxhor, Arogoxver, Arogoxobject, Arogoxdarkness, ArogoxIsImmediate, Arogoxpbuf, ArogoxX, ArogoxY, Arogoxori, ArogoxEncodeType, ArogoxBarNarrow, ArogoxBarWide, ArogoxBarcodeHeight, ArogoxPrintCode, ArogoxBarCodeInterval, txt_STBID.Text.Trim(), txt_CAID.Text.Trim(), txt_SmartCardID.Text.Trim(), ArogoxCodeInterval, Arogoxfont, Arogoxhor_factor, Arogoxver_factor, Arogoxmode, flag, ArogoxPrintLabelCopeNum);
+                }
+            }
+        
         }
 
         #endregion

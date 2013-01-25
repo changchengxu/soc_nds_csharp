@@ -31,7 +31,7 @@ namespace soc_nds_csharp.Station_Operation
         String CAID ;
         Int32 ReceiveLength = 0;//接收串口数据包中数据的长度
 
-        System.Threading.Semaphore mSemaphore;//用于为扫描枪设置超时时间
+        ////System.Threading.Semaphore mSemaphore;//用于为扫描枪设置超时时间
 
         public gf_CheckSerializer()
         {
@@ -56,7 +56,7 @@ namespace soc_nds_csharp.Station_Operation
         private void gf_CheckSerializer_Load(object sender, EventArgs e)
         {
 
-            mSemaphore = new System.Threading.Semaphore(0, 1);
+            ////mSemaphore = new System.Threading.Semaphore(0, 1);
 
             //打开串口
             //mSpSlot = new Uart();
@@ -554,14 +554,14 @@ namespace soc_nds_csharp.Station_Operation
 
             BarCode.Start();  //开始监听扫描枪
 
-            if (!mSemaphore.WaitOne(60000))//设定1分钟为超时 目前没有写成函数（原因是与别的主调函数冲突了）
-            {
-                richtxt_connect.Text = "超时! 没有在规定的时间内扫描标签序列号";
-                richtxt_Tips.Text += "超时! 没有在规定的时间内扫描标签序列号\r\n";
-                btn_begin.Enabled = true;
-                btn_begin.Focus();
-                BarCode.Stop();
-            }
+            ////if (!mSemaphore.WaitOne(60000))//设定1分钟为超时 目前没有写成函数（原因是与别的主调函数冲突了）
+            ////{
+                ////richtxt_connect.Text = "超时! 没有在规定的时间内扫描标签序列号";
+                ////richtxt_Tips.Text += "超时! 没有在规定的时间内扫描标签序列号\r\n";
+                ////btn_begin.Enabled = true;
+                ////btn_begin.Focus();
+                ////BarCode.Stop();
+            ////}
          
             return 0;
         }
@@ -926,7 +926,7 @@ namespace soc_nds_csharp.Station_Operation
                             {
                                 richtxt_connect.Text = "校验成功,请进行下一台!";
                                 richtxt_Tips.Text += "校验成功,请进行下一台!\r\n";
-                                mSemaphore.Release();
+                                ////mSemaphore.Release();
                             }
                         }
                         catch (System.Exception ex)
@@ -955,9 +955,9 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_CAID.Text.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txt_CAID.Text.Trim()))
             {
-                mSemaphore.Release();
+                ////mSemaphore.Release();
                 printInfo(txt_CAID.Text.Trim());
-                SemaphoreWaitOne("加密序列化");
+                ////SemaphoreWaitOne("加密序列化");
             }
         }
         /// <summary>
@@ -969,9 +969,9 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_STBID.Text.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txt_STBID.Text.Trim()))
             {
-                mSemaphore.Release();
+                ////mSemaphore.Release();
                 printInfo(txt_STBID.Text.Trim());
-                SemaphoreWaitOne("机顶盒序列号");
+                ////SemaphoreWaitOne("机顶盒序列号");
             }
         }
         /// <summary>
@@ -983,9 +983,9 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_SmartCardID.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()))
             {
-                mSemaphore.Release();
+                ////mSemaphore.Release();
                 printInfo(txt_SmartCardID.Text.Trim());
-                SemaphoreWaitOne("智能卡号");
+                ////SemaphoreWaitOne("智能卡号");
             }
         }
 
@@ -994,14 +994,15 @@ namespace soc_nds_csharp.Station_Operation
         /// </summary>
         private void SemaphoreWaitOne(string info)
         {
-            if (!mSemaphore.WaitOne(60000))//设定1分钟为超时
-            {
-                richtxt_connect.Text = "超时! 没有在规定的时间内扫描"+info;
-                richtxt_Tips.Text += "超时! 没有在规定的时间内扫描"+info+"\r\n";
-                btn_begin.Enabled = true;
-                btn_begin.Focus();
-                BarCode.Stop();
-            }
+            ////if (!mSemaphore.WaitOne(60000))//设定1分钟为超时
+            ////{
+                ////this.richtxt_connect.ForeColor = System.Drawing.Color.Red;
+                ////richtxt_connect.Text = "超时! 没有在规定的时间内扫描" + info;
+                ////richtxt_Tips.Text += "超时! 没有在规定的时间内扫描"+info+"\r\n";
+                ////btn_begin.Enabled = true;
+                ////btn_begin.Focus();
+                ////BarCode.Stop();
+            ////}
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

@@ -25,7 +25,7 @@ namespace soc_protocol
 
    public enum SERCOM_TYPE
     {
-       COM_NULL = 0,
+    COM_NULL = 0,
 	COM_START,
 	COM_CONNECT = 0x10,
 	COM_ASKHAND,
