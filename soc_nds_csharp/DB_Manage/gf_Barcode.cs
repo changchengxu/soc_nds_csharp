@@ -82,7 +82,7 @@ namespace soc_nds_csharp.DB_Manage
         }
         #endregion
 
-        #region 博思得打印机参数变量赋值 并将值赋给条形码打印机
+        #region 博思得（POSTEK）打印机参数变量赋值 并将值赋给条形码打印机
         string POSTEKOutPutPort = "";
         string POSTEKPrintSpeed = "";
         string POSTEKDensity = "";
@@ -141,7 +141,7 @@ namespace soc_nds_csharp.DB_Manage
         }
         #endregion
 
-        #region 立像打印机参数变量赋值 并将值赋给条形码打印机
+        #region 立像（ARGOX）打印机参数变量赋值 并将值赋给条形码打印机
         string ArogoxOutPutPort = "";
         string ArogoxnEnable = "";
         string Arogoxhor = "";

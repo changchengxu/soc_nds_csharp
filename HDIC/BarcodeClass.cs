@@ -366,4 +366,100 @@ namespace HDICPrinter
             int dwTimeoutms);
     }
 
+    //斑马打印机 对错待鉴定
+    /// <summary>
+    /// /// LPT端口控制类
+    /// </summary>
+    public class Zebra
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        private struct OVERLAPPED
+        {
+            int Internal;
+            int InternalHigh;
+            int Offset;
+            int OffSetHigh;
+            int hEvent;
+        }
+
+        [DllImport("kernel32.dll")]
+        private static extern int CreateFile(
+        string lpFileName,
+        uint dwDesiredAccess,
+        int dwShareMode,
+        int lpSecurityAttributes,
+        int dwCreationDisposition,
+        int dwFlagsAndAttributes,
+        int hTemplateFile
+        );
+
+
+        [DllImport("kernel32.dll")]
+        private static extern bool WriteFile(
+        int hFile,
+        byte[] lpBuffer,
+        int nNumberOfBytesToWrite,
+        out int lpNumberOfBytesWritten,
+        out OVERLAPPED lpOverlapped
+        );
+
+
+        [DllImport("kernel32.dll")]
+        private static extern bool CloseHandle(
+        int hObject
+        );
+
+
+
+        private int iHandle;
+        /// <summary>
+        /// 打开LPT端口的方法
+        /// </summary>
+        /// <returns>返回打开是否成功</returns>
+        public bool Open()
+        {
+            iHandle = CreateFile("lpt1", 0x40000000, 0, 0, 3, 0, 0);
+
+            if (iHandle != -1)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("端口已经打开，不需要重复操作");
+                return false;
+            }
+
+        }
+
+        /// <summary>
+        /// 向端口发送字符串(控制字符集)
+        /// </summary>
+        /// <param name="Mystring">控制字符集</param>
+        /// <returns>是否成功发送</returns>
+        public bool Write(String Mystring)
+        {
+
+
+            if (iHandle != -1)
+            {
+                int i;
+                OVERLAPPED x;
+                byte[] mybyte = System.Text.Encoding.Default.GetBytes(Mystring);
+                return WriteFile(iHandle, mybyte, mybyte.Length, out i, out x);
+            }
+            else
+            {
+                MessageBox.Show("打开并口失败！");
+                return false;
+            }
+        }
+
+        //关闭端口
+        public bool Close()
+        {
+            return CloseHandle(iHandle);
+        }
+    }
+
 }

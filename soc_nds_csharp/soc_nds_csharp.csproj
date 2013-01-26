@@ -393,9 +393,6 @@
     <Content Include="config\Serial.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="config\SerialToolsCheck.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="temp.ico" />
     <EmbeddedResource Include="Winpplb.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

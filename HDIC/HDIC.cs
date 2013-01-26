@@ -919,19 +919,19 @@ namespace HDICSoft.Func
             //打印STBID条形码
             PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
             //打印码文
-            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth),FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth),FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", "STB ID"+content1);//打印一行 TrueType Font文字
 
             //打印CAID条形码
-            PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
+            PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content2);//打印一个条码
             //打印码文
-            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+            PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", "CA ID"+content2);//打印一行 TrueType Font文字
 
             if (Flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
             {
                 //打印SC ID条形码
-                PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content1);//打印一个条码
+                PrintLab.PTK_DrawBarcode(Convert.ToUInt32(X), Convert.ToUInt32(Y), Convert.ToUInt32(BarRotation), EncodeType, Convert.ToUInt32(BarNarrow), Convert.ToUInt32(BarWide), Convert.ToUInt32(BarcodeHeight), MPrintCode, content3);//打印一个条码
                 //打印码文
-                PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+2*Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", content1);//打印一行 TrueType Font文字
+                PrintLab.PTK_DrawTextTrueTypeW(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+2*Convert.ToInt32(BarCodeInterval), Convert.ToInt32(FontHeight), Convert.ToInt32(FontWidth), FontType, Convert.ToInt32(FontAlign), Convert.ToInt32(FontWeight), false, true, true, "1", "SC ID"+content3);//打印一行 TrueType Font文字
                 PrintLab.PTK_SetPagePrintCount(Convert.ToUInt32(PrintLabelSetNum), Convert.ToUInt32(PrintLabelCopeNum));//命令打印机执行打印 村村通 工作
             }
             else
@@ -1246,19 +1246,19 @@ namespace HDICSoft.Func
                 mMode='Y';
             }
             //  打印 STB ID 码文
-            Argox_Dll.B_Prn_Text( Convert.ToInt32(X), Convert.ToInt32(Y)+Convert.ToInt32(CodeInterval),   Convert.ToInt32(ori),   Convert.ToInt32(font),   Convert.ToInt32(hor_factor),   Convert.ToInt32(ver_factor), mMode,  content1);
+            Argox_Dll.B_Prn_Text( Convert.ToInt32(X), Convert.ToInt32(Y)+Convert.ToInt32(CodeInterval),   Convert.ToInt32(ori),   Convert.ToInt32(font),   Convert.ToInt32(hor_factor),   Convert.ToInt32(ver_factor), mMode, "STB ID"+ content1);
             
             //打印 CA ID 
             Argox_Dll.B_Prn_Barcode(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), EncodeType, Convert.ToInt32(BarNarrow), Convert.ToInt32(BarWide), Convert.ToInt32(BarcodeHeight), mPrintCode, content2 + "<+1>");//have a counter
             //打印CA ID 码文
-            Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode, content2);
+            Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval)+Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode,"CA ID"+ content2);
 
             if (Flag == 0)//1，表示不用打印智能卡号（户户通打印八份） ；0表示打印智能卡号（村村通打印七份）
             {
                 //打印 SC ID 
                 Argox_Dll.B_Prn_Barcode(Convert.ToInt32(X), Convert.ToInt32(Y) + 2 * Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), EncodeType, Convert.ToInt32(BarNarrow), Convert.ToInt32(BarWide), Convert.ToInt32(BarcodeHeight), mPrintCode, content3 + "<+1>");//have a counter
                 //打印 SC ID 码文
-                Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode, content3);
+                Argox_Dll.B_Prn_Text(Convert.ToInt32(X), Convert.ToInt32(Y) + Convert.ToInt32(CodeInterval) + 2 * Convert.ToInt32(BarCodeInterval), Convert.ToInt32(ori), Convert.ToInt32(font), Convert.ToInt32(hor_factor), Convert.ToInt32(ver_factor), mMode, "SC ID"+content3);
                 //列印所有資料
                 //列印的份數
                 Argox_Dll.B_Print_Out(Convert.ToInt32(PrintLabelCopeNum));// copy 2.
@@ -1277,6 +1277,87 @@ namespace HDICSoft.Func
             Argox_Dll.B_ClosePrn();
             #endregion
 
+        }
+
+       /// <summary>
+       /// 斑马打印机
+       /// </summary>
+       /// <param name="content1"></param>
+       /// <param name="content2"></param>
+       /// <param name="content3"></param>
+       public static void ZebraPrinter(string content1,string content2,string content3)
+        {
+            #region 1
+            ////实例化LPT端口操作类
+            //Zebra Mylpt = new Zebra();
+            //Mylpt.Open();
+            //try
+            //{
+
+            //    //这里使用的是EAN-13码（^BE=EAN-13码）
+            //    //N=不旋转，空的=条码高度（默认由BY来设置），Y=打印注释行，Y=打印校验位
+            //    //^BY=条码字段默认参数设置2=窄条的宽度【点阵】，2.0=宽条与窄条的比例（默认=3.0有效范围——2.0到3.0【增量0.1】），95=条码的高度   
+            //    //^FD+"字符串"+^FS  打印内容  
+            //    //^A0B(A零B)表示字体的设置,数字为字符的高度和宽度                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+            //    Mylpt.Write("^XA~TA000~JSN^LT0^MMT^MNW^MTT^PON^PMN^LH0,0^JMA^PR4,4^MD30^JUS^LRN^CI0^XZ^XA^LL1199^FT572,415^A0B,48,72^FH\\^FD" +
+            //        this.textBox6.Text.Trim() + "kg" + "^FS^FT578,920^A0B,48,57^FH\\^FD" +
+            //        this.textBox5.Text.Trim() + "^FS^FT462,520^A0B,41,72^FH\\^FD" +
+            //        this.textBox4.Text.Trim() + "%" + "^FS^FT465,775^A0B,46,72^FH\\^FD" +
+            //        this.textBox3.Text.Trim() + "%" + "^FS^FT360,840^A0B,50,81^FH\\^FD" +
+            //        this.textBox2.Text.Trim() + "^FS^FT254,920^A0B,75,124^FD" +
+            //        this.textBox1.Text.Trim() + "^FS^BY3,2.1,95^FT339,165^BEN,,Y,Y^FD6948351700016^FS^PQ1,0,1,Y^XZ");
+            //    Mylpt.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("打开LPT端口时发生错误，原因" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            #endregion
+           //^PQ（打印数量）指令有几个打印操作。它控制打印标签数量，打印机暂停打印标签数量，每个序列号复制数量。
+            //^PQ50，10，1，Y：打印总数50张标签每个序列号只打一张。打印每组数量是10，但在每组间不暂停。
+            #region 2
+            //实例化LPT端口操作类
+            Zebra Mylpt = new Zebra();
+            Mylpt.Open();
+            try
+            {
+
+                //这里使用的是EAN-13码（^BE=EAN-13码）
+                //N=不旋转，空的=条码高度（默认由BY来设置），Y=打印注释行，Y=打印校验位
+                //^BY=条码字段默认参数设置2=窄条的宽度【点阵】，2.0=宽条与窄条的比例（默认=3.0有效范围——2.0到3.0【增量0.1】），95=条码的高度   
+                //^FD+"字符串"+^FS  打印内容  
+                //^A0B(A零B)表示字体的设置,数字为字符的高度和宽度                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                Mylpt.Write("^XA~TA000~JSN^LT0^MMT^MNW^MTT^PON^PMN^LH0,0^JMA^PR4,4^MD30^JUS^LRN^CI0^XZ^XA^LL1199^FT572,415^A0B,48,72^FH\\^FD" +
+                   "STB ID"+content1+ "^FS^FT578,920^A0B,48,57^FH\\^FD" +
+                   "CA ID"+content2+ "^FS^FT462,520^A0B,41,72^FH\\^FD" +
+                   "SC ID"+content3 + "%" + "^FS^FT465,775^A0B,46,72^FH\\^FS^BY3,2.1,95^FT339,165^BEN,,Y,Y^FD6948351700016^FS^PQ1,0,1,Y^XZ");
+                Mylpt.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("打开LPT端口时发生错误，原因" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            #endregion
+
+           //^XA 条码打印指令开始
+           //^MD30 设置色带颜色的深度，取值范围从-30到30
+           //^LH60,10设置条码纸的边距
+           //^FO20,10 设置条码左上角的位置
+           //^ACN,18,10 设置字体
+           //^BY1.4,3,50 设置条码样式。1.4是条码的缩放级别，3是条码中粗细柱的比例，50是条码高度
+           //^BCN,,Y,N 打印code128的指令
+           //^FD123^FS 设置要打印的内容 ^FD是要打印的条码内容 ^FS表示换行
+           //^AON  字体方向
+           //^XZ 条码打印指令结束
+           //^MCY 清除以前的标签
+           //^LRN 不反向打印（N表示不反向）
+           //^FWN 字体方向为正常（N表示正常)
+           //^CFD 采用的字符字体
+           //^PR 打印速度
+           //^MNY 纸类型类Y表示非连续纸
+           //^MTT纸种类T表示热传印纸
+           //^MMT 打印模式T表示撕下
+           //^MD 标签深度（值在-30到30之间）
         }
 
         /// <param name="xmlPath">xml字符串</param>
@@ -1702,6 +1783,51 @@ namespace HDICSoft.Func
             return returnStr;
         }
 
+        #region 密码加密（异或算法）暂时没有用到
+        /// <summary>
+        /// 加密
+        /// </summary>
+        /// <param name="str">待加密的明文字符串</param>
+        /// <param name="key">密钥</param>
+        /// <returns>加密后的字符串</returns>
+        public static string EncryptStr(string str, string key)
+        {
+            byte[] bStr = (new UnicodeEncoding()).GetBytes(str);
+            byte[] bKey = (new UnicodeEncoding()).GetBytes(key);
+
+            for (int i = 0; i < bStr.Length; i++)
+            {
+                for (int j = 0; j < bKey.Length; j++)
+                {
+                    bStr[i] = Convert.ToByte(bStr[i] ^ bKey[j]);
+                }
+            }
+            return (new UnicodeEncoding()).GetString(bStr).TrimEnd('\0');
+        }
+
+        private static string EncryptString(string str, string key)
+        {
+            //检验加密解密，加密解密失败，返回 null
+            string s1 = EncryptStr(str, key);
+            string s2 = EncryptStr(s1, key);
+            if (s2 != str)
+                return null;
+            else
+                return s1;
+        }
+
+        /// <summary>
+        /// 解密
+        /// </summary>
+        /// <param name="str">待解密的密文字符串</param>
+        /// <param name="key">密钥</param>
+        /// <returns>解密后的明文</returns>
+        public static string DecryptString(string str, string key)
+        {
+            return EncryptStr(str, key);
+        }
+
+        #endregion
 
         //#region 下面加密和解密复制考勤机 长城暂时屏蔽
         ///// <summary>

@@ -24,6 +24,18 @@ namespace soc_nds_csharp
        // List<byte> mReadBuffer1 = new List<byte>(2048);
         private void gf_main_Load(object sender, EventArgs e)
         {
+            using (DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\Serial.xml").Tables["com"])
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    string dtTime = DateTime.Now.ToString("yyyyMMdd");
+                    string pwd = (Convert.ToInt32(dtTime) ^ 123456).ToString();
+                    if (dt.Rows[0]["password"].ToString().Trim()==pwd)
+                    {
+                        MessageBox.Show("password ok");
+                    }
+                }
+            }
             ////string chiptxt = "2164262913";
             ////string str = Convert.ToString(Convert.ToInt64(chiptxt), 16);
             ////long b = Convert.ToInt64(str);

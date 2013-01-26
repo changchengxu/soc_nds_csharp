@@ -1702,6 +1702,51 @@ namespace HDICSoft.Func
             return returnStr;
         }
 
+        #region 密码加密（异或算法）暂时没有用到
+        /// <summary>
+        /// 加密
+        /// </summary>
+        /// <param name="str">待加密的明文字符串</param>
+        /// <param name="key">密钥</param>
+        /// <returns>加密后的字符串</returns>
+        public static string EncryptStr(string str, string key)
+        {
+            byte[] bStr = (new UnicodeEncoding()).GetBytes(str);
+            byte[] bKey = (new UnicodeEncoding()).GetBytes(key);
+
+            for (int i = 0; i < bStr.Length; i++)
+            {
+                for (int j = 0; j < bKey.Length; j++)
+                {
+                    bStr[i] = Convert.ToByte(bStr[i] ^ bKey[j]);
+                }
+            }
+            return (new UnicodeEncoding()).GetString(bStr).TrimEnd('\0');
+        }
+
+        private static string EncryptString(string str, string key)
+        {
+            //检验加密解密，加密解密失败，返回 null
+            string s1 = EncryptStr(str, key);
+            string s2 = EncryptStr(s1, key);
+            if (s2 != str)
+                return null;
+            else
+                return s1;
+        }
+
+        /// <summary>
+        /// 解密
+        /// </summary>
+        /// <param name="str">待解密的密文字符串</param>
+        /// <param name="key">密钥</param>
+        /// <returns>解密后的明文</returns>
+        public static string DecryptString(string str, string key)
+        {
+            return EncryptStr(str, key);
+        }
+
+        #endregion
 
         //#region 下面加密和解密复制考勤机 长城暂时屏蔽
         ///// <summary>
