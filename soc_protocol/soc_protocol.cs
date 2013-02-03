@@ -25,36 +25,43 @@ namespace soc_protocol
 
    public enum SERCOM_TYPE
     {
-    COM_NULL = 0,
-	COM_START,
-	COM_CONNECT = 0x10,
-	COM_ASKHAND,
-	COM_HANDINFO,
-	COM_OK,
-	COM_RESET,
-	//COM_ALLINFO = 0x20,	/* chipid, manufactureid, modelid, hardwareid */
+        COM_NULL = 0,
+        COM_START,
+        COM_CONNECT = 0x10,
+        COM_ASKHAND,
+        COM_HANDINFO,
+        COM_OK,
+        COM_RESET,
+        //COM_ALLINFO = 0x20,	/* chipid, manufactureid, modelid, hardwareid */
 
-    COM_CHIPID = 0x20,
-    COM_MFID,
-    COM_MDID,
-    COM_HWID,
-    COM_STBTYPE,					/* 00 */
-    COM_CAID,
-    COM_STBIDPC,       				/*序列化工位中，上位机拼接STBID后 发送给下位机（以ASCII码格式发送）*/
-    COM_STBIDPCOK,  				/*序列化工位中，下位机收到STBID成功后返回给上位机作为成功标识*/
-    COM_STBIDSTB,     				/*校验工位中，下位机将STBID(以ASCII码发送)发送给上位机，用于校验*/
+        COM_CHIPID = 0x20,
+        COM_MFID,
+        COM_MDID,
+        COM_HWID,
+        COM_STBTYPE,					/* 00 */
+        COM_CAID,
+        COM_STBIDPC,       				/*序列化工位中，上位机拼接STBID后 发送给下位机（以ASCII码格式发送）*/
+        COM_STBIDPCOK,  				/*序列化工位中，下位机收到STBID成功后返回给上位机作为成功标识*/
+        COM_STBIDSTB,     				/*校验工位中，下位机将STBID(以ASCII码发送)发送给上位机，用于校验*/
 
-    COM_FLASHWRITELICENSE = 0x30, 	/*序列化工位中，上位机向下位机发送序列化数据（88个字节）*/
-    COM_FLASHWRITELICENSEOK,		/*序列化工位中，下位机写序列化数据成功后返回给上位机作为成功标识*/
-    COM_GETLICENSE,					/*flash上授权信息*/
-    COM_GETLICENSEOK,				/*flash上授权信息ok*/
-    COM_FLASHSTATUS,            	/*校验工位中，获取Flash当前写保护状态（0为未写保护/1为写保护）*/
-    COM_SECURITYSTATUS,            	/*校验工位中，获取高级安全状态（0为未打开/1为已打开*/
+        COM_FLASHWRITELICENSE = 0x30, 	/*序列化工位中，上位机向下位机发送序列化数据（88个字节）*/
+        COM_FLASHWRITELICENSEOK,		/*序列化工位中，下位机写序列化数据成功后返回给上位机作为成功标识*/
+        COM_GETLICENSE,					/*flash上授权信息*/
+        COM_GETLICENSEOK,				/*flash上授权信息ok*/
+        COM_FLASHSTATUS,            	/*校验工位中，获取Flash当前写保护状态（0为未写保护/1为写保护）*/
+        COM_SECURITYSTATUS,            	/*校验工位中，获取高级安全状态（0为未打开/1为已打开*/
 
-	COM_DEBUG = 0x80,	/* 发送debug信息，下位机内存的值 addr + val*/
-	COM_RETURN,
-	COM_FAIL,
-	COM_END
+        COM_FLASHWP, 					   /* 上位机向下位机发送0Flash写保护命令*/
+        COM_FLASHWPOK,					/* 下位机Flash写保护成功后返回成功标识*/
+        COM_REMOVEFLASHWP,	  /* 上位机向下位机发送解除Flash写保护命令*/
+        COM_REMOVEFLASHWPOK,  /*下位机解除Flash写保护成功后返回成功标识*/
+        COM_FUSESTATUSTYPE,
+
+        COM_DEBUG = 0x80,	/* 发送debug信息，下位机内存的值 addr + val*/
+        COM_RETURN,
+        COM_FAIL,
+        COM_ERROR,
+        COM_END
     };
     //========================================================================================
    /// <summary>

@@ -104,7 +104,6 @@ namespace soc_nds_csharp.Station_Operation
             {
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
             }
-            btn_ReadChipID.Enabled = true;
             btn_ReadChipID.Focus();
         }
 
@@ -184,6 +183,16 @@ namespace soc_nds_csharp.Station_Operation
                 Int32 c = (Int32)(cmdlineACK[(Int32)Index.buffer + 1] << 16);
                 Int32 d = (Int32)(cmdlineACK[(Int32)Index.buffer] << 24);
                 ChipID = a + b + c + d;
+
+                #region ChipID的处理
+                string MChipID = Convert.ToInt64(Convert.ToString(ChipID, 16).ToString(), 16).ToString();
+
+                if (Convert.ToInt64(MChipID) == 0 || Convert.ToInt64(MChipID) < 0)
+                {
+                    return -12;//向机顶盒获取ChipID失败
+                }
+
+                #endregion
 
                 richtxt_info.Text = String.Format("ChipID：{0:X08}", ChipID).ToString(); 
             return 0;

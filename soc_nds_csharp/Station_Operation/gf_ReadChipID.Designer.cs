@@ -49,13 +49,14 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.82019F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 21.92982F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 78.07018F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 149F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(804, 613);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(804, 637);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -63,9 +64,9 @@
             this.panel1.Controls.Add(this.btn_ReadChipID);
             this.panel1.Controls.Add(this.richtxt_info);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(185, 104);
+            this.panel1.Location = new System.Drawing.Point(185, 110);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(436, 356);
+            this.panel1.Size = new System.Drawing.Size(436, 374);
             this.panel1.TabIndex = 0;
             // 
             // btn_ReadChipID

@@ -161,7 +161,8 @@ namespace soc_nds_csharp.Station_Operation
             this.richtxt_LincenseAdo.ForeColor = System.Drawing.Color.Black;
             this.txt_CAID.ForeColor = System.Drawing.Color.Black;
             this.txt_SmartCardID.ForeColor = System.Drawing.Color.Black;
-            this.richtxt_Tips.ForeColor = System.Drawing.Color.Black;
+            //this.richtxt_Tips.ForeColor = System.Drawing.Color.Black;
+            this.richtxt_Tips.ForeColor = System.Drawing.Color.Blue;
             this.richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
             btn_begin.Focus();
         }
@@ -279,7 +280,11 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_Tips.Text += "高级安全状态为：未打开!\r\n";
                 HDIC_Message.ShowWarnDialog(this, "高级安全状态为：未打开");
             }
-                ////////////////////////////////
+            else if (index == -32)
+            {
+                richtxt_connect.Text = "获取所有高级安全特性失败!";
+                richtxt_Tips.Text += "获取所有高级安全特性失败!\r\n";
+            }
             else if (index == -40)
             {
                 richtxt_connect.Text = "获取机顶盒的序列化数据失败!";
@@ -405,7 +410,26 @@ namespace soc_nds_csharp.Station_Operation
             }
             richtxt_connect.Text = "连接成功，请勿断电!";
             richtxt_Tips.Text += "连接成功，请勿断电!\r\n";
+            /////////////////////////////////////////////////////待删除
+            index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 31, ref cmdlineACK);//调用类 ，尝试连接
+            if (index != 0)
+            {
+                return index;
+            }
+            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_FUSESTATUSTYPE)
+            {
+                return -32;
+            }
+            #region 打印
+            byte[] FuseStatusType = new byte[cmdlineACK.Length - 5];
+            for (int mIndex = (Int32)Index.buffer; mIndex < (cmdlineACK.Length - 5); mIndex++)
+            {
+                FuseStatusType[mIndex] = cmdlineACK[mIndex];
+            }
 
+            string log = HDIC_Func.byteToHexStr(FuseStatusType);//字符数组转换成字符串
+            HDIC_Func.LogRecord("FuseStatusType", log);
+            #endregion
             ////////////////////////////////从下位机获取机顶盒类型
 
             index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null, ReceiveLength + 1, ref cmdlineACK);//调用类 ，尝试连接
@@ -449,10 +473,11 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -14;//已经校验过该ChipID无需再次校验
             }
+            #endregion
 
             /////////////////////////从下位机获取Flash当前状态（0为未写保护/1为写保护）
             #region 校验Flash写保护状态
-            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null, ReceiveLength + 1, ref cmdlineACK);
+            index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null, ReceiveLength +1, ref cmdlineACK);
             if (index != 0)
             {
                 return index;
@@ -489,6 +514,25 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_connect.Text = "高级安全状态为：已打开!";
             richtxt_Tips.Text += "高级安全状态为：已打开!\r\n";
             #endregion
+            ////////////////////////从下位机获取所有高级安全特性
+            //index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 96, ref cmdlineACK);//调用类 ，尝试连接
+            //if (index != 0)
+            //{
+            //    return index;
+            //}
+            //if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_FUSESTATUSTYPE)
+            //{
+            //    return -32;
+            //}
+            //#region 打印
+            //byte[] FuseStatusType = new byte[cmdlineACK.Length - 5];
+            //for (int mIndex = (Int32)Index.buffer; mIndex < (cmdlineACK.Length - 5); mIndex++)
+            //{
+            //    FuseStatusType[mIndex] = cmdlineACK[mIndex];
+            //}
+
+            //string log = HDIC_Func.byteToHexStr(FuseStatusType);//字符数组转换成字符串
+            //HDIC_Func.LogRecord("FuseStatusType", log);
 
             ///////////////////从机顶盒获取序列化数据
             index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, null, ReceiveLength + 88, ref cmdlineACK);
@@ -496,7 +540,6 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return index;
             }
-            #endregion
 
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_GETLICENSEOK)
             {

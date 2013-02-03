@@ -619,15 +619,22 @@ namespace soc_nds_csharp.Station_Operation
 
             richtxt_Connect.Text = "发送序列化数据成功!";
             richtxt_info.Text += "发送序列化数据成功!\r\n";
-
             ///////////////////////////////////////////////flash写保护 目前没有写
-            #region flash写保护 目前没有写
-            if (false) 
+            #region flash写保护 
+            index = Protocol.Command(SERCOM_TYPE.COM_FLASHWP, null, ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
+            if (index != 0)
+            {
+                    return index;//向机顶盒发送写保护命令失败
+            }
+            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_ERROR)
             {
                 return -71;
             }
-            //richtxt_Connect.Text = "Flash写保护成功";
-            //richtxt_info.Text += "Flash写保护成功!\r\n";
+            else if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_FLASHWPOK)
+            {
+                richtxt_Connect.Text = "Flash写保护成功";
+                richtxt_info.Text += "Flash写保护成功!\r\n";
+            }
             #endregion
 
             if (STBType == 0)//表示是村村通
@@ -841,7 +848,7 @@ namespace soc_nds_csharp.Station_Operation
                     tscFontMagnify2 = dt.Rows[0]["tscFontMagnify2"].ToString().Trim();
                     tscBarCodeInterval = dt.Rows[0]["tscBarCodeInterval"].ToString().Trim();
                     tscRotate = dt.Rows[0]["tscRotate"].ToString().Trim();
-                    tscBarNarrow = dt.Rows[0]["tscBar"].ToString().Trim();
+                    tscBarNarrow = dt.Rows[0]["tscBarNarrow"].ToString().Trim();
                     tscBarWide = dt.Rows[0]["tscBarWide"].ToString().Trim(); ;
                     tscPrintLabelSetNum = dt.Rows[0]["tscPrintLabelSetNum"].ToString().Trim(); ;
                     tscPrintLabelCopeNum = dt.Rows[0]["tscPrintLabelCopeNum"].ToString().Trim(); ;
@@ -1018,7 +1025,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 BarCode.Stop();
                 ////mSemaphore.Release();
-                if (insertDB(txt_SmartCardID.Text.Trim()))
+                        if (insertDB(txt_SmartCardID.Text.Trim()))
                 {
                     printBar();
 

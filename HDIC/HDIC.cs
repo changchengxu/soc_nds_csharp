@@ -1379,7 +1379,7 @@ namespace HDICSoft.Func
         /// 写日志信息
         /// </summary>
         /// <param name="LogMsg">日志信息</param>
-        public static void LogRecord(string LogMsg)
+        public static void LogRecord(string LogName,string LogMsg)
         {
             ////检查是否启用日志
             //if (HaierSoft.Configuration.Configure.GetConfigString("enablelog").ToLower() != "true")
@@ -1396,7 +1396,7 @@ namespace HDICSoft.Func
                     Directory.CreateDirectory(strPath);
                 }
 
-                strPath = strPath + "\\STBLog_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+                strPath = strPath + "\\"+LogName+ DateTime.Now.ToString("yyyyMMdd") + ".log";
 
                 // 初始化文件流
                 tmpStreamWriter = new StreamWriter(strPath, true, Encoding.GetEncoding("GB2312"));
@@ -1775,10 +1775,46 @@ namespace HDICSoft.Func
             string returnStr = "";
             if (bytes != null)
             {
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    returnStr += bytes[i].ToString("X2");
-                }
+                //for (int i = 0; i < bytes.Length; i++)
+                //{
+                //    returnStr += bytes[i].ToString("X2");
+                //}
+
+                //for (int i = index; i < length; i++)
+                //{
+                //    returnStr += bytes[i].ToString("X2");
+                //}
+                returnStr += "Fuse_USB_Disable :"+bytes[0].ToString("X2")+"\r\n";
+                returnStr += "SecondSmartCard_Disable :" + bytes[1].ToString("X2") + "\r\n";
+                returnStr += "Fuse_Disable_NonDescramble_Mode :" + bytes[2].ToString("X2") + "\r\n";
+                returnStr += "Fuse_Disable_DVB_CSA_Mode :" + bytes[3].ToString("X2") + "\r\n";
+                returnStr += "Fuse_Disable_ICAM_Mode :" + bytes[4].ToString("X2") + "\r\n";
+                returnStr += "Fuse_DDR_Obfuscator_Enable :" + bytes[5].ToString("X2") + "\r\n";
+                returnStr += "Fuse_SCPU_Secure_Mode :" + bytes[6].ToString("X2") + "\r\n";
+                returnStr += "CPU_AccessRandomNumberRegister_Disable :" + bytes[7].ToString("X2") + "\r\n";
+                returnStr += "Fuse_ContentProtect_Enable :" + bytes[8].ToString("X2") + "\r\n";
+                returnStr += "Fuse_OTP_RegbusSecureMode_Disable :" + bytes[9].ToString("X2") + "\r\n";
+                returnStr += "Fuse_DMA_RegbusSecureMode_Disable :" + bytes[10].ToString("X2") + "\r\n";
+                returnStr += "Fuse_OTP_TestMode_Disable :" + bytes[11].ToString("X2") + "\r\n";
+                returnStr += "CommandMode_Disable :" + bytes[12].ToString("X2") + "\r\n";
+                returnStr += "RSA_Signature_Check :" + bytes[13].ToString("X2") + "\r\n";
+                returnStr += " RSA_Protected :" + bytes[14].ToString("X2") + "\r\n";
+                returnStr += "FlashCheck_Size :" + bytes[15].ToString("X2") + "\r\n";
+                returnStr += "SecureBoot_Enable :" + bytes[16].ToString("X2") + "\r\n";
+                returnStr += "RSA_Key_Select :" + bytes[17].ToString("X2") + "\r\n";
+                returnStr += "Fuse_DMA_Key_RAM_CPU_Write_Disable :" + bytes[18].ToString("X2") + "\r\n";
+                returnStr += "Fuse_TP_Key_RAM_CPU_Write_Disable :" + bytes[19].ToString("X2") + "\r\n";
+                returnStr += "I2S_Disable :" + bytes[20].ToString("X2") + "\r\n";
+                returnStr += "SPDIF_Disable :" + bytes[21].ToString("X2") + "\r\n";
+                returnStr += "TransportOut_Disable :" + bytes[22].ToString("X2") + "\r\n";
+                returnStr += "Fuse_Des3_Disable :" + bytes[23].ToString("X2") + "\r\n";
+                returnStr += "Fuse_RunTimeCodeCheck_Enable :" + bytes[24].ToString("X2") + "\r\n";
+                returnStr += "Fuse_DebugConfig_Locked :" + bytes[25].ToString("X2") + "\r\n";
+                returnStr += "Fuse_Memory_BIST_Mode :" + bytes[26].ToString("X2") + "\r\n";
+                returnStr += "Fuse_ScanChain_Mode :" + bytes[27].ToString("X2") + "\r\n";
+                returnStr += "Fuse_BoundaryConfig_Locked :" + bytes[28].ToString("X2") + "\r\n";
+                returnStr += "Fuse_DebugModeProtect_Disable :" + bytes[29].ToString("X2") + "\r\n";
+                returnStr += "ICAM_Config_Bit :" + bytes[30].ToString("X2") + "\r\n";
             }
             return returnStr;
         }
