@@ -410,26 +410,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             richtxt_connect.Text = "连接成功，请勿断电!";
             richtxt_Tips.Text += "连接成功，请勿断电!\r\n";
-            /////////////////////////////////////////////////////待删除
-            index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 31, ref cmdlineACK);//调用类 ，尝试连接
-            if (index != 0)
-            {
-                return index;
-            }
-            if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_FUSESTATUSTYPE)
-            {
-                return -32;
-            }
-            #region 打印
-            byte[] FuseStatusType = new byte[cmdlineACK.Length - 5];
-            for (int mIndex = (Int32)Index.buffer; mIndex < (cmdlineACK.Length - 5); mIndex++)
-            {
-                FuseStatusType[mIndex] = cmdlineACK[mIndex];
-            }
-
-            string log = HDIC_Func.byteToHexStr(FuseStatusType);//字符数组转换成字符串
-            HDIC_Func.LogRecord("FuseStatusType", log);
-            #endregion
+          
             ////////////////////////////////从下位机获取机顶盒类型
 
             index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null, ReceiveLength + 1, ref cmdlineACK);//调用类 ，尝试连接
@@ -515,24 +496,38 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_Tips.Text += "高级安全状态为：已打开!\r\n";
             #endregion
             ////////////////////////从下位机获取所有高级安全特性
-            //index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 96, ref cmdlineACK);//调用类 ，尝试连接
-            //if (index != 0)
-            //{
-            //    return index;
-            //}
-            //if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_FUSESTATUSTYPE)
-            //{
-            //    return -32;
-            //}
-            //#region 打印
-            //byte[] FuseStatusType = new byte[cmdlineACK.Length - 5];
-            //for (int mIndex = (Int32)Index.buffer; mIndex < (cmdlineACK.Length - 5); mIndex++)
-            //{
-            //    FuseStatusType[mIndex] = cmdlineACK[mIndex];
-            //}
+         
+            using (DataTable dt = HDIC_Func.XMLToDataSet(HDIC_Func.GetRunningPath() + @"config\Serial.xml").Tables["com"])
+            {
+                if (dt.Rows.Count > 0)
+                {
+                    string dtTime = DateTime.Now.ToString("yyyyMMdd");
+                    string pwd = (Convert.ToInt32(dtTime) ^ 123456).ToString();
+                    if (dt.Rows[0]["password"].ToString().Trim() == pwd)
+                    {
+                        index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 31, ref cmdlineACK);//获取所有高级安全特性
+                        if (index != 0)
+                        {
+                            return index;
+                        }
+                        if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_FUSESTATUSTYPE)
+                        {
+                            return -32;
+                        }
+                        #region 打印
+                        byte[] FuseStatusType = new byte[cmdlineACK.Length - 5];
+                        int flashTypeIndex = 0;
+                        for (int mIndex = (Int32)Index.buffer; mIndex < cmdlineACK.Length-1; mIndex++)
+                        {
+                            FuseStatusType[flashTypeIndex++] = cmdlineACK[mIndex];
+                        }
 
-            //string log = HDIC_Func.byteToHexStr(FuseStatusType);//字符数组转换成字符串
-            //HDIC_Func.LogRecord("FuseStatusType", log);
+                        string log = HDIC_Func.byteToHexStr(FuseStatusType);//字符数组转换成字符串
+                        HDIC_Func.LogRecord("FuseStatusType", log);
+                        #endregion
+                    }
+                }
+            }
 
             ///////////////////从机顶盒获取序列化数据
             index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, null, ReceiveLength + 88, ref cmdlineACK);
