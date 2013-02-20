@@ -110,8 +110,8 @@ namespace soc_nds_csharp.Station_Operation
 
             ////mSemaphore = new System.Threading.Semaphore(0, 1);
 
-            timer1.Interval = 1000;
-            timer1.Enabled = false;
+            //timer1.Interval = 1000;
+            //timer1.Enabled = false;
 
         }
 
@@ -358,26 +358,26 @@ namespace soc_nds_csharp.Station_Operation
             btn_begin.Focus();
         }
 
-        Int32 timeCount = 60;
+        //Int32 timeCount = 60;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timeCount--;
+            //timeCount--;
 
-            if (timeCount == 0)
-            {
-                timer1.Enabled = false;
-                richtxt_Connect.ForeColor = System.Drawing.Color.Red;
-                richtxt_info.Text += "接收机顶盒数据超时!\r\n";
-                richtxt_Connect.Text = "接收机顶盒数据超时!";
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-                btn_begin.Enabled = true;
-                timeCount = 60;
-                btn_begin.Focus();
-            }
-            else
-            {
-                Connect();
-            }
+            //if (timeCount == 0)
+            //{
+            //    timer1.Enabled = false;
+            //    richtxt_Connect.ForeColor = System.Drawing.Color.Red;
+            //    richtxt_info.Text += "接收机顶盒数据超时!\r\n";
+            //    richtxt_Connect.Text = "接收机顶盒数据超时!";
+            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+            //    btn_begin.Enabled = true;
+            //    timeCount = 60;
+            //    btn_begin.Focus();
+            //}
+            //else
+            //{
+            //    Connect();
+            //}
         }
 
 
@@ -414,18 +414,18 @@ namespace soc_nds_csharp.Station_Operation
             index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
-                if (index == -120)
-                {
+                //if (index == -120)
+                //{
 
-                    timer1.Enabled = true;
-                    return 0;
-                }
-                else
-                {
+                //    timer1.Enabled = true;
+                //    return 0;
+                //}
+                //else
+                //{
                     return index;
-                }
+                //}
             }
-            timer1.Enabled = false;
+            //timer1.Enabled = false;
 
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {

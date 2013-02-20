@@ -35,8 +35,8 @@ namespace soc_nds_csharp.Station_Operation
             btn_RemoteFlash.Focus();
             richtxt_info.Enabled = false;
 
-            timer1.Interval = 1000;
-            timer1.Enabled = false;
+            //timer1.Interval = 1000;
+            //timer1.Enabled = false;
 
             btn_RemoteFlash.Enabled = true;
 
@@ -121,27 +121,20 @@ namespace soc_nds_csharp.Station_Operation
 
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-            try
-            {
+
                 index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
-            }
-            catch
-            {
-
-            }
-
             if (index != 0)
             {
-                if (index == -120)
-                {
+                //if (index == -120)
+                //{
 
-                    timer1.Enabled = true;
-                    return 0;
-                }
-                else
-                {
+                //    timer1.Enabled = true;
+                //    return 0;
+                //}
+                //else
+                //{
                     return index;
-                }
+                //}
             }
             timer1.Enabled = false;
 
@@ -194,31 +187,31 @@ namespace soc_nds_csharp.Station_Operation
             return 0;
         }
 
-        Int32 timeCount = 100;
+        //Int32 timeCount = 100;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timeCount--;
+            //timeCount--;
 
-            if (timeCount == 0)
-            {
-                timer1.Enabled = false;
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-                richtxt_info.ForeColor = System.Drawing.Color.Red;
-                richtxt_info.Text = "解除flash写保护失败";
-                btn_RemoteFlash.Enabled = true;
-                timeCount = 60;
-                btn_RemoteFlash.Focus();
-            }
-            else
-            {
-                //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-                //st.Start();
+            //if (timeCount == 0)
+            //{
+            //    timer1.Enabled = false;
+            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+            //    richtxt_info.ForeColor = System.Drawing.Color.Red;
+            //    richtxt_info.Text = "解除flash写保护失败";
+            //    btn_RemoteFlash.Enabled = true;
+            //    timeCount = 60;
+            //    btn_RemoteFlash.Focus();
+            //}
+            //else
+            //{
+            //    //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
+            //    //st.Start();
 
-                Connect();
+            //    Connect();
 
-                //st.Stop();
-                //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
-            }
+            //    //st.Stop();
+            //    //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
+            //}
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

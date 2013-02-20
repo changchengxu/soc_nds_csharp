@@ -79,8 +79,8 @@ namespace soc_nds_csharp.Station_Operation
             txt_SmartCardID.Enabled = false;
             btn_begin.Focus();
 
-            timer1.Interval = 1000;
-            timer1.Enabled = false;
+            //timer1.Interval = 1000;
+            //timer1.Enabled = false;
 
             #region 让文本框失去焦点
             richtxt_connect.TabStop = false;
@@ -329,32 +329,32 @@ namespace soc_nds_csharp.Station_Operation
             btn_begin.Focus();
         }
 
-        Int32 timeCount = 60;
+        //Int32 timeCount = 60;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timeCount--;
+            //timeCount--;
 
-            if (timeCount == 0)
-            {
-                timer1.Enabled = false;
-                richtxt_connect.ForeColor = System.Drawing.Color.Red;
-                richtxt_connect.Text = "接收机顶盒数据超时!";
-                richtxt_Tips.Text += "接收机顶盒数据超时!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-                btn_begin.Enabled = true;
-                timeCount = 60;
-                btn_begin.Focus();
-            }
-            else
-            {
-                //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-                //st.Start();
+            //if (timeCount == 0)
+            //{
+            //    timer1.Enabled = false;
+            //    richtxt_connect.ForeColor = System.Drawing.Color.Red;
+            //    richtxt_connect.Text = "接收机顶盒数据超时!";
+            //    richtxt_Tips.Text += "接收机顶盒数据超时!\r\n";
+            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+            //    btn_begin.Enabled = true;
+            //    timeCount = 60;
+            //    btn_begin.Focus();
+            //}
+            //else
+            //{
+            //    //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
+            //    //st.Start();
 
-                Connect();
+            //    Connect();
 
-                //st.Stop();
-                //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
-            }
+            //    //st.Stop();
+            //    //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
+            //}
         }
 
         private Int32 CommandSerial()
@@ -372,18 +372,18 @@ namespace soc_nds_csharp.Station_Operation
             index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
-                if (index == -120)
-                {
+                //if (index == -120)
+                //{
 
-                    timer1.Enabled = true;
-                    return 0;
-                }
-                else
-                {
+                //    timer1.Enabled = true;
+                //    return 0;
+                //}
+                //else
+                //{
                     return index;
-                }
+                //}
             }
-            timer1.Enabled = false;
+            //timer1.Enabled = false;
 
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {
