@@ -80,6 +80,7 @@ namespace soc_nds_csharp.Station_Operation
             if (index < 0)
             {
                 richtxt_info.ForeColor = System.Drawing.Color.Red;
+                richtxt_info.Text = "解除Flash写保护失败";
                 btn_RemoteFlash.Enabled = true;
             }
 
@@ -170,6 +171,7 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_info.Text = "连接成功，请勿断电!";
 
             ///////////////////向下位机发送解除flash写保护
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_REMOVEFLASHWP, null, ReceiveLength, ref cmdlineACK);
             if (index != 0)
             {
@@ -192,7 +194,7 @@ namespace soc_nds_csharp.Station_Operation
             return 0;
         }
 
-        Int32 timeCount = 60;
+        Int32 timeCount = 100;
         private void timer1_Tick(object sender, EventArgs e)
         {
             timeCount--;
@@ -201,6 +203,8 @@ namespace soc_nds_csharp.Station_Operation
             {
                 timer1.Enabled = false;
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+                richtxt_info.ForeColor = System.Drawing.Color.Red;
+                richtxt_info.Text = "解除flash写保护失败";
                 btn_RemoteFlash.Enabled = true;
                 timeCount = 60;
                 btn_RemoteFlash.Focus();

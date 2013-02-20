@@ -109,38 +109,49 @@ namespace soc_protocol
             }
             mSpSlot.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
 
+            //////////////////////////////////////////////////////////////////////接收握手信号
+            if (Reqcmd == SERCOM_TYPE.COM_NULL)
+            {
+                if (!mSemaphore.WaitOne(60000))//设置接收握手信号 等待时间是1分钟
+                {
+                    return -120; // timeout
+                }
+                //string a = "";
+            }
+
             if (Reqcmd != SERCOM_TYPE.COM_NULL)
             {
                 // flush serial port
                 mSpSlot.DiscardInBuffer();
-            //mReadBuffer.Initialize();
-            //////////////////////////////////////////////////////////////////////////发送
-            ReqCount = CONTAINER_LENGTH;
-            if (dataReq != null)
-            {
-                ReqCount +=dataReq.Length;
-            }
-            Byte[] packet = new Byte[ReqCount];
-            bool ReqData = PutCommData(Reqcmd, dataReq, packet);//组建发送命令包
-            if (!ReqData)
-            {
-                return -100;
-            }
-            try
-            {
-                mSpSlot.Write(packet, 0, packet.Length);       //发送命令
-            }
-            catch
-            {
-                return -110;
+                //mReadBuffer.Initialize();
+                //////////////////////////////////////////////////////////////////////////发送
+                ReqCount = CONTAINER_LENGTH;
+                if (dataReq != null)
+                {
+                    ReqCount += dataReq.Length;
+                }
+                Byte[] packet = new Byte[ReqCount];
+                bool ReqData = PutCommData(Reqcmd, dataReq, packet);//组建发送命令包
+                if (!ReqData)
+                {
+                    return -100;
+                }
+                try
+                {
+                    mSpSlot.Write(packet, 0, packet.Length);       //发送命令
+                }
+                catch
+                {
+                    return -110;
+                }
+                //////////////////////////////////////////////////////////////////////////接收
+                if (!mSemaphore.WaitOne(2000))//超时
+                {
+                    return -120; // timeout
+                }
             }
 
-            }
-            //////////////////////////////////////////////////////////////////////////接收
-            if (!mSemaphore.WaitOne(2000))//超时
-            {
-                    return -120; // timeout
-            }
+         
 
                 cmdlineAck = ReceiveBytes;
 
@@ -221,7 +232,7 @@ namespace soc_protocol
         Int32 ErrorCount = 0;
         void dataReceived(System.Object sender, System.IO.Ports.SerialDataReceivedEventArgs e) //received data
         {
-            System.Threading.Thread.Sleep(150); //等待150毫秒
+            //System.Threading.Thread.Sleep(150); //等待150毫秒
             try
             {
                 ////if (!mSpSlot.IsOpen)//如果串口已经关闭，则不执行下面的代码
@@ -267,17 +278,17 @@ namespace soc_protocol
                     //if (len == 0 || len == 1 || len == 4 || len == 88|| len==11 || len==12|| len==16)
                     if(len==ReceiveLength)
                     {
-                        if (len != mReadBuffer.Count - 5)//如果数据长度 ！= 数据长度位，则说明不是命令包
-                        {
-                            //System.Threading.Thread.Sleep(5);
-                            ErrorCount++;
-                            if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
-                            {
-                                mReadBuffer.RemoveAt(0);
-                                ErrorCount = 0;
-                            }
-                            break;
-                        }
+                        ////if (len != mReadBuffer.Count - 5)//如果数据长度 ！= 数据长度位，则说明不是命令包
+                        ////{
+                        ////    //System.Threading.Thread.Sleep(5);
+                        ////    ErrorCount++;
+                        ////    if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
+                        ////    {
+                        ////        mReadBuffer.RemoveAt(0);
+                        ////        ErrorCount = 0;
+                        ////    }
+                        ////    break;
+                        ////}
 
                         byte cell = 0;
                         for (int i = 0; i < 4 + len; i++)

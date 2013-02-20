@@ -7,10 +7,10 @@ Copyright:ShangHai HDIC  Technology Co.Ltd.
 
 <com>
 
-  <port>COM1</port>
+  <port>COM5</port>
   <data_bits>8</data_bits>
   <parity>None</parity>
   <stop_bit>1</stop_bit>
   <baud_rate>115200</baud_rate>
-  <password>20106204</password>
+  <password>20106220</password>
 </com>

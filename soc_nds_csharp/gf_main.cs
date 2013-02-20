@@ -24,6 +24,23 @@ namespace soc_nds_csharp
        // List<byte> mReadBuffer1 = new List<byte>(2048);
         private void gf_main_Load(object sender, EventArgs e)
         {
+            #region 临时测试
+            //string ChipInfo = "0001005401000500673090380200106E532500C29CA3BE84030DEE0BF4ECE003001601000102020322C002BEECD83E1AD56ED3A657601A520300160200020202033897D93211BEA6F16D5B8A0B55A2AA9CFE0004D5E1E990";
+            //Byte[] dataBuffer = new Byte[ChipInfo.Length / 2];
+            //string temp = "";
+            //if (HDIC_Func.CStringToByte(ChipInfo, ref dataBuffer))
+            //{
+
+            //    foreach (Byte b in dataBuffer)
+            //    {
+            //        temp += String.Format("{0:x02}", b).ToString() + ",";
+            //        if (temp.Length % 16 == 0)
+            //        {
+            //            temp += "\r\n";
+            //        }
+            //    }
+            //}
+            #endregion
             ////string chiptxt = "2164262913";
             ////string str = Convert.ToString(Convert.ToInt64(chiptxt), 16);
             ////long b = Convert.ToInt64(str);

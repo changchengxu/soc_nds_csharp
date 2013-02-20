@@ -16,7 +16,7 @@ namespace soc_nds_csharp.Station_Operation
         System.IO.Ports.SerialPort mSpSlot;//串口对象定义
         UartProtocol Protocol;
         Int32 ReceiveLength = 0;//接收串口数据包中数据的长度
-        Int32 ChipID = 0;
+        UInt32 ChipID = 0;
 
         public gf_ReadChipID()
         {
@@ -24,7 +24,7 @@ namespace soc_nds_csharp.Station_Operation
             this.BackColor = HDIC_Command.setColor();
 
             this.richtxt_info.Font = new System.Drawing.Font("SimSun", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-
+            this.richtxt_info.SelectionAlignment = HorizontalAlignment.Center;
         }
 
         private void gf_ReadChipID_Load(object sender, EventArgs e)
@@ -34,8 +34,8 @@ namespace soc_nds_csharp.Station_Operation
 
             btn_ReadChipID.Focus();
 
-            timer1.Interval = 1000;
-            timer1.Enabled = false;
+            //timer1.Interval = 1000;
+            //timer1.Enabled = false;
 
             btn_ReadChipID.Enabled = true;
         }
@@ -76,7 +76,7 @@ namespace soc_nds_csharp.Station_Operation
             if (index < 0)
             {
                 richtxt_info.ForeColor = System.Drawing.Color.Red;
-                btn_ReadChipID.Enabled = true;
+                richtxt_info.Text = "获取ChipID失败";
             }
 
             if (index == -1)
@@ -104,6 +104,7 @@ namespace soc_nds_csharp.Station_Operation
             {
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
             }
+            btn_ReadChipID.Enabled = true;
             btn_ReadChipID.Focus();
         }
 
@@ -117,29 +118,23 @@ namespace soc_nds_csharp.Station_Operation
 
                 Int32 index = 0;
                 Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
-                try
-                {
+
                     index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
-                }
-                catch (System.Exception ex)
-                {
-                	
-                }
                
                 if (index != 0)
                 {
-                    if (index == -120)
-                    {
+                    //if (index == -120)
+                    //{
 
-                        timer1.Enabled = true;
-                        return 0;
-                    }
-                    else
-                    {
+                    //    timer1.Enabled = true;
+                    //    return 0;
+                    //}
+                    //else
+                    //{
                         return index;
-                    }
+                    //}
                 }
-                timer1.Enabled = false;
+                //timer1.Enabled = false;
 
                 if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
                 {
@@ -167,6 +162,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_info.Text = "连接成功，请勿断电!";
 
                 ///////////////////从下位机获取ChipID信息
+                System.Threading.Thread.Sleep(1);
                 index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null, ReceiveLength + 4, ref cmdlineACK);
                 if (index != 0)
                 {
@@ -182,11 +178,10 @@ namespace soc_nds_csharp.Station_Operation
                 Int32 b = (Int32)(cmdlineACK[(Int32)Index.buffer + 2] << 8);
                 Int32 c = (Int32)(cmdlineACK[(Int32)Index.buffer + 1] << 16);
                 Int32 d = (Int32)(cmdlineACK[(Int32)Index.buffer] << 24);
-                ChipID = a + b + c + d;
+                ChipID = (UInt32)(a + b + c + d);
 
                 #region ChipID的处理
                 string MChipID = Convert.ToInt64(Convert.ToString(ChipID, 16).ToString(), 16).ToString();
-
                 if (Convert.ToInt64(MChipID) == 0 || Convert.ToInt64(MChipID) < 0)
                 {
                     return -12;//向机顶盒获取ChipID失败
@@ -194,7 +189,8 @@ namespace soc_nds_csharp.Station_Operation
 
                 #endregion
 
-                richtxt_info.Text = String.Format("ChipID：{0:X08}", ChipID).ToString(); 
+                //richtxt_info.Text = String.Format("ChipID：{0:X08}", ChipID).ToString(); 
+                richtxt_info.Text ="ChipID："+MChipID; 
             return 0;
         }
 
@@ -207,26 +203,28 @@ namespace soc_nds_csharp.Station_Operation
         Int32 timeCount = 60;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timeCount--;
+            //timeCount--;
 
-            if (timeCount == 0)
-            {
-                timer1.Enabled = false;
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-                btn_ReadChipID.Enabled = true;
-                timeCount = 60;
-                btn_ReadChipID.Focus();
-            }
-            else
-            {
-                //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-                //st.Start();
+            //if (timeCount == 0)
+            //{
+            //    timer1.Enabled = false;
+            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
+            //    richtxt_info.ForeColor = System.Drawing.Color.Red;
+            //    richtxt_info.Text = "获取ChipID超时";
+            //    btn_ReadChipID.Enabled = true;
+            //    timeCount = 60;
+            //    btn_ReadChipID.Focus();
+            //}
+            //else
+            //{
+            //    //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
+            //    //st.Start();
 
-                Connect();
+            //    Connect();
 
-                //st.Stop();
-                //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
-            }
+            //    //st.Stop();
+            //    //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
+            //}
         }
       
     }

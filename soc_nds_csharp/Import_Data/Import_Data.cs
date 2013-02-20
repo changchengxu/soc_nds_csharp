@@ -159,17 +159,17 @@ namespace soc_nds_csharp.Import_Data
         private void ImportData()
         {
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString))
-            //using (SqlConnection conn = new SqlConnection("Data Source=192.168.64.128;Initial Catalog=STBInfo;Persist Security Info=False;User ID=sa; pwd =sa;"))
+            //using (SqlConnection conn = new SqlConnection("Data Source=192.168.16.9;Initial Catalog=STBInfo;Persist Security Info=False;User ID=sa; pwd =sa;"))
 
             {
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     if (conn.State != ConnectionState.Open)
                         conn.Open();
-
+                    string tt = ConfigurationManager.ConnectionStrings["connStringName"].ConnectionString;
                     cmd.Connection = conn;
-                    cmd.CommandTimeout = 900;//长城设置，15分钟即超时
-                    cmd.CommandText = "BULK INSERT ChipData FROM '" + path + "' WITH (FIELDTERMINATOR = ' ',KEEPIDENTITY,ROWTERMINATOR='\n',BATCHSIZE = 100000)";
+                    cmd.CommandTimeout = 2000;//长城设置，15分钟即超时
+                    cmd.CommandText = "BULK INSERT ChipData FROM '" + path + "' WITH (FIELDTERMINATOR = ' ',KEEPIDENTITY,ROWTERMINATOR='\r\n',BATCHSIZE = 100000)";
 
                     try
                     {
@@ -203,7 +203,7 @@ namespace soc_nds_csharp.Import_Data
             OpenFileDialog OpenFile = new OpenFileDialog();
             OpenFile.Title = "打开";
             OpenFile.InitialDirectory = @"桌面";
-            OpenFile.Filter = "文本文件(*.txt)|*.txt|文档文件（*.doc)|*.doc;*.docx)";
+            OpenFile.Filter = "文本文件(*.txt,*.pers)|*.txt;*.pers|文档文件（*.doc)|*.doc;*.docx)";
             DialogResult drResult = OpenFile.ShowDialog();
             if (drResult == DialogResult.OK)
                 path = OpenFile.FileName;

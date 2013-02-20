@@ -22,8 +22,8 @@ namespace soc_nds_csharp.Station_Operation
     public partial class gf_Serializer : Form
     {
         // Create a new Mutex. The creating thread does not own the
-        // Mutex.
-        private Mutex mutex = new Mutex();//互斥体
+        //// Mutex.
+        //private Mutex mutex = new Mutex();//互斥体
 
         BarCodeHook BarCode = new BarCodeHook();  //定义扫描仪对象
 
@@ -45,6 +45,7 @@ namespace soc_nds_csharp.Station_Operation
         public gf_Serializer(gf_SelectPipeLine obj)
         {
             InitializeComponent();
+
             tableLayoutPanel1.BackColor = HDIC_Command.setColor();
             this.BackColor = HDIC_Command.setColor();
 
@@ -182,8 +183,8 @@ namespace soc_nds_csharp.Station_Operation
 
         private void btn_begin_KeyDown(object sender, KeyEventArgs e)
         {
-            // Wait until it is safe to enter.
-            mutex.WaitOne();
+            //// Wait until it is safe to enter.
+            //mutex.WaitOne();
 
             if (Keys.KeyCode == Keys.Enter || Keys.KeyCode==Keys.Back)//回车或者空格
             {
@@ -191,20 +192,20 @@ namespace soc_nds_csharp.Station_Operation
                 thread.Start();
             }
 
-            // Release the Mutex.
-            mutex.ReleaseMutex();
+            //// Release the Mutex.
+            //mutex.ReleaseMutex();
         }
 
         private void btn_begin_Click(object sender, EventArgs e)
         {
-            // Wait until it is safe to enter.
-            mutex.WaitOne();
+            //// Wait until it is safe to enter.
+            //mutex.WaitOne();
 
             Thread thread = new Thread(new ThreadStart(DoWork));
             thread.Start();
           
-            // Release the Mutex.
-            mutex.ReleaseMutex();
+            //// Release the Mutex.
+            //mutex.ReleaseMutex();
 
         }
 
@@ -450,6 +451,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             richtxt_info.Text += "连接成功，请勿断电!\r\n";
             richtxt_Connect.Text = "连接成功，请勿断电!";
+            System.Threading.Thread.Sleep(1);
             index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null,ReceiveLength+1, ref cmdlineACK);
             if (index != 0)
             {
@@ -462,6 +464,7 @@ namespace soc_nds_csharp.Station_Operation
             /////////////////从下位机获取机顶盒类型
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
             //////////////////从下位机获取ChipID
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null,ReceiveLength+4, ref cmdlineACK);
             if (index != 0)
             {
@@ -481,7 +484,6 @@ namespace soc_nds_csharp.Station_Operation
             //////////////////////////////////////////////////////////////////////////
             #region ChipID的处理
             txt_ChipID.Text = Convert.ToInt64(Convert.ToString(ChipID, 16).ToString(), 16).ToString();
-
             if (Convert.ToInt64(txt_ChipID.Text.Trim()) == 0 || Convert.ToInt64(txt_ChipID.Text.Trim()) < 0)
             {
                 return -22;//向机顶盒获取ChipID失败
@@ -516,6 +518,7 @@ namespace soc_nds_csharp.Station_Operation
                 txt_CAID.Text = CAIDBufferStr.Trim();
                 #endregion
                 ///////////////////////////////////////////从下位机获取制造商ID
+                System.Threading.Thread.Sleep(10);
                 index = Protocol.Command(SERCOM_TYPE.COM_MFID, null,ReceiveLength+1,ref cmdlineACK);
                 if (index != 0)
                 {
@@ -529,6 +532,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_ManufacturerID.Text = String.Format("{0:X02}", MFID).ToString();
 
                 //////////////////////////////////////////从下位机获取机顶盒型号
+                System.Threading.Thread.Sleep(10);
                 index = Protocol.Command(SERCOM_TYPE.COM_MDID, null,ReceiveLength+1, ref cmdlineACK);
                 if (index != 0)
                 {
@@ -541,6 +545,7 @@ namespace soc_nds_csharp.Station_Operation
                 MDID = (Int32)cmdlineACK[((Int32)Index.buffer)];
                 richtxt_ModelID.Text = String.Format("{0:X02}", MDID).ToString();
                 //////////////////////////////////////////从下位机获取硬件ID
+                System.Threading.Thread.Sleep(10);
                 index = Protocol.Command(SERCOM_TYPE.COM_HWID,null,ReceiveLength+1, ref cmdlineACK);
                 if (index != 0)
                 {
@@ -570,6 +575,7 @@ namespace soc_nds_csharp.Station_Operation
                 richtxt_info.Text += "从机顶盒获取信息成功!\r\n";
 
                 ///////////////////////////////////////////发送STBID到下位机
+                System.Threading.Thread.Sleep(10);
                 Byte[] STBIDByte = Encoding.ASCII.GetBytes(txt_STBID.Text);
                 index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC,STBIDByte,ReceiveLength, ref cmdlineACK);
                 if (index != 0)
@@ -607,6 +613,7 @@ namespace soc_nds_csharp.Station_Operation
 
             int length = (ChipInfo.Length) / 2;
             ////////////////////////////////////////////向下位机发送写序列化数据
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_FLASHWRITELICENSE, dataBuffer,ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
             if (index != 0)
             {
@@ -621,6 +628,7 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_info.Text += "发送序列化数据成功!\r\n";
             ///////////////////////////////////////////////flash写保护 目前没有写
             #region flash写保护 
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_FLASHWP, null, ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
             if (index != 0)
             {

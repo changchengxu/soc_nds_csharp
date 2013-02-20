@@ -412,7 +412,7 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_Tips.Text += "连接成功，请勿断电!\r\n";
           
             ////////////////////////////////从下位机获取机顶盒类型
-
+            System.Threading.Thread.Sleep(1);
             index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null, ReceiveLength + 1, ref cmdlineACK);//调用类 ，尝试连接
             if (index != 0)
             {
@@ -425,6 +425,7 @@ namespace soc_nds_csharp.Station_Operation
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
 
             ///////////////////从下位机获取ChipID信息
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null, ReceiveLength + 4, ref cmdlineACK);
             if (index != 0)
             {
@@ -458,6 +459,7 @@ namespace soc_nds_csharp.Station_Operation
 
             /////////////////////////从下位机获取Flash当前状态（0为未写保护/1为写保护）
             #region 校验Flash写保护状态
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null, ReceiveLength +1, ref cmdlineACK);
             if (index != 0)
             {
@@ -478,6 +480,7 @@ namespace soc_nds_csharp.Station_Operation
 
             ////////////////////////从下位机获取高级安全状态（0为未打开/1为已打开）
             #region 校验高级安全状态
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, null, ReceiveLength + 1, ref cmdlineACK);
             if (index != 0)
             {
@@ -505,6 +508,7 @@ namespace soc_nds_csharp.Station_Operation
                     string pwd = (Convert.ToInt32(dtTime) ^ 123456).ToString();
                     if (dt.Rows[0]["password"].ToString().Trim() == pwd)
                     {
+                        System.Threading.Thread.Sleep(10);
                         index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 31, ref cmdlineACK);//获取所有高级安全特性
                         if (index != 0)
                         {
@@ -530,6 +534,7 @@ namespace soc_nds_csharp.Station_Operation
             }
 
             ///////////////////从机顶盒获取序列化数据
+            System.Threading.Thread.Sleep(10);
             index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, null, ReceiveLength + 88, ref cmdlineACK);
             if (index != 0)
             {
