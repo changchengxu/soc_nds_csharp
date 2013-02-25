@@ -24,6 +24,8 @@ namespace soc_nds_csharp
        // List<byte> mReadBuffer1 = new List<byte>(2048);
         private void gf_main_Load(object sender, EventArgs e)
         {
+            //string fdsa = "1234567890";
+            //string dsfds = Convert.ToString(Convert.ToInt64(fdsa, 10), 16);
             #region 临时测试
             //string ChipInfo = "0001005401000500673090380200106E532500C29CA3BE84030DEE0BF4ECE003001601000102020322C002BEECD83E1AD56ED3A657601A520300160200020202033897D93211BEA6F16D5B8A0B55A2AA9CFE0004D5E1E990";
             //Byte[] dataBuffer = new Byte[ChipInfo.Length / 2];

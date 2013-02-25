@@ -109,6 +109,7 @@ namespace soc_nds_csharp.Station_Operation
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时！");
             }
             btn_RemoteFlash.Focus();
+            mSpSlot.Close();
         }
 
         private Int32 CommandSerial()
@@ -216,7 +217,7 @@ namespace soc_nds_csharp.Station_Operation
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            mSpSlot.Close();
+            //mSpSlot.Close();
             this.Close();
         }
 

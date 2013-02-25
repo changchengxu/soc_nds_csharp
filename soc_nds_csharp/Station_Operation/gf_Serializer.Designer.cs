@@ -54,6 +54,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.工位一退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.chkbox_FlashWP = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -69,13 +70,13 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.6556F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.3444F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 696);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 695);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -84,7 +85,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(96, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1126, 589);
+            this.panel1.Size = new System.Drawing.Size(1126, 588);
             this.panel1.TabIndex = 0;
             // 
             // panel2
@@ -92,6 +93,7 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.chkbox_FlashWP);
             this.panel2.Controls.Add(this.txt_SerialID);
             this.panel2.Controls.Add(this.groupBox1);
             this.panel2.Controls.Add(this.btn_begin);
@@ -101,14 +103,14 @@
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1126, 588);
+            this.panel2.Size = new System.Drawing.Size(1126, 587);
             this.panel2.TabIndex = 1;
             // 
             // txt_SerialID
             // 
             this.txt_SerialID.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.txt_SerialID.Enabled = false;
-            this.txt_SerialID.Location = new System.Drawing.Point(108, 461);
+            this.txt_SerialID.Location = new System.Drawing.Point(108, 460);
             this.txt_SerialID.Name = "txt_SerialID";
             this.txt_SerialID.Size = new System.Drawing.Size(299, 21);
             this.txt_SerialID.TabIndex = 30;
@@ -128,7 +130,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(560, 17);
+            this.groupBox1.Location = new System.Drawing.Point(560, 16);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(476, 420);
             this.groupBox1.TabIndex = 29;
@@ -244,7 +246,7 @@
             // 
             this.btn_begin.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btn_begin.Font = new System.Drawing.Font("宋体", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn_begin.Location = new System.Drawing.Point(319, 512);
+            this.btn_begin.Location = new System.Drawing.Point(319, 511);
             this.btn_begin.Name = "btn_begin";
             this.btn_begin.Size = new System.Drawing.Size(491, 38);
             this.btn_begin.TabIndex = 28;
@@ -257,7 +259,7 @@
             // 
             this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(20, 466);
+            this.label7.Location = new System.Drawing.Point(20, 465);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 12);
             this.label7.TabIndex = 27;
@@ -267,7 +269,7 @@
             // 
             this.richtxt_Connect.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.richtxt_Connect.Enabled = false;
-            this.richtxt_Connect.Location = new System.Drawing.Point(12, 17);
+            this.richtxt_Connect.Location = new System.Drawing.Point(12, 16);
             this.richtxt_Connect.Name = "richtxt_Connect";
             this.richtxt_Connect.Size = new System.Drawing.Size(542, 35);
             this.richtxt_Connect.TabIndex = 26;
@@ -277,7 +279,7 @@
             // 
             this.richtxt_info.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.richtxt_info.Enabled = false;
-            this.richtxt_info.Location = new System.Drawing.Point(10, 58);
+            this.richtxt_info.Location = new System.Drawing.Point(10, 57);
             this.richtxt_info.Name = "richtxt_info";
             this.richtxt_info.Size = new System.Drawing.Size(544, 372);
             this.richtxt_info.TabIndex = 25;
@@ -298,20 +300,31 @@
             this.工位一退出ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1296, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1296, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // 工位一退出ToolStripMenuItem
             // 
             this.工位一退出ToolStripMenuItem.Name = "工位一退出ToolStripMenuItem";
-            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.工位一退出ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.工位一退出ToolStripMenuItem.Text = "工位一退出";
             this.工位一退出ToolStripMenuItem.Click += new System.EventHandler(this.工位一退出ToolStripMenuItem_Click);
             // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // chkbox_FlashWP
+            // 
+            this.chkbox_FlashWP.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkbox_FlashWP.AutoSize = true;
+            this.chkbox_FlashWP.Location = new System.Drawing.Point(560, 460);
+            this.chkbox_FlashWP.Name = "chkbox_FlashWP";
+            this.chkbox_FlashWP.Size = new System.Drawing.Size(102, 16);
+            this.chkbox_FlashWP.TabIndex = 31;
+            this.chkbox_FlashWP.Text = " Flash 写保护";
+            this.chkbox_FlashWP.UseVisualStyleBackColor = true;
             // 
             // gf_Serializer
             // 
@@ -369,6 +382,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 工位一退出ToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox chkbox_FlashWP;
 
 
 

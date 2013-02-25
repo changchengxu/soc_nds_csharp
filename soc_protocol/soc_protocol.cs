@@ -289,30 +289,33 @@ namespace soc_protocol
                         ////    }
                         ////    break;
                         ////}
+                        if (mReadBuffer.Count < (4 + len))
+                        {
+                            //return;
+                            if (mReadBuffer.Count > 0)
+                            {
+                                mReadBuffer.RemoveAt(0);
+                            }
+                        }
 
                         byte cell = 0;
                         for (int i = 0; i < 4 + len; i++)
                         {
                             cell += mReadBuffer[i];
                         }
-                        if (cell == mReadBuffer[CONTAINER_LENGTH + len - 1])
+
+                        if (mReadBuffer.Count < (CONTAINER_LENGTH + len - 1) || cell != mReadBuffer[CONTAINER_LENGTH + len - 1])
+                        {
+                            mReadBuffer.RemoveAt(0);
+                            break;
+                        }
+                        else if (cell == mReadBuffer[CONTAINER_LENGTH + len - 1])
                         {
                             ReceiveBytes = new byte[CONTAINER_LENGTH + len];
                             mReadBuffer.CopyTo(0, ReceiveBytes, 0, CONTAINER_LENGTH + len);
                             mReadBuffer.Clear();
                             mSemaphore.Release();
                             mSpSlot.DataReceived -= new System.IO.Ports.SerialDataReceivedEventHandler(dataReceived);
-                        }
-                        else
-                        {
-                            //System.Threading.Thread.Sleep(5);
-                            //ErrorCount++;
-                            //if (ErrorCount == 3)//如果截取段三次检测校验位都不正确，则移除第一位字符
-                            //{
-                                mReadBuffer.RemoveAt(0);
-                                ErrorCount = 0;
-                            //}
-                            break;
                         }
                     }
                     else

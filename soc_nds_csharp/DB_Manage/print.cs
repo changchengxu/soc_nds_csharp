@@ -141,7 +141,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue == true)
                 {
-                    rowSelect += dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim() + ",";
+                    rowSelect += "'"+dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim()+"'" + ",";
                 }
             }
 
@@ -204,7 +204,7 @@ namespace soc_nds_csharp.DB_Manage
             }
             if (txt_ChipID.Text.Trim() != "")
             {
-                sqlstr += " and ChipID='" + txt_ChipID.Text.Trim() + "'";
+                sqlstr += " and ChipID='" + Convert.ToString(Convert.ToInt64(txt_ChipID.Text.Trim(), 10), 16) +"'";
             }
             if (txt_STBID.Text.Trim() != "")
             {

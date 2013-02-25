@@ -327,6 +327,7 @@ namespace soc_nds_csharp.Station_Operation
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
             }
             btn_begin.Focus();
+            mSpSlot.Close();//关闭串口
         }
 
         //Int32 timeCount = 60;
@@ -1050,7 +1051,7 @@ namespace soc_nds_csharp.Station_Operation
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            mSpSlot.Close();//关闭串口
+            //mSpSlot.Close();//关闭串口
             this.Close();
         }
 

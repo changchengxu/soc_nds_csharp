@@ -93,6 +93,9 @@ namespace soc_nds_csharp.Station_Operation
             txt_STBID.Enabled = false;
             richtxt_ManufacturerID.Enabled = false; richtxt_ModelID.Enabled = false; richtxt_HardwareID.Enabled = false;
 
+            chkbox_FlashWP.Checked = false;
+            chkbox_FlashWP.TabStop = false;
+
             #region 失去焦点
             richtxt_Connect.TabStop = false;
             richtxt_info.TabStop = false;
@@ -356,6 +359,7 @@ namespace soc_nds_csharp.Station_Operation
                 HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
             }
             btn_begin.Focus();
+            mSpSlot.Close();
         }
 
         //Int32 timeCount = 60;
@@ -460,6 +464,17 @@ namespace soc_nds_csharp.Station_Operation
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBTYPE)
             {
                 return -20;
+            }
+            ///////////////////向下位机发送解除flash写保护
+            System.Threading.Thread.Sleep(10);
+            index = Protocol.Command(SERCOM_TYPE.COM_REMOVEFLASHWP, null, ReceiveLength, ref cmdlineACK);
+            if (index != 0)
+            {
+                return index;
+            }
+            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_REMOVEFLASHWPOK)
+            {
+                richtxt_info.Text += "解除Flash写保护!\r\n";
             }
             /////////////////从下位机获取机顶盒类型
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
@@ -577,14 +592,14 @@ namespace soc_nds_csharp.Station_Operation
                 ///////////////////////////////////////////发送STBID到下位机
                 System.Threading.Thread.Sleep(10);
                 Byte[] STBIDByte = Encoding.ASCII.GetBytes(txt_STBID.Text);
-                index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC,STBIDByte,ReceiveLength, ref cmdlineACK);
+                index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC, STBIDByte, ReceiveLength, ref cmdlineACK);
                 if (index != 0)
                 {
                     return index;
                 }
                 if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_STBIDPCOK)//如果下位机没有回应，上位机重发一次
                 {
-                    index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC,STBIDByte,ReceiveLength, ref cmdlineACK);
+                    index = Protocol.Command(SERCOM_TYPE.COM_STBIDPC, STBIDByte, ReceiveLength, ref cmdlineACK);
                     if (index != 0)
                     {
                         return index;
@@ -627,23 +642,26 @@ namespace soc_nds_csharp.Station_Operation
             richtxt_Connect.Text = "发送序列化数据成功!";
             richtxt_info.Text += "发送序列化数据成功!\r\n";
             ///////////////////////////////////////////////flash写保护 目前没有写
-            #region flash写保护 
-            System.Threading.Thread.Sleep(10);
-            index = Protocol.Command(SERCOM_TYPE.COM_FLASHWP, null, ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
-            if (index != 0)
+            if (chkbox_FlashWP.Checked)
             {
+                #region flash写保护
+                System.Threading.Thread.Sleep(10);
+                index = Protocol.Command(SERCOM_TYPE.COM_FLASHWP, null, ReceiveLength, ref cmdlineACK);//调用类 ，获取所有的信息
+                if (index != 0)
+                {
                     return index;//向机顶盒发送写保护命令失败
+                }
+                if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_ERROR)
+                {
+                    return -71;
+                }
+                else if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_FLASHWPOK)
+                {
+                    richtxt_Connect.Text = "Flash写保护成功";
+                    richtxt_info.Text += "Flash写保护成功!\r\n";
+                }
+                #endregion
             }
-            if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_ERROR)
-            {
-                return -71;
-            }
-            else if (cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_FLASHWPOK)
-            {
-                richtxt_Connect.Text = "Flash写保护成功";
-                richtxt_info.Text += "Flash写保护成功!\r\n";
-            }
-            #endregion
 
             if (STBType == 0)//表示是村村通
             {
@@ -1054,7 +1072,7 @@ namespace soc_nds_csharp.Station_Operation
         private void 工位一退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.gf_Serializer_FormClosing);
-            mSpSlot.Close();
+            //mSpSlot.Close();
             mObj.eventFunc("open");
             this.Close();
 

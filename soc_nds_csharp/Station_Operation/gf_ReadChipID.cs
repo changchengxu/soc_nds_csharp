@@ -106,6 +106,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             btn_ReadChipID.Enabled = true;
             btn_ReadChipID.Focus();
+            mSpSlot.Close();
         }
 
             private Int32 CommandSerial()
@@ -196,7 +197,7 @@ namespace soc_nds_csharp.Station_Operation
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            mSpSlot.Close();
+            //mSpSlot.Close();
             this.Close();
         }
 
