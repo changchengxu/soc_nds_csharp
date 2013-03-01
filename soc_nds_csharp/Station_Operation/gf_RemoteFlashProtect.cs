@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using HDICSoft.Command;
 using HDICSoft.Message;
 using soc_protocol;
+using System.Threading;
 
 namespace soc_nds_csharp.Station_Operation
 {
@@ -40,21 +41,38 @@ namespace soc_nds_csharp.Station_Operation
 
             btn_RemoteFlash.Enabled = true;
 
+            //Control.CheckForIllegalCrossThreadCalls = false;//这个方法不推荐，目前暂时关闭（目的是解除界面假死）
+
         }
 
         private void btn_RemoteFlash_Click(object sender, EventArgs e)
         {
-            Connect();
-
+            Thread thread = new Thread(new ThreadStart(Connect));
+            thread.Start();
         }
 
         private void btn_RemoteFlash_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Keys.KeyCode == Keys.Enter || Keys.KeyCode == Keys.Back)
             {
-                Connect();
+                Thread thread = new Thread(new ThreadStart(Connect));
+                thread.Start();
             }
         }
+        #region 定义委托，目的多线程下UI及时更新
+        delegate void InfoDelegate(string str);
+        private void SetInfoDelegateText(string str)
+        {
+            if (richtxt_info.InvokeRequired)
+            {
+                Invoke(new InfoDelegate(SetInfoDelegateText), new string[] { str });
+            }
+            else
+            {
+                richtxt_info.Text = str;
+            }
+        }
+        #endregion
 
         private void Connect()
         {
@@ -67,58 +85,75 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (mSpSlot.IsOpen == false)
                 {
-                    HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
-                    btn_RemoteFlash.Focus();
-                    btn_RemoteFlash.Enabled = true;
-
+                    if (btn_RemoteFlash.IsHandleCreated)
+                    this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                      btn_RemoteFlash.Focus();
+                      btn_RemoteFlash.Enabled = true;
+                  }));
                     return;
                 }
             }
-            this.richtxt_info.ForeColor = System.Drawing.Color.ForestGreen;
+            if (richtxt_info.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      this.richtxt_info.ForeColor = System.Drawing.Color.ForestGreen;
+                  }));
 
             Int32 index = CommandSerial();
             if (index < 0)
             {
-                richtxt_info.ForeColor = System.Drawing.Color.Red;
-                richtxt_info.Text = "解除Flash写保护失败";
-                btn_RemoteFlash.Enabled = true;
+                if (richtxt_info.IsHandleCreated)
+                this.BeginInvoke(new MethodInvoker(delegate()
+                 {
+                     richtxt_info.ForeColor = System.Drawing.Color.Red;
+                 }));
+                SetInfoDelegateText("解除Flash写保护失败");
             }
 
             if (index == -1)
             {
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒连接失败！");
+                SetInfoDelegateText("向机顶盒连接失败！");
             }
             else if (index == -11)
             {
-                HDIC_Message.ShowWarnDialog(this, "解除Flash写保护失败！");
+                SetInfoDelegateText("解除Flash写保护失败！");
             }
             else if (index == -12)
             {
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒发送解除Flash写保护命令失败！");
+                SetInfoDelegateText("向机顶盒发送解除Flash写保护命令失败！");
             }
             else if (index == -100)
             {
-                HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败！");
+                SetInfoDelegateText("发送的命令包创建失败！");
             }
             else if (index == -110)
             {
-                HDIC_Message.ShowWarnDialog(this, "发送命令包失败！");
+                SetInfoDelegateText("发送命令包失败！");
             }
             else if (index == -120)
             {
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时！");
+                SetInfoDelegateText("接收机顶盒信息超时！");
             }
-            btn_RemoteFlash.Focus();
+            if (btn_RemoteFlash.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                 {
+                     btn_RemoteFlash.Enabled = true;
+                     btn_RemoteFlash.Focus();
+                 }));
             mSpSlot.Close();
         }
 
         private Int32 CommandSerial()
         {
-            btn_RemoteFlash.Enabled = false;
-
-
+            if (btn_RemoteFlash.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                 {
+                     btn_RemoteFlash.Enabled = false;
+                 }));
             // richtxt_Connect
-            richtxt_info.Text = "正在建立连接,请稍后... ...";
+             SetInfoDelegateText("正在建立连接,请稍后... ...");
 
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
@@ -126,18 +161,8 @@ namespace soc_nds_csharp.Station_Operation
                 index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
-                //if (index == -120)
-                //{
-
-                //    timer1.Enabled = true;
-                //    return 0;
-                //}
-                //else
-                //{
                     return index;
-                //}
             }
-            timer1.Enabled = false;
 
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {
@@ -162,10 +187,10 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            richtxt_info.Text = "连接成功，请勿断电!";
+             SetInfoDelegateText("连接成功，请勿断电!");
 
             ///////////////////向下位机发送解除flash写保护
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Thread.Sleep(4);
             index = Protocol.Command(SERCOM_TYPE.COM_REMOVEFLASHWP, null, ReceiveLength, ref cmdlineACK);
             if (index != 0)
             {
@@ -177,9 +202,7 @@ namespace soc_nds_csharp.Station_Operation
             }
             else if(cmdlineACK[(Int32)Index.cmdone] == (Byte)SERCOM_TYPE.COM_REMOVEFLASHWPOK)
             {
-                richtxt_info.Text = "解除flash写保护成功！";
-                btn_RemoteFlash.Enabled = true;
-
+                SetInfoDelegateText("解除flash写保护成功！");
             }
             else
             {
@@ -187,37 +210,9 @@ namespace soc_nds_csharp.Station_Operation
             }
             return 0;
         }
-
-        //Int32 timeCount = 100;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //timeCount--;
-
-            //if (timeCount == 0)
-            //{
-            //    timer1.Enabled = false;
-            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-            //    richtxt_info.ForeColor = System.Drawing.Color.Red;
-            //    richtxt_info.Text = "解除flash写保护失败";
-            //    btn_RemoteFlash.Enabled = true;
-            //    timeCount = 60;
-            //    btn_RemoteFlash.Focus();
-            //}
-            //else
-            //{
-            //    //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-            //    //st.Start();
-
-            //    Connect();
-
-            //    //st.Stop();
-            //    //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
-            //}
-        }
-
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            //mSpSlot.Close();
+            mSpSlot.Close();
             this.Close();
         }
 

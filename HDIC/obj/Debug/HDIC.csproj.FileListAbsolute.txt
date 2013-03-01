@@ -6,3 +6,27 @@ D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\HDIC\bin\De
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\HDIC\obj\Debug\ResolveAssemblyReference.cache
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\HDIC\obj\Debug\HDIC.dll
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp\HDIC\obj\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\bin\Debug\HDIC.cs
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\bin\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\bin\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\bin\Debug\BarcodeLib.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\bin\Debug\GoldPrinter.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\obj\Debug\ResolveAssemblyReference.cache
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\obj\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 - 副本\HDIC\obj\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\bin\Debug\HDIC.cs
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\bin\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\bin\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\bin\Debug\BarcodeLib.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\bin\Debug\GoldPrinter.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\obj\Debug\ResolveAssemblyReference.cache
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\obj\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本\HDIC\obj\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\bin\Debug\HDIC.cs
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\bin\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\bin\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\bin\Debug\BarcodeLib.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\bin\Debug\GoldPrinter.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\obj\Debug\ResolveAssemblyReference.cache
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\obj\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\HDIC\obj\Debug\HDIC.pdb

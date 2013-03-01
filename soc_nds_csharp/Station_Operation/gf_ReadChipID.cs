@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using HDICSoft.Command;
 using HDICSoft.Message;
 using soc_protocol;
+using System.Threading;
 
 namespace soc_nds_csharp.Station_Operation
 {
@@ -38,20 +39,40 @@ namespace soc_nds_csharp.Station_Operation
             //timer1.Enabled = false;
 
             btn_ReadChipID.Enabled = true;
+
+            //Control.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void btn_ReadChipID_Click(object sender, EventArgs e)
         {
-            Connect();
+            Thread thread = new Thread(new ThreadStart(Connect));
+            thread.Start();
         }
 
         private void btn_ReadChipID_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Keys.KeyCode == Keys.Enter || Keys.KeyCode == Keys.Back)
             {
-                Connect();
+                Thread thread = new Thread(new ThreadStart(Connect));
+                thread.Start();
             }
         }
+
+        #region 定义委托，目的多线程下UI及时更新
+        delegate void InfoDelegate(string str);
+        private void SetInfoDelegateText(string str)
+        {
+            if (richtxt_info.InvokeRequired)
+            {
+                Invoke(new InfoDelegate(SetInfoDelegateText), new string[] { str });
+            }
+            else
+            {
+                richtxt_info.Text = str;
+            }
+        }
+        #endregion
+
         private void Connect()
         {
 
@@ -63,59 +84,79 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (mSpSlot.IsOpen == false)
                 {
-                    HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
-                    btn_ReadChipID.Focus();
-                    btn_ReadChipID.Enabled = true;
+                    if (btn_ReadChipID.IsHandleCreated)
+                    this.BeginInvoke(new MethodInvoker(delegate()
+                   {
+                       HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                       btn_ReadChipID.Focus();
+                       btn_ReadChipID.Enabled = true;
+                   }));
 
                     return;
                 }
             }
-            this.richtxt_info.ForeColor = System.Drawing.Color.ForestGreen;
-
+            if (richtxt_info.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      this.richtxt_info.ForeColor = System.Drawing.Color.ForestGreen;
+                  }));
             Int32 index = CommandSerial();
             if (index < 0)
             {
-                richtxt_info.ForeColor = System.Drawing.Color.Red;
-                richtxt_info.Text = "获取ChipID失败";
+                if (richtxt_info.IsHandleCreated)
+                this.BeginInvoke(new MethodInvoker(delegate()
+                     {
+                         richtxt_info.ForeColor = System.Drawing.Color.Red;
+                     }));
+                SetInfoDelegateText("获取ChipID失败");
+
             }
 
             if (index == -1)
             {
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒连接失败");
+                SetInfoDelegateText("向机顶盒连接失败");
             }
 
             else if (index == -11)
             {
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取ChipID信息失败");
+                SetInfoDelegateText("向机顶盒获取ChipID信息失败");
             }
             else if (index == -12)
             {
-                HDIC_Message.ShowWarnDialog(this, "机顶盒获取的ChipID不正确");
+                SetInfoDelegateText("机顶盒获取的ChipID不正确");
             }
             else if (index == -100)
             {
-                HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+                SetInfoDelegateText("发送的命令包创建失败");
             }
             else if (index == -110)
             {
-                HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+                SetInfoDelegateText("发送命令包失败");
             }
             else if (index == -120)
             {
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
+                SetInfoDelegateText("接收机顶盒信息超时");
             }
-            btn_ReadChipID.Enabled = true;
-            btn_ReadChipID.Focus();
+            if (btn_ReadChipID.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                   {
+                       btn_ReadChipID.Enabled = true;
+                       btn_ReadChipID.Focus();
+                   }));
             mSpSlot.Close();
         }
 
             private Int32 CommandSerial()
             {
+                if (btn_ReadChipID.IsHandleCreated)
+                this.BeginInvoke(new MethodInvoker(delegate()
+            {
                 btn_ReadChipID.Enabled = false;
-
+            }));
 
                 // richtxt_Connect
-                richtxt_info.Text = "正在建立连接,请稍后... ...";
+                //richtxt_info.Text = "正在建立连接,请稍后... ...";
+                SetInfoDelegateText("正在建立连接,请稍后... ...");
 
                 Int32 index = 0;
                 Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
@@ -160,8 +201,8 @@ namespace soc_nds_csharp.Station_Operation
                 {
                     return -1;
                 }
-                richtxt_info.Text = "连接成功，请勿断电!";
-
+                //richtxt_info.Text = "连接成功，请勿断电!";
+                SetInfoDelegateText("连接成功，请勿断电!");
                 ///////////////////从下位机获取ChipID信息
                 System.Threading.Thread.Sleep(1);
                 index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null, ReceiveLength + 4, ref cmdlineACK);
@@ -191,7 +232,8 @@ namespace soc_nds_csharp.Station_Operation
                 #endregion
 
                 //richtxt_info.Text = String.Format("ChipID：{0:X08}", ChipID).ToString(); 
-                richtxt_info.Text ="ChipID："+MChipID; 
+                //richtxt_info.Text ="ChipID："+MChipID;
+                SetInfoDelegateText("ChipID：" + Convert.ToString(ChipID, 10) + "\r\n" + "ChipID：0x" + Convert.ToString(ChipID, 16));
             return 0;
         }
 

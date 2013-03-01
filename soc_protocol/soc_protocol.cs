@@ -122,7 +122,7 @@ namespace soc_protocol
             if (Reqcmd != SERCOM_TYPE.COM_NULL)
             {
                 // flush serial port
-                mSpSlot.DiscardInBuffer();
+                ////mSpSlot.DiscardInBuffer();
                 //mReadBuffer.Initialize();
                 //////////////////////////////////////////////////////////////////////////发送
                 ReqCount = CONTAINER_LENGTH;
@@ -140,7 +140,7 @@ namespace soc_protocol
                 {
                     mSpSlot.Write(packet, 0, packet.Length);       //发送命令
                 }
-                catch
+                catch (Exception ex)
                 {
                     return -110;
                 }
@@ -150,8 +150,6 @@ namespace soc_protocol
                     return -120; // timeout
                 }
             }
-
-         
 
                 cmdlineAck = ReceiveBytes;
 
@@ -232,7 +230,7 @@ namespace soc_protocol
         Int32 ErrorCount = 0;
         void dataReceived(System.Object sender, System.IO.Ports.SerialDataReceivedEventArgs e) //received data
         {
-            //System.Threading.Thread.Sleep(150); //等待150毫秒
+            System.Threading.Thread.Sleep(20); //等待20毫秒
             try
             {
                 ////if (!mSpSlot.IsOpen)//如果串口已经关闭，则不执行下面的代码
@@ -289,24 +287,31 @@ namespace soc_protocol
                         ////    }
                         ////    break;
                         ////}
-                        if (mReadBuffer.Count < (4 + len))
+                        //if (mReadBuffer.Count < (4 + len))
+                        //{
+                        //    //return;
+                        //    if (mReadBuffer.Count > 0)
+                        //    {
+                        //        mReadBuffer.RemoveAt(0);
+                        //    }
+                        //}
+                   
+                        byte cell = 0;
+                        if (mReadBuffer.Count >= (4 + len))
                         {
-                            //return;
-                            if (mReadBuffer.Count > 0)
+                            for (int i = 0; i < 4 + len; i++)
                             {
-                                mReadBuffer.RemoveAt(0);
+                                cell += mReadBuffer[i];
                             }
                         }
-
-                        byte cell = 0;
-                        for (int i = 0; i < 4 + len; i++)
-                        {
-                            cell += mReadBuffer[i];
-                        }
-
-                        if (mReadBuffer.Count < (CONTAINER_LENGTH + len - 1) || cell != mReadBuffer[CONTAINER_LENGTH + len - 1])
+                        if (mReadBuffer.Count < (CONTAINER_LENGTH + len - 1))
                         {
                             mReadBuffer.RemoveAt(0);
+                            break;
+                        }
+                        else if(cell != mReadBuffer[CONTAINER_LENGTH + len - 1])
+                        {
+                             mReadBuffer.RemoveAt(0);
                             break;
                         }
                         else if (cell == mReadBuffer[CONTAINER_LENGTH + len - 1])

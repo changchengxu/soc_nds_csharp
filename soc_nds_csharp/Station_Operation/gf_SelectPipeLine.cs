@@ -61,7 +61,7 @@ namespace soc_nds_csharp.Station_Operation
             gf_serial.WindowState = FormWindowState.Maximized;
             gf_serial.MaximizeBox = false;
 
-            eventFunc("off");
+           // eventFunc("off");
 
             gf_serial.Show();
 

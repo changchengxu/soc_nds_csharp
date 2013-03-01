@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gf_CheckSerializer));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txt_ReceiveBarCode = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.richtxt_LincenseAdo = new System.Windows.Forms.RichTextBox();
             this.richtxt_LincenseBoard = new System.Windows.Forms.RichTextBox();
@@ -49,6 +50,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btn_deleteCheck = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,6 +80,8 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.btn_deleteCheck);
+            this.panel1.Controls.Add(this.txt_ReceiveBarCode);
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.richTextBox1);
@@ -86,6 +90,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1106, 574);
             this.panel1.TabIndex = 0;
+            // 
+            // txt_ReceiveBarCode
+            // 
+            this.txt_ReceiveBarCode.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.txt_ReceiveBarCode.Location = new System.Drawing.Point(936, 480);
+            this.txt_ReceiveBarCode.Name = "txt_ReceiveBarCode";
+            this.txt_ReceiveBarCode.Size = new System.Drawing.Size(10, 21);
+            this.txt_ReceiveBarCode.TabIndex = 22;
+            this.txt_ReceiveBarCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_ReceiveBarCode_KeyDown);
+            this.txt_ReceiveBarCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_ReceiveBarCode_KeyPress);
             // 
             // groupBox2
             // 
@@ -222,7 +236,6 @@
             this.btn_begin.Text = "  开      始   ";
             this.btn_begin.UseVisualStyleBackColor = true;
             this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
-            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
             // 
             // toolStrip1
             // 
@@ -240,13 +253,25 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(36, 22);
             this.toolStripButton1.Text = "退出";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // timer1
             // 
+            this.timer1.Interval = 350;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btn_deleteCheck
+            // 
+            this.btn_deleteCheck.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btn_deleteCheck.Location = new System.Drawing.Point(842, 478);
+            this.btn_deleteCheck.Name = "btn_deleteCheck";
+            this.btn_deleteCheck.Size = new System.Drawing.Size(88, 23);
+            this.btn_deleteCheck.TabIndex = 23;
+            this.btn_deleteCheck.Text = "解除校验限制";
+            this.btn_deleteCheck.UseVisualStyleBackColor = true;
+            this.btn_deleteCheck.Click += new System.EventHandler(this.btn_deleteCheck_Click);
             // 
             // gf_CheckSerializer
             // 
@@ -261,6 +286,7 @@
             this.Load += new System.EventHandler(this.gf_CheckSerializer_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -291,7 +317,9 @@
         private System.Windows.Forms.RichTextBox richtxt_Tips;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_CAID;
+        private System.Windows.Forms.TextBox txt_ReceiveBarCode;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button btn_deleteCheck;
 
     }
 }

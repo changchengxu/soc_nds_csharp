@@ -65,7 +65,7 @@ namespace soc_nds_csharp.Station_Operation
 
             mSpSlot = Uart.slot;//串口初始化
 
-            BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
+            //BarCode.BarCodeEvent += new BarCodeHook.BarCodeDelegate(BarCode_BarCodeEvent);
 
             //Protocol = new UartProtocol(mSpSlot.slot);//初始化uart对象 
             Protocol = new UartProtocol(mSpSlot);//初始化uart对象 
@@ -77,10 +77,6 @@ namespace soc_nds_csharp.Station_Operation
             txt_CAID.Enabled = false;
             txt_STBID.Enabled = false;
             txt_SmartCardID.Enabled = false;
-            btn_begin.Focus();
-
-            //timer1.Interval = 1000;
-            //timer1.Enabled = false;
 
             #region 让文本框失去焦点
             richtxt_connect.TabStop = false;
@@ -90,58 +86,67 @@ namespace soc_nds_csharp.Station_Operation
             txt_STBID.TabStop = false;
             richtxt_LincenseAdo.TabStop = false;
             richtxt_LincenseBoard.TabStop = false;
+            btn_begin.TabStop=false;
+            btn_deleteCheck.TabStop=false;
             #endregion
 
             btn_begin.Enabled = true;
+            txt_ReceiveBarCode.Focus();
+            //Control.CheckForIllegalCrossThreadCalls = false;
 
         }
         ///////////////////////////////////////////////////////////////////////////////扫描仪
-        /// <summary>
-        /// 扫描仪
-        /// </summary>
-         private delegate void ShowInfoDelegate(BarCodeHook.BarCodes barCode);  
-        void BarCode_BarCodeEvent(BarCodeHook.BarCodes barCode)  
-        {  
-            ShowInfo(barCode);  
-        }
+        #region 挂钩的扫描仪接口
+        ///// <summary>
+        ///// 扫描仪
+        ///// </summary>
+        // private delegate void ShowInfoDelegate(BarCodeHook.BarCodes barCode);  
+        //void BarCode_BarCodeEvent(BarCodeHook.BarCodes barCode)  
+        //{  
+        //    ShowInfo(barCode);  
+        //}
 
+        //bool CheckCAID = false;
+        //bool CheckSTBID = false;
+        //bool CheckSmartCardID = false;
+
+        // private void ShowInfo(BarCodeHook.BarCodes barCode)  
+        //{  
+        //    if (this.InvokeRequired)  
+        //    {  
+        //        this.BeginInvoke(new ShowInfoDelegate(ShowInfo), new object[] { barCode });  
+        //    }  
+        //    else  
+        //    {  
+        //        //textBox1.Text = barCode.KeyName;  
+        //        //textBox2.Text = barCode.VirtKey.ToString();  
+        //        //textBox3.Text = barCode.ScanCode.ToString();  
+        //        //textBox4.Text = barCode.AscII.ToString();  
+        //        //textBox5.Text = barCode.Chr.ToString();  
+        //        //textBox6.Text = barCode.IsValid ? barCode.BarCode : "";  
+                
+                
+        //        if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 16) //获取扫描枪中的数据赋值到文本框
+        //        {
+        //            txt_STBID.Text = barCode.IsValid ? barCode.BarCode : "";
+        //        }
+        //        else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 11)
+        //        {
+        //            txt_CAID.Text = barCode.IsValid ? barCode.BarCode : "";
+        //        }
+        //        else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 12)
+        //        {
+        //            txt_SmartCardID.Text = barCode.IsValid ? barCode.BarCode : "";
+        //        }
+              
+        //    }  
+        //}
+        #endregion
+         ////////////////////////////////////////////////////////////////////////////////////
         bool CheckCAID = false;
         bool CheckSTBID = false;
         bool CheckSmartCardID = false;
-
-         private void ShowInfo(BarCodeHook.BarCodes barCode)  
-        {  
-            if (this.InvokeRequired)  
-            {  
-                this.BeginInvoke(new ShowInfoDelegate(ShowInfo), new object[] { barCode });  
-            }  
-            else  
-            {  
-                //textBox1.Text = barCode.KeyName;  
-                //textBox2.Text = barCode.VirtKey.ToString();  
-                //textBox3.Text = barCode.ScanCode.ToString();  
-                //textBox4.Text = barCode.AscII.ToString();  
-                //textBox5.Text = barCode.Chr.ToString();  
-                //textBox6.Text = barCode.IsValid ? barCode.BarCode : "";  
-                
-                
-                if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 16) //获取扫描枪中的数据赋值到文本框
-                {
-                    txt_STBID.Text = barCode.IsValid ? barCode.BarCode : "";
-                }
-                else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 11)
-                {
-                    txt_CAID.Text = barCode.IsValid ? barCode.BarCode : "";
-                }
-                else if (barCode.IsValid == true && barCode.BarCode.Trim().Length == 12)
-                {
-                    txt_SmartCardID.Text = barCode.IsValid ? barCode.BarCode : "";
-                }
-              
-            }  
-        }  
-        ////////////////////////////////////////////////////////////////////////////////////
-
+        bool Scanner = false;//扫描枪打开标志
         private void initControl()
         {
             ChipID = 0;
@@ -149,6 +154,7 @@ namespace soc_nds_csharp.Station_Operation
             CheckCAID = false;
             CheckSTBID = false;
             CheckSmartCardID = false;
+            Scanner = false;
 
             richtxt_LincenseBoard.Text = "";
             richtxt_LincenseAdo.Text="";
@@ -156,7 +162,7 @@ namespace soc_nds_csharp.Station_Operation
             txt_STBID.Text="";
             txt_SmartCardID.Text = "";
             richtxt_Tips.Text="";
-
+            
             this.richtxt_LincenseBoard.ForeColor = System.Drawing.Color.Black;
             this.richtxt_LincenseAdo.ForeColor = System.Drawing.Color.Black;
             this.txt_CAID.ForeColor = System.Drawing.Color.Black;
@@ -164,31 +170,98 @@ namespace soc_nds_csharp.Station_Operation
             //this.richtxt_Tips.ForeColor = System.Drawing.Color.Black;
             this.richtxt_Tips.ForeColor = System.Drawing.Color.Blue;
             this.richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
-            btn_begin.Focus();
+            txt_ReceiveBarCode.Focus();
+        }
+        #region 从文本框获取扫描枪内容，放到智能卡号文本框中
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if ( Scanner==true && txt_ReceiveBarCode.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_ReceiveBarCode.Text.Trim()))
+            {
+                if (txt_SmartCardID.Text.Trim() == "" || (CheckSmartCardID==false && txt_SmartCardID.Text.Trim()!=""))
+                {
+                    txt_SmartCardID.Text = txt_ReceiveBarCode.Text.Trim();
+                }
+            }
+            else if (Scanner==true && txt_ReceiveBarCode.Text.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txt_ReceiveBarCode.Text.Trim()) )
+            {
+                if (txt_CAID.Text.Trim() == "" || (CheckCAID==false && txt_CAID.Text.Trim()!=""))
+                {
+                    txt_CAID.Text = txt_ReceiveBarCode.Text.Trim();
+                }
+            }
+            else  if (Scanner==true && txt_ReceiveBarCode.Text.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txt_ReceiveBarCode.Text.Trim()))
+            {
+                if (txt_STBID.Text.Trim() == "" || (CheckSTBID==false && txt_STBID.Text.Trim()!=""))   
+                {
+                    txt_STBID.Text = txt_ReceiveBarCode.Text.Trim();
+                }
+            }
+            txt_ReceiveBarCode.Text = "";
+            timer1.Enabled = false;
         }
 
+        private void txt_ReceiveBarCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Space)
+            {
+                btn_begin_Click(sender, e);
+            }
+        }
+
+        private void txt_ReceiveBarCode_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        #endregion
         private void btn_begin_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(new ThreadStart(DoWork));
+            Thread thread = new Thread(new ThreadStart(Connect));
             thread.Start();
 
         }
 
-        private void btn_begin_KeyDown(object sender, KeyEventArgs e)
+        #region 定义委托，目的多线程下UI及时更新
+        delegate void LincenseBoardDelegate(string LincenseBoard);
+        private void SetLincenseBoardDelegateText(string LincenseBoard)
         {
-            if (Keys.KeyCode == Keys.Enter || Keys.KeyCode==Keys.Back)
+            if (richtxt_LincenseBoard.InvokeRequired)
             {
-                Thread thread = new Thread(new ThreadStart(DoWork));
-                thread.Start();
-
+                Invoke(new LincenseBoardDelegate(SetLincenseBoardDelegateText), new string[] { LincenseBoard });
+            }
+            else
+            {
+                richtxt_LincenseBoard.Text = LincenseBoard;
             }
         }
 
-        public void DoWork()
+        delegate void LincenseAdoDelegate(string LincenseAdo);
+        private void SetLincenseAdoDelegateText(string LincenseAdo)
         {
-            MyInvoke mi = new MyInvoke(Connect);
-            this.BeginInvoke(mi);
+            if (richtxt_LincenseAdo.InvokeRequired)
+            {
+                Invoke(new LincenseAdoDelegate(SetLincenseAdoDelegateText), new string[] { LincenseAdo });
+            }
+            else
+            {
+                richtxt_LincenseAdo.Text = LincenseAdo;
+            }
         }
+
+        delegate void InfoDelegate(string connect, string info);
+        private void SetInfoDelegateText(string connect, string info)
+        {
+            if (richtxt_connect.InvokeRequired || richtxt_Tips.InvokeRequired)
+            {
+                Invoke(new InfoDelegate(SetInfoDelegateText), new string[] { connect, info });
+            }
+            else
+            {
+                richtxt_connect.Text = connect;
+                richtxt_Tips.Text += info;
+            }
+        }
+        #endregion
 
 
         private void Connect()
@@ -202,9 +275,13 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (mSpSlot.IsOpen == false)
                 {
-                    HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
-                    btn_begin.Focus();
-                    btn_begin.Enabled = true;
+                    if (btn_begin.IsHandleCreated)
+                    this.BeginInvoke(new MethodInvoker(delegate()
+                   {
+                       HDIC_Message.ShowWarnDialog(null, "串口打开失败，请检查串口.\r\n");
+                       btn_begin.Enabled = true;
+                       txt_ReceiveBarCode.Focus();
+                   }));
                     
                     return;
                 }
@@ -214,177 +291,209 @@ namespace soc_nds_csharp.Station_Operation
 
             if (index != 0)
             {
-                richtxt_connect.ForeColor = System.Drawing.Color.Red;
-                btn_begin.Enabled = true;
+                if (btn_begin.IsHandleCreated)
+                    this.BeginInvoke(new MethodInvoker(delegate()
+                          {
+                              richtxt_connect.ForeColor = System.Drawing.Color.Red;
+
+                              btn_begin.Enabled = true;
+                              txt_ReceiveBarCode.Focus();
+                          }));
             }
 
             if (index == -1)
             {
-                richtxt_connect.Text = "连接失败，请重新连接!";
-                richtxt_Tips.Text += "连接失败，请重新连接!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒连接失败");
+                //richtxt_connect.Text = "连接失败，请重新连接!";
+                //richtxt_Tips.Text += "连接失败，请重新连接!\r\n";
+                SetInfoDelegateText("连接失败，请重新连接!", "连接失败，请重新连接!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "向机顶盒连接失败");
+                  }));
             }
 
             else if (index == -10)
             {
-                richtxt_Tips.Text += "从机顶盒获取机顶盒类型失败!\r\n";
-                richtxt_connect.Text = "从机顶盒获取机顶盒类型失败!";
-                HDIC_Message.ShowWarnDialog(this, "从机顶盒获取机顶盒类型失败");
+                //richtxt_Tips.Text += "从机顶盒获取机顶盒类型失败!\r\n";
+                //richtxt_connect.Text = "从机顶盒获取机顶盒类型失败!";
+                SetInfoDelegateText("从机顶盒获取机顶盒类型失败!","从机顶盒获取机顶盒类型失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "从机顶盒获取机顶盒类型失败");
+                  }));
             }
 
             else if (index == -11)
             {
-                richtxt_connect.Text = "获取ChipID信息失败!";
-                richtxt_Tips.Text += "获取ChipID信息失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "从机顶盒获取ChipID信息失败");
+                //richtxt_connect.Text = "获取ChipID信息失败!";
+                //richtxt_Tips.Text += "获取ChipID信息失败!\r\n";
+                SetInfoDelegateText("获取ChipID信息失败!", "获取ChipID信息失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "从机顶盒获取ChipID信息失败");
+                  }));
             }
             else if (index == -12)
             {
-                richtxt_connect.Text = "从机顶盒获取的ChipID不正确";
-                richtxt_Tips.Text += "从机顶盒获取的ChipID不正确\r\n";
+                //richtxt_connect.Text = "从机顶盒获取的ChipID不正确";
+                //richtxt_Tips.Text += "从机顶盒获取的ChipID不正确\r\n";
+                SetInfoDelegateText("从机顶盒获取的ChipID不正确", "从机顶盒获取的ChipID不正确\r\n");
             }
             else if (index == -13)
             {
-                richtxt_connect.Text = "数据库中没有找到该ChipID!";
-                richtxt_Tips.Text += "数据库中没有找到该ChipID!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "数据库中没有找到该ChipID!");
+                //richtxt_connect.Text = "数据库中没有找到该ChipID!";
+                //richtxt_Tips.Text += "数据库中没有找到该ChipID!\r\n";
+                SetInfoDelegateText("数据库中没有找到该ChipID!", "数据库中没有找到该ChipID!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "数据库中没有找到该ChipID!");
+                  }));
             }
             else if (index == -14)
             {
-                richtxt_connect.Text = "该ChipID已经校验过，无需再次校验!";
-                richtxt_Tips.Text += "该ChipID已经校验过，无需再次校验!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "该ChipID已经校验过，无需再次校验");
+                //richtxt_connect.Text = "该ChipID已经校验过，无需再次校验!";
+                //richtxt_Tips.Text += "该ChipID已经校验过，无需再次校验!\r\n";
+                SetInfoDelegateText("该ChipID已经校验过，无需再次校验!", "该ChipID已经校验过，无需再次校验!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "该ChipID已经校验过，无需再次校验");
+                  }));
             }
 
             else if (index == -20)
             {
-                richtxt_connect.Text = "获取Flash写保护状态失败!";
-                richtxt_Tips.Text += "获取Flash写保护状态失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "获取Flash写保护状态失败");
+                //richtxt_connect.Text = "获取Flash写保护状态失败!";
+                //richtxt_Tips.Text += "获取Flash写保护状态失败!\r\n";
+                SetInfoDelegateText("获取Flash写保护状态失败!", "获取Flash写保护状态失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "获取Flash写保护状态失败");
+                  }));
             }
             else if (index == -21)
             {
-                richtxt_connect.Text = "Flash写保护状态：未锁定!";
-                richtxt_Tips.Text += "Flash写保护状态：未锁定!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "Flash写保护状态：未锁定");
+                //richtxt_connect.Text = "Flash写保护状态：未锁定!";
+                //richtxt_Tips.Text += "Flash写保护状态：未锁定!\r\n";
+                SetInfoDelegateText("Flash写保护状态：未锁定!", "Flash写保护状态：未锁定!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "Flash写保护状态：未锁定");
+                  }));
             }
             else if (index == -30)
             {
-                richtxt_connect.Text = "从机顶盒获取高级安全状态失败!";
-                richtxt_Tips.Text += "从机顶盒获取高级安全状态失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "从机顶盒获取高级安全状态失败");
+                //richtxt_connect.Text = "从机顶盒获取高级安全状态失败!";
+                //richtxt_Tips.Text += "从机顶盒获取高级安全状态失败!\r\n";
+                SetInfoDelegateText("从机顶盒获取高级安全状态失败!", "从机顶盒获取高级安全状态失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "从机顶盒获取高级安全状态失败");
+                  }));
             }
             else if (index == -31)
             {
-                richtxt_connect.Text = "高级安全状态为：未打开!";
-                richtxt_Tips.Text += "高级安全状态为：未打开!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "高级安全状态为：未打开");
+                //richtxt_connect.Text = "高级安全状态为：未打开!";
+                //richtxt_Tips.Text += "高级安全状态为：未打开!\r\n";
+                SetInfoDelegateText("高级安全状态为：未打开!", "高级安全状态为：未打开!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "高级安全状态为：未打开");
+                  }));
             }
             else if (index == -32)
             {
-                richtxt_connect.Text = "获取所有高级安全特性失败!";
-                richtxt_Tips.Text += "获取所有高级安全特性失败!\r\n";
+                //richtxt_connect.Text = "获取所有高级安全特性失败!";
+                //richtxt_Tips.Text += "获取所有高级安全特性失败!\r\n";
+                SetInfoDelegateText("获取所有高级安全特性失败!", "获取所有高级安全特性失败!\r\n");
             }
             else if (index == -40)
             {
-                richtxt_connect.Text = "获取机顶盒的序列化数据失败!";
-                richtxt_Tips.Text += "获取机顶盒的序列化数据失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "向机顶盒获取序列化数据失败");
+                //richtxt_connect.Text = "获取机顶盒的序列化数据失败!";
+                //richtxt_Tips.Text += "获取机顶盒的序列化数据失败!\r\n";
+                SetInfoDelegateText("获取机顶盒的序列化数据失败!", "获取机顶盒的序列化数据失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "向机顶盒获取序列化数据失败");
+                  }));
             }
             else if (index == -41)
             {
-                richtxt_connect.Text = "搜索数据库中的序列化数据失败!";
-                richtxt_Tips.Text += "搜索数据库中的序列化数据失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "搜索数据库中的序列化数据失败，请检查当前ChipID或服务器网络!");
+                //richtxt_connect.Text = "搜索数据库中的序列化数据失败!";
+                //richtxt_Tips.Text += "搜索数据库中的序列化数据失败!\r\n";
+                SetInfoDelegateText("搜索数据库中的序列化数据失败!", "搜索数据库中的序列化数据失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "搜索数据库中的序列化数据失败，请检查当前ChipID或服务器网络!");
+                  }));
             }
             else if (index == -42)
             {
-                richtxt_connect.Text = "序列化数据转换字符数组时，发生错误!";
-                richtxt_Tips.Text += "序列化数据转换字符数组时，发生错误!\r\n";
+                //richtxt_connect.Text = "序列化数据转换字符数组时，发生错误!";
+                //richtxt_Tips.Text += "序列化数据转换字符数组时，发生错误!\r\n";
+                SetInfoDelegateText("序列化数据转换字符数组时，发生错误!", "序列化数据转换字符数组时，发生错误!\r\n");
             }
             else if (index == -43)
             {
-                richtxt_connect.Text = "序列化校验失败！请检查或返回第一个工位!";
-                richtxt_Tips.Text += "序列化校验失败！请检查或返回第一个工位!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "序列化校验失败！请检查或返回第一个工位!");
+                //richtxt_connect.Text = "序列化校验失败！请检查或返回第一个工位!";
+                //richtxt_Tips.Text += "序列化校验失败！请检查或返回第一个工位!\r\n";
+                SetInfoDelegateText("序列化校验失败！请检查或返回第一个工位!", "序列化校验失败！请检查或返回第一个工位!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "序列化校验失败！请检查或返回第一个工位!");
+                  }));
             }
             else if (index == -100)
             {
-                richtxt_connect.Text = "发送的命令包创建失败!";
-                richtxt_Tips.Text += "发送的命令包创建失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+               // richtxt_connect.Text = "发送的命令包创建失败!";
+               // richtxt_Tips.Text += "发送的命令包创建失败!\r\n";
+                SetInfoDelegateText("发送的命令包创建失败!", "发送的命令包创建失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "发送的命令包创建失败");
+                  }));
             }
             else if (index == -110)
             {
-                richtxt_connect.Text = "发送命令包失败!";
-                richtxt_Tips.Text += "发送命令包失败!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+                //richtxt_connect.Text = "发送命令包失败!";
+                //richtxt_Tips.Text += "发送命令包失败!\r\n";
+                SetInfoDelegateText("发送命令包失败!", "发送命令包失败!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "发送命令包失败");
+                  }));
             }
             else if (index == -120)
             {
-                richtxt_connect.Text = "接收机顶盒信息超时!";
-                richtxt_Tips.Text += "接收机顶盒信息超时!\r\n";
-                HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
+                //richtxt_connect.Text = "接收机顶盒信息超时!";
+                //richtxt_Tips.Text += "接收机顶盒信息超时!\r\n";
+                SetInfoDelegateText("接收机顶盒信息超时!", "接收机顶盒信息超时!\r\n");
+                this.BeginInvoke(new MethodInvoker(delegate()
+                  {
+                      HDIC_Message.ShowWarnDialog(this, "接收机顶盒信息超时");
+                  }));
             }
-            btn_begin.Focus();
-            mSpSlot.Close();//关闭串口
-        }
-
-        //Int32 timeCount = 60;
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //timeCount--;
-
-            //if (timeCount == 0)
-            //{
-            //    timer1.Enabled = false;
-            //    richtxt_connect.ForeColor = System.Drawing.Color.Red;
-            //    richtxt_connect.Text = "接收机顶盒数据超时!";
-            //    richtxt_Tips.Text += "接收机顶盒数据超时!\r\n";
-            //    HDIC_Message.ShowWarnDialog(this, "接收机顶盒数据超时");
-            //    btn_begin.Enabled = true;
-            //    timeCount = 60;
-            //    btn_begin.Focus();
-            //}
-            //else
-            //{
-            //    //System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
-            //    //st.Start();
-
-            //    Connect();
-
-            //    //st.Stop();
-            //    //HDIC_Message.ShowWarnDialog(null, "当前实例测量出总运行时间" + st.ElapsedMilliseconds + "毫秒");
-            //}
         }
 
         private Int32 CommandSerial()
         {
-            btn_begin.Enabled = false;
-
-            initControl();
+            if (btn_begin.IsHandleCreated)
+            this.BeginInvoke(new MethodInvoker(delegate()
+                   {
+                       initControl();
+                       btn_begin.Enabled = false;
+                   }));
 
             // richtxt_Connect
-            richtxt_connect.Text = "正在建立连接,请稍后... ...";
-
+            //richtxt_connect.Text = "正在建立连接,请稍后... ...";
+            SetInfoDelegateText("正在建立连接,请稍后... ...", "");
             Int32 index = 0;
             Byte[] cmdlineACK = { };//获取收到的命令（主要用于判断当前什么命令）
 
             index = Protocol.Command(SERCOM_TYPE.COM_NULL, null, ReceiveLength, ref cmdlineACK);//调用类 ，发送命令
             if (index != 0)
             {
-                //if (index == -120)
-                //{
-
-                //    timer1.Enabled = true;
-                //    return 0;
-                //}
-                //else
-                //{
                     return index;
-                //}
             }
-            //timer1.Enabled = false;
 
             if (cmdlineACK[(Int32)Index.cmdone] != (Byte)SERCOM_TYPE.COM_ASKHAND || cmdlineACK[(Int32)Index.cmdtwo] != (Byte)SERCOM_TYPE.COM_RETURN)
             {
@@ -409,9 +518,9 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -1;
             }
-            richtxt_connect.Text = "连接成功，请勿断电!";
-            richtxt_Tips.Text += "连接成功，请勿断电!\r\n";
-          
+            //richtxt_connect.Text = "连接成功，请勿断电!";
+            //richtxt_Tips.Text += "连接成功，请勿断电!\r\n";
+            SetInfoDelegateText("连接成功，请勿断电!", "连接成功，请勿断电!\r\n");
             ////////////////////////////////从下位机获取机顶盒类型
             System.Threading.Thread.Sleep(1);
             index = Protocol.Command(SERCOM_TYPE.COM_STBTYPE, null, ReceiveLength + 1, ref cmdlineACK);//调用类 ，尝试连接
@@ -426,7 +535,7 @@ namespace soc_nds_csharp.Station_Operation
             STBType = (Int32)cmdlineACK[(Int32)Index.buffer];
 
             ///////////////////从下位机获取ChipID信息
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Thread.Sleep(4);
             index = Protocol.Command(SERCOM_TYPE.COM_CHIPID, null, ReceiveLength + 4, ref cmdlineACK);
             if (index != 0)
             {
@@ -460,7 +569,7 @@ namespace soc_nds_csharp.Station_Operation
 
             /////////////////////////从下位机获取Flash当前状态（0为未写保护/1为写保护）
             #region 校验Flash写保护状态
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Thread.Sleep(4);
             index = Protocol.Command(SERCOM_TYPE.COM_FLASHSTATUS, null, ReceiveLength +1, ref cmdlineACK);
             if (index != 0)
             {
@@ -475,13 +584,14 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -21;
             }
-            richtxt_connect.Text = "Flash写保护状态：已锁定!";
-            richtxt_Tips.Text += "Flash写保护状态：已锁定!\r\n";
+            //richtxt_connect.Text = "Flash写保护状态：已锁定!";
+            //richtxt_Tips.Text += "Flash写保护状态：已锁定!\r\n";
+            SetInfoDelegateText("Flash写保护状态：已锁定!", "Flash写保护状态：已锁定!\r\n");
             #endregion
 
             ////////////////////////从下位机获取高级安全状态（0为未打开/1为已打开）
             #region 校验高级安全状态
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Thread.Sleep(4);
             index = Protocol.Command(SERCOM_TYPE.COM_SECURITYSTATUS, null, ReceiveLength + 1, ref cmdlineACK);
             if (index != 0)
             {
@@ -496,8 +606,9 @@ namespace soc_nds_csharp.Station_Operation
             {
                 return -31;
             }
-            richtxt_connect.Text = "高级安全状态为：已打开!";
-            richtxt_Tips.Text += "高级安全状态为：已打开!\r\n";
+            //richtxt_connect.Text = "高级安全状态为：已打开!";
+           // richtxt_Tips.Text += "高级安全状态为：已打开!\r\n";
+            SetInfoDelegateText("高级安全状态为：已打开!", "高级安全状态为：已打开!\r\n");
             #endregion
             ////////////////////////从下位机获取所有高级安全特性
          
@@ -509,7 +620,7 @@ namespace soc_nds_csharp.Station_Operation
                     string pwd = (Convert.ToInt32(dtTime) ^ 123456).ToString();
                     if (dt.Rows[0]["password"].ToString().Trim() == pwd)
                     {
-                        System.Threading.Thread.Sleep(10);
+                        System.Threading.Thread.Sleep(4);
                         index = Protocol.Command(SERCOM_TYPE.COM_FUSESTATUSTYPE, null, ReceiveLength + 31, ref cmdlineACK);//获取所有高级安全特性
                         if (index != 0)
                         {
@@ -535,7 +646,7 @@ namespace soc_nds_csharp.Station_Operation
             }
 
             ///////////////////从机顶盒获取序列化数据
-            System.Threading.Thread.Sleep(10);
+            System.Threading.Thread.Sleep(4);
             index = Protocol.Command(SERCOM_TYPE.COM_GETLICENSE, null, ReceiveLength + 88, ref cmdlineACK);
             if (index != 0)
             {
@@ -548,30 +659,30 @@ namespace soc_nds_csharp.Station_Operation
             }
             #region 校验序列化数据
 
-            string StrBarcode = "";
+            string LincenseBoard = "";
+            string LincenseAdo = "";
             //Byte[] bb = new Byte[88];
             for (int i = 0; i < cmdlineACK.Length - 5; i++)
             {
                 if (i != 0 && i % 20 == 0)//用于分页
                 {
-                    StrBarcode += "\r\n";
+                    LincenseBoard += "\r\n";
                 }
-                StrBarcode += String.Format("{0:X02}", cmdlineACK[(Int32)Index.buffer + i]).ToString().Trim();//从STB获取ChipInfo
+                LincenseBoard += String.Format("{0:X02}", cmdlineACK[(Int32)Index.buffer + i]).ToString().Trim();//从STB获取ChipInfo
                 //bb[i]= cmdlineACK[(Int32)Index.buffer + i];
             }
             //string aa = HDIC_Func.byteToHexStr(bb);//测试用；字节数组转换字符串
-            richtxt_LincenseBoard.Text = StrBarcode;
+            //richtxt_LincenseBoard.Text = StrBarcode;
+            SetLincenseBoardDelegateText(LincenseBoard);
             string ChipInfo = SearchSerializeData();
             if (ChipInfo.Trim() == "0")//搜索ChipInfo失败
             {
                 return -41;
             }
 
-            StrBarcode = "";
-
-            richtxt_connect.Text = "搜索序列化数据成功!";
-            richtxt_Tips.Text += "搜索序列化数据成功!\r\n";
-
+            //richtxt_connect.Text = "搜索序列化数据成功!";
+            //richtxt_Tips.Text += "搜索序列化数据成功!\r\n";
+            SetInfoDelegateText("搜索序列化数据成功!", "搜索序列化数据成功!\r\n");
             Byte[] DbChipInfoBuffer = new Byte[ChipInfo.Length / 2];
             if (!HDIC_Func.CStringToByte(ChipInfo, ref DbChipInfoBuffer))
             {
@@ -581,29 +692,34 @@ namespace soc_nds_csharp.Station_Operation
             {
                 if (i != 0 && i % 20 == 0)//用于分页
                 {
-                    StrBarcode += "\r\n";
+                    LincenseAdo += "\r\n";
                 }
-                StrBarcode += String.Format("{0:X02}", DbChipInfoBuffer[i]).ToString().Trim();//从数据库获取ChipInfo
+                LincenseAdo += String.Format("{0:X02}", DbChipInfoBuffer[i]).ToString().Trim();//从数据库获取ChipInfo
             }
-            richtxt_LincenseAdo.Text = StrBarcode;
-
-            if (richtxt_LincenseAdo.Text.Trim() != richtxt_LincenseBoard.Text.Trim())//校验序列化数据
+            //richtxt_LincenseAdo.Text = StrBarcode;
+            SetLincenseAdoDelegateText(LincenseAdo);
+            if (LincenseBoard.Trim() != LincenseAdo.Trim())//校验序列化数据
             {
                 return -43;
             }
-            richtxt_Tips.Text += "序列化校验成功!\r\n";
-            richtxt_connect.Text = "序列化校验成功! 请扫描机顶盒标签上的条形码!";
-            richtxt_Tips.Text += "等待扫描仪扫描标签ID... ...\r\n";
+            //richtxt_Tips.Text += "序列化校验成功!\r\n";
+            //richtxt_connect.Text = "序列化校验成功! 请扫描机顶盒标签上的条形码!";
+            //richtxt_Tips.Text += "等待扫描仪扫描标签ID... ...\r\n";
+            SetInfoDelegateText("序列化校验成功! 请扫描机顶盒标签上的条形码!", "");
+            Scanner = true;
             #endregion
-
-            BarCode.Start();  //开始监听扫描枪
+            
+          //  this.BeginInvoke(new MethodInvoker(delegate()
+          //{
+          //    BarCode.Start();  //开始监听扫描枪
+          //}));
 
             ////if (!mSemaphore.WaitOne(60000))//设定1分钟为超时 目前没有写成函数（原因是与别的主调函数冲突了）
             ////{
                 ////richtxt_connect.Text = "超时! 没有在规定的时间内扫描标签序列号";
                 ////richtxt_Tips.Text += "超时! 没有在规定的时间内扫描标签序列号\r\n";
                 ////btn_begin.Enabled = true;
-                ////btn_begin.Focus();
+            ////txt_ReceiveBarCode.Focus();
                 ////BarCode.Stop();
             ////}
          
@@ -704,7 +820,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             try
             {
-                if (HDIC_DB.sqlQuery("select count(*) from STBData where CAID='" + CAID + "'") != "0")
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where CAID='" + CAID + "' and ChipID='" + string.Format("{0:X08}", ChipID) + "'") != "0")
                 {
                     return true;
                 }
@@ -721,7 +837,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             try
             {
-                if (HDIC_DB.sqlQuery("select count(*) from STBData where STBID='" + mSTBID + "'") != "0")
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where STBID='" + mSTBID + "' and ChipID='" + string.Format("{0:X08}", ChipID) + "'") != "0")
                 {
                     return true;
                 }
@@ -738,7 +854,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             try
             {
-                if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + mSmartCardID + "'") != "0")
+                if (HDIC_DB.sqlQuery("select count(*) from STBData where SmartCardID='" + mSmartCardID + "' and ChipID='" + string.Format("{0:X08}", ChipID) + "'") != "0")
                 {
                     return true;
                 }
@@ -754,15 +870,9 @@ namespace soc_nds_csharp.Station_Operation
 
         private void gf_CheckSerializer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (HDIC_Message.ShowQuestionDialog(this, "确定要关闭该窗体？") == DialogResult.OK)
-            //{
            Uart.close();//关闭串口
-            e.Cancel = false; ;//关闭本窗体
-            //}
-            //else
-            //{
-            //    e.Cancel = true;
-            //}
+           e.Cancel = false; ;//关闭本窗体
+           
         }
 
         #region 校验
@@ -875,11 +985,12 @@ namespace soc_nds_csharp.Station_Operation
 
         private void  printInfo(string txtInfo)
         {
-            
                 Int32 index = Check(txtInfo);
                 if (index < 0)
                 {
                     richtxt_connect.ForeColor = System.Drawing.Color.Red;
+                    btn_begin.Enabled = true;
+                    txt_ReceiveBarCode.Focus();
                 }
                 if (index == -100)
                 {
@@ -909,16 +1020,17 @@ namespace soc_nds_csharp.Station_Operation
                 {
                     richtxt_connect.Text = "机顶盒中的CAID和扫描枪扫描的CAID不一致!";
                     richtxt_Tips.Text += "机顶盒中的CAID和扫描枪扫描的CAID不一致!\r\n"; 
-                    //HDIC_Message.ShowWarnDialog(this, "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!");
+                    HDIC_Message.ShowWarnDialog(this, "机顶盒计算出的CAID和扫描枪扫描的CAID不一致!");
                 }
                 else if (index == -31)
                 {
                     richtxt_connect.Text = "数据库的CAID与扫描枪扫描的不一致!";
                     richtxt_Tips.Text += "数据库的CAID与扫描枪扫描的不一致!\r\n";
-                    //HDIC_Message.ShowWarnDialog(this, "数据库的CAID与扫描枪扫描的不一致!");
+                    HDIC_Message.ShowWarnDialog(this, "数据库的CAID与扫描枪扫描的不一致!");
                 }
                 else if (index == 30) //【大于100的是成功的】
                 {
+                    richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
                     richtxt_connect.Text = "加密序列号校验成功!";
                     richtxt_Tips.Text += "加密序列号校验成功!\r\n";
                     CheckCAID = true;
@@ -943,6 +1055,7 @@ namespace soc_nds_csharp.Station_Operation
                 }
                 else if (index == 40) //【大于100的是成功的】
                 {
+                    richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
                     richtxt_connect.Text = "STBID校验成功!";
                     richtxt_Tips.Text += "STBID校验成功!\r\n";
                     CheckSTBID = true;
@@ -951,9 +1064,11 @@ namespace soc_nds_csharp.Station_Operation
                 {
                     richtxt_connect.Text = "数据库的SmartCardID与扫描枪扫描的不一致!";
                     richtxt_Tips.Text += "数据库的SmartCardID与扫描枪扫描的不一致!\r\n";
+                    HDIC_Message.ShowWarnDialog(null, "数据库的SmartCardID与扫描枪扫描的不一致!");
                 }
                 else if (index == 50) //【大于100的是成功的】
                 {
+                    richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
                     richtxt_connect.Text = "智能卡号校验成功!";
                     richtxt_Tips.Text += "智能卡号校验成功!\r\n";
                     CheckSmartCardID = true;
@@ -968,6 +1083,7 @@ namespace soc_nds_csharp.Station_Operation
                         {
                             if (HDIC_DB.ExcuteNonQuery("update STBData set CheckFlag=1 where ChipID='" + String.Format("{0:X08}", ChipID).ToString() + "'") > 0)
                             {
+                                richtxt_connect.ForeColor = System.Drawing.Color.ForestGreen;
                                 richtxt_connect.Text = "校验成功,请进行下一台!";
                                 richtxt_Tips.Text += "校验成功,请进行下一台!\r\n";
                                 ////mSemaphore.Release();
@@ -978,15 +1094,13 @@ namespace soc_nds_csharp.Station_Operation
                             HDIC_Message.ShowErrorDialog(this, "校验数据成功后修改标志位失败，原因：" + ex.ToString());
                         }
 
-                        //richtxt_Tips.Select(0, richtxt_Tips.Text.Length); 
-                        //richtxt_Tips.SelectionColor = System.Drawing.Color.ForestGreen;
-                        //richtxt_Tips.SelectionLength = 0; 
-
-                        BarCode.Stop();//关闭扫描仪
+                        //BarCode.Stop();//关闭扫描仪
+                        btn_begin.Enabled = true;
+                        txt_ReceiveBarCode.Focus();
+                        mSpSlot.Close();//关闭串口
                     }
                 }
-                btn_begin.Enabled = true;
-                btn_begin.Focus();
+                txt_ReceiveBarCode.Focus();
         }
         #endregion
 
@@ -999,9 +1113,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_CAID.Text.Trim().Length == 11 && HDIC_Func.CheckObjectIsInteger(txt_CAID.Text.Trim()))
             {
-                ////mSemaphore.Release();
                 printInfo(txt_CAID.Text.Trim());
-                ////SemaphoreWaitOne("加密序列化");
             }
         }
         /// <summary>
@@ -1013,9 +1125,7 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_STBID.Text.Trim().Length == 16 && HDIC_Func.CheckObjectIsInteger(txt_STBID.Text.Trim()))
             {
-                ////mSemaphore.Release();
                 printInfo(txt_STBID.Text.Trim());
-                ////SemaphoreWaitOne("机顶盒序列号");
             }
         }
         /// <summary>
@@ -1027,35 +1137,32 @@ namespace soc_nds_csharp.Station_Operation
         {
             if (txt_SmartCardID.Text.Trim().Length == 12 && HDIC_Func.CheckObjectIsInteger(txt_SmartCardID.Text.Trim()))
             {
-                ////mSemaphore.Release();
                 printInfo(txt_SmartCardID.Text.Trim());
-                ////SemaphoreWaitOne("智能卡号");
             }
-        }
-
-        /// <summary>
-        /// 用于设置扫描枪超时时间
-        /// </summary>
-        private void SemaphoreWaitOne(string info)
-        {
-            ////if (!mSemaphore.WaitOne(60000))//设定1分钟为超时
-            ////{
-                ////this.richtxt_connect.ForeColor = System.Drawing.Color.Red;
-                ////richtxt_connect.Text = "超时! 没有在规定的时间内扫描" + info;
-                ////richtxt_Tips.Text += "超时! 没有在规定的时间内扫描"+info+"\r\n";
-                ////btn_begin.Enabled = true;
-                ////btn_begin.Focus();
-                ////BarCode.Stop();
-            ////}
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            //mSpSlot.Close();//关闭串口
+            mSpSlot.Close();//关闭串口
             this.Close();
         }
 
-      
-
+        private void btn_deleteCheck_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string sqlstr = "update STBData set CheckFlag=0";
+                Int32 count = HDIC_DB.ExcuteNonQuery(sqlstr);
+                if (count >= 0)
+                {
+                    HDIC_Message.ShowInfoDialog(this, "成功解除:" + count + "个");
+                }
+            }
+            catch (Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "解除失败，原因：\r\n" + ex.ToString());
+            }
+            txt_ReceiveBarCode.Focus();
+        }
     }
 }

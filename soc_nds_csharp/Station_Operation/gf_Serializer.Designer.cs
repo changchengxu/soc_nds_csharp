@@ -32,6 +32,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txt_ReceiveBarCode = new System.Windows.Forms.TextBox();
+            this.chkbox_FlashWP = new System.Windows.Forms.CheckBox();
             this.txt_SerialID = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txt_STBID = new System.Windows.Forms.TextBox();
@@ -54,7 +56,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.工位一退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.chkbox_FlashWP = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -93,6 +94,7 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.txt_ReceiveBarCode);
             this.panel2.Controls.Add(this.chkbox_FlashWP);
             this.panel2.Controls.Add(this.txt_SerialID);
             this.panel2.Controls.Add(this.groupBox1);
@@ -105,6 +107,26 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1126, 587);
             this.panel2.TabIndex = 1;
+            // 
+            // txt_ReceiveBarCode
+            // 
+            this.txt_ReceiveBarCode.Location = new System.Drawing.Point(900, 492);
+            this.txt_ReceiveBarCode.Name = "txt_ReceiveBarCode";
+            this.txt_ReceiveBarCode.Size = new System.Drawing.Size(10, 21);
+            this.txt_ReceiveBarCode.TabIndex = 32;
+            this.txt_ReceiveBarCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_ReceiveBarCode_KeyDown);
+            this.txt_ReceiveBarCode.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_ReceiveBarCode_KeyPress);
+            // 
+            // chkbox_FlashWP
+            // 
+            this.chkbox_FlashWP.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.chkbox_FlashWP.AutoSize = true;
+            this.chkbox_FlashWP.Location = new System.Drawing.Point(560, 460);
+            this.chkbox_FlashWP.Name = "chkbox_FlashWP";
+            this.chkbox_FlashWP.Size = new System.Drawing.Size(102, 16);
+            this.chkbox_FlashWP.TabIndex = 31;
+            this.chkbox_FlashWP.Text = " Flash 写保护";
+            this.chkbox_FlashWP.UseVisualStyleBackColor = true;
             // 
             // txt_SerialID
             // 
@@ -253,7 +275,6 @@
             this.btn_begin.Text = "   开     始    ";
             this.btn_begin.UseVisualStyleBackColor = true;
             this.btn_begin.Click += new System.EventHandler(this.btn_begin_Click);
-            this.btn_begin.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btn_begin_KeyDown);
             // 
             // label7
             // 
@@ -313,18 +334,8 @@
             // 
             // timer1
             // 
+            this.timer1.Interval = 220;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // chkbox_FlashWP
-            // 
-            this.chkbox_FlashWP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.chkbox_FlashWP.AutoSize = true;
-            this.chkbox_FlashWP.Location = new System.Drawing.Point(560, 460);
-            this.chkbox_FlashWP.Name = "chkbox_FlashWP";
-            this.chkbox_FlashWP.Size = new System.Drawing.Size(102, 16);
-            this.chkbox_FlashWP.TabIndex = 31;
-            this.chkbox_FlashWP.Text = " Flash 写保护";
-            this.chkbox_FlashWP.UseVisualStyleBackColor = true;
             // 
             // gf_Serializer
             // 
@@ -381,8 +392,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 工位一退出ToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox chkbox_FlashWP;
+        private System.Windows.Forms.TextBox txt_ReceiveBarCode;
+        private System.Windows.Forms.Timer timer1;
 
 
 

@@ -141,7 +141,7 @@ namespace soc_nds_csharp.DB_Manage
             {
                 if ((bool)dataGridView1.Rows[i].Cells[0].EditedFormattedValue == true)
                 {
-                    rowSelect += "'"+dataGridView1.Rows[i].Cells["ChipID"].Value.ToString().Trim()+"'" + ",";
+                    rowSelect += "'" + dataGridView1.Rows[i].Cells["STBNO"].Value.ToString().Trim() + "'" + ",";
                 }
             }
 
@@ -153,7 +153,7 @@ namespace soc_nds_csharp.DB_Manage
             if (rowSelect != "")
             {
                 rowSelect = rowSelect.Substring(0, rowSelect.LastIndexOf(','));
-                string sqlstr = "delete from STBData where ChipID in (" + rowSelect + ")";
+                string sqlstr = "delete from STBData where STBNO in (" + rowSelect + ")";
                 try
                 {
                     HDIC_DB.sqlDelete(sqlstr);
@@ -161,7 +161,7 @@ namespace soc_nds_csharp.DB_Manage
                 }
                 catch (System.Exception ex)
                 {
-                    HDIC_Message.ShowErrorDialog(this,"delete failed because of" + ex.ToString());
+                    HDIC_Message.ShowErrorDialog(this,"delete failed because of:\r\n" + ex.ToString());
                 }
 
                 btn_Query_Click(sender, e);
@@ -219,10 +219,15 @@ namespace soc_nds_csharp.DB_Manage
             cb_check.HeaderText = "Select";
             cb_check.Name = "cb_check";
             dataGridView1.Columns.Add(cb_check);
-
+            
             try
             {
-                dataGridView1.DataSource = HDIC_DB.GetList(sqlstr);
+                DataTable dt =HDIC_DB.GetList(sqlstr);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    dt.Rows[i]["chipid"] = Convert.ToInt64(dt.Rows[i]["chipid"].ToString(), 16).ToString() + "(0x" + dt.Rows[i]["chipid"].ToString()+ ")";
+                }
+                dataGridView1.DataSource = dt;
             }
             catch 
             {
