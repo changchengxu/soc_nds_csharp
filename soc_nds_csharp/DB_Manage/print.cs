@@ -16,7 +16,7 @@ namespace soc_nds_csharp.DB_Manage
 {
     public partial class print : Form
     {
-        HDIC_Export exportOBJ = new HDIC_Export();
+        HDIC_Export exportOBJ;
         public print()
         {
             InitializeComponent();
@@ -35,6 +35,14 @@ namespace soc_nds_csharp.DB_Manage
             dateTimePicker_end.Enabled = false;
 
             this.Closed += new System.EventHandler(this.frmPrint_Closed);
+            try
+            {
+                exportOBJ = new HDIC_Export();
+            }
+            catch (Exception ex)
+            {
+                HDIC_Message.ShowWarnDialog(this, "初始化发生错误，原因：\r\n" + ex.ToString());
+            }
         }
 
         #region 打印方法调用

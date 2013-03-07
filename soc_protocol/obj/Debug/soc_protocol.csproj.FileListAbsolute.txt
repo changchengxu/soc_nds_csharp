@@ -30,3 +30,11 @@ D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 �
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\soc_protocol\obj\Debug\ResolveAssemblyReference.cache
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\soc_protocol\obj\Debug\soc_protocol.dll
 D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩）\soc_protocol\obj\Debug\soc_protocol.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\bin\Debug\HDIC.cs
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\bin\Debug\soc_protocol.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\bin\Debug\soc_protocol.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\bin\Debug\HDIC.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\bin\Debug\HDIC.pdb
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\obj\Debug\ResolveAssemblyReference.cache
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\obj\Debug\soc_protocol.dll
+D:\用户目录\Documents\Visual Studio 2010\Projects\soc_nds_csharp - 副本 副本(扫描枪去掉了挂钩） - 副本 - 副本\soc_protocol\obj\Debug\soc_protocol.pdb
